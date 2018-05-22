@@ -1,102 +1,86 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import { H1, H2, H3, H4, P } from './components/Text';
-import {
-  ViewContainer,
-  Heading,
-  SubHeading,
-  PaperSheet,
-  PadContainer,
-} from './components/Base';
-import ReduxDemo from './components/ReduxDemo' //Import the component file
+import { DefaultTheme, BottomNavigation } from 'react-native-paper';
+
+import Home from './screens/Home';
+import Mentors from './screens/Mentors';
+import Profile from './screens/Profile';
+import Saved from './screens/Saved';
+import Schedule from './screens/Schedule';
+
+import { H5 } from './components/Text';
+import { colors } from './components/Colors';
+
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+
 
 export default class App extends Component<Props> {
+  state = {
+    index: 0,
+    routes: [
+      { key: 'home', title: 'HOME', icon: 'home' },
+      { key: 'schedule', title: 'SCHEDULE', icon: 'calendar' },
+      { key: 'saved', title: 'SAVED', icon: 'heart' },
+      { key: 'mentors', title: 'MENTORS', icon: 'people' },
+      { key: 'profile', title: 'PROFILE', icon: 'user' },
+    ],
+  };
+
+  _handleIndexChange = index => this.setState({ index });
+
+  _renderScene = BottomNavigation.SceneMap({
+    home: Home,
+    schedule: Schedule,
+    saved: Saved,
+    mentors: Mentors,
+    profile: Profile,
+  });
+
+  _renderIcon = ({ route, focused, tintColor }) => {
+    // tintColor = (focused) ? colors.pink : tintColor;
+    return (
+      <Icon
+        name={route.icon}
+        size={22}
+        color={tintColor}
+      />
+    )
+  };
+
+  _renderLabel = ({ route, focused, tintColor }) => {
+    // tintColor = (focused) ? colors.pink : tintColor;
+    return (
+      <H5 style={{ textAlign: 'center', marginBottom: -4, color: tintColor }}>
+        {route.title}
+      </H5>
+    );
+  };
+
   render() {
     return (
-      <ViewContainer>
-        <PadContainer>
-          <Heading>
-            Saved
-          </Heading>
-          <SubHeading>
-            12 events saved
-          </SubHeading>          
-        </PadContainer>
-
-
-        <ReduxDemo/>
-
-        <PaperSheet>
-          <H4>
-            10:00am - 11:00am
-          </H4>
-          <H3>
-            Intro to ReactJS
-          </H3>
-          <P>
-            Room 33043
-          </P>
-        </PaperSheet>
-        <PaperSheet heading="9:00am">
-          <H4>
-            10:00am - 11:00am
-          </H4>
-          <H3>
-            Intro to ReactJS
-          </H3>
-          <P>
-            Room 33043
-          </P>
-        </PaperSheet>
-        <PaperSheet heading="9:00am">
-          <H4>
-            10:00am - 11:00am
-          </H4>
-          <H3>
-            Intro to ReactJS
-          </H3>
-          <P>
-            Room 33043
-          </P>
-        </PaperSheet>
-        <PaperSheet heading="9:00am">
-          <H4>
-            10:00am - 11:00am
-          </H4>
-          <H3>
-            Intro to ReactJS
-          </H3>
-          <P>
-            Room 33043
-          </P>
-        </PaperSheet>
-        {/* <H2 style={styles.welcome}>
-          16h 34m 43s left
-        </H2>
-        <H3 style={styles.welcome}>
-          Intro to ReactJS
-        </H3>
-        <H4 style={styles.welcome}>
-          10:00am - 11:00am
-        </H4>
-        <P style={styles.welcome}>
-          Room 3304
-        </P> */}
-      </ViewContainer>
-
+      <BottomNavigation
+        navigationState={this.state}
+        onIndexChange={this._handleIndexChange}
+        renderScene={this._renderScene}
+        renderLabel={this._renderLabel}
+        renderIcon={this._renderIcon}
+        // shifting={false}
+        theme={{
+          ...DefaultTheme,
+          colors: {
+            ...DefaultTheme.colors,
+            background: '#FFFFFF',
+          }
+        }}
+        barStyle={{
+          backgroundColor: colors.white,
+          borderWidth: 1,
+          borderColor: '#f7f7f7',
+          marginLeft: -1,
+          marginRight: -1,
+          marginBottom: -4,
+          paddingTop: 4,
+        }}
+      />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  instructions: {
-    textAlign: 'left',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

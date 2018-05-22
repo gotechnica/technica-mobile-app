@@ -6,6 +6,7 @@ import App from './src/App';
 import store from './src/store'; //Import the store
 import { Provider } from 'react-redux';
 
+
 // TODO render redux outside of paper provider
 export default Main = () => (
   <Provider store={store}>
