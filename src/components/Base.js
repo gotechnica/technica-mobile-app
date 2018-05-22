@@ -5,12 +5,12 @@ import { Paper } from 'react-native-paper';
 import {
   View,
   Platform,
+  ScrollView,
   StyleSheet,
 } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
     backgroundColor: colors.white,
   },
@@ -23,19 +23,31 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   paper: {
-    padding: 20,
     elevation: Platform.OS === 'ios' ? 4 : 6,
     borderRadius: 4,
     // shadowColor: 'rgba(0, 0, 0, .6)',
     shadowOpacity: .18,
+    marginBottom: 20,
   },
+  paperHead: {
+    padding: 15,
+  },
+  paperBody: {
+    padding: 15,
+  },
+  horizontalLine: {
+    height: 1,
+    backgroundColor: colors.borderGrey,
+  }
 });
 
 
 const ViewContainer = (props) => (
-  <View style={[styles.container, props.style]}>
-    {props.children}
-  </View>
+  <ScrollView style={{ flex: 1 }}>
+    <View style={[styles.container, props.style]}>
+      {props.children}
+    </View>
+  </ScrollView>
 );
 
 const Heading = (props) => (
@@ -56,7 +68,20 @@ const SubHeading = (props) => (
 
 const PaperSheet = (props) => (
   <Paper style={styles.paper}>
-    {props.children}
+    {
+      props.heading ?
+      <View>
+        <H2 style={styles.paperHead}>
+          {props.heading}
+        </H2>
+        <View style={styles.horizontalLine}></View>
+      </View>
+      :
+      null
+    }
+    <View style={styles.paperBody}>
+      {props.children}
+    </View>
   </Paper>
 );
 
