@@ -1,4 +1,4 @@
-package com.techica;
+package com.technica;
 
 import android.app.Application;
 
