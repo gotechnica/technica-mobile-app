@@ -11,6 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
+import { Paper } from 'react-native-paper';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -24,21 +25,32 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
+
+      <Paper style={styles.paper}>
+          <Text style={styles.welcome}>
+            Welcome to React Native! iOS
+          </Text>
+          <Text style={styles.instructions}>
+            To get started, edit App.js
+          </Text>
+          <Text style={styles.instructions}>
+            {instructions}
+          </Text>
+      </Paper>
+    </View>
+
     );
   }
 }
 
 const styles = StyleSheet.create({
+  paper: {
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 4,
+    borderRadius: 6,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
