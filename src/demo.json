@@ -1,0 +1,12 @@
+{
+  "instructions": [
+    {
+      "title": "Demo Redux Data #1",
+      "description": "Wow look at it go."
+    },
+    {
+      "title": "Demo Redux Data #2",
+      "description": "The cow goes moo."
+    }
+  ]
+}

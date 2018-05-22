@@ -11,19 +11,26 @@ import {
   Heading,
   SubHeading,
   PaperSheet,
-} from './components/Base.js';
-
+  PadContainer,
+} from './components/Base';
+import ReduxDemo from './components/ReduxDemo' //Import the component file
 
 export default class App extends Component<Props> {
   render() {
     return (
       <ViewContainer>
-        <Heading>
-          Saved
-        </Heading>
-        <SubHeading>
-          12 events saved
-        </SubHeading>
+        <PadContainer>
+          <Heading>
+            Saved
+          </Heading>
+          <SubHeading>
+            12 events saved
+          </SubHeading>          
+        </PadContainer>
+
+
+        <ReduxDemo/>
+
         <PaperSheet>
           <H4>
             10:00am - 11:00am
@@ -81,6 +88,7 @@ export default class App extends Component<Props> {
           Room 3304
         </P> */}
       </ViewContainer>
+
     );
   }
 }

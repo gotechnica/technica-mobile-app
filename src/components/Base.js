@@ -11,9 +11,13 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     flex: 1,
     backgroundColor: colors.white,
+  },
+  padContainer: {
+    flex: 1,
+    paddingLeft: 20,
+    paddingRight: 20
   },
   heading: {
     paddingTop: 60,
@@ -29,6 +33,8 @@ const styles = StyleSheet.create({
     // shadowColor: 'rgba(0, 0, 0, .6)',
     shadowOpacity: .18,
     marginBottom: 20,
+    marginLeft: 20,
+    marginRight: 20,
   },
   paperHead: {
     padding: 15,
@@ -50,6 +56,12 @@ const ViewContainer = (props) => (
     </View>
   </ScrollView>
 );
+
+const PadContainer = (props) => (
+  <View style={[styles.padContainer, props.style]}>
+    {props.children}
+  </View>
+)
 
 const Heading = (props) => (
   <View style={[styles.heading, props.style]}>
@@ -90,5 +102,6 @@ export {
   ViewContainer,
   Heading,
   SubHeading,
-  PaperSheet
+  PaperSheet,
+  PadContainer
 };
