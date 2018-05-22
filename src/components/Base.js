@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 20,
     marginRight: 20,
+    marginTop: 2,
   },
   paperHead: {
     padding: 15,
