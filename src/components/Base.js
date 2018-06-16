@@ -24,6 +24,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20
   },
+  modal: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 4,
+  },
   spacing: {
     height: 15,
   },
@@ -132,6 +137,12 @@ const Spacing = (props) => (
   <View style={styles.spacing}></View>
 );
 
+const ModalContent = (props) => (
+  <View style={styles.modal}>
+    {props.children}
+  </View>
+)
+
 export {
   ViewContainer,
   Heading,
@@ -141,4 +152,5 @@ export {
   GradientBackground,
   HorizontalLine,
   Spacing,
+  ModalContent,
 };

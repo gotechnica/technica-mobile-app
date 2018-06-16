@@ -16,9 +16,11 @@ import {
   PadContainer,
   GradientBackground,
   HorizontalLine,
+  ModalContent,
   Spacing,
 } from '../components/Base';
 import Images from '../../assets/imgs/index';
+import Modal from "react-native-modal";
 
 const EventCard = ({ name, saves, img }) => {
   const dimensions = require('Dimensions').get('window');
@@ -48,11 +50,44 @@ const EventCard = ({ name, saves, img }) => {
 }
 
 export default class Home extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalVisible: false,
+    }
+  }
+
+  toggleModal = (question, answer) => {
+    isModalVisible: !this.state.isModalVisible
+  }
+
+  closeModal = () =>
+    this.setState({ isModalVisible: false });
 
   render() {
     const { width, height } = require('Dimensions').get('window');
     return (
       <GradientBackground>
+        <Modal
+          isVisible={this.state.isModalVisible}
+          backdropColor={'white'}
+          backdropOpacity={1}
+          animationInTiming={250}
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          animationOutTiming={250}
+          backdropTransitionInTiming={250}
+          backdropTransitionOutTiming={250}
+          avoidKeyboard={true}
+          onBackButtonPress={() => this.setState({ isModalVisible: false })}
+        >
+          <ModalContent>
+            <TouchableOpacity onPress={() => this.setState({ isModalVisible: false })}>
+              <H1>{'<='}</H1>
+            </TouchableOpacity>
+            <H1>hello</H1>
+          </ModalContent>
+        </Modal>
         <ViewContainer>
           <PadContainer>
             <Heading>
@@ -66,7 +101,7 @@ export default class Home extends Component<Props> {
           <PadContainer>
             <H2 style={styles.heading}>Recent Updates</H2>
           </PadContainer>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => { this.setState({ isModalVisible: !this.state.isModalVisible })}}>
             <PaperSheet>
               <H4>11:15am</H4>
               <H6>Lunch has been postponed until tomorrow.</H6>
