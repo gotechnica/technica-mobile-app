@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     paddingRight: 20
   },
   spacing: {
-    height: 10,
+    height: 15,
   },
   heading: {
     paddingTop: 60,
