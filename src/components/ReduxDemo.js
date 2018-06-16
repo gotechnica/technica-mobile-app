@@ -42,7 +42,7 @@ class RedexDemo extends Component {
             );
         } else {
             return (
-                <View style={{flex:1, backgroundColor: '#ffffff'}}>
+                <View style={{flex:1, }}>
                     <FlatList
                         ref='listRef'
                         data={this.props.data}
