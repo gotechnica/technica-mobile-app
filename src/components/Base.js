@@ -51,6 +51,9 @@ const styles = StyleSheet.create({
   paperBody: {
     padding: 15,
   },
+  white: {
+    backgroundColor: 'white',
+  },
   horizontalLine: {
     height: 1,
     backgroundColor: colors.borderGrey,
@@ -67,9 +70,14 @@ const ViewContainer = (props) => (
 );
 
 const PadContainer = (props) => (
-  <View style={[styles.padContainer, props.style]}>
-    {props.children}
-  </View>
+    props.white ?
+    <View style={[styles.padContainer, styles.white, props.style]}>
+      {props.children}
+    </View>
+    :
+    <View style={[styles.padContainer, props.style]}>
+      {props.children}
+    </View>
 )
 
 const Heading = (props) => (
