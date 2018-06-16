@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20
   },
+  spacing: {
+    height: 10,
+  },
   heading: {
     paddingTop: 60,
     marginBottom: 15,
@@ -93,7 +96,7 @@ const PaperSheet = (props) => (
         <H2 style={styles.paperHead}>
           {props.heading}
         </H2>
-        <View style={styles.horizontalLine}></View>
+        <HorizontalLine/>
       </View>
       :
       null
@@ -102,6 +105,10 @@ const PaperSheet = (props) => (
       {props.children}
     </View>
   </Paper>
+);
+
+const HorizontalLine = (props) => (
+  <View style={styles.horizontalLine}></View>
 );
 
 const GradientBackground = (props) => (
@@ -113,11 +120,17 @@ const GradientBackground = (props) => (
   </ImageBackground>
 );
 
+const Spacing = (props) => (
+  <View style={styles.spacing}></View>
+);
+
 export {
   ViewContainer,
   Heading,
   SubHeading,
   PaperSheet,
   PadContainer,
-  GradientBackground
+  GradientBackground,
+  HorizontalLine,
+  Spacing,
 };

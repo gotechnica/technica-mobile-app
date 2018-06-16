@@ -31,6 +31,10 @@ const styles = StyleSheet.create({
     fontFamily: "DINPro-Medium",
     fontSize: 10,
   },
+  h6: {
+    fontFamily: "Poppins-Regular",
+    fontSize: 12,
+  },
   p: {
     fontFamily: "Poppins-Regular",
     fontSize: 14,
@@ -68,6 +72,12 @@ const H5 = (props) => (
   </Text>
 );
 
+const H6 = (props) => (
+  <Text style={[styles.text, styles.h6, props.style]}>
+    {props.children}
+  </Text>
+);
+
 const P = (props) => (
   <Text style={[styles.text, styles.p, props.style]}>
     {props.children}
@@ -75,4 +85,4 @@ const P = (props) => (
 );
 
 
-export { H1, H2, H3, H4, H5, P }
+export { H1, H2, H3, H4, H5, H6, P }

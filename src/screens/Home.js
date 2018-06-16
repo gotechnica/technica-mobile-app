@@ -5,7 +5,7 @@ import {
   Text,
   View
 } from 'react-native';
-import { H1, H2, H3, H4, P } from '../components/Text';
+import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import {
   ViewContainer,
   Heading,
@@ -13,8 +13,9 @@ import {
   PaperSheet,
   PadContainer,
   GradientBackground,
+  HorizontalLine,
+  Spacing,
 } from '../components/Base';
-import ReduxDemo from '../components/ReduxDemo';
 
 export default class Home extends Component<Props> {
   render() {
@@ -26,12 +27,28 @@ export default class Home extends Component<Props> {
               Technica 2018
             </Heading>
             <SubHeading>
-              12 events saved
+              16h 34m 53s left to hack
             </SubHeading>
           </PadContainer>
 
 
-          <ReduxDemo/>
+          <PadContainer>
+            <H2 style={styles.heading}>Recent Updates</H2>
+          </PadContainer>
+          <PaperSheet>
+            <H4>11:00am</H4>
+            <H6>Lunch has been postponed until tomorrow.</H6>
+            <Spacing/>
+            <HorizontalLine/>
+            <Spacing/>
+            <H4>11:00am</H4>
+            <H6>Lunch has been postponed until tomorrow.</H6>
+            <Spacing/>
+            <HorizontalLine/>
+            <Spacing/>
+            <H4>11:00am</H4>
+            <H6>Lunch has been postponed until tomorrow.</H6>
+          </PaperSheet>
 
           <PaperSheet>
             <H4>
@@ -96,5 +113,9 @@ export default class Home extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
-
+  heading: {
+    marginBottom: 20,
+  },
+  spacing: {
+  },
 });
