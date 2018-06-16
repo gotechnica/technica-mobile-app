@@ -7,12 +7,17 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
+  ImageBackground,
 } from 'react-native';
 
 const styles = StyleSheet.create({
+  bg: {
+    flex: 1,
+    flexDirection: 'row',
+  },
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
   },
   padContainer: {
     flex: 1,
@@ -99,10 +104,20 @@ const PaperSheet = (props) => (
   </Paper>
 );
 
+const GradientBackground = (props) => (
+  <ImageBackground
+    style={styles.bg}
+    source={require('../../assets/imgs/bg.png')}
+  >
+    {props.children}
+  </ImageBackground>
+);
+
 export {
   ViewContainer,
   Heading,
   SubHeading,
   PaperSheet,
-  PadContainer
+  PadContainer,
+  GradientBackground
 };
