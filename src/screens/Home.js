@@ -88,7 +88,6 @@ export default class Home extends Component<Props> {
           Room 3304
         </P> */}
       </ViewContainer>
-
     );
   }
 }
