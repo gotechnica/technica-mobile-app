@@ -71,6 +71,19 @@ const styles = StyleSheet.create({
   modalHeadingText: {
     marginTop: 20,
   },
+  button: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: colors.lavender,
+    padding: 8,
+    marginLeft: 20,
+    marginRight: 20,
+    borderRadius: 4,
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: colors.lavender,
+  },
 });
 
 
@@ -164,6 +177,18 @@ const ModalHeader = (props) => (
   </View>
 );
 
+const Button = (props) => (
+  <View style={{ backgroundColor: 'white' }}>
+    <TouchableOpacity>
+      <View style={styles.button}>
+        <H3 style={styles.buttonText}>
+          {props.text}
+        </H3>
+      </View>
+    </TouchableOpacity>
+  </View>
+)
+
 export {
   ViewContainer,
   Heading,
@@ -175,4 +200,5 @@ export {
   Spacing,
   ModalContent,
   ModalHeader,
+  Button
 };
