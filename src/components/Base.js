@@ -8,7 +8,9 @@ import {
   ScrollView,
   StyleSheet,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 const styles = StyleSheet.create({
   bg: {
@@ -62,7 +64,13 @@ const styles = StyleSheet.create({
   horizontalLine: {
     height: 1,
     backgroundColor: colors.borderGrey,
-  }
+  },
+  modalHeader: {
+    marginTop: 20,
+  },
+  modalHeadingText: {
+    marginTop: 20,
+  },
 });
 
 
@@ -143,6 +151,19 @@ const ModalContent = (props) => (
   </View>
 )
 
+const ModalHeader = (props) => (
+  <View style={styles.modalHeader}>
+    <TouchableOpacity onPress={props.onBackButtonPress}>
+      <Icon
+        name="arrow-left"
+        size={22}
+        color={"black"}
+      />
+    </TouchableOpacity>
+    <H2 style={styles.modalHeadingText}>{props.heading}</H2>
+  </View>
+);
+
 export {
   ViewContainer,
   Heading,
@@ -153,4 +174,5 @@ export {
   HorizontalLine,
   Spacing,
   ModalContent,
+  ModalHeader,
 };

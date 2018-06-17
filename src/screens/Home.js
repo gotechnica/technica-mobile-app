@@ -17,10 +17,12 @@ import {
   GradientBackground,
   HorizontalLine,
   ModalContent,
+  ModalHeader,
   Spacing,
 } from '../components/Base';
 import Images from '../../assets/imgs/index';
 import Modal from "react-native-modal";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const EventCard = ({ name, saves, img }) => {
   const dimensions = require('Dimensions').get('window');
@@ -43,7 +45,8 @@ const EventCard = ({ name, saves, img }) => {
           source={Images[img]}
         />
         <H3>{name}</H3>
-        <H6>{`[X] ${saves}`}</H6>
+        <H6><Icon name="heart" size={12} color="#000000"/> {saves}</H6>
+        {/* heart-o for outline heart */}
       </View>
     </TouchableOpacity>
   );
@@ -55,10 +58,11 @@ export default class Home extends Component<Props> {
     this.state = {
       isModalVisible: false,
     }
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   toggleModal = (question, answer) => {
-    isModalVisible: !this.state.isModalVisible
+    this.setState({ isModalVisible: !this.state.isModalVisible })
   }
 
   closeModal = () =>
@@ -79,13 +83,39 @@ export default class Home extends Component<Props> {
           backdropTransitionInTiming={250}
           backdropTransitionOutTiming={250}
           avoidKeyboard={true}
-          onBackButtonPress={() => this.setState({ isModalVisible: false })}
+          onBackButtonPress={() => this.toggleModal()}
         >
           <ModalContent>
-            <TouchableOpacity onPress={() => this.setState({ isModalVisible: false })}>
-              <H1>{'<='}</H1>
-            </TouchableOpacity>
-            <H1>hello</H1>
+            <ModalHeader
+              onBackButtonPress={() => this.toggleModal()}
+              heading="Recent Updates"
+            />
+            <Spacing/>
+            <H4>11:15am</H4>
+            <H6>Lunch has beeen postponed until tomorrow.</H6>
+            <Spacing/>
+            <HorizontalLine/>
+            <Spacing/>
+            <H4>11:15am</H4>
+            <H6>Lunch has been postponed until tomorrow.</H6>
+            <Spacing/>
+            <HorizontalLine/>
+            <Spacing/>
+            <H4>11:15am</H4>
+            <H6>Lunch has been postponed until tomorrow.</H6>
+            <Spacing/>
+            <HorizontalLine/>
+            <Spacing/>
+            <H4>11:15am</H4>
+            <H6>Lunch has been postponed until tomorrow.</H6>
+            <Spacing/>
+            <HorizontalLine/>
+            <Spacing/>
+            <H4>11:15am</H4>
+            <H6>Lunch has been postponed until tomorrow.</H6>
+            <Spacing/>
+            <HorizontalLine/>
+            <Spacing/>
           </ModalContent>
         </Modal>
         <ViewContainer>
@@ -101,7 +131,7 @@ export default class Home extends Component<Props> {
           <PadContainer>
             <H2 style={styles.heading}>Recent Updates</H2>
           </PadContainer>
-          <TouchableOpacity onPress={() => { this.setState({ isModalVisible: !this.state.isModalVisible })}}>
+          <TouchableOpacity onPress={() => this.toggleModal()}>
             <PaperSheet>
               <H4>11:15am</H4>
               <H6>Lunch has been postponed until tomorrow.</H6>
