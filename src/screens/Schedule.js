@@ -27,6 +27,11 @@ export default class Schedule extends Component<Props> {
 
   const EVENT_GROUP = 'EVENT_GROUP';
   const EVENT_SEPARATOR = 'EVENT_SEPARATOR'
+
+  constructor(props) {
+
+  }
+
   componentDidMount() {
 
 
