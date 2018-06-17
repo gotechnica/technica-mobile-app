@@ -179,13 +179,11 @@ const ModalHeader = (props) => (
 
 const Button = (props) => (
   <View style={{ backgroundColor: 'white' }}>
-    <TouchableOpacity>
-      <View style={styles.button}>
-        <H3 style={styles.buttonText}>
-          {props.text}
-        </H3>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.button}>
+      <H3 style={styles.buttonText}>
+        {props.text}
+      </H3>
+    </View>
   </View>
 )
 
