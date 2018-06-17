@@ -19,14 +19,16 @@ import {
   ModalContent,
   ModalHeader,
   Spacing,
+  Button,
 } from '../components/Base';
 import Images from '../../assets/imgs/index';
 import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const EventCard = ({ name, saves, img }) => {
+const EventCard = ({ name, saves, img, big }) => {
   const dimensions = require('Dimensions').get('window');
-  const imageWidth = (dimensions.width / 2) - 30;
+
+  const imageWidth = (big) ? dimensions.width - 40 : (dimensions.width / 2) - 30;
   const imageHeight = Math.round(imageWidth * 38/67);
 
   console.log(Image);
@@ -44,8 +46,17 @@ const EventCard = ({ name, saves, img }) => {
           // source={Image[img]}
           source={Images[img]}
         />
-        <H3>{name}</H3>
-        <H6><Icon name="heart" size={12} color="#000000"/> {saves}</H6>
+        {
+          (big) ?
+            null
+            :
+            (
+              <View>
+                <H3>{name}</H3>
+                <H6><Icon name="heart" size={12} color="#000000"/> {saves}</H6>
+              </View>
+            )
+        }
         {/* heart-o for outline heart */}
       </View>
     </TouchableOpacity>
@@ -56,24 +67,24 @@ export default class Home extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      isModalVisible: false,
+      isUpdatesModalVisible: false,
     }
-    this.toggleModal = this.toggleModal.bind(this);
+    this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
   }
 
-  toggleModal = (question, answer) => {
-    this.setState({ isModalVisible: !this.state.isModalVisible })
+  toggleUpdatesModal = (question, answer) => {
+    this.setState({ isUpdatesModalVisible: !this.state.isUpdatesModalVisible })
   }
 
   closeModal = () =>
-    this.setState({ isModalVisible: false });
+    this.setState({ isUpdatesModalVisible: false });
 
   render() {
     const { width, height } = require('Dimensions').get('window');
     return (
       <GradientBackground>
         <Modal
-          isVisible={this.state.isModalVisible}
+          isVisible={this.state.isUpdatesModalVisible}
           backdropColor={'white'}
           backdropOpacity={1}
           animationInTiming={250}
@@ -83,11 +94,11 @@ export default class Home extends Component<Props> {
           backdropTransitionInTiming={250}
           backdropTransitionOutTiming={250}
           avoidKeyboard={true}
-          onBackButtonPress={() => this.toggleModal()}
+          onBackButtonPress={() => this.toggleUpdatesModal()}
         >
           <ModalContent>
             <ModalHeader
-              onBackButtonPress={() => this.toggleModal()}
+              onBackButtonPress={() => this.toggleUpdatesModal()}
               heading="Recent Updates"
             />
             <Spacing/>
@@ -131,7 +142,7 @@ export default class Home extends Component<Props> {
           <PadContainer>
             <H2 style={styles.heading}>Recent Updates</H2>
           </PadContainer>
-          <TouchableOpacity onPress={() => this.toggleModal()}>
+          <TouchableOpacity onPress={() => this.toggleUpdatesModal()}>
             <PaperSheet>
               <H4>11:15am</H4>
               <H6>Lunch has been postponed until tomorrow.</H6>
@@ -146,43 +157,58 @@ export default class Home extends Component<Props> {
             <H2>Popular Events</H2>
           </PadContainer>
 
-          <PadContainer white style={[styles.columnContainer, { width: width }]}>
-            <View style={styles.column}>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-              <EventCard name="Demo Event" saves="255" img="demo3"/>
+          <View style={styles.bottomContainer}>
+            <PadContainer white style={[styles.columnContainer, { width: width }]}>
+              <View style={styles.column}>
+                <EventCard name="Demo Event" saves="255" img="demo1"/>
+                <EventCard name="Demo Event" saves="255" img="demo1"/>
+                <EventCard name="Demo Event" saves="255" img="demo3"/>
+              </View>
+              <View style={{width: 20}}></View>
+              <View style={styles.column}>
+                <EventCard name="Demo Event" saves="255" img="demo2"/>
+                <EventCard name="Demo Event" saves="255" img="demo3"/>
+                <EventCard name="Demo Event" saves="255" img="demo1"/>
+              </View>
+            </PadContainer>
 
-            </View>
+            <Button text="View All" />
+            <Spacing />
 
-            <View style={{width: 20}}></View>
+            <PadContainer white style={styles.subSection}>
+              <H2>Best for Beginners</H2>
+            </PadContainer>
 
-            <View style={styles.column}>
-              <EventCard name="Demo Event" saves="255" img="demo2"/>
-              <EventCard name="Demo Event" saves="255" img="demo3"/>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-            </View>
-          </PadContainer>
+            <PadContainer white style={[styles.columnContainer, { width: width }]}>
+              <View style={styles.column}>
+                <EventCard name="Demo Event" saves="255" img="demo1"/>
+                <EventCard name="Demo Event" saves="255" img="demo1"/>
+                <EventCard name="Demo Event" saves="255" img="demo3"/>
 
-          <PadContainer white style={styles.subSection}>
-            <H2>Best for Beginners</H2>
-          </PadContainer>
+              </View>
 
-          <PadContainer white style={[styles.columnContainer, { width: width }]}>
-            <View style={styles.column}>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-              <EventCard name="Demo Event" saves="255" img="demo3"/>
+              <View style={{width: 20}}></View>
 
-            </View>
+              <View style={styles.column}>
+                <EventCard name="Demo Event" saves="255" img="demo2"/>
+                <EventCard name="Demo Event" saves="255" img="demo3"/>
+                <EventCard name="Demo Event" saves="255" img="demo1"/>
+              </View>
+            </PadContainer>
 
-            <View style={{width: 20}}></View>
+            <Button text="View All" />
+            <Spacing />
 
-            <View style={styles.column}>
-              <EventCard name="Demo Event" saves="255" img="demo2"/>
-              <EventCard name="Demo Event" saves="255" img="demo3"/>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-            </View>
-          </PadContainer>
+            <PadContainer white style={styles.subSection}>
+              <H2>Venue Map</H2>
+            </PadContainer>
+            <PadContainer>
+              <EventCard big img="demo1"/>
+            </PadContainer>
+
+
+
+          </View>
 
         </ViewContainer>
       </GradientBackground>
@@ -191,6 +217,10 @@ export default class Home extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
+  bottomContainer: {
+    // paddingBottom: 20,
+    backgroundColor: 'white',
+  },
   heading: {
     marginBottom: 20,
   },
