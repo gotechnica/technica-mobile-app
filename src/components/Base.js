@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
   bg: {
@@ -67,6 +68,10 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     marginTop: 20,
+  },
+  modalHeaderNav: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   modalHeadingText: {
     marginTop: 20,
@@ -166,14 +171,36 @@ const ModalContent = (props) => (
 
 const ModalHeader = (props) => (
   <View style={styles.modalHeader}>
-    <TouchableOpacity onPress={props.onBackButtonPress}>
-      <Icon
-        name="arrow-left"
-        size={22}
-        color={"black"}
-      />
-    </TouchableOpacity>
-    <H2 style={styles.modalHeadingText}>{props.heading}</H2>
+    <View style={styles.modalHeaderNav}>
+      <TouchableOpacity onPress={props.onBackButtonPress}>
+        <FAIcon
+          name="chevron-left"
+          size={22}
+          color={"black"}
+        />
+      </TouchableOpacity>
+      {
+        props.heart ?
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <H3 style={{ marginRight: 8, marginTop: 3 }}>255</H3>
+          <TouchableOpacity>
+            <FAIcon
+              name="heart-o"
+              size={22}
+              color={"black"}
+            />
+          </TouchableOpacity>
+        </View>
+          :
+          null
+      }
+    </View>
+    {
+      props.small ?
+        null
+        :
+        <H2 style={styles.modalHeadingText}>{props.heading}</H2>
+    }
   </View>
 );
 

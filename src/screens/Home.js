@@ -21,48 +21,9 @@ import {
   Spacing,
   Button,
 } from '../components/Base';
-import Images from '../../assets/imgs/index';
 import Modal from "react-native-modal";
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-// TODO make this carry a whole event object, and contain the modal to render! make this its own file too
-const EventCard = ({ name, saves, img, big }) => {
-  const dimensions = require('Dimensions').get('window');
-
-  const imageWidth = (big) ? dimensions.width - 40 : (dimensions.width / 2) - 30;
-  const imageHeight = Math.round(imageWidth * 38/67);
-
-  console.log(Image);
-
-  return (
-    <TouchableOpacity>
-      <View style={styles.event}>
-        <Image
-          style={{
-            width: imageWidth,
-            height: imageHeight,
-            borderRadius: 4,
-            marginBottom: 5,
-          }}
-          // source={Image[img]}
-          source={Images[img]}
-        />
-        {
-          (big) ?
-            null
-            :
-            (
-              <View>
-                <H3>{name}</H3>
-                <H6><Icon name="heart" size={12} color="#000000"/> {saves}</H6>
-              </View>
-            )
-        }
-        {/* heart-o for outline heart */}
-      </View>
-    </TouchableOpacity>
-  );
-}
+import EventCard from '../components/EventCard';
+import EventColumns from '../components/EventColumns';
 
 export default class Home extends Component<Props> {
   constructor(props) {
@@ -93,11 +54,11 @@ export default class Home extends Component<Props> {
       backdropColor={'white'}
       backdropOpacity={1}
       animationInTiming={250}
-      animationIn="fadeIn"
-      animationOut="fadeOut"
-      animationOutTiming={250}
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
+      animationOutTiming={300}
       backdropTransitionInTiming={250}
-      backdropTransitionOutTiming={250}
+      backdropTransitionOutTiming={300}
       avoidKeyboard={true}
       onBackButtonPress={() => this.togglePopularModal()}
     >
@@ -116,11 +77,11 @@ export default class Home extends Component<Props> {
       backdropColor={'white'}
       backdropOpacity={1}
       animationInTiming={250}
-      animationIn="fadeIn"
-      animationOut="fadeOut"
-      animationOutTiming={250}
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
+      animationOutTiming={300}
       backdropTransitionInTiming={250}
-      backdropTransitionOutTiming={250}
+      backdropTransitionOutTiming={300}
       avoidKeyboard={true}
       onBackButtonPress={() => this.toggleBegModal()}
     >
@@ -139,11 +100,11 @@ export default class Home extends Component<Props> {
       backdropColor={'white'}
       backdropOpacity={1}
       animationInTiming={250}
-      animationIn="fadeIn"
-      animationOut="fadeOut"
-      animationOutTiming={250}
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
+      animationOutTiming={300}
       backdropTransitionInTiming={250}
-      backdropTransitionOutTiming={250}
+      backdropTransitionOutTiming={300}
       avoidKeyboard={true}
       onBackButtonPress={() => this.toggleUpdatesModal()}
     >
@@ -204,7 +165,6 @@ export default class Home extends Component<Props> {
   }
 
   renderPopularEventsSection = () => {
-    const { width, height } = require('Dimensions').get('window');
     return (
       <View>
         {this.renderPopularModal()}
@@ -214,19 +174,7 @@ export default class Home extends Component<Props> {
         </PadContainer>
 
         <View style={{ backgroundColor: 'white' }}>
-          <PadContainer white style={[styles.columnContainer, { width: width }]}>
-            <View style={styles.column}>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-              <EventCard name="Demo Event" saves="255" img="demo3"/>
-            </View>
-            <View style={{width: 20}}></View>
-            <View style={styles.column}>
-              <EventCard name="Demo Event" saves="255" img="demo2"/>
-              <EventCard name="Demo Event" saves="255" img="demo3"/>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-            </View>
-          </PadContainer>
+          <EventColumns />
           <TouchableOpacity onPress={() => this.togglePopularModal()}>
             <Button text="View All" />
           </TouchableOpacity>
@@ -238,7 +186,6 @@ export default class Home extends Component<Props> {
   }
 
   renderBestForBeginnersSection = () => {
-    const { width, height } = require('Dimensions').get('window');
     return (
       <View style={{ backgroundColor: 'white' }}>
 
@@ -248,22 +195,7 @@ export default class Home extends Component<Props> {
           <H2>Best for Beginners</H2>
         </PadContainer>
 
-        <PadContainer white style={[styles.columnContainer, { width: width }]}>
-          <View style={styles.column}>
-            <EventCard name="Demo Event" saves="255" img="demo1"/>
-            <EventCard name="Demo Event" saves="255" img="demo1"/>
-            <EventCard name="Demo Event" saves="255" img="demo3"/>
-
-          </View>
-
-          <View style={{width: 20}}></View>
-
-          <View style={styles.column}>
-            <EventCard name="Demo Event" saves="255" img="demo2"/>
-            <EventCard name="Demo Event" saves="255" img="demo3"/>
-            <EventCard name="Demo Event" saves="255" img="demo1"/>
-          </View>
-        </PadContainer>
+        <EventColumns />
         <TouchableOpacity onPress={() => this.toggleBegModal()}>
           <Button text="View All" />
         </TouchableOpacity>
