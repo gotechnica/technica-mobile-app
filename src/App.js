@@ -72,9 +72,9 @@ export default class App extends Component<Props> {
           }
         }}
         barStyle={{
-          backgroundColor: colors.white,
+          backgroundColor: colors.mediumGrey,
           borderWidth: 1,
-          borderColor: '#f7f7f7',
+          borderColor: colors.mediumGrey,
           marginLeft: -1,
           marginRight: -1,
           marginBottom: -4,

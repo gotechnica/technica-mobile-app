@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // backgroundColor: colors.white,
+    backgroundColor: colors.black,
   },
   padContainer: {
     flex: 1,
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colors.black,
     borderRadius: 4,
   },
   spacing: {
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 2,
+    backgroundColor: colors.darkGrey,
   },
   paperHead: {
     padding: 15,
@@ -77,9 +78,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: colors.lavender,
+    backgroundColor: colors.darkGrey,
+    // borderWidth: 1,
+    // borderColor: colors.lavender,
     padding: 8,
     marginLeft: 20,
     marginRight: 20,
@@ -87,25 +88,22 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-    color: colors.lavender,
+    color: colors.white,
   },
 });
 
 
 const ViewContainer = (props) => (
-  <ScrollView style={{ flex: 1 }}>
-    <View style={[styles.container, props.style]}>
-      {props.children}
-    </View>
-  </ScrollView>
+  <View style={{ backgroundColor: colors.black, flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}>
+      <View style={[styles.container, props.style]}>
+        {props.children}
+      </View>
+    </ScrollView>
+  </View>
 );
 
 const PadContainer = (props) => (
-    props.white ?
-    <View style={[styles.padContainer, styles.white, props.style]}>
-      {props.children}
-    </View>
-    :
     <View style={[styles.padContainer, props.style]}>
       {props.children}
     </View>
@@ -150,15 +148,6 @@ const HorizontalLine = (props) => (
   <View style={styles.horizontalLine}></View>
 );
 
-const GradientBackground = (props) => (
-  <ImageBackground
-    style={styles.bg}
-    source={require('../../assets/imgs/bg.png')}
-  >
-    {props.children}
-  </ImageBackground>
-);
-
 const Spacing = (props) => (
   <View style={styles.spacing}></View>
 );
@@ -176,7 +165,7 @@ const ModalHeader = (props) => (
         <FAIcon
           name="chevron-left"
           size={22}
-          color={"black"}
+          color={colors.white}
         />
       </TouchableOpacity>
       {
@@ -187,7 +176,7 @@ const ModalHeader = (props) => (
             <FAIcon
               name="heart-o"
               size={22}
-              color={"black"}
+              color={colors.white}
             />
           </TouchableOpacity>
         </View>
@@ -205,7 +194,7 @@ const ModalHeader = (props) => (
 );
 
 const Button = (props) => (
-  <View style={{ backgroundColor: 'white' }}>
+  <View>
     <View style={styles.button}>
       <H3 style={styles.buttonText}>
         {props.text}
@@ -220,7 +209,6 @@ export {
   SubHeading,
   PaperSheet,
   PadContainer,
-  GradientBackground,
   HorizontalLine,
   Spacing,
   ModalContent,

@@ -14,7 +14,6 @@ import {
   SubHeading,
   PaperSheet,
   PadContainer,
-  GradientBackground,
   HorizontalLine,
   ModalContent,
   ModalHeader,
@@ -24,6 +23,7 @@ import {
 import Modal from "react-native-modal";
 import EventCard from '../components/EventCard';
 import EventColumns from '../components/EventColumns';
+import { colors } from '../components/Colors';
 
 export default class Home extends Component<Props> {
   constructor(props) {
@@ -51,7 +51,7 @@ export default class Home extends Component<Props> {
   renderPopularModal = () => (
     <Modal
       isVisible={this.state.isPopularModalVisible}
-      backdropColor={'white'}
+      backdropColor={colors.black}
       backdropOpacity={1}
       animationInTiming={250}
       animationIn="fadeInUp"
@@ -74,7 +74,7 @@ export default class Home extends Component<Props> {
   renderBegModal = () => (
     <Modal
       isVisible={this.state.isBeginnerModalVisible}
-      backdropColor={'white'}
+      backdropColor={colors.black}
       backdropOpacity={1}
       animationInTiming={250}
       animationIn="fadeInUp"
@@ -97,7 +97,7 @@ export default class Home extends Component<Props> {
   renderUpdatesModal = () => (
     <Modal
       isVisible={this.state.isUpdatesModalVisible}
-      backdropColor={'white'}
+      backdropColor={colors.black}
       backdropOpacity={1}
       animationInTiming={250}
       animationIn="fadeInUp"
@@ -169,11 +169,11 @@ export default class Home extends Component<Props> {
       <View>
         {this.renderPopularModal()}
 
-        <PadContainer white style={styles.subSection}>
+        <PadContainer style={styles.subSection}>
           <H2>Popular Events</H2>
         </PadContainer>
 
-        <View style={{ backgroundColor: 'white' }}>
+        <View>
           <EventColumns />
           <TouchableOpacity onPress={() => this.togglePopularModal()}>
             <Button text="View All" />
@@ -187,11 +187,11 @@ export default class Home extends Component<Props> {
 
   renderBestForBeginnersSection = () => {
     return (
-      <View style={{ backgroundColor: 'white' }}>
+      <View>
 
         {this.renderBegModal()}
 
-        <PadContainer white style={styles.subSection}>
+        <PadContainer style={styles.subSection}>
           <H2>Best for Beginners</H2>
         </PadContainer>
 
@@ -205,8 +205,8 @@ export default class Home extends Component<Props> {
   }
 
   renderMapSection = () => (
-    <View style={{ backgroundColor: 'white' }}>
-      <PadContainer white style={styles.subSection}>
+    <View>
+      <PadContainer style={styles.subSection}>
         <H2>Venue Map</H2>
       </PadContainer>
       <PadContainer>
@@ -217,22 +217,20 @@ export default class Home extends Component<Props> {
 
   render() {
     return (
-      <GradientBackground>
-        <ViewContainer>
-          <PadContainer>
-            <Heading>
-              Technica 2018
-            </Heading>
-            <SubHeading>
-              16h 34m 53s left to hack
-            </SubHeading>
-          </PadContainer>
-          {this.renderUpdatesSection()}
-          {this.renderPopularEventsSection()}
-          {this.renderBestForBeginnersSection()}
-          {this.renderMapSection()}
-        </ViewContainer>
-      </GradientBackground>
+      <ViewContainer>
+        <PadContainer>
+          <Heading>
+            Technica 2018
+          </Heading>
+          <SubHeading>
+            16h 34m 53s left to hack
+          </SubHeading>
+        </PadContainer>
+        {this.renderUpdatesSection()}
+        {this.renderPopularEventsSection()}
+        {this.renderBestForBeginnersSection()}
+        {this.renderMapSection()}
+      </ViewContainer>
     );
   }
 }

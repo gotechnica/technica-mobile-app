@@ -47,7 +47,7 @@ export default class EventCard extends Component {
     return (
       <Modal
         isVisible={this.state.isModalVisible}
-        backdropColor={'white'}
+        backdropColor={colors.black}
         backdropOpacity={1}
         animationInTiming={250}
         animationIn="fadeInUp"
@@ -126,7 +126,7 @@ export default class EventCard extends Component {
                 (
                   <View>
                     <H3>{name}</H3>
-                    <H6><Icon name="heart" size={12} color="#000000"/> {saves}</H6>
+                    <H6><Icon name="heart" size={12} color={colors.white}/> {saves}</H6>
                   </View>
                 )
             }
