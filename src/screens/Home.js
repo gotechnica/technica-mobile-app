@@ -24,6 +24,7 @@ import Modal from "react-native-modal";
 import EventCard from '../components/EventCard';
 import EventColumns from '../components/EventColumns';
 import { colors } from '../components/Colors';
+import CountdownTimer from '../components/CountdownTimer';
 
 export default class Home extends Component<Props> {
   constructor(props) {
@@ -222,9 +223,7 @@ export default class Home extends Component<Props> {
           <Heading>
             Technica 2018
           </Heading>
-          <SubHeading>
-            16h 34m 53s left to hack
-          </SubHeading>
+          <CountdownTimer />
         </PadContainer>
         {this.renderUpdatesSection()}
         {this.renderPopularEventsSection()}
