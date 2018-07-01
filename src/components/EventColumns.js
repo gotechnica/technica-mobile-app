@@ -13,7 +13,8 @@ import EventCard from './EventCard';
 
 const styles = StyleSheet.create({
   columnContainer: {
-    flex: 1, flexDirection: 'row'
+    flex: 1,
+    flexDirection: 'row',
   },
   column: {
     flex: 5,
@@ -26,12 +27,12 @@ const styles = StyleSheet.create({
 
 // TODO have this component take an array of events as its prop
 
-export default EventColumns = () => {
+export default EventColumns = ({ offsetLeftMargin }) => {
   const { width, height } = require('Dimensions').get('window');
 
   return (
-    <View>
-      <PadContainer white style={[styles.columnContainer, { width: width }]}>
+    <View style={{ flex: 1 }}>
+      <PadContainer style={[styles.columnContainer, { marginLeft: (offsetLeftMargin) ? -20 : 0 }, { width: width }]}>
         <View style={styles.column}>
           <EventCard name="Demo Event" saves="255" img="demo1"/>
           <EventCard name="Demo Event" saves="255" img="demo1"/>

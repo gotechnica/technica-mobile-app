@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
   },
   modalHeadingText: {
     marginTop: 20,
+    marginBottom: 20,
   },
   button: {
     backgroundColor: colors.darkGrey,
@@ -153,9 +154,9 @@ const Spacing = (props) => (
 );
 
 const ModalContent = (props) => (
-  <View style={styles.modal}>
+  <ScrollView style={styles.modal}>
     {props.children}
-  </View>
+  </ScrollView>
 )
 
 const ModalHeader = (props) => (

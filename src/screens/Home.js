@@ -68,6 +68,9 @@ export default class Home extends Component<Props> {
           onBackButtonPress={() => this.togglePopularModal()}
           heading="Popular Events"
         />
+        <EventColumns offsetLeftMargin />
+        <EventColumns offsetLeftMargin />
+        <EventColumns offsetLeftMargin />
       </ModalContent>
     </Modal>
   )
@@ -91,6 +94,8 @@ export default class Home extends Component<Props> {
           onBackButtonPress={() => this.toggleBegModal()}
           heading="Best for Beginners"
         />
+        <EventColumns offsetLeftMargin />
+        <EventColumns offsetLeftMargin />
       </ModalContent>
     </Modal>
   )
