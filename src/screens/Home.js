@@ -14,183 +14,236 @@ import {
   SubHeading,
   PaperSheet,
   PadContainer,
-  GradientBackground,
   HorizontalLine,
   ModalContent,
   ModalHeader,
   Spacing,
+  Button,
 } from '../components/Base';
-import Images from '../../assets/imgs/index';
 import Modal from "react-native-modal";
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-const EventCard = ({ name, saves, img }) => {
-  const dimensions = require('Dimensions').get('window');
-  const imageWidth = (dimensions.width / 2) - 30;
-  const imageHeight = Math.round(imageWidth * 38/67);
-
-  console.log(Image);
-
-  return (
-    <TouchableOpacity>
-      <View style={styles.event}>
-        <Image
-          style={{
-            width: imageWidth,
-            height: imageHeight,
-            borderRadius: 4,
-            marginBottom: 5,
-          }}
-          // source={Image[img]}
-          source={Images[img]}
-        />
-        <H3>{name}</H3>
-        <H6><Icon name="heart" size={12} color="#000000"/> {saves}</H6>
-        {/* heart-o for outline heart */}
-      </View>
-    </TouchableOpacity>
-  );
-}
+import EventCard from '../components/EventCard';
+import EventColumns from '../components/EventColumns';
+import { colors } from '../components/Colors';
+import CountdownTimer from '../components/CountdownTimer';
 
 export default class Home extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      isModalVisible: false,
+      isUpdatesModalVisible: false,
+      isPopularModalVisible: false,
+      isBeginnerModalVisible: false,
     }
-    this.toggleModal = this.toggleModal.bind(this);
+    this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
+    this.togglePopularModal = this.togglePopularModal.bind(this);
+    this.toggleBegModal = this.toggleBegModal.bind(this);
   }
 
-  toggleModal = (question, answer) => {
-    this.setState({ isModalVisible: !this.state.isModalVisible })
+  toggleUpdatesModal() {
+    this.setState({ isUpdatesModalVisible: !this.state.isUpdatesModalVisible })
+  }
+  togglePopularModal() {
+    this.setState({ isPopularModalVisible: !this.state.isPopularModalVisible })
+  }
+  toggleBegModal() {
+    this.setState({ isBeginnerModalVisible: !this.state.isBeginnerModalVisible })
   }
 
-  closeModal = () =>
-    this.setState({ isModalVisible: false });
+  renderPopularModal = () => (
+    <Modal
+      isVisible={this.state.isPopularModalVisible}
+      backdropColor={colors.black}
+      backdropOpacity={1}
+      animationInTiming={250}
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
+      animationOutTiming={300}
+      backdropTransitionInTiming={250}
+      backdropTransitionOutTiming={300}
+      avoidKeyboard={true}
+      onBackButtonPress={() => this.togglePopularModal()}
+    >
+      <ModalContent>
+        <ModalHeader
+          onBackButtonPress={() => this.togglePopularModal()}
+          heading="Popular Events"
+        />
+        <EventColumns offsetLeftMargin />
+        <EventColumns offsetLeftMargin />
+        <EventColumns offsetLeftMargin />
+      </ModalContent>
+    </Modal>
+  )
+
+  renderBegModal = () => (
+    <Modal
+      isVisible={this.state.isBeginnerModalVisible}
+      backdropColor={colors.black}
+      backdropOpacity={1}
+      animationInTiming={250}
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
+      animationOutTiming={300}
+      backdropTransitionInTiming={250}
+      backdropTransitionOutTiming={300}
+      avoidKeyboard={true}
+      onBackButtonPress={() => this.toggleBegModal()}
+    >
+      <ModalContent>
+        <ModalHeader
+          onBackButtonPress={() => this.toggleBegModal()}
+          heading="Best for Beginners"
+        />
+        <EventColumns offsetLeftMargin />
+        <EventColumns offsetLeftMargin />
+      </ModalContent>
+    </Modal>
+  )
+
+  renderUpdatesModal = () => (
+    <Modal
+      isVisible={this.state.isUpdatesModalVisible}
+      backdropColor={colors.black}
+      backdropOpacity={1}
+      animationInTiming={250}
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
+      animationOutTiming={300}
+      backdropTransitionInTiming={250}
+      backdropTransitionOutTiming={300}
+      avoidKeyboard={true}
+      onBackButtonPress={() => this.toggleUpdatesModal()}
+    >
+      <ModalContent>
+        <ModalHeader
+          onBackButtonPress={() => this.toggleUpdatesModal()}
+          heading="Recent Updates"
+        />
+        <Spacing/>
+        <H4>11:15am</H4>
+        <H6>Lunch has beeen postponed until tomorrow.</H6>
+        <Spacing/>
+        <HorizontalLine/>
+        <Spacing/>
+        <H4>11:15am</H4>
+        <H6>Lunch has been postponed until tomorrow.</H6>
+        <Spacing/>
+        <HorizontalLine/>
+        <Spacing/>
+        <H4>11:15am</H4>
+        <H6>Lunch has been postponed until tomorrow.</H6>
+        <Spacing/>
+        <HorizontalLine/>
+        <Spacing/>
+        <H4>11:15am</H4>
+        <H6>Lunch has been postponed until tomorrow.</H6>
+        <Spacing/>
+        <HorizontalLine/>
+        <Spacing/>
+        <H4>11:15am</H4>
+        <H6>Lunch has been postponed until tomorrow.</H6>
+        <Spacing/>
+        <HorizontalLine/>
+        <Spacing/>
+      </ModalContent>
+    </Modal>
+  )
+
+  renderUpdatesSection = () => {
+    return (
+      <View>
+        {this.renderUpdatesModal()}
+        <PadContainer>
+          <H2 style={styles.heading}>Recent Updates</H2>
+        </PadContainer>
+        <TouchableOpacity onPress={() => this.toggleUpdatesModal()}>
+          <PaperSheet>
+            <H4>11:15am</H4>
+            <H6>Lunch has been postponed until tomorrow.</H6>
+            <Spacing/>
+            <HorizontalLine/>
+            <Spacing/>
+            <H6>View 5 other updates</H6>
+          </PaperSheet>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  renderPopularEventsSection = () => {
+    return (
+      <View>
+        {this.renderPopularModal()}
+
+        <PadContainer style={styles.subSection}>
+          <H2>Popular Events</H2>
+        </PadContainer>
+
+        <View>
+          <EventColumns />
+          <TouchableOpacity onPress={() => this.togglePopularModal()}>
+            <Button text="View All" />
+          </TouchableOpacity>
+          <Spacing />
+        </View>
+
+      </View>
+    )
+  }
+
+  renderBestForBeginnersSection = () => {
+    return (
+      <View>
+
+        {this.renderBegModal()}
+
+        <PadContainer style={styles.subSection}>
+          <H2>Best for Beginners</H2>
+        </PadContainer>
+
+        <EventColumns />
+        <TouchableOpacity onPress={() => this.toggleBegModal()}>
+          <Button text="View All" />
+        </TouchableOpacity>
+        <Spacing />
+      </View>
+    )
+  }
+
+  renderMapSection = () => (
+    <View>
+      <PadContainer style={styles.subSection}>
+        <H2>Venue Map</H2>
+      </PadContainer>
+      <PadContainer>
+        <EventCard big img="demo1"/>
+      </PadContainer>
+    </View>
+  )
 
   render() {
-    const { width, height } = require('Dimensions').get('window');
     return (
-      <GradientBackground>
-        <Modal
-          isVisible={this.state.isModalVisible}
-          backdropColor={'white'}
-          backdropOpacity={1}
-          animationInTiming={250}
-          animationIn="fadeIn"
-          animationOut="fadeOut"
-          animationOutTiming={250}
-          backdropTransitionInTiming={250}
-          backdropTransitionOutTiming={250}
-          avoidKeyboard={true}
-          onBackButtonPress={() => this.toggleModal()}
-        >
-          <ModalContent>
-            <ModalHeader
-              onBackButtonPress={() => this.toggleModal()}
-              heading="Recent Updates"
-            />
-            <Spacing/>
-            <H4>11:15am</H4>
-            <H6>Lunch has beeen postponed until tomorrow.</H6>
-            <Spacing/>
-            <HorizontalLine/>
-            <Spacing/>
-            <H4>11:15am</H4>
-            <H6>Lunch has been postponed until tomorrow.</H6>
-            <Spacing/>
-            <HorizontalLine/>
-            <Spacing/>
-            <H4>11:15am</H4>
-            <H6>Lunch has been postponed until tomorrow.</H6>
-            <Spacing/>
-            <HorizontalLine/>
-            <Spacing/>
-            <H4>11:15am</H4>
-            <H6>Lunch has been postponed until tomorrow.</H6>
-            <Spacing/>
-            <HorizontalLine/>
-            <Spacing/>
-            <H4>11:15am</H4>
-            <H6>Lunch has been postponed until tomorrow.</H6>
-            <Spacing/>
-            <HorizontalLine/>
-            <Spacing/>
-          </ModalContent>
-        </Modal>
-        <ViewContainer>
-          <PadContainer>
-            <Heading>
-              Technica 2018
-            </Heading>
-            <SubHeading>
-              16h 34m 53s left to hack
-            </SubHeading>
-          </PadContainer>
-
-          <PadContainer>
-            <H2 style={styles.heading}>Recent Updates</H2>
-          </PadContainer>
-          <TouchableOpacity onPress={() => this.toggleModal()}>
-            <PaperSheet>
-              <H4>11:15am</H4>
-              <H6>Lunch has been postponed until tomorrow.</H6>
-              <Spacing/>
-              <HorizontalLine/>
-              <Spacing/>
-              <H6>View 5 other updates</H6>
-            </PaperSheet>
-          </TouchableOpacity>
-
-          <PadContainer white style={styles.subSection}>
-            <H2>Popular Events</H2>
-          </PadContainer>
-
-          <PadContainer white style={[styles.columnContainer, { width: width }]}>
-            <View style={styles.column}>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-              <EventCard name="Demo Event" saves="255" img="demo3"/>
-
-            </View>
-
-            <View style={{width: 20}}></View>
-
-            <View style={styles.column}>
-              <EventCard name="Demo Event" saves="255" img="demo2"/>
-              <EventCard name="Demo Event" saves="255" img="demo3"/>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-            </View>
-          </PadContainer>
-
-          <PadContainer white style={styles.subSection}>
-            <H2>Best for Beginners</H2>
-          </PadContainer>
-
-          <PadContainer white style={[styles.columnContainer, { width: width }]}>
-            <View style={styles.column}>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-              <EventCard name="Demo Event" saves="255" img="demo3"/>
-
-            </View>
-
-            <View style={{width: 20}}></View>
-
-            <View style={styles.column}>
-              <EventCard name="Demo Event" saves="255" img="demo2"/>
-              <EventCard name="Demo Event" saves="255" img="demo3"/>
-              <EventCard name="Demo Event" saves="255" img="demo1"/>
-            </View>
-          </PadContainer>
-
-        </ViewContainer>
-      </GradientBackground>
+      <ViewContainer>
+        <PadContainer>
+          <Heading>
+            Technica 2018
+          </Heading>
+          <CountdownTimer />
+        </PadContainer>
+        {this.renderUpdatesSection()}
+        {this.renderPopularEventsSection()}
+        {this.renderBestForBeginnersSection()}
+        {this.renderMapSection()}
+      </ViewContainer>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  bottomContainer: {
+    // paddingBottom: 20,
+    backgroundColor: 'white',
+  },
   heading: {
     marginBottom: 20,
   },

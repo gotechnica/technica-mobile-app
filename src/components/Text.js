@@ -7,7 +7,7 @@ import {
 
 const styles = StyleSheet.create({
   text: {
-    color: colors.black,
+    color: colors.white,
     fontFamily: "Poppins-Regular",
     fontSize: 12,
   },
