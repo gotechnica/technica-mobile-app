@@ -3,51 +3,63 @@ import {
   Platform,
   StyleSheet,
   Text,
+  FlatList,
   View,
   ActivityIndicator,
 } from 'react-native';
-
+import { H1, H2, H3, H4, P } from '../components/Text';
 import {
   GradientBackground,
   ViewContainer,
   PadContainer,
   Heading,
 } from '../components/Base'
-
-import EventGroup from '../components/schedule/EventGroup'
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+import EventGroup from '../components/schedule/EventGroup';
 import EventSeparator from '../components/schedule/EventSeparator'
+import ScheduleSceneTabBarOverlay from '../components/schedule/ScheduleSceneTabBarOverlay'
 
-import { H1, H2, H3, H4, P } from '../components/Text';
 
-import underscore from 'underscore'
+import moment from 'moment';
+import _ from 'lodash';
 
-import scheduleData from '../assets/schedule.json'
+
+
+
+import scheduleData from '../../assets/schedule.json';
+
+const EVENT_GROUP = 'EVENT_GROUP';
+const EVENT_SEPARATOR = 'EVENT_SEPARATOR';
+
 
 export default class Schedule extends Component<Props> {
 
-  const EVENT_GROUP = 'EVENT_GROUP';
-  const EVENT_SEPARATOR = 'EVENT_SEPARATOR'
-
   constructor(props) {
+    super(props);
+
+    this.state = {
+      datasource: scheduleData.Schedule
+    }
+
+
+    this.renderScheduleForDay = this.renderScheduleForDay.bind(this);
 
   }
 
   componentDidMount() {
 
-
-
   }
 
   renderScheduleForDay(scheduleArray) {
-    if(this.state.loaded === false){
-      return
-        (<View
-          style={styles.activityIndicatorContainer}
-          key = {scheduleArray[0]}
-          tabLabel={scheduleArray[0]}>
-            <ActivityIndicator animating={true}/>
-         </View>);
-    }
+    // if(this.state.loaded === false){
+    //   return
+    //     (<View
+    //       style={styles.activityIndicatorContainer}
+    //       key = {scheduleArray[0]}
+    //       tabLabel={scheduleArray[0]}>
+    //         <ActivityIndicator animating={true}/>
+    //      </View>);
+    // }
 
     alteredData = scheduleArray[1].sort((event1, event2) => {
       start1 = moment(event1.startTime);
@@ -63,10 +75,10 @@ export default class Schedule extends Component<Props> {
       return start1 - start2;
     })
 
-    groupedData = underscore.groupBy(
+    groupedData = _.groupBy(
       alteredData,
       (event) => {
-        return normalizeTimeLabel(event.startTime)
+        return this.normalizeTimeLabel(event.startTime)
       }
     )
 
@@ -78,8 +90,8 @@ export default class Schedule extends Component<Props> {
       groupedDataWithSeps.push(
         {
           type: EVENT_GROUP,
-          header: labels[i]
-          data: groupedData[labels[i]]
+          header: labels[i],
+          data: groupedData[labels[i]],
         }
       )
 
@@ -100,7 +112,7 @@ export default class Schedule extends Component<Props> {
         renderItem={this.renderEventCard.bind(this)}
         keyExtractor={(item, index) => index}
       />
-    )
+    );
   }
 
   renderEventCard(eventData) {
