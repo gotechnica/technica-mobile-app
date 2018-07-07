@@ -13,7 +13,6 @@ import {
   PaperSheet,
   PadContainer,
 } from '../components/Base';
-import ReduxDemo from '../components/ReduxDemo';
 
 
 export default class Mentors extends Component<Props> {
@@ -29,8 +28,6 @@ export default class Mentors extends Component<Props> {
           </SubHeading>
         </PadContainer>
 
-
-        <ReduxDemo/>
 
         <PaperSheet>
           <H4>

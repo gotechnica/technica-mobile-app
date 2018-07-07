@@ -13,7 +13,6 @@ import {
   PaperSheet,
   PadContainer,
 } from '../components/Base';
-import ReduxDemo from '../components/ReduxDemo';
 
 
 export default class Mentors extends Component<Props> {
@@ -28,9 +27,6 @@ export default class Mentors extends Component<Props> {
             12 events saved
           </SubHeading>
         </PadContainer>
-
-
-        <ReduxDemo/>
 
         <PaperSheet>
           <H4>
