@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { DefaultTheme, BottomNavigation } from 'react-native-paper';
-
 import Home from './screens/Home';
 import Mentors from './screens/Mentors';
 import Profile from './screens/Profile';
@@ -20,6 +19,7 @@ export default class App extends Component<Props> {
       <ScrollableTabView
         tabBarPosition="bottom"
         locked
+        style={{ backgroundColor: colors.black}}
         renderTabBar={() => <CustomTabBar />}
       >
         <Home tabLabel="home" />

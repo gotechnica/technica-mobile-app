@@ -6,21 +6,29 @@ import {
   View
 } from 'react-native';
 import { H1, H2, H3, H4, P } from '../components/Text';
+import {
+  ViewContainer,
+  Heading,
+  SubHeading,
+  PaperSheet,
+  PadContainer,
+} from '../components/Base';
 
 
-export default class Profile extends Component<Props> {
+export default class Mentors extends Component<Props> {
   render() {
     return (
-      <H1>Profile</H1>
+      <ViewContainer>
+        <PadContainer>
+          <Heading>
+            Profile
+          </Heading>
+          <SubHeading>
+            12 events saved
+          </SubHeading>
+        </PadContainer>
 
+      </ViewContainer>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  instructions: {
-    textAlign: 'left',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
