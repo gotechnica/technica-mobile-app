@@ -28,7 +28,6 @@ export default class Mentors extends Component<Props> {
           </SubHeading>
         </PadContainer>
 
-
         <PaperSheet>
           <H4>
             10:00am - 11:00am
