@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -30,15 +30,41 @@ export default class Home extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      updates: [],
       isUpdatesModalVisible: false,
-    }
+    };
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
+  }
+
+  componentDidMount() {
+    // TODO Wait for updates from API
+    // Push each update to front of the array
+    this.setState({
+      updates: [
+        {
+          id: 3,
+          time: '2:15pm, Saturday',
+          body: 'Lunch has beeen postponed until tomorrow.',
+        },
+        {
+          id: 2,
+          time: '12:00pm, Saturday',
+          body: 'Snacks have been remove from the facility',
+        },
+        {
+          id: 1,
+          time: '11:00am, Saturday',
+          body: 'Get your new chickens from the stand',
+        },
+      ],
+    })
   }
 
   toggleUpdatesModal() {
     this.setState({ isUpdatesModalVisible: !this.state.isUpdatesModalVisible })
   }
 
+  // Renders the full list view of all updates
   renderUpdatesModal = () => (
     <Modal
       isVisible={this.state.isUpdatesModalVisible}
@@ -59,52 +85,55 @@ export default class Home extends Component<Props> {
           heading="Recent Updates"
         />
         <Spacing/>
-        <H4>11:15am</H4>
-        <H6>Lunch has beeen postponed until tomorrow.</H6>
-        <Spacing/>
-        <HorizontalLine/>
-        <Spacing/>
-        <H4>11:15am</H4>
-        <H6>Lunch has been postponed until tomorrow.</H6>
-        <Spacing/>
-        <HorizontalLine/>
-        <Spacing/>
-        <H4>11:15am</H4>
-        <H6>Lunch has been postponed until tomorrow.</H6>
-        <Spacing/>
-        <HorizontalLine/>
-        <Spacing/>
-        <H4>11:15am</H4>
-        <H6>Lunch has been postponed until tomorrow.</H6>
-        <Spacing/>
-        <HorizontalLine/>
-        <Spacing/>
-        <H4>11:15am</H4>
-        <H6>Lunch has been postponed until tomorrow.</H6>
-        <Spacing/>
-        <HorizontalLine/>
-        <Spacing/>
+        {
+          this.state.updates.map((update) => (
+            <View key={update.id}>
+              <H4>{update.time}</H4>
+              <H6>{update.body}</H6>
+              <Spacing/>
+              <HorizontalLine/>
+              <Spacing/>
+            </View>
+          ))
+        }
       </ModalContent>
     </Modal>
   )
 
+  // Does not render anything if there are no recent updates yet
   renderUpdatesSection = () => {
+    const { updates } = this.state;
+    const numUpdates = updates.length;
     return (
       <View>
         {this.renderUpdatesModal()}
-        <PadContainer>
-          <H2 style={styles.heading}>Recent Updates</H2>
-        </PadContainer>
-        <TouchableOpacity onPress={() => this.toggleUpdatesModal()}>
-          <PaperSheet>
-            <H4>11:15am</H4>
-            <H6>Lunch has been postponed until tomorrow.</H6>
-            <Spacing/>
-            <HorizontalLine/>
-            <Spacing/>
-            <H6>View 5 other updates</H6>
-          </PaperSheet>
-        </TouchableOpacity>
+        {
+          numUpdates > 0 ?
+            <Fragment>
+              <PadContainer>
+                <H2 style={styles.heading}>Recent Updates</H2>
+              </PadContainer>
+              <TouchableOpacity onPress={() => this.toggleUpdatesModal()}>
+                <PaperSheet>
+                  <H4>{updates[0].time}</H4>
+                  <H6>{updates[0].body}</H6>
+                  {
+                    numUpdates > 1 ?
+                      <Fragment>
+                        <Spacing/>
+                        <HorizontalLine/>
+                        <Spacing/>
+                        <H6>View {numUpdates - 1} other updates</H6>
+                      </Fragment>
+                      :
+                      null
+                  }
+                </PaperSheet>
+              </TouchableOpacity>
+            </Fragment>
+            :
+            null
+        }
       </View>
     );
   }
