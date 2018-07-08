@@ -31,8 +31,6 @@ export default class Home extends Component<Props> {
     super(props);
     this.state = {
       isUpdatesModalVisible: false,
-      isPopularModalVisible: false,
-      isBeginnerModalVisible: false,
     }
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
   }
