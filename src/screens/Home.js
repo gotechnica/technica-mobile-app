@@ -123,7 +123,7 @@ export default class Home extends Component<Props> {
                         <Spacing/>
                         <HorizontalLine/>
                         <Spacing/>
-                        <H6>View {numUpdates - 1} other updates</H6>
+                        <H6>View {numUpdates - 1} other update{updates.length > 2 ? 's' : null}</H6>
                       </Fragment>
                       :
                       null
