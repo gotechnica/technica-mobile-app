@@ -12,18 +12,13 @@ import {
   ViewContainer,
   PadContainer,
   Heading,
-} from '../components/Base'
+} from '../Base'
 
 import { H1, H2, H3, H4, P } from '../Text';
-
-
-import colors from '../components/Colors'
-
+import { colors } from '../Colors'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-
-import { H1, H2, H3, H4, P } from '../components/Text';
-
+import { normalizeTimeLabel } from '../../actions/util.js';
 
 const styles = StyleSheet.create({
   column: {
@@ -34,7 +29,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Eventcard extends Component<Props> {
+export default class ScheduleCard extends Component<Props> {
 
   constructor(props) {
     super(props);
@@ -65,34 +60,40 @@ export default class Eventcard extends Component<Props> {
   }
 
   render() {
+    //console.log(this.props);
     return (
       <View
-        style=[{styles.row}]>
+        style={[styles.row]}>
         <View
-          style=[{styles.col}, {flex: 4}]>
+          style={[styles.col, {flex: 4}]}>
           <H4>
             {
-              (this.props.startTimeFormatted) == (this.props.endTimeFormatted)
+              (this.props.startTime) == (this.props.endTime)
               ?
-              `${this.props.startTimeFormatted}`
+              `${normalizeTimeLabel(this.props.startTime)}`
               :
-              `${this.props.startTimeFormatted} - ${this.props.endTimeFormatted}`
+              `${normalizeTimeLabel(this.props.startTime)} - ${normalizeTimeLabel(this.props.endTime)}`
             }
           </H4>
           <H3>{this.props.title}</H3>
-          <P>{this.props.location}</P>
+          <H4
+            style = {{ color: colors.fontGrey}}>
+              {this.props.location}
+          </H4>
         </View>
         <View
-          style = [{styles.row}, {flex: 1}]>
-          <H3>255</H3>
+          style = {[styles.row, {flex: 1}]}>
+          <H3
+            style = {{marginRight: 8, marginTop: 3}}>
+            255
+          </H3>
           <Icon
             name = {this.state.favorited ? 'heart' : 'heart-o'}
             size = {30}
-            color = {colors.pink}
-            }
-          </Icon>
+            color = {colors.pink}/>
+        </View>
       </View>
-    )
+    );
   }
 
 }

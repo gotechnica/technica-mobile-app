@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+  FlatList,
 } from 'react-native';
 
 import {
@@ -12,13 +13,15 @@ import {
   ViewContainer,
   PadContainer,
   Heading,
-} from '../../components/Base'
+  PaperSheet,
+  HorizontalLine,
+} from '../Base'
 import { H1, H2, H3, H4, P } from '../Text';
-
+import EventDescription from './EventDescription';
 
 const styles = StyleSheet.create({
 
-})
+});
 
 export default class EventGroup extends Component<Props> {
 
@@ -26,12 +29,31 @@ export default class EventGroup extends Component<Props> {
     super(props);
   }
 
-  triggerButtonPress() {
-
-  }
-
-
   render() {
-    return <H1>{this.props.header}</H1>
+    console.log(this.props.data);
+
+    return (
+      <PaperSheet
+        heading = {this.props.header}>
+        <FlatList
+          data = {this.props.data}
+          renderItem = {(eventObj => {
+            return <EventDescription
+              startTime = {eventObj.item.startTime}
+              endTime = {eventObj.item.endTime}
+              title = {eventObj.item.title}
+              location = {eventObj.item.location}
+            />
+          })}
+          ItemSeparatorComponent = {() => {
+            return (
+              <HorizontalLine
+                style = {{marginVertical: 10}}
+              />)
+          }}
+          keyExtractor = {(item, index) => item.key.toString()}
+        />
+      </PaperSheet>
+    )
   }
 }

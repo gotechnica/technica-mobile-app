@@ -94,14 +94,21 @@ const styles = StyleSheet.create({
 });
 
 
+const PlainViewContainer = (props) => (
+  <View style = {{ backgroundColor: colors.black, flex: 1}}>
+    {props.children}
+  </View>
+
+)
+
 const ViewContainer = (props) => (
-  <View style={{ backgroundColor: colors.black, flex: 1 }}>
+  <PlainViewContainer>
     <ScrollView style={{ flex: 1 }}>
       <View style={[styles.container, props.style]}>
         {props.children}
       </View>
     </ScrollView>
-  </View>
+  </PlainViewContainer>
 );
 
 const PadContainer = (props) => (
@@ -146,7 +153,7 @@ const PaperSheet = (props) => (
 );
 
 const HorizontalLine = (props) => (
-  <View style={styles.horizontalLine}></View>
+  <View style={[props.style, styles.horizontalLine]}></View>
 );
 
 const Spacing = (props) => (
@@ -205,6 +212,7 @@ const Button = (props) => (
 )
 
 export {
+  PlainViewContainer,
   ViewContainer,
   Heading,
   SubHeading,

@@ -10,27 +10,34 @@ import {
 import { H1, H2, H3, H4, P } from '../components/Text';
 import {
   GradientBackground,
+  PlainViewContainer,
   ViewContainer,
   PadContainer,
   Heading,
 } from '../components/Base'
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import EventGroup from '../components/schedule/EventGroup';
-import EventSeparator from '../components/schedule/EventSeparator'
-import ScheduleSceneTabBarOverlay from '../components/schedule/ScheduleSceneTabBarOverlay'
+import ScheduleSceneTabBar from '../components/schedule/ScheduleSceneTabBar'
 
-
-import moment from 'moment';
 import _ from 'lodash';
+import moment from 'moment';
 
-
-
-
+import { normalizeTimeLabel } from '../actions/util.js';
 import scheduleData from '../../assets/schedule.json';
 
-const EVENT_GROUP = 'EVENT_GROUP';
-const EVENT_SEPARATOR = 'EVENT_SEPARATOR';
-
+const styles = StyleSheet.create({
+  instructions: {
+    textAlign: 'left',
+    color: '#333333',
+    marginBottom: 5,
+  },
+  activityIndicatorContainer:{
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1,
+      paddingBottom: 20,
+  },
+});
 
 export default class Schedule extends Component<Props> {
 
@@ -41,7 +48,6 @@ export default class Schedule extends Component<Props> {
       datasource: scheduleData.Schedule
     }
 
-
     this.renderScheduleForDay = this.renderScheduleForDay.bind(this);
 
   }
@@ -50,7 +56,7 @@ export default class Schedule extends Component<Props> {
 
   }
 
-  renderScheduleForDay(scheduleArray) {
+  renderScheduleForDay(dayObj) {
     // if(this.state.loaded === false){
     //   return
     //     (<View
@@ -60,7 +66,7 @@ export default class Schedule extends Component<Props> {
     //         <ActivityIndicator animating={true}/>
     //      </View>);
     // }
-
+    scheduleArray = dayObj.item
     alteredData = scheduleArray[1].sort((event1, event2) => {
       start1 = moment(event1.startTime);
       start2 = moment(event2.startTime);
@@ -78,100 +84,68 @@ export default class Schedule extends Component<Props> {
     groupedData = _.groupBy(
       alteredData,
       (event) => {
-        return this.normalizeTimeLabel(event.startTime)
+        return normalizeTimeLabel(event.startTime)
       }
     )
 
     labels = Object.keys(groupedData);
 
-    groupedDataWithSeps = [];
+    eventGroupObjs = [];
     for (let i = 0; i < labels.length; i++) {
 
-      groupedDataWithSeps.push(
+      eventGroupObjs.push(
         {
-          type: EVENT_GROUP,
           header: labels[i],
           data: groupedData[labels[i]],
         }
       )
-
-      if(i != labels.length - 1) {
-        groupedDataWithSeps.push(
-          {
-            type: EVENT_SEPARATOR
-          }
-        )
-      }
     }
 
-    return (
-      <FlatList
+    return (<FlatList
         key = {scheduleArray[0]}
-        tabLabel={scheduleArray[0]}
-        data={groupedDataWithSeps}
-        renderItem={this.renderEventCard.bind(this)}
-        keyExtractor={(item, index) => index}
-      />
-    );
+        data={eventGroupObjs}
+        renderItem = {this.renderEventCard.bind(this)}
+        keyExtractor={(item, index) => index.toString()}
+        scrollEnabled = {false}
+      />);
   }
 
   renderEventCard(eventData) {
-    if(eventData.item.type === EVENT_GROUP) {
-      return (
+    //console.log(eventData);
+    return (
       <EventGroup
         header = {eventData.item.header}
         data = {eventData.item.data}
-      />
-      )
-    } else if (eventData.item.type === EVENT_SEPARATOR) {
-      return (
-        <EventSeparator/>
-      )
-    }
+      />);
   }
-
 
   render() {
+    let tabNames = this.state.datasource.map((day) => day[0]);
     return (
-      <GradientBackground>
-        <ViewContainer>
-          <PadContainer>
-            <Heading>Schedule</Heading>
-              <ScrollableTabView
-                renderTabBar = {() => <ScheduleSceneTabBarOverlay />}
-                tabBarPosition = {'top'}
-                // style = {styles.tabView}
-                initialPage = {0}
-                keyExtractor = {(item, index) => index}
-                tabBarUnderlineStyle = {{opacity: 0}}
-                >
-                  {this.state.datasource.map(this.renderScheduleForDay)}
-              </ScrollableTabView>
-          </PadContainer>
-        </ViewContainer>
-      </GradientBackground>
-
+      <PlainViewContainer>
+        <FlatList
+          data = {this.state.datasource}
+          renderItem = {this.renderScheduleForDay}
+          ListHeaderComponent = {() => (
+            <PadContainer>
+              <View>
+                <Heading>Schedule</Heading>
+                <ScheduleSceneTabBar
+                  goToSection = {(i) => {
+                    this.scheduleListRef.scrollToIndex({
+                      index: i,
+                      viewOffset: 100,
+                      viewPosition: 0
+                    })}}
+                  tabs = {tabNames}
+                />
+              </View>
+            </PadContainer>)}
+          ItemSeparatorComponent = {() => (<H2>Separator Component TBD</H2>)}
+          keyExtractor = {(item, index) => item[0]}
+          ref = {(ref) => {this.scheduleListRef = ref}}>
+        </FlatList>
+      </PlainViewContainer>
     );
   }
-
-  // formats the time for each event
-  normalizeTimeLabel(t){
-    return moment(t).format("h:mma")
-  }
 }
-
-
-
-const styles = StyleSheet.create({
-  instructions: {
-    textAlign: 'left',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  activityIndicatorContainer:{
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 1,
-      paddingBottom: 20,
-  },
-});
