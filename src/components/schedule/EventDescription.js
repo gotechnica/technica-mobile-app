@@ -82,7 +82,7 @@ export default class ScheduleCard extends Component<Props> {
           </H4>
         </View>
         <View
-          style = {[styles.row, {flex: 1}]}>
+          style = {[styles.row, {flex: 1, justifyContent: 'flex-end'}]}>
           <H3
             style = {{marginRight: 8, marginTop: 2}}>
             255
