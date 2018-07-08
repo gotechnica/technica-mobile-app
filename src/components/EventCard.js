@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -61,6 +61,7 @@ export default class EventCard extends Component {
         <ModalContent>
           <ModalHeader
             onBackButtonPress={() => this.toggleModal()}
+            savedCount={props.savedCount}
             heart
             small
           />
@@ -86,12 +87,16 @@ export default class EventCard extends Component {
             <HorizontalLine />
             <Spacing />
             <Spacing />
-            <H4 style={{ color: colors.lavender }}>BEGINNER FRIENDLY</H4>
-            <Spacing />
-            <P>
-              Workshop events will be glorified with a nice big banner at the top.
-              Learn about cool stuff lorem ipsum Technica's going to give you good stuff. Learn about cool.
-            </P>
+            {
+              props.beginnerFriendly ?
+                <Fragment>
+                  <H4 style={{ color: colors.lavender }}>BEGINNER FRIENDLY</H4>
+                  <Spacing />
+                </Fragment>
+                :
+                null
+            }
+            <P>{props.description}</P>
           </ScrollView>
         </ModalContent>
       </Modal>
@@ -99,7 +104,7 @@ export default class EventCard extends Component {
   }
 
   render() {
-    const { name, saves, img, big } = this.props;
+    const { name, savedCount, img, big } = this.props;
     const dimensions = require('Dimensions').get('window');
     const imageWidth = (big) ? dimensions.width - 40 : (dimensions.width / 2) - 30;
     const imageHeight = Math.round(imageWidth * 38/67);
@@ -126,7 +131,7 @@ export default class EventCard extends Component {
                 (
                   <View>
                     <H3>{name}</H3>
-                    <H6><Icon name="heart" size={12} color={colors.white}/> {saves}</H6>
+                    <H6><Icon name="heart" size={12} color={colors.white}/> {savedCount}</H6>
                   </View>
                 )
             }

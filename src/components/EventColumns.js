@@ -17,6 +17,8 @@ import { H3 } from '../components/Text';
 import Modal from "react-native-modal";
 import { colors } from './Colors';
 
+const CLIP_LIMIT = 6;
+
 const styles = StyleSheet.create({
   columnContainer: {
     flex: 1,
@@ -30,8 +32,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 });
-
-// TODO have this component take an array of events as its prop
 
 export default class EventColumns extends Component {
   constructor(props) {
@@ -52,13 +52,7 @@ export default class EventColumns extends Component {
   }
 
   getColumns(isClipped) {
-    const { events } = this.props;
-
-    // Convert events to arr
-    const eventsArr = [];
-    for (const id in events) {
-      eventsArr.push(events[id]);
-    }
+    const { eventsArr } = this.props;
 
     // If empty
     if (eventsArr.length == 0) {
@@ -69,29 +63,22 @@ export default class EventColumns extends Component {
       );
     }
 
-    // Sort by highest count of favs
-    const sortedEventsArr = eventsArr.sort((a, b) => {
-      return b.savedCount - a.savedCount;
-    });
-
     // Separate into two columns
     const leftList = [];
     const rightList = [];
+    // If clipping, limit to CLIP_LIMIT, else show it all
     const limit =
       (isClipped) ?
-        (sortedEventsArr.length >= 6) ? 6 : sortedEventsArr.length
+        (eventsArr.length >= CLIP_LIMIT) ? CLIP_LIMIT : eventsArr.length
         :
-        sortedEventsArr.length;
+        eventsArr.length;
 
     for (let i = 0; i < limit; i++) {
-      const currEvent = sortedEventsArr[i];
+      const currEvent = eventsArr[i];
       const currEventCard = (
         <EventCard
+          {...currEvent}
           key={currEvent.name}
-          name={currEvent.name}
-          location={currEvent.location}
-          saves={currEvent.savedCount}
-          img={currEvent.img}
         />
       );
 
@@ -125,7 +112,7 @@ export default class EventColumns extends Component {
         </PadContainer>
 
         {
-          isClipped && sortedEventsArr.length > 6 ?
+          isClipped && eventsArr.length > CLIP_LIMIT ?
             <TouchableOpacity onPress={() => this.toggleModal()}>
               <Button text="View All" />
             </TouchableOpacity>
@@ -174,10 +161,10 @@ export default class EventColumns extends Component {
 }
 
 EventColumns.propTypes = {
-  events: PropTypes.object,
+  eventsArr: PropTypes.array,
   heading: PropTypes.string.isRequired,
 };
 
 EventColumns.defaultProps = {
-  events: {},
+  eventsArr: [],
 };

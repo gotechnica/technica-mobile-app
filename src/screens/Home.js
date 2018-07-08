@@ -113,6 +113,7 @@ export default class Home extends Component<Props> {
 
   renderPopularEventsSection = () => {
     const heading = "Popular Events";
+    const events = getPopularEventsArray(this.props.masterState.events)
     return (
       <View>
         <PadContainer style={styles.subSection}>
@@ -121,7 +122,7 @@ export default class Home extends Component<Props> {
         <View>
           <EventColumns
             heading={heading}
-            events={this.props.masterState.events} // TODO pass in an array thats prefiltered here
+            eventsArr={events}
           />
         </View>
       </View>
@@ -130,6 +131,7 @@ export default class Home extends Component<Props> {
 
   renderBestForBeginnersSection = () => {
     const heading = "Best for Beginners"
+    const events = getBeginnerEventsArray(this.props.masterState.events)
     return (
       <View>
         <PadContainer style={styles.subSection}>
@@ -137,7 +139,7 @@ export default class Home extends Component<Props> {
         </PadContainer>
         <EventColumns
           heading={heading}
-          events={this.props.masterState.events} // TODO pass in an array thats prefiltered here
+          eventsArr={events}
         />
       </View>
     )
@@ -196,3 +198,40 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 });
+
+// Convert events object to arr
+function eventsToArr(events) {
+  const eventsArr = [];
+  for (const id in events) {
+    eventsArr.push(events[id]);
+  }
+  return eventsArr;
+}
+
+// Takes in the events state, calculates the top 10 events, returns as
+// a descending sorted array
+function getPopularEventsArray(events) {
+  const eventsArr = eventsToArr(events);
+  // If empty return empty array
+  if (eventsArr.length == 0) return eventsArr;
+
+  // Sort by highest count of favs
+  const sortedEventsArr = eventsArr.sort((a, b) => {
+    return b.savedCount - a.savedCount;
+  });
+  return sortedEventsArr.slice(0, 10);
+}
+
+// Takes in the events state, finds all beginner events, returns as an array
+// in unknown order
+function getBeginnerEventsArray(events) {
+  const eventsArr = eventsToArr(events);
+  // If empty return empty array
+  if (eventsArr.length == 0) return eventsArr;
+
+  const beginnerEventsArr = [];
+  for (event of eventsArr) {
+    if (event.beginnerFriendly) beginnerEventsArr.push(event);
+  }
+  return beginnerEventsArr;
+}

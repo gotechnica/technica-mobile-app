@@ -172,7 +172,7 @@ const ModalHeader = (props) => (
       {
         props.heart ?
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <H3 style={{ marginRight: 8, marginTop: 3 }}>255</H3>
+          <H3 style={{ marginRight: 8, marginTop: 3 }}>{props.savedCount}</H3>
           <TouchableOpacity>
             <FAIcon
               name="heart-o"
