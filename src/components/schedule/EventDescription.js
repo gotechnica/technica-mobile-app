@@ -84,12 +84,12 @@ export default class ScheduleCard extends Component<Props> {
         <View
           style = {[styles.row, {flex: 1}]}>
           <H3
-            style = {{marginRight: 8, marginTop: 3}}>
+            style = {{marginRight: 8, marginTop: 2}}>
             255
           </H3>
           <Icon
             name = {this.state.favorited ? 'heart' : 'heart-o'}
-            size = {30}
+            size = {22}
             color = {colors.pink}/>
         </View>
       </View>
