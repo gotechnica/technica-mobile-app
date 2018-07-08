@@ -153,7 +153,7 @@ export default class EventColumns extends Component {
     const { width, height } = require('Dimensions').get('window');
     return (
       <View style={{ flex: 1 }}>
-        { this.state.showModal ? this.renderModal() : null }
+        { this.renderModal() }
         { this.getColumns(true) }
       </View>
     );
