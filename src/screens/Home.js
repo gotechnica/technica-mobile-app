@@ -35,70 +35,11 @@ export default class Home extends Component<Props> {
       isBeginnerModalVisible: false,
     }
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
-    this.togglePopularModal = this.togglePopularModal.bind(this);
-    this.toggleBegModal = this.toggleBegModal.bind(this);
   }
 
   toggleUpdatesModal() {
     this.setState({ isUpdatesModalVisible: !this.state.isUpdatesModalVisible })
   }
-  togglePopularModal() {
-    this.setState({ isPopularModalVisible: !this.state.isPopularModalVisible })
-  }
-  toggleBegModal() {
-    this.setState({ isBeginnerModalVisible: !this.state.isBeginnerModalVisible })
-  }
-
-  renderPopularModal = () => (
-    <Modal
-      isVisible={this.state.isPopularModalVisible}
-      backdropColor={colors.black}
-      backdropOpacity={1}
-      animationInTiming={250}
-      animationIn="fadeInUp"
-      animationOut="fadeOutDown"
-      animationOutTiming={300}
-      backdropTransitionInTiming={250}
-      backdropTransitionOutTiming={300}
-      avoidKeyboard={true}
-      onBackButtonPress={() => this.togglePopularModal()}
-    >
-      <ModalContent>
-        <ModalHeader
-          onBackButtonPress={() => this.togglePopularModal()}
-          heading="Popular Events"
-        />
-        <EventColumns offsetLeftMargin />
-        <EventColumns offsetLeftMargin />
-        <EventColumns offsetLeftMargin />
-      </ModalContent>
-    </Modal>
-  )
-
-  renderBegModal = () => (
-    <Modal
-      isVisible={this.state.isBeginnerModalVisible}
-      backdropColor={colors.black}
-      backdropOpacity={1}
-      animationInTiming={250}
-      animationIn="fadeInUp"
-      animationOut="fadeOutDown"
-      animationOutTiming={300}
-      backdropTransitionInTiming={250}
-      backdropTransitionOutTiming={300}
-      avoidKeyboard={true}
-      onBackButtonPress={() => this.toggleBegModal()}
-    >
-      <ModalContent>
-        <ModalHeader
-          onBackButtonPress={() => this.toggleBegModal()}
-          heading="Best for Beginners"
-        />
-        <EventColumns offsetLeftMargin />
-        <EventColumns offsetLeftMargin />
-      </ModalContent>
-    </Modal>
-  )
 
   renderUpdatesModal = () => (
     <Modal
@@ -171,41 +112,33 @@ export default class Home extends Component<Props> {
   }
 
   renderPopularEventsSection = () => {
+    const heading = "Popular Events";
     return (
       <View>
-        {this.renderPopularModal()}
-
         <PadContainer style={styles.subSection}>
-          <H2>Popular Events</H2>
+          <H2>{heading}</H2>
         </PadContainer>
-
         <View>
-          <EventColumns />
-          <TouchableOpacity onPress={() => this.togglePopularModal()}>
-            <Button text="View All" />
-          </TouchableOpacity>
-          <Spacing />
+          <EventColumns
+            heading={heading}
+            events={this.props.masterState.events} // TODO pass in an array thats prefiltered here
+          />
         </View>
-
       </View>
     )
   }
 
   renderBestForBeginnersSection = () => {
+    const heading = "Best for Beginners"
     return (
       <View>
-
-        {this.renderBegModal()}
-
         <PadContainer style={styles.subSection}>
-          <H2>Best for Beginners</H2>
+          <H2>{heading}</H2>
         </PadContainer>
-
-        <EventColumns />
-        <TouchableOpacity onPress={() => this.toggleBegModal()}>
-          <Button text="View All" />
-        </TouchableOpacity>
-        <Spacing />
+        <EventColumns
+          heading={heading}
+          events={this.props.masterState.events} // TODO pass in an array thats prefiltered here
+        />
       </View>
     )
   }

@@ -80,7 +80,7 @@ export default class EventCard extends Component {
             <H3>12:00pm - 1:00pm</H3>
             <Spacing />
             <H2>{props.name}</H2>
-            <H2>Room 1345</H2>
+            <H2>{props.location}</H2>
             <Spacing />
             <Spacing />
             <HorizontalLine />
