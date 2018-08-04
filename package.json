@@ -7,11 +7,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "@aws-amplify/pushnotification": "^1.0.3",
+    "aws-amplify": "^1.0.4",
     "generator-rn-toolbox": "^3.3.2",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "react": "16.3.1",
-    "react-native": "0.55.4",
+    "react-native": "^0.56.0",
     "react-native-modal": "^6.1.0",
     "react-native-paper": "^1.11.0",
     "react-native-scrollable-tab-view": "^0.8.0",
