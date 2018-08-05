@@ -9,6 +9,7 @@
   "dependencies": {
     "@aws-amplify/pushnotification": "^1.0.3",
     "aws-amplify": "^1.0.4",
+    "aws-amplify-react-native": "^1.0.4",
     "generator-rn-toolbox": "^3.3.2",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
