@@ -30,10 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNPushNotificationPackage(),
-            new RNPushNotificationPackage(),
-            new RNPushNotificationPackage(),
             new RNAWSCognitoPackage(),
-            new RNPushNotificationPackage(),
             new VectorIconsPackage()
       );
     }

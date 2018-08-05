@@ -14,9 +14,9 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 import { PushNotificationIOS } from 'react-native';
 import Analytics from '@aws-amplify/analytics';
-// import PushNotification from '@aws-amplify/pushnotification';
-// import aws_exports from './aws_exports.js';
-//
+import PushNotification from '@aws-amplify/pushnotification';
+import aws_exports from './aws-exports';
+
 
 export default class App extends Component<Props> {
   constructor(props) {
@@ -109,22 +109,22 @@ export default class App extends Component<Props> {
   }
 
   render() {
-    // Analytics.configure(aws_exports)
-    // PushNotification.configure(aws_exports);
-    //
-    // // get the notification data
-    // PushNotification.onNotification((notification) => {
-    //   // Note that the notification object structure is different from Android and IOS
-    //   console.log('in app notification', notification);
-    //
-    //   // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
-    //   notification.finish(PushNotificationIOS.FetchResult.NoData);
-    // });
-    //
-    // // get the registration token
-    // PushNotification.onRegister((token) => {
-    //   console.log('in app registration', token);
-    // });
+    Analytics.configure(aws_exports)
+    PushNotification.configure(aws_exports);
+
+    // get the notification data
+    PushNotification.onNotification((notification) => {
+      // Note that the notification object structure is different from Android and IOS
+      console.log('in app notification', notification);
+
+      // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
+      // notification.finish(PushNotificationIOS.FetchResult.NoData);
+    });
+
+    // get the registration token
+    PushNotification.onRegister((token) => {
+      console.log('in app registration', token);
+    });
 
     return (
       <ScrollableTabView
