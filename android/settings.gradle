@@ -1,14 +1,8 @@
 rootProject.name = 'technica'
-include ':@aws-amplify_pushnotification', 'aws-amplify-pushnotification'
-project(':@aws-amplify_pushnotification').projectDir = new File(rootProject.projectDir, '../node_modules/@aws-amplify/pushnotification/android')
-include ':@aws-amplify/pushnotification'
-project(':@aws-amplify/pushnotification').projectDir = new File(rootProject.projectDir, '../node_modules/@aws-amplify/pushnotification/android')
-include ':@aws-amplify/pushnotification'
-project(':@aws-amplify/pushnotification').projectDir = new File(rootProject.projectDir, '../node_modules/@aws-amplify/pushnotification/android')
+include ':react-native-firebase'
+project(':react-native-firebase').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-firebase/android')
 include ':amazon-cognito-identity-js'
 project(':amazon-cognito-identity-js').projectDir = new File(rootProject.projectDir, '../node_modules/amazon-cognito-identity-js/android')
-include ':@aws-amplify/pushnotification'
-project(':@aws-amplify/pushnotification').projectDir = new File(rootProject.projectDir, '../node_modules/@aws-amplify/pushnotification/android')
 include ':react-native-vector-icons'
 project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
 

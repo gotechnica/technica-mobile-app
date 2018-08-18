@@ -14,8 +14,9 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 import { PushNotificationIOS } from 'react-native';
 import Analytics from '@aws-amplify/analytics';
-import PushNotification from '@aws-amplify/pushnotification';
 import aws_exports from './aws-exports';
+
+import firebase from 'react-native-firebase';
 
 
 export default class App extends Component<Props> {
@@ -109,22 +110,50 @@ export default class App extends Component<Props> {
   }
 
   render() {
-    Analytics.configure(aws_exports)
-    PushNotification.configure(aws_exports);
+    Analytics.configure(aws_exports);
 
-    // get the notification data
-    PushNotification.onNotification((notification) => {
-      // Note that the notification object structure is different from Android and IOS
-      console.log('in app notification', notification);
-
-      // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
-      // notification.finish(PushNotificationIOS.FetchResult.NoData);
+    firebase.messaging().hasPermission()
+        .then(enabled => {
+          if (enabled) {
+            // user has permissions
+          } else {
+            try {
+              firebase.messaging().requestPermission();
+            } catch (error) {
+              console.log("Error authenticating", error);
+            }
+        }
     });
 
-    // get the registration token
-    PushNotification.onRegister((token) => {
-      console.log('in app registration', token);
+    firebase.messaging().getToken()
+        .then(fcmToken => {
+          if(fcmToken) {
+            console.log("fcmtoken: ", fcmToken);
+          } else {
+            console.log('no token');
+          }
     });
+
+    this.notificationDisplayedListener = firebase.notifications().onNotificationDisplayed((notification: Notification) => {
+    // Process your notification as required
+    // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
+        console.log("notification displayed", notification);
+    });
+    this.notificationListener = firebase.notifications().onNotification((notification: Notification) => {
+      console.log("notificatoin received", notification);
+      notification.android.setChannelId('technica-push-notifications');
+      firebase.notifications().displayNotification(notification);
+    });
+
+
+    const notification = new firebase.notifications.Notification()
+      .setNotificationId('notificationId')
+      .setTitle('Hello world')
+      .setBody('My notification body');
+
+    notification.android.setChannelId('channelId').android.setSmallIcon('ic_launcher');
+    firebase.notifications().displayNotification(notification);
+
 
     return (
       <ScrollableTabView

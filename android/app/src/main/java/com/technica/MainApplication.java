@@ -3,7 +3,9 @@ package com.technica;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.amazonaws.amplify.pushnotification.RNPushNotificationPackage;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import com.amazonaws.RNAWSCognitoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
@@ -26,9 +28,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNPushNotificationPackage(),
-            new RNAWSCognitoPackage(),
-            new VectorIconsPackage()
+              new RNFirebasePackage(),
+              new RNFirebaseNotificationsPackage(),
+              new RNFirebaseMessagingPackage(),
+              new RNAWSCognitoPackage(),
+              new VectorIconsPackage()
       );
     }
 
