@@ -14,7 +14,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 import { PushNotificationIOS } from 'react-native';
 import Analytics from '@aws-amplify/analytics';
-import aws_exports from './aws-exports';
+import aws_exports from '../aws-exports';
 
 import firebase from 'react-native-firebase';
 
