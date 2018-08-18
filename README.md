@@ -10,6 +10,12 @@ This is the the mobile app for Technica's 2018 hackathon.
 
 3. `react-native run-ios` or `react-native run-android`
 
+# Setting up notifications on iOS
+
+1. `sudo gem install cocoapods`
+
+2. `cd ios && pod install && cd ..`
+
 # Built With
 
 - React-Native
