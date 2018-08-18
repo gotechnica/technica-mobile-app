@@ -18,6 +18,8 @@ import aws_exports from './aws-exports';
 
 import firebase from 'react-native-firebase';
 
+const channelId = 'technica-push-notifications';
+const channelName = 'Technica Announcements';
 
 export default class App extends Component<Props> {
   constructor(props) {
@@ -112,48 +114,68 @@ export default class App extends Component<Props> {
   render() {
     Analytics.configure(aws_exports);
 
-    firebase.messaging().hasPermission()
-        .then(enabled => {
-          if (enabled) {
-            // user has permissions
-          } else {
-            try {
-              firebase.messaging().requestPermission();
-            } catch (error) {
-              console.log("Error authenticating", error);
-            }
-        }
-    });
+    //create notifications channel
+    const channel = new firebase.notifications.Android.Channel(
+      channelId,
+      channelName,
+      firebase.notifications.Android.Importance.Max
+    ).setDescription(
+      'Technica notification channel for delivering important announcements'
+    );
 
-    firebase.messaging().getToken()
-        .then(fcmToken => {
-          if(fcmToken) {
-            console.log("fcmtoken: ", fcmToken);
-          } else {
-            console.log('no token');
+    firebase.notifications().android.createChannel(channel);
+
+    firebase
+      .messaging()
+      .hasPermission()
+      .then(enabled => {
+        if (enabled) {
+          console.log('Permission enabled');
+        } else {
+          try {
+            firebase.messaging().requestPermission();
+          } catch (error) {
+            console.log('Error authenticating', error);
           }
-    });
+        }
+      });
 
-    this.notificationDisplayedListener = firebase.notifications().onNotificationDisplayed((notification: Notification) => {
-    // Process your notification as required
-    // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
-        console.log("notification displayed", notification);
-    });
-    this.notificationListener = firebase.notifications().onNotification((notification: Notification) => {
-      console.log("notificatoin received", notification);
-      notification.android.setChannelId('technica-push-notifications');
-      firebase.notifications().displayNotification(notification);
-    });
+    firebase
+      .messaging()
+      .getToken()
+      .then(fcmToken => {
+        if (fcmToken) {
+          console.log('fcm token: ', fcmToken);
+        } else {
+          console.log('no token');
+        }
+      });
 
+    this.notificationDisplayedListener = firebase
+      .notifications()
+      .onNotificationDisplayed((notification: Notification) => {
+        // Process your notification as required
+        // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
+        console.log('notification displayed', notification);
+      });
+
+    this.notificationListener = firebase
+      .notifications()
+      .onNotification((notification: Notification) => {
+        console.log('notification received', notification);
+        notification.android.setChannelId(channelId);
+        firebase.notifications().displayNotification(notification);
+      });
 
     const notification = new firebase.notifications.Notification()
       .setNotificationId('notificationId')
       .setTitle('Hello world')
-      .setBody('My notification body');
+      .setBody('I love local notifications');
 
-    notification.android.setChannelId('channelId').android.setSmallIcon('ic_launcher');
+    notification.android
+      .setChannelId(channelId)
+      .android.setSmallIcon('ic_launcher');
     firebase.notifications().displayNotification(notification);
-
 
     return (
       <ScrollableTabView
