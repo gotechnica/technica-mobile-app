@@ -1,5 +1,6 @@
 // Use this class to interact with all of the events, never modify the state directly
 
+import { AsyncStorage } from 'react-native';
 import moment from 'moment';
 import _ from 'lodash';
 
@@ -10,8 +11,12 @@ import Event from './Event';
 import { normalizeTimeLabel } from '../actions/util.js';
 import scheduleData from '../../assets/schedule.json';
 
+const EVENT_FAVORITED_STORE = 'EVENT_FAVORITED_STORE';
+const SAVED_COUNT_STORE = 'SAVED_COUNT_STORE';
+
 export default class EventsManager {
   constructor() {
+    console.log('Initializing event manager');
     // creates an EventGroup object from a collection of event json entries
     // which have already been grouped
     function createEventGroup(eventGroupLabel, rawEventArray) {
@@ -72,11 +77,24 @@ export default class EventsManager {
       return new EventDay(dayLabel, eventGroupObjs);
     }
 
-    this.rawData = scheduleData.Schedule;
+    rawData = scheduleData.Schedule;
 
     this.eventDays = [];
-    for (let i in this.rawData) {
-      this.eventDays.push(createEventDay(this.rawData[i]));
+
+    this.favoriteState = {};
+    AsyncStorage.getItem(EVENT_FAVORITED_STORE, (err, result) => {
+      this.favoriteState = result;
+      console.log('favorites', result);
+    });
+
+    this.savedCounts = {};
+    AsyncStorage.getItem(SAVED_COUNT_STORE, (err, result) => {
+      this.savedCounts = result;
+      console.log('savedCounts', savedCounts);
+    });
+
+    for (let i in rawData) {
+      this.eventDays.push(createEventDay(rawData[i]));
     }
   }
 
@@ -89,18 +107,26 @@ export default class EventsManager {
   }
 
   isFavorited(key) {
-    return false;
+    return this.favoriteState[key];
   }
 
   favoriteEvent(key) {
-    console.log('Favorited event: ' + key.toString());
+    updateObj = {};
+    updateObj[key] = true;
+    AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
+
+    //TODO schedule notification
   }
 
   unfavoriteEvent(key) {
-    console.log('Removed ' + key.toString() + ' from favorites');
+    updateObj = {};
+    updateObj[key] = false;
+    AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
+
+    //TODO remove notification
   }
 
   getSavedCount(key) {
-    return 0;
+    return this.savedCounts[key];
   }
 }

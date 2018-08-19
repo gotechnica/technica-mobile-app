@@ -42,8 +42,6 @@ export default class Schedule extends Component<Props> {
   componentDidMount() {}
 
   renderScheduleForDay(eventDayObj) {
-    // console.log('eventDayObj', eventDayObj);
-
     eventDay = eventDayObj.item;
     return (
       <FlatList

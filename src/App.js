@@ -110,7 +110,11 @@ export default class App extends Component<Props> {
         style={{ backgroundColor: colors.black }}
         renderTabBar={() => <CustomTabBar />}
       >
-        <Home masterState={this.state} tabLabel="home" />
+        <Home
+          masterState={this.state}
+          eventManager={eventManager}
+          tabLabel="home"
+        />
         <Schedule
           masterState={this.state}
           tabLabel="calendar"
