@@ -5,6 +5,7 @@ import Mentors from './screens/Mentors';
 import Profile from './screens/Profile';
 import Saved from './screens/Saved';
 import Schedule from './screens/Schedule';
+import Login from './screens/Login';
 import CustomTabBar from './components/CustomTabBar';
 import { H5 } from './components/Text';
 import { colors } from './components/Colors';
@@ -102,28 +103,36 @@ export default class App extends Component<Props> {
     };
   }
 
+  renderHomePage = () => (
+    <ScrollableTabView
+      tabBarPosition="bottom"
+      locked
+      style={{ backgroundColor: colors.black }}
+      renderTabBar={() => <CustomTabBar />}>
+      <Home
+        masterState={this.state}
+        eventManager={eventManager}
+        tabLabel="home"
+      />
+      <Schedule
+        masterState={this.state}
+        tabLabel="calendar"
+        eventManager={this.props.eventManager}
+      />
+      <Saved masterState={this.state} tabLabel="heart" />
+      <Mentors masterState={this.state} tabLabel="people" />
+      <Profile masterState={this.state} tabLabel="user" />
+    </ScrollableTabView>
+  );
+
+  renderLoginPage = () => (
+    <Login />
+  );
+
+
   render() {
-    return (
-      <ScrollableTabView
-        tabBarPosition="bottom"
-        locked
-        style={{ backgroundColor: colors.black }}
-        renderTabBar={() => <CustomTabBar />}
-      >
-        <Home
-          masterState={this.state}
-          eventManager={eventManager}
-          tabLabel="home"
-        />
-        <Schedule
-          masterState={this.state}
-          tabLabel="calendar"
-          eventManager={this.props.eventManager}
-        />
-        <Saved masterState={this.state} tabLabel="heart" />
-        <Mentors masterState={this.state} tabLabel="people" />
-        <Profile masterState={this.state} tabLabel="user" />
-      </ScrollableTabView>
-    );
+    if (true){
+      return this.renderLoginPage()
+    }
   }
 }
