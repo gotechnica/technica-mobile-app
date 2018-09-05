@@ -16,11 +16,11 @@ import { colors } from './Colors';
 const CLIP_LIMIT = 6;
 
 const styles = StyleSheet.create({
-  columnContainer: {
+  row: {
     flex: 1,
     flexDirection: 'row'
   },
-  column: {
+  halfColumn: {
     flex: 5,
     flexDirection: 'column'
   },
@@ -36,7 +36,9 @@ export default class EventColumns extends Component {
       showModal: false
     };
     this.toggleModal = this.toggleModal.bind(this);
-    this.getColumns = this.getColumns.bind(this);
+    // this.getColumns = this.getColumns.bind(this);
+    this.getRows = this.getRows.bind(this);
+    this.getCardCol = this.getCardCol.bind(this);
   }
 
   toggleModal() {
@@ -45,8 +47,30 @@ export default class EventColumns extends Component {
     });
   }
 
-  getColumns(isClipped) {
+  getCardCol(event) {
+    if (event) {
+      return (
+        <View style={styles.halfColumn}>
+          <EventCard
+            {...event}
+            savedCount={this.props.eventManager.getSavedCount(event.key)}
+          />
+        </View>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  getRows(isClipped) {
     const { eventsArr } = this.props;
+    const { width } = require('Dimensions').get('window');
+
+    const limit = isClipped
+      ? eventsArr.length >= CLIP_LIMIT
+        ? CLIP_LIMIT
+        : eventsArr.length
+      : eventsArr.length;
 
     // If empty
     if (eventsArr.length == 0) {
@@ -57,57 +81,34 @@ export default class EventColumns extends Component {
       );
     }
 
-    // Separate into two columns
-    const leftList = [];
-    const rightList = [];
-    // If clipping, limit to CLIP_LIMIT, else show it all
-    const limit = isClipped
-      ? eventsArr.length >= CLIP_LIMIT
-        ? CLIP_LIMIT
-        : eventsArr.length
-      : eventsArr.length;
-
-    for (let i = 0; i < limit; i++) {
-      const currEvent = eventsArr[i];
-      const currEventCard = (
-        <EventCard
-          {...currEvent}
-          savedCount={this.props.eventManager.getSavedCount(currEvent.key)}
-        />
-      );
-
-      // Even goes on left
-      if (i == 0 || i % 2 == 0) {
-        leftList.push(currEventCard);
-        // Odd goes on right
-      } else {
-        rightList.push(currEventCard);
-      }
-    }
-
-    const { width, height } = require('Dimensions').get('window');
-
-    return (
-      <View style={{ flex: 1 }}>
+    const rows = [];
+    for (let i = 0; i < limit; i += 2) {
+      const left = eventsArr[i];
+      const right = eventsArr[i + 1];
+      rows.push(
         <PadContainer
+          key={i}
           style={[
-            styles.columnContainer,
+            styles.row,
             { marginLeft: isClipped == false ? -20 : 0 },
             { width: width }
           ]}
         >
-          <View style={styles.column}>{leftList}</View>
+          { this.getCardCol(left) }
           <View style={{ width: 20 }} />
-          <View style={styles.column}>{rightList}</View>
+          { this.getCardCol(right) }
         </PadContainer>
+      );
+    }
 
-        {isClipped && eventsArr.length > CLIP_LIMIT ? (
-          <TouchableOpacity onPress={() => this.toggleModal()}>
-            <Button text="View All" />
-          </TouchableOpacity>
-        ) : null}
-      </View>
-    );
+    const viewAllButton = isClipped && eventsArr.length > CLIP_LIMIT ?
+      (
+        <TouchableOpacity key="viewButton" onPress={() => this.toggleModal()}>
+          <Button text="View All" />
+        </TouchableOpacity>
+      ) : null
+
+    return [rows, viewAllButton];
   }
 
   renderModal() {
@@ -130,7 +131,7 @@ export default class EventColumns extends Component {
             onBackButtonPress={() => this.toggleModal()}
             heading={this.props.heading}
           />
-          {this.getColumns(false)}
+          {this.getRows(false)}
         </ModalContent>
       </Modal>
     );
@@ -141,7 +142,7 @@ export default class EventColumns extends Component {
     return (
       <View style={{ flex: 1 }}>
         {this.renderModal()}
-        {this.getColumns(true)}
+        {this.getRows(true)}
       </View>
     );
   }

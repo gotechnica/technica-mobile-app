@@ -100,7 +100,14 @@ export default class EventCard extends Component {
     const dimensions = require('Dimensions').get('window');
     const imageWidth = big ? dimensions.width - 40 : dimensions.width / 2 - 30;
     const imageHeight = Math.round((imageWidth * 38) / 67);
-    // TODO refactor "big" property, which is isolated to just the map on homescreen, to its own component
+    // TODO refactor "big" property, which is used on just the map on homescreen, to its own component
+
+    let titleClipped = title;
+    let titleLimit = 30;
+    if (titleClipped && titleClipped.length > titleLimit) {
+      titleClipped = titleClipped.substring(0, titleLimit) + "…";
+    }
+
     return (
       <View>
         {big ? null : this.renderModal(this.props)}
@@ -118,8 +125,8 @@ export default class EventCard extends Component {
             />
             {big ? null : (
               <View>
-                <H3>{title}</H3>
-                <H6>
+                <H3>{titleClipped}</H3>
+                <H6 style={{ opacity: .7 }}>
                   <Icon name="heart" size={12} color={colors.white} />{' '}
                   {savedCount}
                 </H6>
