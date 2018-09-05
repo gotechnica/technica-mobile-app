@@ -78,24 +78,53 @@ export default class EventsManager {
     }
 
     rawData = scheduleData.Schedule;
-
     this.eventDays = [];
+
+    for (let i in rawData) {
+      this.eventDays.push(createEventDay(rawData[i]));
+    }
+
+    this.combinedEvents = _.flatten(
+      _.flatten(
+        _.map(this.eventDays, eventDay =>
+          _.map(eventDay.eventGroups, eventGroup => eventGroup.events)
+        )
+      )
+    );
+
+    console.log('Combined events', this.combinedEvents);
 
     this.favoriteState = {};
     AsyncStorage.getItem(EVENT_FAVORITED_STORE, (err, result) => {
-      this.favoriteState = result;
-      console.log('favorites', result);
+      if (result === null) {
+        this.favoriteState = {};
+      } else {
+        this.favoriteState = result;
+      }
+      console.log('favorites', this.savedCounts);
     });
 
     this.savedCounts = {};
     AsyncStorage.getItem(SAVED_COUNT_STORE, (err, result) => {
       this.savedCounts = result;
-      console.log('savedCounts', savedCounts);
-    });
+      if (result === null) {
+        this.savedCounts = {};
 
-    for (let i in rawData) {
-      this.eventDays.push(createEventDay(rawData[i]));
-    }
+        for (let i in this.combinedEvents) {
+          this.savedCounts[this.combinedEvents[i].key] = Math.floor(
+            Math.random() * 1000
+          );
+        }
+      } else {
+        this.savedCounts = result;
+      }
+
+      console.log('savedCounts', this.savedCounts);
+      this.getTopEvents.bind(this);
+      this.getBeginnerEventsArray.bind(this);
+      this.getTopEvents(10);
+      console.log('beginners', this.getBeginnerEventsArray());
+    });
   }
 
   getEventDays() {
@@ -103,7 +132,16 @@ export default class EventsManager {
   }
 
   getTopEvents(num) {
-    return [];
+    topSorted = _.sortBy(
+      this.combinedEvents,
+      event => -this.savedCounts[event.key]
+    );
+
+    return topSorted.slice(0, num);
+  }
+
+  getBeginnerEventsArray() {
+    return _.filter(this.combinedEvents, event => event.beginnerFriendly);
   }
 
   isFavorited(key) {

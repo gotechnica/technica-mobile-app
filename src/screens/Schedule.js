@@ -60,6 +60,7 @@ export default class Schedule extends Component<Props> {
       <EventGroupComponent
         header={eventGroup.label}
         events={eventGroup.events}
+        eventManager={this.props.eventManager}
       />
     );
   }

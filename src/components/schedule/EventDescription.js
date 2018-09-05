@@ -66,7 +66,9 @@ export default class ScheduleCard extends Component<Props> {
           <H4 style={{ color: colors.fontGrey }}>{this.props.location}</H4>
         </View>
         <View style={[styles.row, { flex: 1, justifyContent: 'flex-end' }]}>
-          <H3 style={{ marginRight: 8, marginTop: 2 }}>255</H3>
+          <H3 style={{ marginRight: 8, marginTop: 2 }}>
+            {this.props.savedCount}
+          </H3>
           <Icon
             name={this.state.favorited ? 'heart' : 'heart-o'}
             size={22}

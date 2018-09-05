@@ -35,6 +35,7 @@ export default class EventGroupComponent extends Component<Props> {
                 endTime={event.endTimeFormatted}
                 title={event.title}
                 location={event.location}
+                savedCount={this.props.eventManager.getSavedCount(event.key)}
               />
             );
           }}

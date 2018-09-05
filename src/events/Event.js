@@ -18,6 +18,7 @@ export default class Event {
     this.endTime = endTime;
     this.beginnerFriendly = beginnerFriendly;
     this.location = location;
+    this.img = img;
   }
 
   get startTimeFormatted() {
