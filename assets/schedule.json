@@ -9,7 +9,9 @@
           "key": 100001,
           "location": "Xfinity Gate A",
           "startTime": "2018-04-06 17:00",
-          "title": "Hacker Check-in"
+          "title": "Hacker Check-in",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
           "description": "",
@@ -17,7 +19,9 @@
           "key": 100002,
           "location": "Xfinity Gate A",
           "startTime": "2018-04-06 17:00",
-          "title": "Mentor Check-in"
+          "title": "Mentor Check-in",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
           "description": "",
@@ -25,7 +29,9 @@
           "key": 100003,
           "location": "Xfinity Gate A",
           "startTime": "2018-04-06 18:00",
-          "title": "UMD Student Check-in"
+          "title": "UMD Student Check-in",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
           "description": "",
@@ -33,7 +39,9 @@
           "key": 100004,
           "location": "Canteen",
           "startTime": "2018-04-06 18:00",
-          "title": "Dinner"
+          "title": "Dinner",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
           "description": "Interact with sponsors and get tons of swag!",
@@ -41,7 +49,9 @@
           "key": 100005,
           "location": "Campgrounds",
           "startTime": "2018-04-06 18:00",
-          "title": "Sponsorship Fair"
+          "title": "Sponsorship Fair",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
           "description": "",
@@ -49,7 +59,9 @@
           "key": 100006,
           "location": "Campfire",
           "startTime": "2018-04-06 19:30",
-          "title": "Opening Ceremony"
+          "title": "Opening Ceremony",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
           "description": "",
@@ -57,7 +69,9 @@
           "key": 100007,
           "location": "Campgrounds",
           "startTime": "2018-04-06 21:00",
-          "title": "Hacking Starts"
+          "title": "Hacking Starts",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
           "description": "",
@@ -65,23 +79,31 @@
           "key": 100008,
           "location": "Canteen",
           "startTime": "2018-04-06 21:00",
-          "title": "Dessert"
+          "title": "Dessert",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
-          "description": "Launch and configure your own blockchain in a matter of minutes with ARK Blockchain",
+          "description":
+            "Launch and configure your own blockchain in a matter of minutes with ARK Blockchain",
           "endTime": "2018-04-06 21:30",
           "key": 100037,
           "location": "Cabin",
           "startTime": "2018-04-06 21:00",
-          "title": "Ark-IoT Blockchain Workshop"
+          "title": "Ark-IoT Blockchain Workshop",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
-          "description": "Learn the ins and outs of hackathons and how to make the best of your first hackathon experience!",
+          "description":
+            "Learn the ins and outs of hackathons and how to make the best of your first hackathon experience!",
           "endTime": "2018-04-06 22:15",
           "key": 100009,
           "location": "Cabin",
           "startTime": "2018-04-06 21:45",
-          "title": "Hackathon 101 Workshop"
+          "title": "Hackathon 101 Workshop",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
           "description": "Form teams based on your passions!",
@@ -89,23 +111,31 @@
           "key": 100010,
           "location": "Campfire",
           "startTime": "2018-04-06 22:15",
-          "title": "Team Formation"
+          "title": "Team Formation",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
-          "description": "What it takes to raise funding for a hackathon project",
+          "description":
+            "What it takes to raise funding for a hackathon project",
           "endTime": "2018-04-06 23:00",
           "key": 100011,
           "location": "Cabin",
           "startTime": "2018-04-06 22:30",
-          "title": "Turn a Hackathon Project into a VC-Funded Product"
+          "title": "Turn a Hackathon Project into a VC-Funded Product",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
-          "description": "How to develop an iconic brand and use design elements cohesively in logos and all brand materials",
+          "description":
+            "How to develop an iconic brand and use design elements cohesively in logos and all brand materials",
           "endTime": "2018-04-07 00:00",
           "key": 100012,
           "location": "Cabin",
           "startTime": "2018-04-06 23:30",
-          "title": "Intro to Design and Branding Workshop"
+          "title": "Intro to Design and Branding Workshop",
+          "beginnerFriendly": true,
+          "img": "demo3"
         }
       ]
     ],
@@ -118,7 +148,9 @@
           "key": 100013,
           "location": "Canteen",
           "startTime": "2018-04-07 00:00",
-          "title": "Insomnia Cookies"
+          "title": "Insomnia Cookies",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
           "description": "",
@@ -126,7 +158,9 @@
           "key": 100015,
           "location": "Power Peak",
           "startTime": "2018-04-07 01:00",
-          "title": "Smash Tournament"
+          "title": "Smash Tournament",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
           "description": "",
@@ -134,7 +168,9 @@
           "key": 100016,
           "location": "Cabin",
           "startTime": "2018-04-07 01:30",
-          "title": "Lifesize Hungry Hungry Hippos"
+          "title": "Lifesize Hungry Hungry Hippos",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
           "description": "",
@@ -142,7 +178,9 @@
           "key": 100017,
           "location": "Canteen",
           "startTime": "2018-04-07 08:30",
-          "title": "Breakfast"
+          "title": "Breakfast",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
           "description": "Learn about life as an attorney in tech",
@@ -150,39 +188,53 @@
           "key": 100018,
           "location": "Campfire",
           "startTime": "2018-04-07 09:00",
-          "title": "Attorney AMA"
+          "title": "Attorney AMA",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
-          "description": "Add the power of location to your application with a comprehensive mapping platform",
+          "description":
+            "Add the power of location to your application with a comprehensive mapping platform",
           "endTime": "2018-04-07 10:30",
           "key": 100019,
           "location": "Cabin",
           "startTime": "2018-04-07 10:00",
-          "title": "Amp Up Your Apps With Maps by Esri"
+          "title": "Amp Up Your Apps With Maps by Esri",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
-          "description": "See MSFT Director Ludovic showcase Office Add-ins that integrate with popular productivity apps",
+          "description":
+            "See MSFT Director Ludovic showcase Office Add-ins that integrate with popular productivity apps",
           "endTime": "2018-04-07 11:30",
           "key": 100020,
           "location": "Cabin",
           "startTime": "2018-04-07 11:00",
-          "title": "Discover the Office 365 Developer Platform by Microsoft"
+          "title": "Discover the Office 365 Developer Platform by Microsoft",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
-          "description": "Hear from alumni entrepreneurs who have launched startups",
+          "description":
+            "Hear from alumni entrepreneurs who have launched startups",
           "endTime": "2018-04-07 12:00",
           "key": 100021,
           "location": "Campfire",
           "startTime": "2018-04-07 11:30",
-          "title": "Entrepeneurship Panel"
+          "title": "Entrepeneurship Panel",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
-          "description": "How to integrate online information gathering tools into your hacks",
+          "description":
+            "How to integrate online information gathering tools into your hacks",
           "endTime": "2018-04-07 12:30",
           "key": 100022,
           "location": "Cabin",
           "startTime": "2018-04-07 12:00",
-          "title": "Open-Source Intelligence Techniques Workshop"
+          "title": "Open-Source Intelligence Techniques Workshop",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
           "description": "",
@@ -190,23 +242,31 @@
           "key": 100023,
           "location": "Canteen",
           "startTime": "2018-04-07 12:30",
-          "title": "Lunch"
+          "title": "Lunch",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
-          "description": "Using Illustrator and Photoshop to explore visual concepts and motion",
+          "description":
+            "Using Illustrator and Photoshop to explore visual concepts and motion",
           "endTime": "2018-04-07 13:30",
           "key": 100024,
           "location": "Cabin",
           "startTime": "2018-04-07 13:00",
-          "title": "GIFs Workshop"
+          "title": "GIFs Workshop",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
-          "description": "Discover the connection between bananas and great UX design! Prize entry too!",
+          "description":
+            "Discover the connection between bananas and great UX design! Prize entry too!",
           "endTime": "2018-04-07 14:30",
           "key": 100025,
           "location": "Cabin",
           "startTime": "2018-04-07 14:00",
-          "title": "Go Bananas Over UX by FINRA"
+          "title": "Go Bananas Over UX by FINRA",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
           "description": "Chat with 1517 Fund about anything entrepreneurship",
@@ -214,23 +274,32 @@
           "key": 100026,
           "location": "1517 Fund Booth",
           "startTime": "2018-04-07 14:00",
-          "title": "Office Hours with 1517 Fund"
+          "title": "Office Hours with 1517 Fund",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
-          "description": "Hear the empowering stories of women in the tech industry",
+          "description":
+            "Hear the empowering stories of women in the tech industry",
           "endTime": "2018-04-07 15:00",
           "key": 100027,
           "location": "Cabin",
           "startTime": "2018-04-07 14:30",
-          "title": "Women in Tech Fireside Chat"
+          "title": "Women in Tech Fireside Chat",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
-          "description": "Round table discussion of modern mobile and social tech to improve quality of Behavioral Healthcare",
+          "description":
+            "Round table discussion of modern mobile and social tech to improve quality of Behavioral Healthcare",
           "endTime": "2018-04-07 15:30",
           "key": 100028,
           "location": "Cabin",
           "startTime": "2018-04-07 15:00",
-          "title": "Using Technology to Improve Healthcare by Credible Behaviorial Health"
+          "title":
+            "Using Technology to Improve Healthcare by Credible Behaviorial Health",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
           "description": "A rapid-fire live-design competition",
@@ -238,7 +307,9 @@
           "key": 100029,
           "location": "Campfire",
           "startTime": "2018-04-07 16:00",
-          "title": "COLORWAR"
+          "title": "COLORWAR",
+          "beginnerFriendly": true,
+          "img": "demo1"
         },
         {
           "description": "Come learn about electronics by making LEDs blink!",
@@ -246,7 +317,9 @@
           "key": 100030,
           "location": "Cabin",
           "startTime": "2018-04-07 19:00",
-          "title": "How 2 Blink LEDs Workshop"
+          "title": "How 2 Blink LEDs Workshop",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
           "description": "Learn about the world of Venture Capital",
@@ -254,7 +327,10 @@
           "key": 100031,
           "location": "Cabin",
           "startTime": "2018-04-07 18:00",
-          "title": "Venture Capital and the Art of Funding Your Startup - Mike Volpi"
+          "title":
+            "Venture Capital and the Art of Funding Your Startup - Mike Volpi",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
           "description": "",
@@ -262,15 +338,20 @@
           "key": 100032,
           "location": "Canteen",
           "startTime": "2018-04-07 18:30",
-          "title": "Dinner"
+          "title": "Dinner",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
-          "description": "Learn how to approach design problems with design thinking!",
+          "description":
+            "Learn how to approach design problems with design thinking!",
           "endTime": "2018-04-07 16:00",
           "key": 100033,
           "location": "Breakout Area",
           "startTime": "2018-04-07 15:30",
-          "title": "Design Thinking Workshop"
+          "title": "Design Thinking Workshop",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
           "description": "What to expect before an interview",
@@ -278,15 +359,20 @@
           "key": 100034,
           "location": "Cabin",
           "startTime": "2018-04-07 19:30",
-          "title": "The Coding Interview Workshop"
+          "title": "The Coding Interview Workshop",
+          "beginnerFriendly": true,
+          "img": "demo2"
         },
         {
-          "description": "Building a self driving car with python and machine learning",
+          "description":
+            "Building a self driving car with python and machine learning",
           "endTime": "2018-04-07 20:30",
           "key": 100035,
           "location": "Cabin",
           "startTime": "2018-04-07 20:00",
-          "title": "Self-Driving Cars Workshop"
+          "title": "Self-Driving Cars Workshop",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
           "description": "Learn how to dance!",
@@ -294,7 +380,9 @@
           "key": 100036,
           "location": "Campfire",
           "startTime": "2018-04-07 20:00",
-          "title": "Ballroom Dancing"
+          "title": "Ballroom Dancing",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
           "description": "nom nom nom",
@@ -302,23 +390,31 @@
           "key": 100038,
           "location": "Canteen",
           "startTime": "2018-04-07 22:00",
-          "title": "Insomnia Cookies"
+          "title": "Insomnia Cookies",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
-          "description": "Intro to the tech that powers bitcoin and almost all other cryptocurrencies",
+          "description":
+            "Intro to the tech that powers bitcoin and almost all other cryptocurrencies",
           "endTime": "2018-04-07 22:30",
           "key": 100039,
           "location": "Cabin",
           "startTime": "2018-04-07 22:00",
-          "title": "Intro to Crypto and Blockchain Workshop"
+          "title": "Intro to Crypto and Blockchain Workshop",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
-          "description": "Learn about the technology that *drives* self-driving cars!",
+          "description":
+            "Learn about the technology that *drives* self-driving cars!",
           "endTime": "2018-04-07 23:30",
           "key": 100040,
           "location": "Cabin",
           "startTime": "2018-04-07 23:00",
-          "title": "SLAM: Why Robots Don't Crash Workshop"
+          "title": "SLAM: Why Robots Don't Crash Workshop",
+          "beginnerFriendly": true,
+          "img": "demo3"
         },
         {
           "description": "How to develop a website!",
@@ -326,7 +422,9 @@
           "key": 100014,
           "location": "Cabin",
           "startTime": "2018-04-07 21:00",
-          "title": "Intro to Web Development Workshop"
+          "title": "Intro to Web Development Workshop",
+          "beginnerFriendly": true,
+          "img": "demo1"
         }
       ]
     ]

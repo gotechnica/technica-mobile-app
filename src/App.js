@@ -12,7 +12,6 @@ import { colors } from './components/Colors';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
-
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
@@ -25,8 +24,8 @@ export default class App extends Component<Props> {
           location: 'Room 123',
           img: 'demo3',
           beginnerFriendly: false,
-          time: undefined,
-          savedCount: 555,
+          startTime: undefined,
+          savedCount: 555
         },
         2: {
           name: 'Dinner',
@@ -35,7 +34,7 @@ export default class App extends Component<Props> {
           beginnerFriendly: true,
           img: 'demo1',
           time: undefined,
-          savedCount: 999,
+          savedCount: 999
         },
         4: {
           name: 'Batista Bombs',
@@ -44,7 +43,7 @@ export default class App extends Component<Props> {
           beginnerFriendly: true,
           img: 'demo2',
           time: undefined,
-          savedCount: 1,
+          savedCount: 1
         },
         3: {
           name: 'Button Making',
@@ -53,7 +52,7 @@ export default class App extends Component<Props> {
           img: 'demo3',
           beginnerFriendly: true,
           time: undefined,
-          savedCount: 4,
+          savedCount: 4
         },
         31: {
           name: 'Chicken Making',
@@ -62,7 +61,7 @@ export default class App extends Component<Props> {
           img: 'demo1',
           beginnerFriendly: false,
           time: undefined,
-          savedCount: 41,
+          savedCount: 41
         },
         32: {
           name: 'Burrito Making',
@@ -71,7 +70,7 @@ export default class App extends Component<Props> {
           img: 'demo2',
           beginnerFriendly: false,
           time: undefined,
-          savedCount: 477,
+          savedCount: 477
         },
         33: {
           name: 'Sushi Making',
@@ -80,7 +79,7 @@ export default class App extends Component<Props> {
           img: 'demo3',
           beginnerFriendly: true,
           time: undefined,
-          savedCount: 41,
+          savedCount: 41
         },
         34: {
           name: 'Block Making',
@@ -89,17 +88,17 @@ export default class App extends Component<Props> {
           img: 'demo2',
           beginnerFriendly: true,
           time: undefined,
-          savedCount: 444,
-        },
+          savedCount: 444
+        }
       },
       userInfo: {
         uid: 123456789,
         name: 'Emma Stone',
         savedEvents: {
           1: true,
-          4: true,
-        },
-      },
+          4: true
+        }
+      }
     };
   }
 
@@ -108,11 +107,19 @@ export default class App extends Component<Props> {
       <ScrollableTabView
         tabBarPosition="bottom"
         locked
-        style={{ backgroundColor: colors.black}}
+        style={{ backgroundColor: colors.black }}
         renderTabBar={() => <CustomTabBar />}
       >
-        <Home masterState={this.state} tabLabel="home" />
-        <Schedule masterState={this.state} tabLabel="calendar" />
+        <Home
+          masterState={this.state}
+          eventManager={eventManager}
+          tabLabel="home"
+        />
+        <Schedule
+          masterState={this.state}
+          tabLabel="calendar"
+          eventManager={this.props.eventManager}
+        />
         <Saved masterState={this.state} tabLabel="heart" />
         <Mentors masterState={this.state} tabLabel="people" />
         <Profile masterState={this.state} tabLabel="user" />

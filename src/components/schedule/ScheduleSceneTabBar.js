@@ -8,48 +8,45 @@ import {
   View,
   Animated,
   TouchableOpacity,
-  FlatList,
+  FlatList
 } from 'react-native';
 
 import { colors } from '../Colors';
 import { H1, H2, H3, H4, P } from '../Text';
 
-
 export default class ScheduleSceneTabBar extends Component {
   render() {
-    // const containerWidth = this.props.containerWidth;
-    // const numberOfTabs = this.props.tabs.length;
-    // const eachTabWidth = {
-    //   width: containerWidth / numberOfTabs
-    // };
-
     return (
       <FlatList
-        style = {[styles.tabs, this.props.style, ]}
-        data = {this.props.tabs}
-        renderItem = {(tabObj) => {
-          return (<TouchableOpacity
-            onPress={() => this.props.goToSection(tabObj.index)}
-            style={[styles.tab, styles.tabActive]}
-          >
-            <H2 style={styles.activeText}>
-              {tabObj.item}
-            </H2>
-          </TouchableOpacity>)
+        style={[styles.tabs, this.props.style]}
+        data={this.props.tabs}
+        renderItem={tabObj => {
+          return (
+            <TouchableOpacity
+              onPress={() => this.props.goToSection(tabObj.index)}
+              style={[styles.tab, styles.tabActive]}
+            >
+              <H2 style={styles.activeText}>{tabObj.item}</H2>
+            </TouchableOpacity>
+          );
         }}
-        ItemSeparatorComponent = {() => {
+        ItemSeparatorComponent={() => {
           return (
             <H2
-              style = {
-                [styles.activeText,
-                {marginHorizontal: 10,
-                  marginVertical: 10}]
-              }>
+              style={[
+                styles.activeText,
+                {
+                  marginHorizontal: 10,
+                  marginVertical: 10
+                }
+              ]}
+            >
               |
-            </H2>);
+            </H2>
+          );
         }}
-        horizontal = {true}
-        keyExtractor = {(item, index) => item}
+        horizontal={true}
+        keyExtractor={(item, index) => item}
       />
     );
   }
@@ -64,12 +61,12 @@ ScheduleSceneTabBar.propTypes = {
 const styles = StyleSheet.create({
   activeText: {
     fontSize: 20,
-    color: colors.pink,
+    color: colors.pink
   },
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
+    marginVertical: 10
   },
   tabs: {
     flexDirection: 'row',
@@ -77,5 +74,5 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderRightWidth: 0,
     borderBottomWidth: 0
-  },
+  }
 });

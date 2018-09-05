@@ -5,144 +5,98 @@ import {
   Text,
   FlatList,
   View,
-  ActivityIndicator,
+  ActivityIndicator
 } from 'react-native';
 import { H1, H2, H3, H4, P } from '../components/Text';
 import {
   PlainViewContainer,
   ViewContainer,
   PadContainer,
-  Heading,
-} from '../components/Base'
+  Heading
+} from '../components/Base';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import EventGroup from '../components/schedule/EventGroup';
-import ScheduleSceneTabBar from '../components/schedule/ScheduleSceneTabBar'
-
-import _ from 'lodash';
-import moment from 'moment';
-import { normalizeTimeLabel } from '../actions/util.js';
-import scheduleData from '../../assets/schedule.json';
+import EventGroupComponent from '../components/schedule/EventGroupComponent';
+import ScheduleSceneTabBar from '../components/schedule/ScheduleSceneTabBar';
 
 const styles = StyleSheet.create({
   instructions: {
     textAlign: 'left',
     color: '#333333',
-    marginBottom: 5,
+    marginBottom: 5
   },
-  activityIndicatorContainer:{
-      alignItems: 'center',
-      justifyContent: 'center',
-      flex: 1,
-      paddingBottom: 20,
-  },
+  activityIndicatorContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    paddingBottom: 20
+  }
 });
 
 export default class Schedule extends Component<Props> {
-
   constructor(props) {
     super(props);
 
-    this.state = {
-      datasource: scheduleData.Schedule
-    }
-
     this.renderScheduleForDay = this.renderScheduleForDay.bind(this);
-
   }
 
-  componentDidMount() {
+  componentDidMount() {}
 
-  }
-
-  renderScheduleForDay(dayObj) {
-    // if(this.state.loaded === false){
-    //   return
-    //     (<View
-    //       style={styles.activityIndicatorContainer}
-    //       key = {scheduleArray[0]}
-    //       tabLabel={scheduleArray[0]}>
-    //         <ActivityIndicator animating={true}/>
-    //      </View>);
-    // }
-    scheduleArray = dayObj.item
-    alteredData = scheduleArray[1].sort((event1, event2) => {
-      start1 = moment(event1.startTime);
-      start2 = moment(event2.startTime);
-
-      end1 = moment(event1.endTime);
-      end2 = moment(event2.endTime);
-
-      if(start1 - start2 == 0){
-        return end1 - end2;
-      }
-
-      return start1 - start2;
-    })
-
-    groupedData = _.groupBy(
-      alteredData,
-      (event) => {
-        return normalizeTimeLabel(event.startTime)
-      }
-    )
-
-    labels = Object.keys(groupedData);
-
-    eventGroupObjs = [];
-    for (let i = 0; i < labels.length; i++) {
-
-      eventGroupObjs.push(
-        {
-          header: labels[i],
-          data: groupedData[labels[i]],
-        }
-      )
-    }
-
-    return (<FlatList
-        key = {scheduleArray[0]}
-        data={eventGroupObjs}
-        renderItem = {this.renderEventCard.bind(this)}
-        keyExtractor={(item, index) => index.toString()}
-        scrollEnabled = {false}
-      />);
-  }
-
-  renderEventCard(eventData) {
-    //console.log(eventData);
+  renderScheduleForDay(eventDayObj) {
+    eventDay = eventDayObj.item;
     return (
-      <EventGroup
-        header = {eventData.item.header}
-        data = {eventData.item.data}
-      />);
+      <FlatList
+        key={eventDay.label}
+        data={eventDay.eventGroups}
+        renderItem={this.renderEventCard.bind(this)}
+        keyExtractor={(item, index) => index.toString()}
+        scrollEnabled={false}
+      />
+    );
+  }
+
+  renderEventCard(eventGroupObj) {
+    eventGroup = eventGroupObj.item;
+    return (
+      <EventGroupComponent
+        header={eventGroup.label}
+        events={eventGroup.events}
+        eventManager={this.props.eventManager}
+      />
+    );
   }
 
   render() {
-    let tabNames = this.state.datasource.map((day) => day[0]);
+    let tabNames = this.props.eventManager
+      .getEventDays()
+      .map(eventDay => eventDay.label);
     return (
       <PlainViewContainer>
         <FlatList
-          data = {this.state.datasource}
-          renderItem = {this.renderScheduleForDay}
-          ListHeaderComponent = {() => (
+          data={this.props.eventManager.getEventDays()}
+          renderItem={this.renderScheduleForDay}
+          ListHeaderComponent={() => (
             <PadContainer>
               <View>
                 <Heading>Schedule</Heading>
                 <ScheduleSceneTabBar
-                  goToSection = {(i) => {
+                  goToSection={i => {
                     this.scheduleListRef.scrollToIndex({
                       index: i,
                       viewOffset: 100,
                       viewPosition: 0
-                    })}}
-                  tabs = {tabNames}
+                    });
+                  }}
+                  tabs={tabNames}
                 />
               </View>
-            </PadContainer>)}
-          ItemSeparatorComponent = {() => (<H2>Separator Component TBD</H2>)}
-          keyExtractor = {(item, index) => item[0]}
-          ref = {(ref) => {this.scheduleListRef = ref}}>
-        </FlatList>
+            </PadContainer>
+          )}
+          ItemSeparatorComponent={() => <H2>Separator Component TBD</H2>}
+          keyExtractor={(eventDay, index) => eventDay.label}
+          ref={ref => {
+            this.scheduleListRef = ref;
+          }}
+        />
       </PlainViewContainer>
     );
   }

@@ -11,27 +11,22 @@ import {
 import Images from '../../assets/imgs/index';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Modal from "react-native-modal";
-import {
-  ModalContent,
-  ModalHeader,
-  HorizontalLine,
-  Spacing,
-} from './Base';
+import Modal from 'react-native-modal';
+import { ModalContent, ModalHeader, HorizontalLine, Spacing } from './Base';
 import { colors } from './Colors';
 
 const styles = StyleSheet.create({
   event: {
     // backgroundColor: 'black',
-    marginBottom: 15,
-  },
+    marginBottom: 15
+  }
 });
 
 export default class EventCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModalVisible: false,
+      isModalVisible: false
     };
     this.toggleModal = this.toggleModal.bind(this);
   }
@@ -43,7 +38,7 @@ export default class EventCard extends Component {
   renderModal(props) {
     const dimensions = require('Dimensions').get('window');
     const imageWidth = dimensions.width - 42;
-    const imageHeight = Math.round(imageWidth * 38/67);
+    const imageHeight = Math.round((imageWidth * 38) / 67);
     return (
       <Modal
         isVisible={this.state.isModalVisible}
@@ -71,7 +66,7 @@ export default class EventCard extends Component {
               height: imageHeight,
               marginTop: 20,
               borderRadius: 4,
-              marginBottom: 20,
+              marginBottom: 20
             }}
             // source={Image[img]}
             source={Images[props.img]}
@@ -80,22 +75,19 @@ export default class EventCard extends Component {
             <Spacing />
             <H3>12:00pm - 1:00pm</H3>
             <Spacing />
-            <H2>{props.name}</H2>
+            <H2>{props.title}</H2>
             <H2>{props.location}</H2>
             <Spacing />
             <Spacing />
             <HorizontalLine />
             <Spacing />
             <Spacing />
-            {
-              props.beginnerFriendly ?
-                <Fragment>
-                  <H4 style={{ color: colors.lavender }}>BEGINNER FRIENDLY</H4>
-                  <Spacing />
-                </Fragment>
-                :
-                null
-            }
+            {props.beginnerFriendly ? (
+              <Fragment>
+                <H4 style={{ color: colors.lavender }}>BEGINNER FRIENDLY</H4>
+                <Spacing />
+              </Fragment>
+            ) : null}
             <P>{props.description}</P>
           </ScrollView>
         </ModalContent>
@@ -104,10 +96,10 @@ export default class EventCard extends Component {
   }
 
   render() {
-    const { name, savedCount, img, big } = this.props;
+    const { title, savedCount, img, big } = this.props;
     const dimensions = require('Dimensions').get('window');
-    const imageWidth = (big) ? dimensions.width - 40 : (dimensions.width / 2) - 30;
-    const imageHeight = Math.round(imageWidth * 38/67);
+    const imageWidth = big ? dimensions.width - 40 : dimensions.width / 2 - 30;
+    const imageHeight = Math.round((imageWidth * 38) / 67);
     // TODO refactor "big" property, which is isolated to just the map on homescreen, to its own component
     return (
       <View>
@@ -119,22 +111,20 @@ export default class EventCard extends Component {
                 width: imageWidth,
                 height: imageHeight,
                 borderRadius: 4,
-                marginBottom: 5,
+                marginBottom: 5
               }}
               // source={Image[img]}
               source={Images[img]}
             />
-            {
-              (big) ?
-                null
-                :
-                (
-                  <View>
-                    <H3>{name}</H3>
-                    <H6><Icon name="heart" size={12} color={colors.white}/> {savedCount}</H6>
-                  </View>
-                )
-            }
+            {big ? null : (
+              <View>
+                <H3>{title}</H3>
+                <H6>
+                  <Icon name="heart" size={12} color={colors.white} />{' '}
+                  {savedCount}
+                </H6>
+              </View>
+            )}
           </View>
         </TouchableOpacity>
       </View>
