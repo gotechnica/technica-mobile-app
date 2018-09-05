@@ -17,20 +17,7 @@ import {
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import EventGroupComponent from '../components/schedule/EventGroupComponent';
 import ScheduleSceneTabBar from '../components/schedule/ScheduleSceneTabBar';
-
-const styles = StyleSheet.create({
-  instructions: {
-    textAlign: 'left',
-    color: '#333333',
-    marginBottom: 5
-  },
-  activityIndicatorContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingBottom: 20
-  }
-});
+import { colors } from '../components/Colors';
 
 export default class Schedule extends Component<Props> {
   constructor(props) {
@@ -76,22 +63,35 @@ export default class Schedule extends Component<Props> {
           renderItem={this.renderScheduleForDay}
           ListHeaderComponent={() => (
             <PadContainer>
-              <View>
-                <Heading>Schedule</Heading>
-                <ScheduleSceneTabBar
-                  goToSection={i => {
-                    this.scheduleListRef.scrollToIndex({
-                      index: i,
-                      viewOffset: 100,
-                      viewPosition: 0
-                    });
-                  }}
-                  tabs={tabNames}
-                />
-              </View>
+              <Heading>Schedule</Heading>
+              <ScheduleSceneTabBar
+                goToSection={i => {
+                  this.scheduleListRef.scrollToIndex({
+                    index: i,
+                    viewOffset: 100,
+                    viewPosition: 0
+                  });
+                }}
+                tabs={tabNames}
+                activeTab={0}
+              />
             </PadContainer>
           )}
-          ItemSeparatorComponent={() => <H2>Separator Component TBD</H2>}
+          ItemSeparatorComponent={() => (
+            <PadContainer style={{ marginTop: 40 }}>
+              <ScheduleSceneTabBar
+                goToSection={i => {
+                  this.scheduleListRef.scrollToIndex({
+                    index: i,
+                    viewOffset: 100,
+                    viewPosition: 0
+                  });
+                }}
+                tabs={tabNames}
+                activeTab={1}
+              />
+            </PadContainer>
+          )}
           keyExtractor={(eventDay, index) => eventDay.label}
           ref={ref => {
             this.scheduleListRef = ref;
