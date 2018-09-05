@@ -126,7 +126,7 @@ export default class EventCard extends Component {
             {big ? null : (
               <View>
                 <H3>{titleClipped}</H3>
-                <H6 style={{ opacity: .7 }}>
+                <H6 style={{ opacity: .8 }}>
                   <Icon name="heart" size={12} color={colors.white} />{' '}
                   {savedCount}
                 </H6>
