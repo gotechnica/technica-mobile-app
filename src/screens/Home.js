@@ -170,6 +170,7 @@ export default class Home extends Component<Props> {
     );
   };
 
+  // TODO remove map from this and add a map icon to page header
   renderMapSection = () => (
     <View>
       <PadContainer style={styles.subSection}>

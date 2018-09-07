@@ -15,6 +15,7 @@ import Modal from 'react-native-modal';
 import { ModalContent, ModalHeader, HorizontalLine, Spacing } from './Base';
 import { colors } from './Colors';
 import moment from 'moment';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 export default class EventModal extends Component {
   render() {
@@ -23,60 +24,65 @@ export default class EventModal extends Component {
     const imageWidth = dimensions.width - 42;
     const imageHeight = Math.round((imageWidth * 38) / 67);
     return (
-      <Modal
-        isVisible={props.isModalVisible}
-        backdropColor={colors.black}
-        backdropOpacity={1}
-        animationInTiming={250}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
-        animationOutTiming={300}
-        backdropTransitionInTiming={250}
-        backdropTransitionOutTiming={300}
-        avoidKeyboard={true}
-        onBackButtonPress={() => props.toggleModal()}
+      // TODO EXPERIMENTAL FEATURE TEST THIS GESTURE ON A REAL DEVICE
+      <GestureRecognizer
+        onSwipeDown={() => {console.log("YOU SWIPED DOWN"); props.toggleModal()}}
       >
-        <ModalContent>
-          <ModalHeader
-            onBackButtonPress={() => props.toggleModal()}
-            savedCount={props.savedCount}
-            heart
-            small
-          />
-          <Image
-            style={{
-              width: imageWidth,
-              height: imageHeight,
-              marginTop: 20,
-              borderRadius: 4,
-              marginBottom: 20
-            }}
-            // source={Image[img]}
-            source={Images[props.img]}
-          />
-          <ScrollView>
-            <Spacing />
-            <H3>{moment(props.endTime).format('dddd')}</H3>
-            <H3>{props.startTimeFormatted} - {props.endTimeFormatted}</H3>
-            <Spacing />
-            <Spacing />
-            <H2>{props.title}</H2>
-            <H2>{props.location}</H2>
-            <Spacing />
-            <Spacing />
-            <HorizontalLine />
-            <Spacing />
-            <Spacing />
-            {props.beginnerFriendly ? (
-              <Fragment>
-                <H4 style={{ color: colors.lavender }}>BEGINNER FRIENDLY</H4>
-                <Spacing />
-              </Fragment>
-            ) : null}
-            <P>{props.description}</P>
-          </ScrollView>
-        </ModalContent>
-      </Modal>
+        <Modal
+          isVisible={props.isModalVisible}
+          backdropColor={colors.black}
+          backdropOpacity={1}
+          animationInTiming={250}
+          animationIn="fadeInUp"
+          animationOut="fadeOutDown"
+          animationOutTiming={300}
+          backdropTransitionInTiming={250}
+          backdropTransitionOutTiming={300}
+          avoidKeyboard={true}
+          onBackButtonPress={() => props.toggleModal()}
+        >
+          <ModalContent>
+            <ModalHeader
+              onBackButtonPress={() => props.toggleModal()}
+              savedCount={props.savedCount}
+              heart
+              small
+            />
+            <Image
+              style={{
+                width: imageWidth,
+                height: imageHeight,
+                marginTop: 20,
+                borderRadius: 4,
+                marginBottom: 20
+              }}
+              // source={Image[img]}
+              source={Images[props.img]}
+            />
+            <ScrollView>
+              <Spacing />
+              <H3>{moment(props.endTime).format('dddd')}</H3>
+              <H3>{props.startTimeFormatted} - {props.endTimeFormatted}</H3>
+              <Spacing />
+              <Spacing />
+              <H2>{props.title}</H2>
+              <H2>{props.location}</H2>
+              <Spacing />
+              <Spacing />
+              <HorizontalLine />
+              <Spacing />
+              <Spacing />
+              {props.beginnerFriendly ? (
+                <Fragment>
+                  <H4 style={{ color: colors.lavender }}>BEGINNER FRIENDLY</H4>
+                  <Spacing />
+                </Fragment>
+              ) : null}
+              <P>{props.description}</P>
+            </ScrollView>
+          </ModalContent>
+        </Modal>
+      </GestureRecognizer>
     );
   }
 }

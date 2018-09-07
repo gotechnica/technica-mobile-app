@@ -70,7 +70,7 @@ export default class EventDescription extends Component<Props> {
     return (
       <Fragment>
         {this.renderModal()}
-        <TouchableOpacity onPress={() => this.toggleModal()}>
+        <TouchableOpacity style={this.props.style} onPress={() => this.toggleModal()}>
           <View style={[styles.row]}>
               <View style={[styles.col, { flex: 4 }]}>
                 <H4>

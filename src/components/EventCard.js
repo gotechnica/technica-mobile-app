@@ -49,7 +49,6 @@ export default class EventCard extends Component {
     const dimensions = require('Dimensions').get('window');
     const imageWidth = big ? dimensions.width - 40 : dimensions.width / 2 - 30;
     const imageHeight = Math.round((imageWidth * 38) / 67);
-    // TODO refactor "big" property, which is used on just the map on homescreen, to its own component
 
     let titleClipped = title;
     let titleLimit = 30;
@@ -59,7 +58,7 @@ export default class EventCard extends Component {
 
     return (
       <View>
-        {big ? null : this.renderModal()}
+        {this.renderModal()}
         <TouchableOpacity onPress={() => this.toggleModal()}>
           <View style={styles.event}>
             <Image

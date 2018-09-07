@@ -3,7 +3,8 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 import { H1, H2, H3, H4, P } from '../components/Text';
 import {
@@ -13,9 +14,10 @@ import {
   PaperSheet,
   PadContainer,
 } from '../components/Base';
+import EventCard from '../components/EventCard';
+import EventDescription from '../components/schedule/EventDescription';
 
-
-export default class Mentors extends Component<Props> {
+export default class Saved extends Component<Props> {
   render() {
     return (
       <ViewContainer>
@@ -26,6 +28,72 @@ export default class Mentors extends Component<Props> {
           <SubHeading>
             12 events saved
           </SubHeading>
+        </PadContainer>
+
+        <PadContainer>
+          <EventCard
+            title="Chicken Little"
+            savedCount="155"
+            img="demo4"
+            big
+          />
+          <EventDescription
+            title="Chicken Little"
+            endTimeFormatted="FakeEndTime"
+            startTimeFormatted="FakeStartTime"
+            location="Xfinity Gate A"
+            savedCount="155"
+            img="demo4"
+            style={styles.eventDescription}
+          />
+
+          <EventCard
+            title="Chicken Little"
+            savedCount="155"
+            img="demo5"
+            big
+          />
+          <EventDescription
+            title="Chicken Little"
+            endTimeFormatted="FakeEndTime"
+            startTimeFormatted="FakeStartTime"
+            location="Xfinity Gate A"
+            savedCount="155"
+            img="demo4"
+            style={styles.eventDescription}
+          />
+
+          <EventCard
+            title="Chicken Little"
+            savedCount="155"
+            img="demo2"
+            big
+          />
+          <EventDescription
+            title="Chicken Little"
+            endTimeFormatted="FakeEndTime"
+            startTimeFormatted="FakeStartTime"
+            location="Xfinity Gate A"
+            savedCount="155"
+            img="demo4"
+            style={styles.eventDescription}
+          />
+
+          <EventCard
+            title="Chicken Little"
+            savedCount="155"
+            img="demo4"
+            big
+          />
+          <EventDescription
+            title="Chicken Little"
+            endTimeFormatted="FakeEndTime"
+            startTimeFormatted="FakeStartTime"
+            location="Xfinity Gate A"
+            savedCount="155"
+            img="demo4"
+            style={styles.eventDescription}
+          />
         </PadContainer>
 
         <PaperSheet>
@@ -90,9 +158,7 @@ export default class Mentors extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  instructions: {
-    textAlign: 'left',
-    color: '#333333',
-    marginBottom: 5,
+  eventDescription: {
+    marginBottom: 30,
   },
 });
