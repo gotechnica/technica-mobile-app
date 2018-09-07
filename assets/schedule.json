@@ -21,7 +21,7 @@
           "startTime": "2018-11-10 17:00",
           "title": "Mentor Check-in",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo4"
         },
         {
           "description": "",
@@ -31,7 +31,7 @@
           "startTime": "2018-11-10 18:00",
           "title": "UMD Student Check-in",
           "beginnerFriendly": true,
-          "img": "demo2"
+          "img": "demo6"
         },
         {
           "description": "",
@@ -41,7 +41,7 @@
           "startTime": "2018-11-10 18:00",
           "title": "Dinner",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo4"
         },
         {
           "description": "Interact with sponsors and get tons of swag!",
@@ -71,7 +71,7 @@
           "startTime": "2018-11-10 21:00",
           "title": "Hacking Starts",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo4"
         },
         {
           "description": "",
@@ -81,7 +81,7 @@
           "startTime": "2018-11-10 21:00",
           "title": "Dessert",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo4"
         },
         {
           "description":
@@ -92,7 +92,7 @@
           "startTime": "2018-11-10 21:00",
           "title": "Ark-IoT Blockchain Workshop",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo5"
         },
         {
           "description":
@@ -103,7 +103,7 @@
           "startTime": "2018-11-10 21:45",
           "title": "Hackathon 101 Workshop",
           "beginnerFriendly": true,
-          "img": "demo2"
+          "img": "demo6"
         },
         {
           "description": "Form teams based on your passions!",
@@ -113,7 +113,7 @@
           "startTime": "2018-11-10 22:15",
           "title": "Team Formation",
           "beginnerFriendly": true,
-          "img": "demo2"
+          "img": "demo6"
         },
         {
           "description":
@@ -124,7 +124,7 @@
           "startTime": "2018-11-10 22:30",
           "title": "Turn a Hackathon Project into a VC-Funded Product",
           "beginnerFriendly": true,
-          "img": "demo2"
+          "img": "demo6"
         },
         {
           "description":
@@ -170,7 +170,7 @@
           "startTime": "2018-11-11 01:30",
           "title": "Lifesize Hungry Hungry Hippos",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo5"
         },
         {
           "description": "",
@@ -180,7 +180,7 @@
           "startTime": "2018-11-11 08:30",
           "title": "Breakfast",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo7"
         },
         {
           "description": "Learn about life as an attorney in tech",
@@ -190,7 +190,7 @@
           "startTime": "2018-11-11 09:00",
           "title": "Attorney AMA",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo7"
         },
         {
           "description":
@@ -201,7 +201,7 @@
           "startTime": "2018-11-11 10:00",
           "title": "Amp Up Your Apps With Maps by Esri",
           "beginnerFriendly": true,
-          "img": "demo2"
+          "img": "demo6"
         },
         {
           "description":
@@ -234,7 +234,7 @@
           "startTime": "2018-11-11 12:00",
           "title": "Open-Source Intelligence Techniques Workshop",
           "beginnerFriendly": true,
-          "img": "demo3"
+          "img": "demo7"
         },
         {
           "description": "",
@@ -266,7 +266,7 @@
           "startTime": "2018-11-11 14:00",
           "title": "Go Bananas Over UX by FINRA",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo7"
         },
         {
           "description": "Chat with 1517 Fund about anything entrepreneurship",
@@ -276,7 +276,7 @@
           "startTime": "2018-11-11 14:00",
           "title": "Office Hours with 1517 Fund",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo7"
         },
         {
           "description":
@@ -287,7 +287,7 @@
           "startTime": "2018-11-11 14:30",
           "title": "Women in Tech Fireside Chat",
           "beginnerFriendly": true,
-          "img": "demo1"
+          "img": "demo7"
         },
         {
           "description":
@@ -372,7 +372,7 @@
           "startTime": "2018-11-11 20:00",
           "title": "Self-Driving Cars Workshop",
           "beginnerFriendly": true,
-          "img": "demo3"
+          "img": "demo5"
         },
         {
           "description": "Learn how to dance!",
@@ -382,7 +382,7 @@
           "startTime": "2018-11-11 20:00",
           "title": "Ballroom Dancing",
           "beginnerFriendly": true,
-          "img": "demo3"
+          "img": "demo5"
         },
         {
           "description": "nom nom nom",
@@ -392,7 +392,7 @@
           "startTime": "2018-11-11 22:00",
           "title": "Insomnia Cookies",
           "beginnerFriendly": true,
-          "img": "demo3"
+          "img": "demo5"
         },
         {
           "description":
@@ -403,7 +403,7 @@
           "startTime": "2018-11-11 22:00",
           "title": "Intro to Crypto and Blockchain Workshop",
           "beginnerFriendly": true,
-          "img": "demo3"
+          "img": "demo4"
         },
         {
           "description":

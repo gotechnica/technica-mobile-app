@@ -14,7 +14,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
 import { ModalContent, ModalHeader, HorizontalLine, Spacing } from './Base';
 import { colors } from './Colors';
-import { normalizeTimeLabel } from '../actions/util.js';
 import moment from 'moment';
 
 export default class EventModal extends Component {
@@ -58,7 +57,7 @@ export default class EventModal extends Component {
           <ScrollView>
             <Spacing />
             <H3>{moment(props.endTime).format('dddd')}</H3>
-            <H3>{normalizeTimeLabel(props.startTime)} - {normalizeTimeLabel(props.endTime)}</H3>
+            <H3>{props.startTimeFormatted} - {props.endTimeFormatted}</H3>
             <Spacing />
             <Spacing />
             <H2>{props.title}</H2>

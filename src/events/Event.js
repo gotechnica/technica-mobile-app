@@ -19,13 +19,9 @@ export default class Event {
     this.beginnerFriendly = beginnerFriendly;
     this.location = location;
     this.img = img;
-  }
 
-  get startTimeFormatted() {
-    return normalizeTimeLabel(this.startTime);
-  }
-
-  get endTimeFormatted() {
-    return normalizeTimeLabel(this.endTime);
+    // The following are not from database schema
+    this.startTimeFormatted = normalizeTimeLabel(this.startTime);
+    this.endTimeFormatted = normalizeTimeLabel(this.endTime);
   }
 }

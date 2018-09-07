@@ -31,10 +31,7 @@ export default class EventGroupComponent extends Component<Props> {
             event = eventObj.item;
             return (
               <EventDescription
-                startTime={event.startTimeFormatted}
-                endTime={event.endTimeFormatted}
-                title={event.title}
-                location={event.location}
+                {...event}
                 savedCount={this.props.eventManager.getSavedCount(event.key)}
               />
             );
