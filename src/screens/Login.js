@@ -44,7 +44,7 @@ export default class Login extends Component<Props> {
 
   sendPhoneNumber(phoneNumber) {
     console.log("HERE");
-    console.log(phoneNumber);
+    console.log("Phone Number: " + phoneNumber);
   }
 
 
@@ -69,7 +69,7 @@ export default class Login extends Component<Props> {
             color='white'
           />
         </PadContainer>
-        <TouchableHighlight onPress={this.sendPhoneNumber(this.state.phone)}>
+        <TouchableHighlight onPress={this.sendPhoneNumber.bind(this.state.phone)}>
           <Icon
               name='arrow-right'
               size={20}
