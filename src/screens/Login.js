@@ -36,7 +36,6 @@ export default class Login extends Component<Props> {
       phone: '',
     };
 
-    this.sendPhoneNumber = this.sendPhoneNumber.bind(this)
   }
 
   componentDidMount() {
@@ -69,7 +68,7 @@ export default class Login extends Component<Props> {
             color='white'
           />
         </PadContainer>
-        <TouchableHighlight onPress={this.sendPhoneNumber.bind(this.state.phone)}>
+        <TouchableHighlight onPress={() => this.sendPhoneNumber(this.state.phone)}>
           <Icon
               name='arrow-right'
               size={20}
