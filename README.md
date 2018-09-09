@@ -13,6 +13,7 @@ This is the the mobile app for Technica's 2018 hackathon.
 # Setting up notifications on iOS
 
 1. `sudo gem install cocoapods`
+  1. Make sure you have version `pod --version` outputs 1.5.3 (not 1.4.0)
 
 2. `cd ios && pod install && cd ..`
 
