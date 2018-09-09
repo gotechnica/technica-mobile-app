@@ -28,7 +28,9 @@ Because we are using AWS mobile hub in our project you will need to pull the req
 
 3. After you run `awsmobile configure`, it will use your cli credentials to find the technica mobile app project
 
-4. Run `awsmobile pull` from now on to update the `aws-exports.json` this file is read by `App.js` to configure aws capabilities.
+4. You will need to run `awsmobile init 6308bcc8-4bd7-4214-b5c1-1b1055829818` to connect to the backend
+
+5. Run `awsmobile pull` from now on to update the `aws-exports.json` this file is read by `App.js` to configure aws capabilities.
 
 # Testing notifications (android and iOS) #
 
