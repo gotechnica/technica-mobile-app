@@ -34,28 +34,58 @@ export default class Login extends Component<Props> {
     super(props);
     this.state = {
       phone: '',
-    };
+      greeting: 'Welcome to \n TECHNICA 2018',
+      instruction: 'Enter the phone number you used to \n sign up for Technica.',
+      nextPage: (
+        <TouchableHighlight onPress={() => this.sendPhoneNumber(this.state.phone)}>
+          <Icon
+              name='arrow-right'
+              size={20}
+              color='white'
+              style={{alignSelf: 'flex-end', paddingRight: '5%'}}
+            />
+        </TouchableHighlight>),
 
+
+    };
   }
 
   componentDidMount() {
   }
+  static navigationOptions = {
+    header: null,
+    };
 
   sendPhoneNumber(phoneNumber) {
     console.log("HERE");
-    console.log("Phone Number: " + phoneNumber);
+    console.log(phoneNumber);
+    this.setState({greeting: "Great!"});
+    this.setState({instruction: "We've texted you a verification code. Please input that code below to login."});
+    this.setState({nextPage: (
+      <TouchableHighlight onPress={() => this.sendReceivedText(this.state.phone)}>
+          <Icon
+              name='arrow-right'
+              size={20}
+              color='white'
+              style={{alignSelf: 'flex-end', paddingRight: '5%'}}
+            />
+        </TouchableHighlight>)});
   }
 
+  sendReceivedText(phoneNumber){
+    const { navigate } = this.props.navigation;
+    navigate('AppContainer');
+  }
 
   render() {
     return (
       <ViewContainer>
         <PadContainer style={styles.subSection}>
           <Heading style={{paddingBottom: 20}}>
-            Welcome to {"\n"}TECHNICA 2018
+            {this.state.greeting}
           </Heading>
           <SubHeading>
-            Enter the phone number you used to {"\n"}sign up for Technica.
+            {this.state.instruction}
           </SubHeading>
           <TextInput
             placeholder='123-456-789'
@@ -68,14 +98,7 @@ export default class Login extends Component<Props> {
             color='white'
           />
         </PadContainer>
-        <TouchableHighlight onPress={() => this.sendPhoneNumber(this.state.phone)}>
-          <Icon
-              name='arrow-right'
-              size={20}
-              color='white'
-              style={{alignSelf: 'flex-end', paddingRight: '5%'}}
-            />
-        </TouchableHighlight>
+        {this.state.nextPage}
       </ViewContainer>
     );
   }
