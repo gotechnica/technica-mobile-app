@@ -64,10 +64,11 @@ export default class EventModal extends Component {
             <ScrollView>
               <Spacing />
               <H2>{props.title}</H2>
-              <H2>{props.location}</H2>
               <Spacing />
-              <H3>{moment(props.endTime).format('dddd')}</H3>
               <H3>{props.startTimeFormatted} - {props.endTimeFormatted}</H3>
+              <H3 style={styles.subtext}>{moment(props.endTime).format('dddd')}</H3>
+              <Spacing />
+              <H3>{props.location}</H3>
               <Spacing />
               <Spacing />
               <HorizontalLine />
@@ -87,3 +88,9 @@ export default class EventModal extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  subtext: {
+    color: colors.fontGrey,
+  },
+});
