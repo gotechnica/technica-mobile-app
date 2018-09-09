@@ -138,11 +138,11 @@ android {
 }
 
 dependencies {
-    implementation project(':react-native-firebase')
+    compile project(':react-native-firebase')
     implementation project(':amazon-cognito-identity-js')
     implementation 'com.google.firebase:firebase-messaging:17.1.0'
     implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation project(':react-native-vector-icons')
+    compile project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:26.1.0"
     implementation "com.facebook.react:react-native:+"  // From node_modules
