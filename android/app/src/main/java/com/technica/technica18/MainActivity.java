@@ -1,4 +1,4 @@
-package com.technica;
+package com.technica.technica18;
 
 import com.facebook.react.ReactActivity;
 
