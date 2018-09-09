@@ -13,7 +13,7 @@
       android:allowBackup="false"
       android:theme="@style/AppTheme">
       <activity
-        android:name="com.technica.MainActivity"
+        android:name=".MainActivity"
         android:label="@string/app_name"
         android:launchMode="singleTop"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
