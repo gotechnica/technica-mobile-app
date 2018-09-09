@@ -36,15 +36,7 @@ export default class Saved extends Component<Props> {
             savedCount="155"
             img="demo4"
             big
-          />
-          <EventDescription
-            title="Chicken Little"
-            endTimeFormatted="FakeEndTime"
-            startTimeFormatted="FakeStartTime"
-            location="Xfinity Gate A"
-            savedCount="155"
-            img="demo4"
-            style={styles.eventDescription}
+            style={styles.eventCard}
           />
 
           <EventCard
@@ -52,15 +44,7 @@ export default class Saved extends Component<Props> {
             savedCount="155"
             img="demo5"
             big
-          />
-          <EventDescription
-            title="Chicken Little"
-            endTimeFormatted="FakeEndTime"
-            startTimeFormatted="FakeStartTime"
-            location="Xfinity Gate A"
-            savedCount="155"
-            img="demo4"
-            style={styles.eventDescription}
+            style={styles.eventCard}
           />
 
           <EventCard
@@ -68,15 +52,7 @@ export default class Saved extends Component<Props> {
             savedCount="155"
             img="demo2"
             big
-          />
-          <EventDescription
-            title="Chicken Little"
-            endTimeFormatted="FakeEndTime"
-            startTimeFormatted="FakeStartTime"
-            location="Xfinity Gate A"
-            savedCount="155"
-            img="demo4"
-            style={styles.eventDescription}
+            style={styles.eventCard}
           />
 
           <EventCard
@@ -84,15 +60,7 @@ export default class Saved extends Component<Props> {
             savedCount="155"
             img="demo4"
             big
-          />
-          <EventDescription
-            title="Chicken Little"
-            endTimeFormatted="FakeEndTime"
-            startTimeFormatted="FakeStartTime"
-            location="Xfinity Gate A"
-            savedCount="155"
-            img="demo4"
-            style={styles.eventDescription}
+            style={styles.eventCard}
           />
         </PadContainer>
 
@@ -158,7 +126,7 @@ export default class Saved extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  eventDescription: {
-    marginBottom: 30,
+  eventCard: {
+    marginBottom: 20,
   },
 });

@@ -15,6 +15,7 @@ import Modal from 'react-native-modal';
 import { ModalContent, ModalHeader, HorizontalLine, Spacing } from './Base';
 import { colors } from './Colors';
 import EventModal from './EventModal';
+import EventDescription from './schedule/EventDescription';
 
 const styles = StyleSheet.create({
   event: {
@@ -81,6 +82,15 @@ export default class EventCard extends Component {
               </View>
             )}
           </View>
+          {
+            big ?
+            <EventDescription
+              {...this.props}
+              savedCount={savedCount}
+            />
+            :
+            null
+          }
         </TouchableOpacity>
       </View>
     );

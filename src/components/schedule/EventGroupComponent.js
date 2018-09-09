@@ -32,6 +32,7 @@ export default class EventGroupComponent extends Component<Props> {
             return (
               <EventDescription
                 {...event}
+                hasModal
                 savedCount={this.props.eventManager.getSavedCount(event.key)}
               />
             );
