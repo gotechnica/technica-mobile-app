@@ -16,22 +16,19 @@ import { H1, H2, H3, H4, P } from '../Text';
 
 export default class ScheduleSceneTabBar extends Component {
   render() {
-    console.log("[COLOR] " + this.props.activeTab);
-
     return (
       <FlatList
         style={[styles.tabs, this.props.style]}
         data={this.props.tabs}
         renderItem={(tabObj) => {
           const isActive = (this.props.activeTab === tabObj.index);
-
           return (
             <TouchableOpacity
               onPress={() => this.props.goToSection(tabObj.index)}
               style={[styles.tab, styles.tabActive]}
             >
-              <H2 style={ isActive ? styles.activeText : styles.inactiveText }>{tabObj.item}</H2>
-              <View style={isActive ? styles.bottomBorder : styles.bottomBorderInactive }></View>
+              <H2 style={ isActive ? styles.activeText : styles.inactiveText }>{tabObj.item}&nbsp;</H2>
+              {/* <View style={isActive ? styles.bottomBorder : styles.bottomBorderInactive }></View> */}
             </TouchableOpacity>
           );
         }}
@@ -56,19 +53,19 @@ const styles = StyleSheet.create({
   inactiveText: {
     color: colors.fontGrey,
   },
-  bottomBorderInactive: {
-    // alignSelf: 'stretch',
-    // height: 2,
-    // marginBottom: 10,
-    // marginTop: 2,
-  },
-  bottomBorder: {
-    // alignSelf: 'stretch',
-    // backgroundColor: colors.white,
-    // height: 2,
-    // marginTop: 2,
-    // marginBottom: 10,
-  },
+  // bottomBorderInactive: {
+  //   // alignSelf: 'stretch',
+  //   // height: 2,
+  //   // marginBottom: 10,
+  //   // marginTop: 2,
+  // },
+  // bottomBorder: {
+  //   // alignSelf: 'stretch',
+  //   // backgroundColor: colors.white,
+  //   // height: 2,
+  //   // marginTop: 2,
+  //   // marginBottom: 10,
+  // },
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
