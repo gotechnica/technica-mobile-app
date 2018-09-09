@@ -74,12 +74,12 @@ export default class EventDescription extends Component<Props> {
         <TouchableOpacity disabled={!hasModal} style={this.props.style} onPress={() => this.toggleModal()}>
           <View style={[styles.row]}>
               <View style={[styles.col, { flex: 4 }]}>
-                <H4>
+                <H3>{this.props.title}</H3>
+                <H4 style={{ color: colors.fontGrey }}>
                   {this.props.startTime == this.props.endTime
                     ? `${this.props.startTimeFormatted}`
                     : `${this.props.startTimeFormatted} - ${this.props.endTimeFormatted}`}
                 </H4>
-                <H3>{this.props.title}</H3>
                 <H4 style={{ color: colors.fontGrey }}>{this.props.location}</H4>
               </View>
               <View style={[styles.row, { flex: 1, justifyContent: 'flex-end' }]}>

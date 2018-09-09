@@ -17,6 +17,8 @@ import { colors } from './Colors';
 import moment from 'moment';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
+// TODO TECH DEBT: Replace <Spacing /> with proper margins
+
 export default class EventModal extends Component {
   render() {
     const props = this.props;
@@ -61,12 +63,11 @@ export default class EventModal extends Component {
             />
             <ScrollView>
               <Spacing />
-              <H3>{moment(props.endTime).format('dddd')}</H3>
-              <H3>{props.startTimeFormatted} - {props.endTimeFormatted}</H3>
-              <Spacing />
-              <Spacing />
               <H2>{props.title}</H2>
               <H2>{props.location}</H2>
+              <Spacing />
+              <H3>{moment(props.endTime).format('dddd')}</H3>
+              <H3>{props.startTimeFormatted} - {props.endTimeFormatted}</H3>
               <Spacing />
               <Spacing />
               <HorizontalLine />

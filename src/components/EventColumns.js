@@ -5,7 +5,7 @@ import {
   Spacing,
   Button,
   ModalContent,
-  ModalHeader
+  ModalHeader,
 } from './Base';
 import EventCard from './EventCard';
 import PropTypes from 'prop-types';

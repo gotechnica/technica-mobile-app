@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { colors } from './Colors';
 import { H1, H2, H3, H4, P } from './Text';
 import { Paper } from 'react-native-paper';
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     paddingTop: 60,
-    marginBottom: 15,
+    marginBottom: 20,
   },
   subHeading: {
     color: colors.fontGrey,
@@ -55,7 +55,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkGrey,
   },
   paperHead: {
-    padding: 15,
+    paddingLeft: 20,
+    paddingBottom: 5,
+    color: colors.cyan,
   },
   paperBody: {
     padding: 15,
@@ -134,22 +136,21 @@ const SubHeading = (props) => (
 );
 
 const PaperSheet = (props) => (
-  <Paper style={styles.paper}>
+  <Fragment>
     {
       props.heading ?
-      <View>
-        <H2 style={styles.paperHead}>
+        <H4 style={styles.paperHead}>
           {props.heading}
-        </H2>
-        <HorizontalLine/>
-      </View>
+        </H4>
       :
-      null
+        null
     }
-    <View style={styles.paperBody}>
-      {props.children}
-    </View>
-  </Paper>
+    <Paper style={styles.paper}>
+      <View style={styles.paperBody}>
+        {props.children}
+      </View>
+    </Paper>
+  </Fragment>
 );
 
 const HorizontalLine = (props) => (

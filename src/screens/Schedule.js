@@ -78,7 +78,14 @@ export default class Schedule extends Component<Props> {
             </PadContainer>
           )}
           ItemSeparatorComponent={() => (
-            <PadContainer style={{ marginTop: 40 }}>
+            <PadContainer
+              style={{
+                marginTop: 20,
+                borderTopWidth: 1,
+                borderColor: colors.borderGrey,
+                paddingTop: 30,
+              }}
+            >
               <ScheduleSceneTabBar
                 goToSection={i => {
                   this.scheduleListRef.scrollToIndex({
