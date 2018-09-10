@@ -33,11 +33,14 @@ export default class Login extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      phone: '',
-      greeting: 'Welcome to \n TECHNICA 2018',
-      instruction: 'Enter the phone number you used to \n sign up for Technica.',
+      savedPhone: '',
+      savedSMS: '',
+      fieldValue: '',
+      placeholder: '123-456-7890',
+      greeting: 'Welcome to \nTECHNICA 2018',
+      instruction: 'Enter the phone number you used to \nsign up for Technica.',
       nextPage: (
-        <TouchableHighlight onPress={() => this.sendPhoneNumber(this.state.phone)}>
+        <TouchableHighlight onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Icon
               name='arrow-right'
               size={20}
@@ -51,28 +54,31 @@ export default class Login extends Component<Props> {
   }
 
   componentDidMount() {
+
   }
+
   static navigationOptions = {
     header: null,
-    };
+  };
 
   sendPhoneNumber(phoneNumber) {
-    console.log("HERE");
-    console.log(phoneNumber);
-    this.setState({greeting: "Great!"});
-    this.setState({instruction: "We've texted you a verification code. Please input that code below to login."});
-    this.setState({nextPage: (
-      <TouchableHighlight onPress={() => this.sendReceivedText(this.state.phone)}>
+    this.setState({greeting: "Great!", instruction: "We've texted you a verification code. Please input that code below to login.", 
+
+      nextPage: (
+      <TouchableHighlight onPress={() => this.sendReceivedText(this.state.fieldValue)}>
           <Icon
               name='arrow-right'
               size={20}
               color='white'
               style={{alignSelf: 'flex-end', paddingRight: '5%'}}
             />
-        </TouchableHighlight>)});
+        </TouchableHighlight>), 
+      savedPhone: phoneNumber, fieldValue: '', placeholder: 'xxxxxx'});
+    console.log("Phone: " + this.state.savedPhone);
   }
 
-  sendReceivedText(phoneNumber){
+  sendReceivedText(sms){
+    this.setState({savedSMS: sms, fieldValue: ''});
     const { navigate } = this.props.navigation;
     navigate('AppContainer');
   }
@@ -88,11 +94,11 @@ export default class Login extends Component<Props> {
             {this.state.instruction}
           </SubHeading>
           <TextInput
-            placeholder='123-456-789'
+            placeholder={this.state.placeholder}
             underlineColor='white'
             selectionColor='white'
-            value={this.state.phone}
-            onChangeText={phone => this.setState({ phone })}
+            value={this.state.fieldValue}
+            onChangeText={field => this.setState({ fieldValue: field })}
             placeholderTextColor='#ffffff'
             inputColorPlaceholder='white'
             color='white'
