@@ -41,6 +41,7 @@ export default class EventCard extends Component {
     return <EventModal
       isModalVisible={this.state.isModalVisible}
       toggleModal={this.toggleModal}
+      eventManager={this.eventManager}
       {...this.props}
     />
   }

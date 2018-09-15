@@ -174,7 +174,8 @@ const ModalHeader = (props) => {
     heart,
     savedCount,
     eventID,
-    eventManager
+    eventManager,
+    small
   } = props;
 
   return (
@@ -201,7 +202,7 @@ const ModalHeader = (props) => {
         }
       </View>
       {
-        props.small ?
+        small ?
           null
           :
           <H2 style={styles.modalHeadingText}>{props.heading}</H2>

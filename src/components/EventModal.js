@@ -43,6 +43,7 @@ export default class EventModal extends Component {
             onBackButtonPress={() => props.toggleModal()}
             savedCount={props.savedCount}
             eventID={props.eventID}
+            eventManager={props.eventManager}
             heart
             small
           />

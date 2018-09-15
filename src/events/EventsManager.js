@@ -190,6 +190,7 @@ export default class EventsManager {
         .subtract(timeMin, 'minutes')
         .valueOf()
     });
+    this.updateComponents();
   }
 
   unfavoriteEvent(key) {
@@ -215,7 +216,7 @@ export default class EventsManager {
     this.componentListeners.delete(component);
   }
 
-  updateComponents(component) {
+  updateComponents() {
     this.componentListeners.forEach((component, comp, set) => {
       component.forceUpdate();
     });
