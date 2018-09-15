@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
+import EventHeart from './EventHeart';
 
 const styles = StyleSheet.create({
   bg: {
@@ -167,40 +168,40 @@ const ModalContent = (props) => (
   </ScrollView>
 )
 
-const ModalHeader = (props) => (
-  <View style={styles.modalHeader}>
-    <View style={styles.modalHeaderNav}>
-      <TouchableOpacity onPress={props.onBackButtonPress}>
-        <FAIcon
-          name="chevron-left"
-          size={22}
-          color={colors.white}
-        />
-      </TouchableOpacity>
-      {
-        props.heart ?
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <H3 style={{ marginRight: 8, marginTop: 3 }}>{props.savedCount}</H3>
-          <TouchableOpacity>
-            <FAIcon
-              name="heart-o"
-              size={22}
-              color={colors.pink}
+const ModalHeader = (props) => {
+  const { onBackButtonPress, heart, savedCount, eventID } = props;
+
+  return (
+    <View style={styles.modalHeader}>
+      <View style={styles.modalHeaderNav}>
+        <TouchableOpacity onPress={onBackButtonPress}>
+          <FAIcon
+            name="chevron-left"
+            size={22}
+            color={colors.white}
+          />
+        </TouchableOpacity>
+        {
+          heart ?
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <EventHeart
+              savedCount={savedCount}
+              eventID={eventID}
             />
-          </TouchableOpacity>
-        </View>
-          :
+          </View>
+            :
+            null
+        }
+      </View>
+      {
+        props.small ?
           null
+          :
+          <H2 style={styles.modalHeadingText}>{props.heading}</H2>
       }
     </View>
-    {
-      props.small ?
-        null
-        :
-        <H2 style={styles.modalHeadingText}>{props.heading}</H2>
-    }
-  </View>
-);
+  );
+}
 
 const Button = (props) => (
   <View>
