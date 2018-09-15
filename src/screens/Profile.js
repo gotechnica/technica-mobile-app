@@ -17,12 +17,11 @@ import {
 
 export default class Mentors extends Component<Props> {
   render() {
-    const { masterState } = this.props;
     return (
       <ViewContainer>
         <PadContainer>
           <Heading>
-            {this.props.masterState.userInfo.name}
+            Demo Name
           </Heading>
           <SubHeading>
             12 events saved
