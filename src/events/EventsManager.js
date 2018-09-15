@@ -1,6 +1,7 @@
 // Use this class to interact with all of the events, never modify the state directly
 
 import { AsyncStorage } from 'react-native';
+import firebase from 'react-native-firebase';
 import moment from 'moment';
 import _ from 'lodash';
 
@@ -13,6 +14,9 @@ import scheduleData from '../../assets/schedule.json';
 
 const EVENT_FAVORITED_STORE = 'EVENT_FAVORITED_STORE';
 const SAVED_COUNT_STORE = 'SAVED_COUNT_STORE';
+const EVENT_ID_PREFIX = 'eventNotification-';
+
+const channelId = 'technica-push-notifications';
 
 export default class EventsManager {
   constructor() {
@@ -94,6 +98,12 @@ export default class EventsManager {
       )
     );
 
+    this.keyToEventMap = {};
+
+    this.combinedEvents.forEach(event => {
+      this.keyToEventMap[event.key] = event;
+    });
+
     console.log('Combined events', this.combinedEvents);
 
     this.favoriteState = {};
@@ -150,20 +160,42 @@ export default class EventsManager {
     return this.favoriteState[key];
   }
 
-  favoriteEvent(key) {
+  //key of event
+  // time in minutes to warn before event
+  favoriteEvent(key, timeMin) {
+    this.favoriteState[key] = true;
     updateObj = {};
     updateObj[key] = true;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
 
+    event = this.keyToEventMap[key];
     //TODO schedule notification
+    let notification = new firebase.notifications.Notification()
+      .setNotificationId(EVENT_ID_PREFIX + key.toString())
+      .setTitle(event.title)
+      .setBody(timeMin + ' minutes until event starts.');
+
+    notification.android
+      .setChannelId(channelId)
+      .android.setSmallIcon('ic_launcher');
+
+    firebase.notifications().scheduleNotification(notification, {
+      fireData: moment(event.startTime)
+        .subtract(timeMin, 'minutes')
+        .valueOf()
+    });
   }
 
   unfavoriteEvent(key) {
+    this.favoriteState[key] = false;
     updateObj = {};
     updateObj[key] = false;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
 
     //TODO remove notification
+    firebase
+      .notifications()
+      .cancelNotification(EVENT_ID_PREFIX + event.key.toString());
   }
 
   getSavedCount(key) {
