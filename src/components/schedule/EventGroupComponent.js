@@ -30,14 +30,14 @@ export default class EventGroupComponent extends Component<Props> {
                 {...event}
                 hasPassed={event.hasPassed}
                 disabled={event.hasPassed}
-                savedCount={this.props.eventManager.getSavedCount(event.key)}
+                savedCount={this.props.eventManager.getSavedCount(event.eventID)}
               />
             );
           }}
           ItemSeparatorComponent={() => {
             return <HorizontalLine style={{ marginVertical: 10 }} />;
           }}
-          keyExtractor={(event, index) => event.key.toString()}
+          keyExtractor={(event, index) => event.eventID.toString()}
         />
       </PaperSheet>
     );

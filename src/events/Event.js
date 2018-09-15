@@ -2,7 +2,7 @@ import { hasTimePassed, normalizeTimeLabel } from '../actions/util.js';
 
 export default class Event {
   constructor(
-    key,
+    eventID,
     title,
     description,
     startTime,
@@ -11,7 +11,7 @@ export default class Event {
     location,
     img
   ) {
-    this.key = key;
+    this.eventID = eventID;
     this.title = title;
     this.description = description;
     this.startTime = startTime;

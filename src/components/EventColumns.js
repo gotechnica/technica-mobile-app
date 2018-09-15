@@ -53,7 +53,7 @@ export default class EventColumns extends Component {
         <View style={styles.halfColumn}>
           <EventCard
             {...event}
-            savedCount={this.props.eventManager.getSavedCount(event.key)}
+            savedCount={this.props.eventManager.getSavedCount(event.eventID)}
           />
         </View>
       );
