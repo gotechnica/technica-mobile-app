@@ -75,7 +75,7 @@ export default class EventDescription extends Component<Props> {
         {this.renderModal()}
         <TouchableOpacity
           disabled={this.props.disabled}
-          style={this.props.disabled ? [this.props.style, styles.disabled] : this.props.style}
+          style={this.props.hasPassed ? [this.props.style, styles.disabled] : this.props.style}
           onPress={() => this.toggleModal()}
         >
           <View style={[styles.row]}>
