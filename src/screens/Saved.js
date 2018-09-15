@@ -40,7 +40,8 @@ export default class Saved extends Component<Props> {
             events.map((event) => (
               <EventCard
                 {...event}
-                savedCount={eventManager.getSavedCount(event.key)}
+                key={event.eventID}
+                savedCount={eventManager.getSavedCount(event.eventID)}
                 big
                 style={styles.eventCard}
               />

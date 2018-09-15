@@ -14,6 +14,7 @@ import { colors } from '../Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EventModal from '../EventModal';
 import { normalizeTimeLabel } from '../../actions/util.js';
+import EventHeart from '../EventHeart';
 
 const styles = StyleSheet.create({
   column: {
@@ -39,16 +40,16 @@ export default class EventDescription extends Component<Props> {
     // this.customizeNotification = this.props.customizeNotification;
     // this.scheduleNotification = this.props.scheduleNotification;
 
-    // AsyncStorage.getItem(EVENT_FAVORITED_KEY_PREFIX + this.props.eventKey.toString(), (err, results) => {
+    // AsyncStorage.getItem(EVENT_FAVORITED_KEY_PREFIX + this.props.eventID.toString(), (err, results) => {
     //   //retrieve whether the event was favorited and update state to reflect change
     //   if(results != null && results != 'null'){
-    //     console.log("myId: " + this.props.eventKey.toString() + " isFavorited: " + results)
+    //     console.log("myId: " + this.props.eventID.toString() + " isFavorited: " + results)
     //     this.setState((prevState, props) => {return {favorited : JSON.parse(results)}});
     //   } else {
     //     this.setState((prevState, props) => {return {favorited : false}});
     //
     //     //update status to not favorited
-    //     AsyncStorage.setItem(EVENT_FAVORITED_KEY_PREFIX + this.props.eventKey.toString(), JSON.stringify(false), function(error){
+    //     AsyncStorage.setItem(EVENT_FAVORITED_KEY_PREFIX + this.props.eventID.toString(), JSON.stringify(false), function(error){
     //       if(error){
     //         console.log(error);
     //       }
@@ -89,16 +90,10 @@ export default class EventDescription extends Component<Props> {
                 <H4 style={{ color: colors.fontGrey }}>{this.props.location}</H4>
               </View>
               <View style={[styles.row, { flex: 1, justifyContent: 'flex-end' }]}>
-                <H3 style={{ marginRight: 8, marginTop: 2 }}>
-                  {this.props.savedCount}
-                </H3>
-                <TouchableOpacity>
-                  <Icon
-                    name={this.state.favorited ? 'heart' : 'heart-o'}
-                    size={22}
-                    color={colors.pink}
-                  />
-                </TouchableOpacity>
+                <EventHeart
+                  eventID={this.props.eventID}
+                  savedCount={this.props.savedCount}
+                />
               </View>
           </View>
         </TouchableOpacity>

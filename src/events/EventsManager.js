@@ -30,7 +30,7 @@ export default class EventsManager {
         rawEvent = rawEventArray[i];
         eventArray.push(
           new Event(
-            rawEvent.key,
+            rawEvent.eventID,
             rawEvent.title,
             rawEvent.description,
             rawEvent.startTime,
@@ -101,7 +101,7 @@ export default class EventsManager {
     this.keyToEventMap = {};
 
     this.combinedEvents.forEach(event => {
-      this.keyToEventMap[event.key] = event;
+      this.keyToEventMap[event.eventID] = event;
     });
 
     console.log('Combined events', this.combinedEvents);
@@ -123,7 +123,7 @@ export default class EventsManager {
         this.savedCounts = {};
 
         for (let i in this.combinedEvents) {
-          this.savedCounts[this.combinedEvents[i].key] = Math.floor(
+          this.savedCounts[this.combinedEvents[i].eventID] = Math.floor(
             Math.random() * 1000
           );
         }
@@ -146,7 +146,7 @@ export default class EventsManager {
   getTopEvents(num) {
     topSorted = _.sortBy(
       this.combinedEvents,
-      event => -this.savedCounts[event.key]
+      event => -this.savedCounts[event.eventID]
     );
 
     return topSorted.slice(0, num);
@@ -195,7 +195,7 @@ export default class EventsManager {
     //TODO remove notification
     firebase
       .notifications()
-      .cancelNotification(EVENT_ID_PREFIX + event.key.toString());
+      .cancelNotification(EVENT_ID_PREFIX + event.eventID.toString());
   }
 
   getSavedCount(key) {
