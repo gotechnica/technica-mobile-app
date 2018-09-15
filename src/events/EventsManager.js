@@ -170,6 +170,8 @@ export default class EventsManager {
   //key of event
   // time in minutes to warn before event
   favoriteEvent(key, timeMin) {
+    console.log('my state', this.favoriteState);
+
     this.favoriteState[key] = true;
     updateObj = {};
     updateObj[key] = true;
@@ -195,14 +197,18 @@ export default class EventsManager {
   }
 
   unfavoriteEvent(key) {
+    console.log('my state', this.favoriteState);
     this.favoriteState[key] = false;
     updateObj = {};
     updateObj[key] = false;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
 
+    event = this.keyToEventMap[key];
     firebase
       .notifications()
       .cancelNotification(EVENT_ID_PREFIX + event.eventID.toString());
+
+    this.updateComponents();
   }
 
   getSavedCount(key) {
