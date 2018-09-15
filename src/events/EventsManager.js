@@ -156,6 +156,13 @@ export default class EventsManager {
     return _.filter(this.combinedEvents, event => event.beginnerFriendly);
   }
 
+  getSavedEventsArray() {
+    return _.filter(
+      this.combinedEvents,
+      event => this.favoriteState[event.eventID]
+    );
+  }
+
   isFavorited(key) {
     return this.favoriteState[key];
   }
