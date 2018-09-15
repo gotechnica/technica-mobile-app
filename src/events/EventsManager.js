@@ -111,7 +111,7 @@ export default class EventsManager {
       if (result === null) {
         this.favoriteState = {};
       } else {
-        this.favoriteState = result;
+        this.favoriteState = JSON.parse(result);
       }
       console.log('favorites', this.favoriteState);
     });
@@ -170,10 +170,6 @@ export default class EventsManager {
   //key of event
   // time in minutes to warn before event
   favoriteEvent(key, timeMin) {
-    console.log("favoriteEvent", this.favoriteState);
-    console.log("favoriteEvent", key);
-    console.log("favoriteEvent", this.favoriteState[key]);
-    console.log("--")
     this.favoriteState[key] = true;
     updateObj = {};
     updateObj[key] = true;
@@ -196,9 +192,6 @@ export default class EventsManager {
     });
 
     this.updateComponents();
-    console.log("favoriteEvent", this.favoriteState);
-    console.log("favoriteEvent", key);
-    console.log("favoriteEvent", this.favoriteState[key]);
   }
 
   unfavoriteEvent(key) {
