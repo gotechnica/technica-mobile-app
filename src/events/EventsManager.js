@@ -80,6 +80,8 @@ export default class EventsManager {
     rawData = scheduleData.Schedule;
     this.eventDays = [];
 
+    this.componentListeners = new Set();
+
     for (let i in rawData) {
       this.eventDays.push(createEventDay(rawData[i]));
     }
@@ -120,11 +122,11 @@ export default class EventsManager {
       }
 
       console.log('savedCounts', this.savedCounts);
-      this.getTopEvents.bind(this);
-      this.getBeginnerEventsArray.bind(this);
-      this.getTopEvents(10);
-      console.log('beginners', this.getBeginnerEventsArray());
+      this.updateComponents();
     });
+
+    this.getTopEvents.bind(this);
+    this.getBeginnerEventsArray.bind(this);
   }
 
   getEventDays() {
@@ -166,5 +168,19 @@ export default class EventsManager {
 
   getSavedCount(key) {
     return this.savedCounts[key];
+  }
+
+  registerComponentListener(component) {
+    this.componentListeners.add(component);
+  }
+
+  removeComponentListener(component) {
+    this.componentListeners.delete(component);
+  }
+
+  updateComponents(component) {
+    this.componentListeners.forEach((component, comp, set) => {
+      component.forceUpdate();
+    });
   }
 }
