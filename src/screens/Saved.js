@@ -18,7 +18,11 @@ import EventCard from '../components/EventCard';
 import EventDescription from '../components/schedule/EventDescription';
 
 export default class Saved extends Component<Props> {
+
   render() {
+    const { eventManager } = this.props;
+    const events = eventManager.getTopEvents(10);
+
     return (
       <ViewContainer>
         <PadContainer>
@@ -31,37 +35,17 @@ export default class Saved extends Component<Props> {
         </PadContainer>
 
         <PadContainer>
-          <EventCard
-            title="Chicken Little"
-            savedCount="155"
-            img="demo4"
-            big
-            style={styles.eventCard}
-          />
+          {
+            events.map((event) => (
+              <EventCard
+                {...event}
+                savedCount={eventManager.getSavedCount(event.key)}
+                big
+                style={styles.eventCard}
+              />
 
-          <EventCard
-            title="Chicken Little"
-            savedCount="155"
-            img="demo5"
-            big
-            style={styles.eventCard}
-          />
-
-          <EventCard
-            title="Chicken Little"
-            savedCount="155"
-            img="demo2"
-            big
-            style={styles.eventCard}
-          />
-
-          <EventCard
-            title="Chicken Little"
-            savedCount="155"
-            img="demo4"
-            big
-            style={styles.eventCard}
-          />
+            ))
+          }
         </PadContainer>
 
       </ViewContainer>

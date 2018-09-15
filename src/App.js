@@ -104,7 +104,10 @@ export default class App extends Component<Props> {
           tabLabel="calendar"
           eventManager={this.props.eventManager}
         />
-        <Saved tabLabel="heart" />
+        <Saved
+          tabLabel="heart"
+          eventManager={this.props.eventManager}
+        />
         <Mentors tabLabel="people" />
         <Profile tabLabel="user" />
       </ScrollableTabView>
