@@ -13,16 +13,12 @@ import {
 import { H1, H2, H3, H4, P } from '../Text';
 import EventDescription from './EventDescription';
 
-const styles = StyleSheet.create({});
-
 export default class EventGroupComponent extends Component<Props> {
   constructor(props) {
     super(props);
   }
 
   render() {
-    // console.log('events', this.props.events);
-
     return (
       <PaperSheet heading={this.props.header}>
         <FlatList
@@ -32,7 +28,7 @@ export default class EventGroupComponent extends Component<Props> {
             return (
               <EventDescription
                 {...event}
-                hasModal
+                disabled={event.hasPassed}
                 savedCount={this.props.eventManager.getSavedCount(event.key)}
               />
             );

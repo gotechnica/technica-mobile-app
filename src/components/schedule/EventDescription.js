@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row'
+  },
+  disabled: {
+    opacity: .4,
   }
 });
 
@@ -67,11 +70,14 @@ export default class EventDescription extends Component<Props> {
   }
 
   render() {
-    const { hasModal } = this.props;
     return (
       <Fragment>
         {this.renderModal()}
-        <TouchableOpacity disabled={!hasModal} style={this.props.style} onPress={() => this.toggleModal()}>
+        <TouchableOpacity
+          disabled={this.props.disabled}
+          style={this.props.disabled ? [this.props.style, styles.disabled] : this.props.style}
+          onPress={() => this.toggleModal()}
+        >
           <View style={[styles.row]}>
               <View style={[styles.col, { flex: 4 }]}>
                 <H3>{this.props.title}</H3>

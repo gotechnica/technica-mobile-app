@@ -86,6 +86,7 @@ export default class EventCard extends Component {
             big ?
             <EventDescription
               {...this.props}
+              disabled
               savedCount={savedCount}
             />
             :
