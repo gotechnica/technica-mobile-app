@@ -169,7 +169,6 @@ export default class EventsManager {
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
 
     event = this.keyToEventMap[key];
-    //TODO schedule notification
     let notification = new firebase.notifications.Notification()
       .setNotificationId(EVENT_ID_PREFIX + key.toString())
       .setTitle(event.title)
@@ -180,7 +179,7 @@ export default class EventsManager {
       .android.setSmallIcon('ic_launcher');
 
     firebase.notifications().scheduleNotification(notification, {
-      fireData: moment(event.startTime)
+      fireDate: moment(event.startTime)
         .subtract(timeMin, 'minutes')
         .valueOf()
     });
@@ -192,7 +191,6 @@ export default class EventsManager {
     updateObj[key] = false;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
 
-    //TODO remove notification
     firebase
       .notifications()
       .cancelNotification(EVENT_ID_PREFIX + event.key.toString());
