@@ -36,6 +36,7 @@ export default class Saved extends Component<Props> {
 
         <PadContainer>
           {
+            /* TODO replace this with the user's saved events, ordering them by ascending time */
             events.map((event) => (
               <EventCard
                 {...event}
