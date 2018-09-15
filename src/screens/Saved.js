@@ -18,7 +18,11 @@ import EventCard from '../components/EventCard';
 import EventDescription from '../components/schedule/EventDescription';
 
 export default class Saved extends Component<Props> {
+
   render() {
+    const { eventManager } = this.props;
+    const events = eventManager.getTopEvents(10);
+
     return (
       <ViewContainer>
         <PadContainer>
@@ -31,95 +35,20 @@ export default class Saved extends Component<Props> {
         </PadContainer>
 
         <PadContainer>
-          <EventCard
-            title="Chicken Little"
-            savedCount="155"
-            img="demo4"
-            big
-            style={styles.eventCard}
-          />
+          {
+            /* TODO replace this with the user's saved events, ordering them by ascending time */
+            events.map((event) => (
+              <EventCard
+                {...event}
+                savedCount={eventManager.getSavedCount(event.key)}
+                big
+                style={styles.eventCard}
+              />
 
-          <EventCard
-            title="Chicken Little"
-            savedCount="155"
-            img="demo5"
-            big
-            style={styles.eventCard}
-          />
-
-          <EventCard
-            title="Chicken Little"
-            savedCount="155"
-            img="demo2"
-            big
-            style={styles.eventCard}
-          />
-
-          <EventCard
-            title="Chicken Little"
-            savedCount="155"
-            img="demo4"
-            big
-            style={styles.eventCard}
-          />
+            ))
+          }
         </PadContainer>
 
-        <PaperSheet>
-          <H4>
-            10:00am - 11:00am
-          </H4>
-          <H3>
-            Intro to ReactJS
-          </H3>
-          <P>
-            Room 33043
-          </P>
-        </PaperSheet>
-        <PaperSheet heading="9:00am">
-          <H4>
-            10:00am - 11:00am
-          </H4>
-          <H3>
-            Intro to ReactJS
-          </H3>
-          <P>
-            Room 33043
-          </P>
-        </PaperSheet>
-        <PaperSheet heading="9:00am">
-          <H4>
-            10:00am - 11:00am
-          </H4>
-          <H3>
-            Intro to ReactJS
-          </H3>
-          <P>
-            Room 33043
-          </P>
-        </PaperSheet>
-        <PaperSheet heading="9:00am">
-          <H4>
-            10:00am - 11:00am
-          </H4>
-          <H3>
-            Intro to ReactJS
-          </H3>
-          <P>
-            Room 33043
-          </P>
-        </PaperSheet>
-        {/* <H2 style={styles.welcome}>
-          16h 34m 43s left
-        </H2>
-        <H3 style={styles.welcome}>
-          Intro to ReactJS
-        </H3>
-        <H4 style={styles.welcome}>
-          10:00am - 11:00am
-        </H4>
-        <P style={styles.welcome}>
-          Room 3304
-        </P> */}
       </ViewContainer>
     );
   }

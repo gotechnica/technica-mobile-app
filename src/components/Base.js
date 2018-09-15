@@ -185,7 +185,7 @@ const ModalHeader = (props) => (
             <FAIcon
               name="heart-o"
               size={22}
-              color={colors.white}
+              color={colors.pink}
             />
           </TouchableOpacity>
         </View>
