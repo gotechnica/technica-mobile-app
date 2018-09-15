@@ -1,4 +1,4 @@
-import { normalizeTimeLabel } from '../actions/util.js';
+import { hasTimePassed, normalizeTimeLabel } from '../actions/util.js';
 
 export default class Event {
   constructor(
@@ -23,5 +23,6 @@ export default class Event {
     // The following are not from database schema
     this.startTimeFormatted = normalizeTimeLabel(this.startTime);
     this.endTimeFormatted = normalizeTimeLabel(this.endTime);
+    this.hasPassed = hasTimePassed(this.endTime);
   }
 }
