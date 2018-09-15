@@ -23,7 +23,7 @@ export default class EventHeart extends Component {
         <H3 style={{ marginRight: 8, marginTop: 2 }}>
           {this.props.savedCount}
         </H3>
-        <TouchableOpacity onPress={eventManager.favoriteEvent(eventID, 10)}>
+        <TouchableOpacity onPress={() => eventManager.favoriteEvent(eventID, 10)}>
           <Icon
             name={(this.state.favorited) ? 'heart' : 'heart-o'} // 'heart'
             size={22}

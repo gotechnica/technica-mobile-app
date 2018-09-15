@@ -113,7 +113,7 @@ export default class EventsManager {
       } else {
         this.favoriteState = result;
       }
-      console.log('favorites', this.savedCounts);
+      console.log('favorites', this.favoriteState);
     });
 
     this.savedCounts = {};
@@ -170,6 +170,10 @@ export default class EventsManager {
   //key of event
   // time in minutes to warn before event
   favoriteEvent(key, timeMin) {
+    console.log("favoriteEvent", this.favoriteState);
+    console.log("favoriteEvent", key);
+    console.log("favoriteEvent", this.favoriteState[key]);
+    console.log("--")
     this.favoriteState[key] = true;
     updateObj = {};
     updateObj[key] = true;
@@ -190,7 +194,11 @@ export default class EventsManager {
         .subtract(timeMin, 'minutes')
         .valueOf()
     });
+
     this.updateComponents();
+    console.log("favoriteEvent", this.favoriteState);
+    console.log("favoriteEvent", key);
+    console.log("favoriteEvent", this.favoriteState[key]);
   }
 
   unfavoriteEvent(key) {
