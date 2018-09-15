@@ -93,6 +93,7 @@ export default class EventDescription extends Component<Props> {
                 <EventHeart
                   eventID={this.props.eventID}
                   savedCount={this.props.savedCount}
+                  eventManager={this.props.eventManager}
                 />
               </View>
           </View>

@@ -41,6 +41,7 @@ export default class Saved extends Component<Props> {
               <EventCard
                 {...event}
                 key={event.eventID}
+                eventManager={eventManager}
                 savedCount={eventManager.getSavedCount(event.eventID)}
                 big
                 style={styles.eventCard}

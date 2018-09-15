@@ -130,6 +130,7 @@ export default class EventColumns extends Component {
           <ModalHeader
             onBackButtonPress={() => this.toggleModal()}
             heading={this.props.heading}
+            eventManager={this.props.eventManager}
           />
           {this.getRows(false)}
         </ModalContent>

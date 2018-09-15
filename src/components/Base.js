@@ -169,7 +169,13 @@ const ModalContent = (props) => (
 )
 
 const ModalHeader = (props) => {
-  const { onBackButtonPress, heart, savedCount, eventID } = props;
+  const {
+    onBackButtonPress,
+    heart,
+    savedCount,
+    eventID,
+    eventManager
+  } = props;
 
   return (
     <View style={styles.modalHeader}>
@@ -187,6 +193,7 @@ const ModalHeader = (props) => {
             <EventHeart
               savedCount={savedCount}
               eventID={eventID}
+              eventManager={eventManager}
             />
           </View>
             :

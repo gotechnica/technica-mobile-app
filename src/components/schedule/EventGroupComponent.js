@@ -30,6 +30,7 @@ export default class EventGroupComponent extends Component<Props> {
                 {...event}
                 hasPassed={event.hasPassed}
                 disabled={event.hasPassed}
+                eventManager={this.props.eventManager}
                 savedCount={this.props.eventManager.getSavedCount(event.eventID)}
               />
             );
