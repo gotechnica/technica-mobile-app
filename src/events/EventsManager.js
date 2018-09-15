@@ -170,8 +170,6 @@ export default class EventsManager {
   //key of event
   // time in minutes to warn before event
   favoriteEvent(key, timeMin) {
-    console.log('my state', this.favoriteState);
-
     this.favoriteState[key] = true;
     updateObj = {};
     updateObj[key] = true;
@@ -197,7 +195,6 @@ export default class EventsManager {
   }
 
   unfavoriteEvent(key) {
-    console.log('my state', this.favoriteState);
     this.favoriteState[key] = false;
     updateObj = {};
     updateObj[key] = false;

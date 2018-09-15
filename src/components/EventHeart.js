@@ -8,30 +8,22 @@ import { colors } from './Colors';
 export default class EventHeart extends Component {
   constructor(props) {
     super(props);
-    const { eventID, eventManager } = this.props;
-    this.state = {
-      favorited: eventManager.isFavorited(eventID),
-    };
     this.handleHeartPress = this.handleHeartPress.bind(this);
   }
 
   handleHeartPress() {
-    const { eventID } = this.props;
-    if (this.state.favorited) {
-      console.log("my state call unfav")
+    const { eventID, eventManager } = this.props;
+
+    if (eventManager.isFavorited(eventID)) {
       eventManager.unfavoriteEvent(eventID)
     } else {
-      console.log("my state call fav")
-
       eventManager.favoriteEvent(eventID, 10)
     }
   }
 
   render() {
-    const { savedCount, eventManager } = this.props;
+    const { savedCount, eventManager, eventID } = this.props;
 
-
-    console.log('my state', this.state);
     return (
       <Fragment>
         <H3 style={{ marginRight: 8, marginTop: 2 }}>
@@ -39,7 +31,7 @@ export default class EventHeart extends Component {
         </H3>
         <TouchableOpacity onPress={this.handleHeartPress}>
           <Icon
-            name={(this.state.favorited) ? 'heart' : 'heart-o'} // 'heart'
+            name={(eventManager.isFavorited(eventID)) ? 'heart' : 'heart-o'} // 'heart'
             size={22}
             color={colors.pink}
           />
