@@ -11,6 +11,14 @@ import { H5 } from '../components/Text';
 import { colors } from '../components/Colors';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import { PushNotificationIOS } from 'react-native';
+import Analytics from '@aws-amplify/analytics';
+import aws_exports from '../aws-exports';
+
+import firebase from 'react-native-firebase';
+
+const channelId = 'technica-push-notifications';
+const channelName = 'Technica Announcements';
 
 export default class AppContainer extends Component<Props> {
 	static navigationOptions = {
@@ -104,26 +112,102 @@ export default class AppContainer extends Component<Props> {
     }
   }
 
+    render() {
+    Analytics.configure(aws_exports);
 
-  render() {
-    return (<ScrollableTabView
-      tabBarPosition="bottom"
-      locked
-      style={{ backgroundColor: colors.black }}
-      renderTabBar={() => <CustomTabBar />}>
-      <Home
-        masterState={this.state}
-        eventManager={eventManager}
-        tabLabel="home"
-      />
-      <Schedule
-        masterState={this.state}
-        tabLabel="calendar"
-        eventManager={this.props.eventManager}
-      />
-      <Saved masterState={this.state} tabLabel="heart" />
-      <Mentors masterState={this.state} tabLabel="people" />
-      <Profile masterState={this.state} tabLabel="user" />
-    </ScrollableTabView>);
+    //create notifications channel
+    const channel = new firebase.notifications.Android.Channel(
+      channelId,
+      channelName,
+      firebase.notifications.Android.Importance.Max
+    ).setDescription(
+      'Technica notification channel for delivering important announcements'
+    );
+
+    firebase.notifications().android.createChannel(channel);
+
+    firebase
+      .messaging()
+      .hasPermission()
+      .then(enabled => {
+        if (enabled) {
+          console.log('Permission enabled');
+        } else {
+          try {
+            firebase.messaging().requestPermission();
+          } catch (error) {
+            console.log('Error authenticating', error);
+          }
+        }
+      });
+
+    firebase
+      .messaging()
+      .getToken()
+      .then(fcmToken => {
+        if (fcmToken) {
+          console.log('fcm token: ', fcmToken);
+        } else {
+          console.log('no token');
+        }
+      });
+
+    this.notificationDisplayedListener = firebase
+      .notifications()
+      .onNotificationDisplayed((notification: Notification) => {
+        // Process your notification as required
+        // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
+        console.log('notification displayed', notification);
+      });
+
+    this.notificationListener = firebase
+      .notifications()
+      .onNotification((notification: Notification) => {
+        console.log('notification received', notification);
+        notification.android.setChannelId(channelId);
+        firebase.notifications().displayNotification(notification);
+      });
+
+    const notification = new firebase.notifications.Notification()
+      .setNotificationId('notificationId')
+      .setTitle('Hello world')
+      .setBody('I love local notifications');
+
+    notification.android
+      .setChannelId(channelId)
+      .android.setSmallIcon('ic_launcher');
+    firebase.notifications().displayNotification(notification);
+
+    return (
+      <ScrollableTabView
+        ref={ref => {
+          this.myComponent = ref;
+          this.props.eventManager.registerComponentListener(ref);
+        }}
+        tabBarPosition="bottom"
+        locked
+        style={{ backgroundColor: colors.black }}
+        renderTabBar={() => <CustomTabBar />}
+      >
+        <Home
+          eventManager={this.props.eventManager}
+          tabLabel="home"
+        />
+        <Schedule
+          tabLabel="calendar"
+          eventManager={this.props.eventManager}
+        />
+        <Saved
+          tabLabel="heart"
+          eventManager={this.props.eventManager}
+        />
+        <Mentors tabLabel="people" />
+        <Profile tabLabel="user" />
+      </ScrollableTabView>
+    );
+  }
+
+  componentWillUnmount() {
+    this.props.eventManager.removeComponentListener(this.myComponent);
   }
 }

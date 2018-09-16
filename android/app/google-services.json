@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "149993005451",
+    "firebase_url": "https://technica-mobile-app.firebaseio.com",
+    "project_id": "technica-mobile-app",
+    "storage_bucket": "technica-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149993005451:android:fff5077db368f09c",
+        "android_client_info": {
+          "package_name": "com.technica.technica18"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "149993005451-ocj965ikgdpkfkjra1lb0ivp0ldbrh5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ9kWO15brKEhIPAkFnD3yTM_uRzPRlXI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149993005451:android:c8288472f69be8f4",
+        "android_client_info": {
+          "package_name": "com.technica.technicaapp2018"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "149993005451-g13qdgstahacvrq5no0uaih836m92a3c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.technica.technicaapp2018",
+            "certificate_hash": "0fbb135c12b72e3830445f66dbacb655255654f3"
+          }
+        },
+        {
+          "client_id": "149993005451-ocj965ikgdpkfkjra1lb0ivp0ldbrh5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ9kWO15brKEhIPAkFnD3yTM_uRzPRlXI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "149993005451-ocj965ikgdpkfkjra1lb0ivp0ldbrh5i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "149993005451-att4gh3erbt51ssm4oj6shm70boa02d2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.technica.technica18"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

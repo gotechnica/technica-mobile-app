@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import {
   PadContainer,
   Spacing,
@@ -14,45 +10,68 @@ import {
 import EventCard from './EventCard';
 import PropTypes from 'prop-types';
 import { H3 } from '../components/Text';
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 import { colors } from './Colors';
 
 const CLIP_LIMIT = 6;
 
 const styles = StyleSheet.create({
-  columnContainer: {
+  row: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
-  column: {
+  halfColumn: {
     flex: 5,
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   event: {
-    marginBottom: 15,
-  },
+    marginBottom: 15
+  }
 });
 
 export default class EventColumns extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false,
-    }
+      showModal: false
+    };
     this.toggleModal = this.toggleModal.bind(this);
-    this.getColumns = this.getColumns.bind(this);
+    // this.getColumns = this.getColumns.bind(this);
+    this.getRows = this.getRows.bind(this);
+    this.getCardCol = this.getCardCol.bind(this);
   }
-
-
 
   toggleModal() {
     this.setState({
-      showModal: !this.state.showModal,
+      showModal: !this.state.showModal
     });
   }
 
-  getColumns(isClipped) {
+  getCardCol(event) {
+    if (event) {
+      return (
+        <View style={styles.halfColumn}>
+          <EventCard
+            {...event}
+            eventManager={this.props.eventManager}
+            savedCount={this.props.eventManager.getSavedCount(event.eventID)}
+          />
+        </View>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  getRows(isClipped) {
     const { eventsArr } = this.props;
+    const { width } = require('Dimensions').get('window');
+
+    const limit = isClipped
+      ? eventsArr.length >= CLIP_LIMIT
+        ? CLIP_LIMIT
+        : eventsArr.length
+      : eventsArr.length;
 
     // If empty
     if (eventsArr.length == 0) {
@@ -63,67 +82,38 @@ export default class EventColumns extends Component {
       );
     }
 
-    // Separate into two columns
-    const leftList = [];
-    const rightList = [];
-    // If clipping, limit to CLIP_LIMIT, else show it all
-    const limit =
-      (isClipped) ?
-        (eventsArr.length >= CLIP_LIMIT) ? CLIP_LIMIT : eventsArr.length
-        :
-        eventsArr.length;
-
-    for (let i = 0; i < limit; i++) {
-      const currEvent = eventsArr[i];
-      const currEventCard = (
-        <EventCard
-          {...currEvent}
-          key={currEvent.name}
-        />
+    const rows = [];
+    for (let i = 0; i < limit; i += 2) {
+      const left = eventsArr[i];
+      const right = eventsArr[i + 1];
+      rows.push(
+        <PadContainer
+          key={i}
+          style={[
+            styles.row,
+            { marginLeft: isClipped == false ? -20 : 0 },
+            { width: width }
+          ]}
+        >
+          { this.getCardCol(left) }
+          <View style={{ width: 20 }} />
+          { this.getCardCol(right) }
+        </PadContainer>
       );
-
-      // Even goes on left
-      if (i == 0 || i % 2 == 0) {
-        leftList.push(currEventCard);
-      // Odd goes on right
-      } else {
-        rightList.push(currEventCard);
-      }
     }
 
-    const { width, height } = require('Dimensions').get('window');
+    const viewAllButton = isClipped && eventsArr.length > CLIP_LIMIT ?
+      (
+        <TouchableOpacity key="viewButton" onPress={() => this.toggleModal()}>
+          <Button text="View All" />
+        </TouchableOpacity>
+      ) : null
 
-    return (
-      <View style={{ flex: 1 }}>
-        <PadContainer
-          style={
-            [styles.columnContainer,
-            { marginLeft: (isClipped == false) ? -20 : 0 },
-            { width: width }]
-          }
-        >
-          <View style={styles.column}>
-            {leftList}
-          </View>
-          <View style={{width: 20}}></View>
-          <View style={styles.column}>
-            {rightList}
-          </View>
-        </PadContainer>
-
-        {
-          isClipped && eventsArr.length > CLIP_LIMIT ?
-            <TouchableOpacity onPress={() => this.toggleModal()}>
-              <Button text="View All" />
-            </TouchableOpacity>
-            :
-            null
-        }
-      </View>
-    );
+    return [rows, viewAllButton];
   }
 
   renderModal() {
+    console.log('eventmanager', this.props);
     return (
       <Modal
         isVisible={this.state.showModal}
@@ -142,19 +132,20 @@ export default class EventColumns extends Component {
           <ModalHeader
             onBackButtonPress={() => this.toggleModal()}
             heading={this.props.heading}
+            eventManager={this.props.eventManager}
           />
-          { this.getColumns(false) }
+          {this.getRows(false)}
         </ModalContent>
       </Modal>
-    )
+    );
   }
 
   render() {
     const { width, height } = require('Dimensions').get('window');
     return (
       <View style={{ flex: 1 }}>
-        { this.renderModal() }
-        { this.getColumns(true) }
+        {this.renderModal()}
+        {this.getRows(true)}
       </View>
     );
   }
@@ -162,9 +153,9 @@ export default class EventColumns extends Component {
 
 EventColumns.propTypes = {
   eventsArr: PropTypes.array,
-  heading: PropTypes.string.isRequired,
+  heading: PropTypes.string.isRequired
 };
 
 EventColumns.defaultProps = {
-  eventsArr: [],
+  eventsArr: []
 };

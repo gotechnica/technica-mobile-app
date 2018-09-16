@@ -1,8 +1,8 @@
-import { normalizeTimeLabel } from '../actions/util.js';
+import { hasTimePassed, normalizeTimeLabel } from '../actions/util.js';
 
 export default class Event {
   constructor(
-    key,
+    eventID,
     title,
     description,
     startTime,
@@ -11,20 +11,18 @@ export default class Event {
     location,
     img
   ) {
-    this.key = key;
+    this.eventID = eventID;
     this.title = title;
     this.description = description;
     this.startTime = startTime;
     this.endTime = endTime;
     this.beginnerFriendly = beginnerFriendly;
     this.location = location;
-  }
+    this.img = img;
 
-  get startTimeFormatted() {
-    return normalizeTimeLabel(this.startTime);
-  }
-
-  get endTimeFormatted() {
-    return normalizeTimeLabel(this.endTime);
+    // The following are not from database schema
+    this.startTimeFormatted = normalizeTimeLabel(this.startTime);
+    this.endTimeFormatted = normalizeTimeLabel(this.endTime);
+    this.hasPassed = hasTimePassed(this.endTime);
   }
 }

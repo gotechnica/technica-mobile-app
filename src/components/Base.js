@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { colors } from './Colors';
 import { H1, H2, H3, H4, P } from './Text';
 import { Paper } from 'react-native-paper';
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
+import EventHeart from './EventHeart';
 
 const styles = StyleSheet.create({
   bg: {
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     paddingTop: 60,
-    marginBottom: 15,
+    marginBottom: 20,
   },
   subHeading: {
     color: colors.fontGrey,
@@ -55,7 +56,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkGrey,
   },
   paperHead: {
-    padding: 15,
+    paddingLeft: 20,
+    paddingBottom: 5,
+    color: colors.cyan,
   },
   paperBody: {
     padding: 15,
@@ -134,22 +137,21 @@ const SubHeading = (props) => (
 );
 
 const PaperSheet = (props) => (
-  <Paper style={styles.paper}>
+  <Fragment>
     {
       props.heading ?
-      <View>
-        <H2 style={styles.paperHead}>
+        <H4 style={styles.paperHead}>
           {props.heading}
-        </H2>
-        <HorizontalLine/>
-      </View>
+        </H4>
       :
-      null
+        null
     }
-    <View style={styles.paperBody}>
-      {props.children}
-    </View>
-  </Paper>
+    <Paper style={styles.paper}>
+      <View style={styles.paperBody}>
+        {props.children}
+      </View>
+    </Paper>
+  </Fragment>
 );
 
 const HorizontalLine = (props) => (
@@ -166,40 +168,48 @@ const ModalContent = (props) => (
   </ScrollView>
 )
 
-const ModalHeader = (props) => (
-  <View style={styles.modalHeader}>
-    <View style={styles.modalHeaderNav}>
-      <TouchableOpacity onPress={props.onBackButtonPress}>
-        <FAIcon
-          name="chevron-left"
-          size={22}
-          color={colors.white}
-        />
-      </TouchableOpacity>
-      {
-        props.heart ?
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <H3 style={{ marginRight: 8, marginTop: 3 }}>{props.savedCount}</H3>
-          <TouchableOpacity>
-            <FAIcon
-              name="heart-o"
-              size={22}
-              color={colors.white}
+const ModalHeader = (props) => {
+  const {
+    onBackButtonPress,
+    heart,
+    savedCount,
+    eventID,
+    eventManager,
+    small
+  } = props;
+
+  return (
+    <View style={styles.modalHeader}>
+      <View style={styles.modalHeaderNav}>
+        <TouchableOpacity onPress={onBackButtonPress}>
+          <FAIcon
+            name="chevron-left"
+            size={22}
+            color={colors.white}
+          />
+        </TouchableOpacity>
+        {
+          heart ?
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <EventHeart
+              savedCount={savedCount}
+              eventID={eventID}
+              eventManager={eventManager}
             />
-          </TouchableOpacity>
-        </View>
-          :
+          </View>
+            :
+            null
+        }
+      </View>
+      {
+        small ?
           null
+          :
+          <H2 style={styles.modalHeadingText}>{props.heading}</H2>
       }
     </View>
-    {
-      props.small ?
-        null
-        :
-        <H2 style={styles.modalHeadingText}>{props.heading}</H2>
-    }
-  </View>
-);
+  );
+}
 
 const Button = (props) => (
   <View>

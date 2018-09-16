@@ -18,9 +18,9 @@ import {
   ModalContent,
   ModalHeader,
   Spacing,
-  Button,
+  Button
 } from '../components/Base';
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 import EventCard from '../components/EventCard';
 import EventColumns from '../components/EventColumns';
 import { colors } from '../components/Colors';
@@ -31,7 +31,7 @@ export default class Home extends Component<Props> {
     super(props);
     this.state = {
       updates: [],
-      isUpdatesModalVisible: false,
+      isUpdatesModalVisible: false
     };
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
   }
@@ -44,24 +44,24 @@ export default class Home extends Component<Props> {
         {
           id: 3,
           time: '2:15pm, Saturday',
-          body: 'Lunch has beeen postponed until tomorrow.',
+          body: 'Lunch has beeen postponed until tomorrow.'
         },
         {
           id: 2,
           time: '12:00pm, Saturday',
-          body: 'Snacks have been remove from the facility',
+          body: 'Snacks have been remove from the facility'
         },
         {
           id: 1,
           time: '11:00am, Saturday',
-          body: 'Get your new chickens from the stand',
-        },
-      ],
-    })
+          body: 'Get your new chickens from the stand'
+        }
+      ]
+    });
   }
 
   toggleUpdatesModal() {
-    this.setState({ isUpdatesModalVisible: !this.state.isUpdatesModalVisible })
+    this.setState({ isUpdatesModalVisible: !this.state.isUpdatesModalVisible });
   }
 
   // Renders the full list view of all updates
@@ -84,21 +84,19 @@ export default class Home extends Component<Props> {
           onBackButtonPress={() => this.toggleUpdatesModal()}
           heading="Recent Updates"
         />
-        <Spacing/>
-        {
-          this.state.updates.map((update) => (
-            <View key={update.id}>
-              <H4>{update.time}</H4>
-              <H6>{update.body}</H6>
-              <Spacing/>
-              <HorizontalLine/>
-              <Spacing/>
-            </View>
-          ))
-        }
+        <Spacing />
+        {this.state.updates.map(update => (
+          <View key={update.id}>
+            <H4>{update.time}</H4>
+            <H6>{update.body}</H6>
+            <Spacing />
+            <HorizontalLine />
+            <Spacing />
+          </View>
+        ))}
       </ModalContent>
     </Modal>
-  )
+  );
 
   // Does not render anything if there are no recent updates yet
   renderUpdatesSection = () => {
@@ -107,40 +105,38 @@ export default class Home extends Component<Props> {
     return (
       <View>
         {this.renderUpdatesModal()}
-        {
-          numUpdates > 0 ?
-            <Fragment>
-              <PadContainer>
-                <H2 style={styles.heading}>Recent Updates</H2>
-              </PadContainer>
-              <TouchableOpacity onPress={() => this.toggleUpdatesModal()}>
-                <PaperSheet>
-                  <H4>{updates[0].time}</H4>
-                  <H6>{updates[0].body}</H6>
-                  {
-                    numUpdates > 1 ?
-                      <Fragment>
-                        <Spacing/>
-                        <HorizontalLine/>
-                        <Spacing/>
-                        <H6>View {numUpdates - 1} other update{updates.length > 2 ? 's' : null}</H6>
-                      </Fragment>
-                      :
-                      null
-                  }
-                </PaperSheet>
-              </TouchableOpacity>
-            </Fragment>
-            :
-            null
-        }
+        {numUpdates > 0 ? (
+          <Fragment>
+            <PadContainer>
+              <H2 style={styles.heading}>Recent Updates</H2>
+            </PadContainer>
+            <TouchableOpacity onPress={() => this.toggleUpdatesModal()}>
+              <PaperSheet>
+                <H4>{updates[0].time}</H4>
+                <H6>{updates[0].body}</H6>
+                {numUpdates > 1 ? (
+                  <Fragment>
+                    <Spacing />
+                    <HorizontalLine />
+                    <Spacing />
+                    <H6>
+                      View {numUpdates - 1} other update{updates.length > 2
+                        ? 's'
+                        : null}
+                    </H6>
+                  </Fragment>
+                ) : null}
+              </PaperSheet>
+            </TouchableOpacity>
+          </Fragment>
+        ) : null}
       </View>
     );
-  }
+  };
 
   renderPopularEventsSection = () => {
-    const heading = "Popular Events";
-    const events = getPopularEventsArray(this.props.masterState.events)
+    const heading = 'Popular Events';
+    const events = this.props.eventManager.getTopEvents(10);
     return (
       <View>
         <PadContainer style={styles.subSection}>
@@ -150,15 +146,16 @@ export default class Home extends Component<Props> {
           <EventColumns
             heading={heading}
             eventsArr={events}
+            eventManager={this.props.eventManager}
           />
         </View>
       </View>
-    )
-  }
+    );
+  };
 
   renderBestForBeginnersSection = () => {
-    const heading = "Best for Beginners"
-    const events = getBeginnerEventsArray(this.props.masterState.events)
+    const heading = 'Best for Beginners';
+    const events = this.props.eventManager.getBeginnerEventsArray();
     return (
       <View>
         <PadContainer style={styles.subSection}>
@@ -167,29 +164,29 @@ export default class Home extends Component<Props> {
         <EventColumns
           heading={heading}
           eventsArr={events}
+          eventManager={this.props.eventManager}
         />
       </View>
-    )
-  }
+    );
+  };
 
+  // TODO remove map from this and add a map icon to page header
   renderMapSection = () => (
     <View>
       <PadContainer style={styles.subSection}>
         <H2>Venue Map</H2>
       </PadContainer>
       <PadContainer>
-        <EventCard big img="demo1"/>
+        {/* <EventCard big img="demo1" /> */}
       </PadContainer>
     </View>
-  )
+  );
 
   render() {
     return (
       <ViewContainer>
         <PadContainer>
-          <Heading>
-            Technica 2018
-          </Heading>
+          <Heading>Technica 2018</Heading>
           <CountdownTimer />
         </PadContainer>
         {this.renderUpdatesSection()}
@@ -204,61 +201,25 @@ export default class Home extends Component<Props> {
 const styles = StyleSheet.create({
   bottomContainer: {
     // paddingBottom: 20,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   heading: {
-    marginBottom: 20,
+    marginBottom: 20
   },
   subSection: {
     paddingTop: 20,
-    paddingBottom: 20,
+    paddingBottom: 20
   },
   columnContainer: {
-    flex: 1, flexDirection: 'row'
+    flex: 1,
+    flexDirection: 'row'
   },
   column: {
     flex: 5,
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   event: {
     // backgroundColor: 'black',
-    marginBottom: 15,
-  },
+    marginBottom: 15
+  }
 });
-
-// Convert events object to arr
-function eventsToArr(events) {
-  const eventsArr = [];
-  for (const id in events) {
-    eventsArr.push(events[id]);
-  }
-  return eventsArr;
-}
-
-// Takes in the events state, calculates the top 10 events, returns as
-// a descending sorted array
-function getPopularEventsArray(events) {
-  const eventsArr = eventsToArr(events);
-  // If empty return empty array
-  if (eventsArr.length == 0) return eventsArr;
-
-  // Sort by highest count of favs
-  const sortedEventsArr = eventsArr.sort((a, b) => {
-    return b.savedCount - a.savedCount;
-  });
-  return sortedEventsArr.slice(0, 10);
-}
-
-// Takes in the events state, finds all beginner events, returns as an array
-// in unknown order
-function getBeginnerEventsArray(events) {
-  const eventsArr = eventsToArr(events);
-  // If empty return empty array
-  if (eventsArr.length == 0) return eventsArr;
-
-  const beginnerEventsArr = [];
-  for (event of eventsArr) {
-    if (event.beginnerFriendly) beginnerEventsArr.push(event);
-  }
-  return beginnerEventsArr;
-}

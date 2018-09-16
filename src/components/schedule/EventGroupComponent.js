@@ -13,16 +13,12 @@ import {
 import { H1, H2, H3, H4, P } from '../Text';
 import EventDescription from './EventDescription';
 
-const styles = StyleSheet.create({});
-
 export default class EventGroupComponent extends Component<Props> {
   constructor(props) {
     super(props);
   }
 
   render() {
-    // console.log('events', this.props.events);
-
     return (
       <PaperSheet heading={this.props.header}>
         <FlatList
@@ -31,17 +27,18 @@ export default class EventGroupComponent extends Component<Props> {
             event = eventObj.item;
             return (
               <EventDescription
-                startTime={event.startTimeFormatted}
-                endTime={event.endTimeFormatted}
-                title={event.title}
-                location={event.location}
+                {...event}
+                hasPassed={event.hasPassed}
+                disabled={event.hasPassed}
+                eventManager={this.props.eventManager}
+                savedCount={this.props.eventManager.getSavedCount(event.eventID)}
               />
             );
           }}
           ItemSeparatorComponent={() => {
             return <HorizontalLine style={{ marginVertical: 10 }} />;
           }}
-          keyExtractor={(event, index) => event.key.toString()}
+          keyExtractor={(event, index) => event.eventID.toString()}
         />
       </PaperSheet>
     );
