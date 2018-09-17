@@ -17,14 +17,19 @@ import {
   createStackNavigator,
 } from 'react-navigation';
 
-const App = createStackNavigator({
+const AppNavigator = createStackNavigator({
   Login: { screen: Login},
-  AppContainer: {screen: AppContainer},
-  Home: { screen: Home },
-  Profile: { screen: Profile },
-  Saved: { screen: Saved },
-  Schedule: { screen: Schedule }
+  AppContainer: { screen: AppContainer}
 });
 
-export default App;
+export default class App extends Component<Props> {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return <AppNavigator screenProps={this.props}/>;
+  }
+}
 

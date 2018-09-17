@@ -6,7 +6,8 @@ import {
   Image,
   TouchableOpacity,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  Alert
 } from 'react-native';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import {
@@ -61,7 +62,29 @@ export default class Login extends Component<Props> {
     header: null,
   };
 
-  sendPhoneNumber(phoneNumber) {
+  async sendPhoneNumber(phoneNumber) {
+    let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/check-status";
+    try {
+        let response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({'phone': phoneNumber})
+        });
+        console.log("RESPONSE: " + JSON.stringify(response));
+    } catch (error) {
+        Alert.alert(
+          "No internet connection.",
+          "Try again.",
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        );
+      }
+    
     this.setState({greeting: "Great!", instruction: "We've texted you a verification code. Please input that code below to login.", 
 
       nextPage: (

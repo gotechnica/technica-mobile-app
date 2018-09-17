@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { PushNotificationIOS } from 'react-native';
 import Analytics from '@aws-amplify/analytics';
-import aws_exports from '../aws-exports';
+import aws_exports from '../../aws-exports';
 
 import firebase from 'react-native-firebase';
 
@@ -26,6 +26,7 @@ export default class AppContainer extends Component<Props> {
 	};
   constructor(props) {
     super(props);
+    console.log("HEREasdf:" + JSON.stringify(props.screenProps));
     this.state = {
     	events: {
         1: {
@@ -182,7 +183,7 @@ export default class AppContainer extends Component<Props> {
       <ScrollableTabView
         ref={ref => {
           this.myComponent = ref;
-          this.props.eventManager.registerComponentListener(ref);
+          this.props.screenProps.eventManager.registerComponentListener(ref);
         }}
         tabBarPosition="bottom"
         locked
@@ -190,16 +191,16 @@ export default class AppContainer extends Component<Props> {
         renderTabBar={() => <CustomTabBar />}
       >
         <Home
-          eventManager={this.props.eventManager}
+          eventManager={this.props.screenProps.eventManager}
           tabLabel="home"
         />
         <Schedule
           tabLabel="calendar"
-          eventManager={this.props.eventManager}
+          eventManager={this.props.screenProps.eventManager}
         />
         <Saved
           tabLabel="heart"
-          eventManager={this.props.eventManager}
+          eventManager={this.props.screenProps.eventManager}
         />
         <Mentors tabLabel="people" />
         <Profile tabLabel="user" />
@@ -208,6 +209,6 @@ export default class AppContainer extends Component<Props> {
   }
 
   componentWillUnmount() {
-    this.props.eventManager.removeComponentListener(this.myComponent);
+    this.props.screenProps.eventManager.removeComponentListener(this.myComponent);
   }
 }
