@@ -45,7 +45,7 @@ export default class Login extends Component<Props> {
       greeting: 'Welcome to \nTECHNICA 2018',
       instruction: 'Enter the phone number you used to \nsign up for Technica. \n\n(Include Country Code)',
       nextPage: (
-        <TouchableHighlight onPress={() => this.sendPhoneNumber("+" + this.state.fieldValue)}>
+        <TouchableHighlight onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Icon
               name='arrow-right'
               size={20}
@@ -81,12 +81,20 @@ export default class Login extends Component<Props> {
   };
 
   validPhoneNumber(phoneNumber){
-    var phoneRegex = RegExp('^\\+\\d{11,}$');
-    return phoneRegex.test(phoneNumber);
+    var phoneRegex = RegExp('^\\d{11,}$');
+    if(phoneRegex.test(phoneNumber)){
+      return "+" + phoneNumber;
+    }
+    phoneRegex = RegExp('^\\d{10}$');
+    if(phoneRegex.test(phoneNumber)){
+      return "+1" + phoneNumber;
+    }
+    return null;
   }
 
   async sendPhoneNumber(phoneNumber) {
-    if(this.validPhoneNumber(phoneNumber)){
+    validNumber = this.validPhoneNumber(phoneNumber);
+    if(validNumber != null){
       let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/check-status";
       try {
           let response = await fetch(url, {
@@ -95,7 +103,7 @@ export default class Login extends Component<Props> {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({'phone': phoneNumber})
+            body: JSON.stringify({'phone': validNumber})
           });
           let responseJson = await response.json();
           if(responseJson.statusCode == 200){
@@ -109,7 +117,7 @@ export default class Login extends Component<Props> {
                       style={{alignSelf: 'flex-end', paddingRight: '5%'}}
                     />
                 </TouchableHighlight>), 
-              savedPhone: phoneNumber, fieldValue: '', placeholder: 'xxxxxx'});
+              savedPhone: validNumber, fieldValue: '', placeholder: 'xxxxxx'});
           } else{
             Alert.alert(
               "SMS failed to send (bad credentials).",
@@ -150,7 +158,7 @@ export default class Login extends Component<Props> {
     try {
         let phoneNumber = this.state.savedPhone;
         let response = await fetch(url, {
-          method: 'POST',
+          method: 'POST', 
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -158,7 +166,6 @@ export default class Login extends Component<Props> {
           body: JSON.stringify({'phone': phoneNumber, 'pin': sms})
         });
         let responseJson = await response.json();
-        console.log("JSON:" + JSON.stringify(responseJson.body.user_data['fav_events']));
         if(responseJson.statusCode == 200){
           await AsyncStorage.setItem(USER_DATA_STORE, JSON.stringify(responseJson.body));
           await AsyncStorage.setItem(EVENT_FAVORITED_STORE, JSON.stringify(responseJson.body.user_data['fav_events']));
@@ -175,9 +182,7 @@ export default class Login extends Component<Props> {
             { cancelable: false }
           );
         }
-        console.log("RESPONSE: " + JSON.stringify(responseJson));
     } catch (error) {
-        console.log(error);
         Alert.alert(
           "No internet connection.",
           "Try again.",

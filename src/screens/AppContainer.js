@@ -26,7 +26,6 @@ export default class AppContainer extends Component<Props> {
 	};
   constructor(props) {
     super(props);
-    console.log("HEREasdf:" + JSON.stringify(props.screenProps));
     this.state = {
     	events: {
         1: {

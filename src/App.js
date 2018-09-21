@@ -19,7 +19,8 @@ import {
 
 const AppNavigator = createStackNavigator({
   Login: { screen: Login},
-  AppContainer: { screen: AppContainer}
+  AppContainer: { screen: AppContainer},
+  Profile: {screen: Profile}
 });
 
 export default class App extends Component<Props> {
