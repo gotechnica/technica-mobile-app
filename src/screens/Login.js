@@ -6,9 +6,9 @@ import {
   Image,
   TouchableOpacity,
   View,
-  TouchableHighlight,
   Alert,
-  AsyncStorage
+  AsyncStorage,
+  TextInput
 } from 'react-native';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import {
@@ -28,8 +28,7 @@ import EventCard from '../components/EventCard';
 import EventColumns from '../components/EventColumns';
 import { colors } from '../components/Colors';
 import CountdownTimer from '../components/CountdownTimer';
-import { TextInput } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const EVENT_FAVORITED_STORE = 'EVENT_FAVORITED_STORE';
 const USER_DATA_STORE = 'USER_DATA_STORE';
@@ -41,46 +40,47 @@ export default class Login extends Component<Props> {
       savedPhone: '',
       savedSMS: '',
       fieldValue: '',
-      placeholder: '123-456-7890',
+      placeholder: '###-###-####',
       greeting: 'Welcome to \nTECHNICA 2018',
-      instruction: 'Enter the phone number you used to \nsign up for Technica. \n\n(Include Country Code)',
+      instruction: 'Enter the phone number you used to \nsign up for Technica.',
       nextPage: (
-        <TouchableHighlight onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
+        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Icon
-              name='arrow-right'
-              size={20}
+              name='chevron-right'
+              size={22}
               color='white'
-              style={{alignSelf: 'flex-end', paddingRight: '5%'}}
+              style={styles.button}
             />
-        </TouchableHighlight>),
-      loadPage: false,
-
+        </TouchableOpacity>),
     };
   }
-
-  async componentDidMount() {
-/*
-    await AsyncStorage.removeItem(USER_DATA_STORE);
-    this.setState({loadPage: true});*/ 
-
-    try {
-      const value = await AsyncStorage.getItem(USER_DATA_STORE);
-      if (value !== null) {
-        const { navigate } = this.props.navigation;
-        navigate('AppContainer');
-      }
-      this.setState({loadPage: true}); 
-    } catch (error) {
-       console.log(error);
-    }
-      
-  }
+//
+//   async componentDidMount() {
+// /*
+//     await AsyncStorage.removeItem(USER_DATA_STORE);
+//     this.setState({loadPage: true});*/
+//
+//     try {
+//       const value = await AsyncStorage.getItem(USER_DATA_STORE);
+//       if (value !== null) {
+//         const { navigate } = this.props.navigation;
+//         navigate('AppContainer');
+//       }
+//       this.setState({loadPage: true});
+//     } catch (error) {
+//        console.log(error);
+//     }
+//
+//   }
 
   static navigationOptions = {
     header: null,
   };
 
   validPhoneNumber(phoneNumber){
+    // Clean spaces, dashes, and parenthesis from phone numbers
+    phoneNumber = phoneNumber.replace(/-| |\(|\)/gm,"");
+
     var phoneRegex = RegExp('^\\d{11,}$');
     if(phoneRegex.test(phoneNumber)){
       return "+" + phoneNumber;
@@ -107,20 +107,20 @@ export default class Login extends Component<Props> {
           });
           let responseJson = await response.json();
           if(responseJson.statusCode == 200){
-            this.setState({greeting: "Great!", instruction: "We've texted you a verification code. Please input that code below to login.", 
+            this.setState({greeting: "Great!", instruction: "We've texted you a verification code. Please enter that code below to login.",
             nextPage: (
-              <TouchableHighlight onPress={() => this.sendReceivedText(this.state.fieldValue)}>
+              <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)}>
                   <Icon
-                      name='arrow-right'
-                      size={20}
+                      name='chevron-right'
+                      size={22}
                       color='white'
-                      style={{alignSelf: 'flex-end', paddingRight: '5%'}}
+                      style={styles.button}
                     />
-                </TouchableHighlight>), 
+                </TouchableOpacity>),
               savedPhone: validNumber, fieldValue: '', placeholder: 'xxxxxx'});
           } else{
             Alert.alert(
-              "SMS failed to send (bad credentials).",
+              "Your phone number was not found.",
               "Please try again.",
               [
                 {text: 'OK', onPress: () => console.log('OK Pressed')},
@@ -142,14 +142,14 @@ export default class Login extends Component<Props> {
     }else{
       Alert.alert(
         "Invalid Phone Number.",
-        "Please enter a phone number with the country code.",
+        "Please enter your phone number in the format ##########.",
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],
         { cancelable: false }
         );
     }
-    
+
   }
 
   async sendReceivedText(sms){
@@ -158,7 +158,7 @@ export default class Login extends Component<Props> {
     try {
         let phoneNumber = this.state.savedPhone;
         let response = await fetch(url, {
-          method: 'POST', 
+          method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -196,44 +196,34 @@ export default class Login extends Component<Props> {
 
 
   render() {
-    if (this.state.loadPage){
-      return (
-        <ViewContainer>
-          <PadContainer style={styles.subSection}>
-            <Heading style={{paddingBottom: 20}}>
-              {this.state.greeting}
-            </Heading>
-            <SubHeading>
-              {this.state.instruction}
-            </SubHeading>
-            <TextInput
-              placeholder={this.state.placeholder}
-              underlineColor='white'
-              selectionColor='white'
-              value={this.state.fieldValue}
-              onChangeText={field => this.setState({ fieldValue: field })}
-              placeholderTextColor='#ffffff'
-              keyboardType = 'numeric'
-            />
-          </PadContainer>
-          {this.state.nextPage}
-        </ViewContainer>
-      );
-      }else{
-        return (
-        <ViewContainer>
-            <PadContainer style={styles.subSection}>
-            <Heading style={{paddingBottom: 20, paddingLeft: '23%', paddingTop: '40%'}}>
-              <Image
-                style={{width: 500, height: 100}}
-                source={require('../../assets/imgs/technica_logo.png')}
-              />
-            </Heading>
-          </PadContainer>
-        </ViewContainer>
-      );
-      }
-
+    return (
+      <ViewContainer>
+        <PadContainer style={styles.subSection}>
+          <Heading style={{ paddingBottom: 20 }}>
+            {this.state.greeting}
+          </Heading>
+          <SubHeading>
+            {this.state.instruction}
+          </SubHeading>
+          <TextInput
+            placeholder={this.state.placeholder}
+            value={this.state.fieldValue}
+            onChangeText={field => this.setState({ fieldValue: field })}
+            placeholderTextColor={colors.borderGrey}
+            keyboardType = 'numeric'
+            style={{
+              borderColor: colors.white,
+              borderBottomWidth: 1,
+              paddingBottom: 8,
+              fontFamily: "DINPro-Medium",
+              fontSize: 24,
+              color: colors.white,
+            }}
+          />
+        </PadContainer>
+        {this.state.nextPage}
+      </ViewContainer>
+    );
   }
 }
 
@@ -246,11 +236,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   subSection: {
-    paddingTop: '30%',
-    paddingBottom: '30%',
+    marginTop: '30%',
   },
   columnContainer: {
     flex: 1, flexDirection: 'row'
+  },
+  button: {
+    alignSelf: 'flex-end',
+    marginTop: -40,
+    paddingTop: 5,
+    paddingRight: 5,
+    paddingLeft: 5,
+    paddingBottom: 5,
+    marginRight: 10,
   },
   column: {
     flex: 5,
