@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'flex-end',
-    marginTop: -40,
+    marginTop: 20,
     paddingTop: 5,
     paddingRight: 5,
     paddingLeft: 5,

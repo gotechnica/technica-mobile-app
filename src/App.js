@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DefaultTheme, BottomNavigation } from 'react-native-paper';
-import { YellowBox, AsyncStorage } from 'react-native';
+import { YellowBox, AsyncStorage, ActivityIndicator } from 'react-native';
 import Home from './screens/Home';
 import Mentors from './screens/Mentors';
 import Profile from './screens/Profile';
@@ -15,6 +15,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import AppContainer from './screens/AppContainer';
 import {View} from 'react-native'
 import { createStackNavigator} from 'react-navigation';
+import { ViewContainer } from './components/Base';
 
 // NOTE dangerously ignore deprecated warning for now
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
@@ -52,7 +53,18 @@ export default class App extends Component<Props> {
 
   render() {
     if (this.state.isLoggedIn === undefined) {
-      return <View />;
+      return (
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          padding: 10,
+          backgroundColor: colors.black
+        }}>
+          <ActivityIndicator size="large" color={colors.pink}/>
+        </View>
+      );
     } else if (this.state.isLoggedIn === false) {
       return <AppNavigator screenProps={this.props}/>;
     } else {

@@ -73,7 +73,7 @@ export default class EventModal extends Component {
             <Spacing />
             {props.beginnerFriendly ? (
               <Fragment>
-                <H4 style={{ color: colors.lavender }}>BEGINNER FRIENDLY</H4>
+                <H4 style={{ color: colors.cyan }}>BEST FOR BEGINNERS</H4>
                 <Spacing />
               </Fragment>
             ) : null}
