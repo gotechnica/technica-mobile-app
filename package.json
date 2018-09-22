@@ -17,8 +17,10 @@
     "react-native-firebase": "^4.3.8",
     "react-native-modal": "^6.1.0",
     "react-native-paper": "^1.11.0",
+    "react-native-phone-input": "^0.2.1",
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-vector-icons": "^4.6.0",
+    "react-navigation": "^2.13.0",
     "yo": "^2.0.3"
   },
   "devDependencies": {
