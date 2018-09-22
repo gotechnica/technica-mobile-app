@@ -177,7 +177,7 @@ export default class Home extends Component<Props> {
         <H2>Venue Map</H2>
       </PadContainer>
       <PadContainer>
-        {/* <EventCard big img="demo1" /> */}
+        {/* <EventCard big img="banner_food" /> */}
       </PadContainer>
     </View>
   );

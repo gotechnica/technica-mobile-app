@@ -58,6 +58,8 @@ export default class EventCard extends Component {
       titleClipped = titleClipped.substring(0, titleLimit) + "…";
     }
 
+    let imgName = big ? img + "_big" : img;
+
     return (
       <View>
         {this.renderModal()}
@@ -70,8 +72,7 @@ export default class EventCard extends Component {
                 borderRadius: 4,
                 marginBottom: 5
               }}
-              // source={Image[img]}
-              source={Images[img]}
+              source={Images[imgName]}
             />
             {big ? null : (
               <View>

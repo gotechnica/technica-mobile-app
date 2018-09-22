@@ -24,6 +24,7 @@ export default class EventModal extends Component {
     const dimensions = require('Dimensions').get('window');
     const imageWidth = dimensions.width - 42;
     const imageHeight = Math.round((imageWidth * 38) / 67);
+    const img = props.img + "_big";
     return (
       <Modal
         isVisible={props.isModalVisible}
@@ -56,7 +57,7 @@ export default class EventModal extends Component {
               marginBottom: 20
             }}
             // source={Image[img]}
-            source={Images[props.img]}
+            source={Images[img]}
           />
           <ScrollView>
             <Spacing />
