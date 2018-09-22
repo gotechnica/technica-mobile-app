@@ -222,7 +222,9 @@ export default class EventsManager {
 
   updateComponents() {
     this.componentListeners.forEach((component, comp, set) => {
-      component.forceUpdate();
+      if (component !== null) {
+        component.forceUpdate();
+      }
     });
   }
 }

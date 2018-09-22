@@ -5,7 +5,8 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  View
+  View,
+  Alert
 } from 'react-native';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import {
@@ -25,6 +26,7 @@ import EventCard from '../components/EventCard';
 import EventColumns from '../components/EventColumns';
 import { colors } from '../components/Colors';
 import CountdownTimer from '../components/CountdownTimer';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 export default class Home extends Component<Props> {
   constructor(props) {
@@ -34,6 +36,7 @@ export default class Home extends Component<Props> {
       isUpdatesModalVisible: false
     };
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
+    this.onMapButtonPress = this.onMapButtonPress.bind(this);
   }
 
   componentDidMount() {
@@ -170,29 +173,41 @@ export default class Home extends Component<Props> {
     );
   };
 
-  // TODO remove map from this and add a map icon to page header
-  renderMapSection = () => (
-    <View>
-      <PadContainer style={styles.subSection}>
-        <H2>Venue Map</H2>
-      </PadContainer>
-      <PadContainer>
-        {/* <EventCard big img="demo1" /> */}
-      </PadContainer>
-    </View>
-  );
+  onMapButtonPress = () => {
+    Alert.alert(
+      "TODO make a map",
+      "Please try again.",
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: false }
+    );
+  }
 
   render() {
     return (
       <ViewContainer>
         <PadContainer>
-          <Heading>Technica 2018</Heading>
+          <View style={styles.headingRow}>
+            <Heading>Technica 2018</Heading>
+            <TouchableOpacity onPress={this.onMapButtonPress}>
+              <Icon
+                name="map"
+                size={30}
+                color="white"
+                style={{
+                  paddingTop: 64,
+                  marginBottom: 20,
+                  opacity: .8,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
           <CountdownTimer />
         </PadContainer>
         {this.renderUpdatesSection()}
         {this.renderPopularEventsSection()}
         {this.renderBestForBeginnersSection()}
-        {this.renderMapSection()}
       </ViewContainer>
     );
   }
@@ -205,6 +220,10 @@ const styles = StyleSheet.create({
   },
   heading: {
     marginBottom: 20
+  },
+  headingRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   subSection: {
     paddingTop: 20,
