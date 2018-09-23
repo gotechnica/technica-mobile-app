@@ -16,9 +16,10 @@ import {
   PadContainer
 } from '../components/Base';
 import { Button } from 'react-native-paper';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import QRCode from 'react-native-qrcode';
 
 const USER_DATA_STORE = 'USER_DATA_STORE';
-
 
 export default class Profile extends Component<Props> {
 
@@ -39,11 +40,16 @@ export default class Profile extends Component<Props> {
       <ViewContainer>
         <PadContainer>
           <Heading>
-            Demo Name
+            Hacker Name
           </Heading>
           <SubHeading>
-            12 events saved
+            Your QR code
           </SubHeading>
+          <QRCode
+              value={'Hacker data'}
+              size={200}
+              bgColor='black'
+              fgColor='white'/>
           <Button icon="add-a-photo" mode="contained" onPress={() => this.logout()}>
             Logout
           </Button>

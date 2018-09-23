@@ -138,6 +138,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-camera')
     compile project(':react-native-firebase')
     implementation project(':amazon-cognito-identity-js')
     implementation 'com.google.firebase:firebase-messaging:17.1.0'
