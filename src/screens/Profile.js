@@ -146,7 +146,7 @@ export default class Profile extends Component<Props> {
                       </SubHeading>
                       <PadContainer style={{backgroundColor:colors.white, padding:1}}>
                           {this.state.user.user_data && <QRCode
-                              value={this.state.user.user_data.phone}
+                              value={fullName}
                               size={200}
                               bgColor='black'
                               fgColor='white'/>}
