@@ -52,15 +52,6 @@ export default class Mentors extends Component<Props> {
     const question = await AsyncStorage.getItem("questions");
     const qList = JSON.parse(question) 
     this.setState({listData: qList})
-
-    this.messageListener = firebase.messaging().onMessage((message) => {
-      console.log("Message received")
-      console.log(message)
-      // Process your message as required
-  });
-  }
-  componentWillUnmount() {
-    this.messageListener();
   }
   clearQuestion() {
     this.setState({ question: ''});
