@@ -18,30 +18,7 @@ import firebase from 'react-native-firebase';
 import QuestionCard from '../components/QuestionCard'
 import { AsyncStorage } from "react-native"
 
-this.notificationListener = firebase
-.notifications()
-.onNotification(async (notification: Notification) => {
-  console.log('notification received', notification.body);
-  var msg = notification.body;
-  // checking that the message is for a question being claimed
-  if (msg.indexOf("Your question: ") != -1) {
-    var question = msg.substring(msg.indexOf("Your question: ") + 15, msg.indexOf("has been claimed!")-1)
-    console.log(question)
-    let questions = await AsyncStorage.getItem("questions")
-    var qList = JSON.parse(questions)
-    // update status of question
-    qList.forEach(element => {
-      if (element.question == question){
-        console.log("found!")
-        element.status = "Responded!"
-      } 
-    })
-    // store update in local storage
-    await AsyncStorage.setItem("questions", JSON.stringify(qList))
-    this.setState({listData: qList})
-}
-});
-export default class Mentors extends Component<Props> {
+export default class Mentors extends Component<Props> {  
   constructor(props) {
     super(props);
     this.state = { question: '', tableNumber: "", newQuestionScreen:false, listData: [] };
@@ -179,6 +156,31 @@ export default class Mentors extends Component<Props> {
     const { newQuestionScreen } = this.state;
     const dimensions = require('Dimensions').get('window');
     const buttonWidth = (dimensions.width / 2) - 30;
+
+    this.notificationListener = firebase
+    .notifications()
+    .onNotification(async (notification: Notification) => {
+      console.log('notification received', notification.body);
+      var msg = notification.body;
+      // checking that the message is for a question being claimed
+      if (msg.indexOf("Your question: ") != -1) {
+        var question = msg.substring(msg.indexOf("Your question: ") + 15, msg.indexOf("has been claimed!")-1)
+        console.log(question)
+        let questions = await AsyncStorage.getItem("questions")
+        var qList = JSON.parse(questions)
+        // update status of question
+        qList.forEach(element => {
+          if (element.question == question){
+            console.log("found!")
+            element.status = "Responded!"
+          } 
+        })
+        // store update in local storage
+        await AsyncStorage.setItem("questions", JSON.stringify(qList))
+        this.setState({listData: qList})
+      } 
+    });
+
     if ( newQuestionScreen ) {
       return (
         <ViewContainer>
