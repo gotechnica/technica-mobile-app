@@ -5,7 +5,8 @@ import {
   Text,
   View,
   AsyncStorage,
-  Alert
+  Alert,
+  TouchableHighlight,
 } from 'react-native';
 import { H1, H2, H3, H4, P } from '../components/Text';
 import {
@@ -13,19 +14,24 @@ import {
   Heading,
   SubHeading,
   PaperSheet,
-  PadContainer
+  PadContainer,
+  ModalHeader,
+  ModalContent,
 } from '../components/Base';
 import { Button } from 'react-native-paper';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRCode from 'react-native-qrcode';
 import _ from 'lodash';
+import { colors } from '../components/Colors';
+import Modal from 'react-native-modal';
+
 
 const USER_DATA_STORE = 'USER_DATA_STORE';
 
 export default class Profile extends Component<Props> {
     constructor(props){
         super(props);
-        this.state = {user:{}, scanner:false};
+        this.state = {user:{}, scanner:false, modalVisible:true};
     }
 
   async logout(){
@@ -40,35 +46,66 @@ export default class Profile extends Component<Props> {
     );
   }
 
-  switchScanner(){
-      this.setState({scanner: true});
+  toggleScanner(){
+      this.setState({scanner: !this.state.scanner});
   }
 
-  onSuccess(e) {
-      alert(e.data);
+  async onScanSuccess(e) {
+      // TODO: verify that this hacker is registered
+      //const isRegistered = await verifyHacker(e.data);
+      //this.setState({modalVisible: true});
       // TODO: should be a modal instead
+      // TODO: only do this on modal exit
+      alert(e.data);
+      this.scanner.reactivate();
+  }
+
+  async verifyHacker(){
+      return true;
+
   }
 
   async componentDidMount(){
-      this.setState({user: JSON.parse(await AsyncStorage.getItem(USER_DATA_STORE))});
-      //console.error(this.state.user.user_data.first_name);
+      var loggedInUser = JSON.parse(await AsyncStorage.getItem(USER_DATA_STORE));
+      loggedInUser.user_data.organizer = false;
+      this.setState({user: loggedInUser});
+  }
+
+  toggleModal(){
+      this.setState({modalVisible:!this.state.modalVisible});
   }
 
   render() {
+
     const scannerView = (() => {
         return(
-            <ViewContainer>
-              <PadContainer>
-              <QRCodeScanner
-                  ref={(node) => { this.scanner = node;
-                  this.scanner.reactivate() }}
-                  onRead={this.onSuccess.bind(this)}
+            <Modal
+              isVisible={this.state.scanner}
+              backdropColor={colors.black}
+              backdropOpacity={1}
+              animationInTiming={250}
+              animationIn="fadeInUp"
+              animationOut="fadeOutDown"
+              animationOutTiming={300}
+              backdropTransitionInTiming={250}
+              backdropTransitionOutTiming={300}
+              avoidKeyboard={true}
+              onBackButtonPress={() => this.toggleScanner()}
+            >
+            <ModalContent>
+                <ModalHeader
+                  onBackButtonPress={() => this.toggleScanner()}
                 />
-              </PadContainer>
-            </ViewContainer>
+                <ViewContainer>
+                  <QRCodeScanner
+                      ref={(node) => { this.scanner = node }}
+                      onRead={this.onScanSuccess.bind(this)}
+                    />
+                </ViewContainer>
+            </ModalContent>
+            </Modal>
         )
     })();
-
 
     const defaultView = ( () => {
         if(this.state.user.user_data){
@@ -86,7 +123,7 @@ export default class Profile extends Component<Props> {
                       <SubHeading>
                         Organizer
                       </SubHeading>
-                      <Button onPress={() => this.switchScanner()}>
+                      <Button onPress={() => this.toggleScanner()}>
                         Open Scanner
                       </Button>
                       <Button mode="contained" onPress={() => this.logout()}>
@@ -107,19 +144,20 @@ export default class Profile extends Component<Props> {
                       <SubHeading>
                         Your QR code
                       </SubHeading>
-                      {this.state.user.user_data && <QRCode
-                          value={fullName}
-                          size={200}
-                          bgColor='black'
-                          fgColor='white'/>}
+                      <PadContainer style={{backgroundColor:colors.white, padding:1}}>
+                          {this.state.user.user_data && <QRCode
+                              value={this.state.user.user_data.phone}
+                              size={200}
+                              bgColor='black'
+                              fgColor='white'/>}
+                      </PadContainer>
                       <SubHeading>
                         Use this code for check-in
                       </SubHeading>
-                      <Button  mode="contained" onPress={() => this.logout()}>
+                      <Button mode="contained" onPress={() => this.logout()}>
                         Logout
                       </Button>
                     </PadContainer>
-
                   </ViewContainer>
                 );
 
@@ -129,6 +167,7 @@ export default class Profile extends Component<Props> {
             return(<ViewContainer>Awaiting user data</ViewContainer>);
         }
     })();
+
     if(this.state.scanner)
         return(scannerView);
     else
