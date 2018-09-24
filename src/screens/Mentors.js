@@ -38,6 +38,7 @@ this.notificationListener = firebase
     })
     // store update in local storage
     await AsyncStorage.setItem("questions", JSON.stringify(qList))
+    this.setState({listData: qList})
 }
 });
 export default class Mentors extends Component<Props> {
@@ -53,8 +54,8 @@ export default class Mentors extends Component<Props> {
     const qList = JSON.parse(question) 
     this.setState({listData: qList})
   }
-  clearQuestion() {
-    this.setState({ question: ''});
+  clearInputs() {
+    this.setState({ question: '', tableNumber: ''});
   }
   cancelQuestion() {
     this.setState({ question: '', newQuestionScreen: !this.state.newQuestionScreen });
@@ -68,12 +69,13 @@ export default class Mentors extends Component<Props> {
       var qList
       if (questions != null) {
         qList = JSON.parse(questions)
-        qList.push(questionObject)
+        qList.unshift(questionObject)
       } else {
         qList = [questionObject]
       }
       await AsyncStorage.setItem("questions", JSON.stringify(qList))
       this.setState({listData: qList})
+      this.clearInputs()
     } catch (error) {
       // Error saving data
       console.log(error)
