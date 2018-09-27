@@ -163,7 +163,7 @@ const Spacing = (props) => (
 );
 
 const ModalContent = (props) => (
-  <ScrollView style={styles.modal}>
+  <ScrollView style={[styles.modal, props.styles]}>
     {props.children}
   </ScrollView>
 )

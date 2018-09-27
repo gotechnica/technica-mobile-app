@@ -50,6 +50,7 @@
 		DCF3FDD7EECB435CB611100C /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7B5BA6452244BC3BB10FCDB /* Ionicons.ttf */; };
 		DD2A71A646264DBFB4AADBD7 /* libRNAWSCognito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E35112842D84FC0A03E8426 /* libRNAWSCognito.a */; };
 		E9DB9C1347854E328E21F5F5 /* DINPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 049F686795D642A5878F92B3 /* DINPro-Medium.otf */; };
+		663EB6405BAF481BB643CE27 /* libRNPhotoView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A52464F51AAF4AB2B22E14D7 /* libRNPhotoView.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -416,6 +417,8 @@
 		F9CF50CDDF5A4550A785FD92 /* libPods-technicaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-technicaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC70FCD806947CA99C06B75 /* DINPro-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DINPro-Bold.otf"; path = "../assets/fonts/DINPro-Bold.otf"; sourceTree = "<group>"; };
 		FB1B63A26D412DB69337A226 /* Pods-technica-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technica-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-technica-tvOS/Pods-technica-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		AD064AF970844AC1901DA7B3 /* RNPhotoView.xcodeproj */ = {isa = PBXFileReference; name = "RNPhotoView.xcodeproj"; path = "../node_modules/react-native-photo-view/ios/RNPhotoView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A52464F51AAF4AB2B22E14D7 /* libRNPhotoView.a */ = {isa = PBXFileReference; name = "libRNPhotoView.a"; path = "libRNPhotoView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -441,6 +444,7 @@
 				DD2A71A646264DBFB4AADBD7 /* libRNAWSCognito.a in Frameworks */,
 				9A58DBBC58FDC2155EC914FA /* libPods-technica.a in Frameworks */,
 				634B819A66B640B6970F55E7 /* libRNFirebase.a in Frameworks */,
+				663EB6405BAF481BB643CE27 /* libRNPhotoView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,6 +643,7 @@
 				F6E3FDEBF3D0408F9B15D06D /* RNVectorIcons.xcodeproj */,
 				7F35CF1E741F454F8BF60537 /* RNAWSCognito.xcodeproj */,
 				D7E1936C7FF14AC29555D894 /* RNFirebase.xcodeproj */,
+				AD064AF970844AC1901DA7B3 /* RNPhotoView.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1285,6 +1290,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/amazon-cognito-identity-js/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 				);
 				INFOPLIST_FILE = technica/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1298,6 +1304,10 @@
 				PROVISIONING_PROFILE = "ac80d34e-a547-4bb3-abc2-3c407ed31190";
 				PROVISIONING_PROFILE_SPECIFIER = "technica development profile";
 				VERSIONING_SYSTEM = "apple-generic";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/technica\"",
+				);
 			};
 			name = Debug;
 		};
@@ -1316,6 +1326,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/amazon-cognito-identity-js/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
+					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 				);
 				INFOPLIST_FILE = technica/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1329,6 +1340,10 @@
 				PROVISIONING_PROFILE = "ac80d34e-a547-4bb3-abc2-3c407ed31190";
 				PROVISIONING_PROFILE_SPECIFIER = "technica development profile";
 				VERSIONING_SYSTEM = "apple-generic";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/technica\"",
+				);
 			};
 			name = Release;
 		};

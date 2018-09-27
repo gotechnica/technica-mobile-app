@@ -15,6 +15,7 @@ import Modal from 'react-native-modal';
 import { ModalContent, ModalHeader, HorizontalLine, Spacing } from './Base';
 import { colors } from './Colors';
 import moment from 'moment';
+import PhotoView from 'react-native-photo-view';
 
 export default class MapModal extends Component {
   render() {
@@ -22,10 +23,12 @@ export default class MapModal extends Component {
     const dimensions = require('Dimensions').get('window');
     const imageWidth = dimensions.width - 42;
     const imageHeight = Math.round((imageWidth * 38) / 67);
+    const styles = {width: window.width, height: window.height, overflow:'visible'};
+
     return (
       <Modal
         isVisible={props.isModalVisible}
-        backdropColor={colors.black}
+        backdropColor="#000000"
         backdropOpacity={1}
         animationInTiming={250}
         animationIn="fadeInUp"
@@ -35,13 +38,26 @@ export default class MapModal extends Component {
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
-        style={{ margin: 0, padding: 10 }}
+        style={{ margin: 0 }}
       >
-        <ModalContent>
-          <ModalHeader
-            onBackButtonPress={() => props.toggleModal()}
+        <ModalContent style={{ backgroundColor: "#000000" }}>
+          <View style={{ padding: 15, paddingBottom: 0 }}>
+            <ModalHeader
+              heading="Venue Map"
+              onBackButtonPress={() => props.toggleModal()}
+            />
+          </View>
+          <PhotoView
+            source={require('./images/floor_plan_final.png')}
+            minimumZoomScale={1}
+            maximumZoomScale={3.5}
+            androidScaleType="fitCenter"
+            onLoad={() => console.log("Image loaded!")}
+            style={{
+              width: window.width,
+              height: 600,
+            }}
           />
-          <H1>HELLO WORLD</H1>
         </ModalContent>
       </Modal>
     );
