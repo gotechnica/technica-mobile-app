@@ -1,124 +1,74 @@
 import React, { Component } from 'react';
 import { DefaultTheme, BottomNavigation } from 'react-native-paper';
+import { YellowBox, AsyncStorage, ActivityIndicator } from 'react-native';
 import Home from './screens/Home';
 import Mentors from './screens/Mentors';
 import Profile from './screens/Profile';
 import Saved from './screens/Saved';
 import Schedule from './screens/Schedule';
+import Login from './screens/Login';
 import CustomTabBar from './components/CustomTabBar';
 import { H5 } from './components/Text';
 import { colors } from './components/Colors';
-
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import AppContainer from './screens/AppContainer';
+import {View} from 'react-native'
+import { createStackNavigator} from 'react-navigation';
+import { ViewContainer } from './components/Base';
 
-import { PushNotificationIOS } from 'react-native';
-import Analytics from '@aws-amplify/analytics';
-import aws_exports from '../aws-exports';
+// NOTE dangerously ignore deprecated warning for now
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
-import firebase from 'react-native-firebase';
-
-const channelId = 'technica-push-notifications';
-const channelName = 'Technica Announcements';
+const AppNavigator = createStackNavigator({
+  Login: { screen: Login},
+  AppContainer: { screen: AppContainer},
+  Profile: {screen: Profile}
+});
 
 export default class App extends Component<Props> {
-
-  render() {
-    Analytics.configure(aws_exports);
-
-    //create notifications channel
-    const channel = new firebase.notifications.Android.Channel(
-      channelId,
-      channelName,
-      firebase.notifications.Android.Importance.Max
-    ).setDescription(
-      'Technica notification channel for delivering important announcements'
-    );
-
-    firebase.notifications().android.createChannel(channel);
-
-    firebase
-      .messaging()
-      .hasPermission()
-      .then(enabled => {
-        if (enabled) {
-          console.log('Permission enabled');
-        } else {
-          try {
-            firebase.messaging().requestPermission();
-          } catch (error) {
-            console.log('Error authenticating', error);
-          }
-        }
-      });
-
-    firebase
-      .messaging()
-      .getToken()
-      .then(fcmToken => {
-        if (fcmToken) {
-          console.log('fcm token: ', fcmToken);
-        } else {
-          console.log('no token');
-        }
-      });
-
-    this.notificationDisplayedListener = firebase
-      .notifications()
-      .onNotificationDisplayed((notification: Notification) => {
-        // Process your notification as required
-        // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
-        console.log('notification displayed', notification);
-      });
-
-    this.notificationListener = firebase
-      .notifications()
-      .onNotification((notification: Notification) => {
-        console.log('notification received', notification);
-        notification.android.setChannelId(channelId);
-        firebase.notifications().displayNotification(notification);
-      });
-
-    const notification = new firebase.notifications.Notification()
-      .setNotificationId('notificationId')
-      .setTitle('Hello world')
-      .setBody('I love local notifications');
-
-    notification.android
-      .setChannelId(channelId)
-      .android.setSmallIcon('ic_launcher');
-    firebase.notifications().displayNotification(notification);
-
-    return (
-      <ScrollableTabView
-        ref={ref => {
-          this.myComponent = ref;
-          this.props.eventManager.registerComponentListener(ref);
-        }}
-        tabBarPosition="bottom"
-        locked
-        style={{ backgroundColor: colors.black }}
-        renderTabBar={() => <CustomTabBar />}
-      >
-        <Home
-          eventManager={this.props.eventManager}
-          tabLabel="home"
-        />
-        <Schedule
-          tabLabel="calendar"
-          eventManager={this.props.eventManager}
-        />
-        <Saved
-          tabLabel="heart"
-          eventManager={this.props.eventManager}
-        />
-        <Mentors tabLabel="people" />
-        <Profile tabLabel="user" />
-      </ScrollableTabView>
-    );
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: undefined,
+    }
   }
 
-  componentWillUnmount() {
-    this.props.eventManager.removeComponentListener(this.myComponent);
+  async componentDidMount() {
+    try {
+      const value = await AsyncStorage.getItem("USER_DATA_STORE");
+      if (value !== null) {
+        this.setState({
+          isLoggedIn: true,
+        });
+      } else {
+        this.setState({
+          isLoggedIn: false,
+        });
+      }
+    } catch (error) {
+       console.log(error);
+    }
+  }
+
+  render() {
+    if (this.state.isLoggedIn === undefined) {
+      return (
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          padding: 10,
+          backgroundColor: colors.black
+        }}>
+          <ActivityIndicator size="large" color={colors.pink}/>
+        </View>
+      );
+    } else if (this.state.isLoggedIn === false) {
+      return <AppNavigator screenProps={this.props}/>;
+    } else {
+      return <AppContainer screenProps={this.props}/>;
+    }
   }
 }
