@@ -25,6 +25,7 @@ import Modal from 'react-native-modal';
 import EventCard from '../components/EventCard';
 import EventColumns from '../components/EventColumns';
 import { colors } from '../components/Colors';
+import MapModal from '../components/MapModal';
 import CountdownTimer from '../components/CountdownTimer';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
@@ -33,10 +34,11 @@ export default class Home extends Component<Props> {
     super(props);
     this.state = {
       updates: [],
-      isUpdatesModalVisible: false
+      isUpdatesModalVisible: false,
+      isMapModalVisible: false,
     };
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
-    this.onMapButtonPress = this.onMapButtonPress.bind(this);
+    this.toggleMapModal = this.toggleMapModal.bind(this);
   }
 
   componentDidMount() {
@@ -173,15 +175,8 @@ export default class Home extends Component<Props> {
     );
   };
 
-  onMapButtonPress = () => {
-    Alert.alert(
-      "TODO make a map",
-      "Please try again.",
-      [
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ],
-      { cancelable: false }
-    );
+  toggleMapModal = () => {
+    this.setState({ isMapModalVisible: !this.state.isMapModalVisible });
   }
 
   render() {
@@ -190,7 +185,7 @@ export default class Home extends Component<Props> {
         <PadContainer>
           <View style={styles.headingRow}>
             <Heading>Technica 2018</Heading>
-            <TouchableOpacity onPress={this.onMapButtonPress}>
+            <TouchableOpacity onPress={this.toggleMapModal}>
               <Icon
                 name="map"
                 size={30}
@@ -205,6 +200,11 @@ export default class Home extends Component<Props> {
           </View>
           <CountdownTimer />
         </PadContainer>
+        <MapModal
+          isModalVisible={this.state.isMapModalVisible}
+          toggleModal={this.toggleMapModal}
+        />
+
         {this.renderUpdatesSection()}
         {this.renderPopularEventsSection()}
         {this.renderBestForBeginnersSection()}
