@@ -30,3 +30,9 @@ allprojects {
         }
     }
 }
+
+project.ext {
+    supportLibVersion = "27.1.0"
+    googlePlayServicesVersion = "15.0.1"
+}
+
