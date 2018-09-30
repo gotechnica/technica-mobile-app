@@ -67,7 +67,7 @@ export default class Profile extends Component<Props> {
 
   async componentDidMount(){
       var loggedInUser = JSON.parse(await AsyncStorage.getItem(USER_DATA_STORE));
-      loggedInUser.user_data.organizer = false;
+      // loggedInUser.user_data.organizer = false;
       this.setState({user: loggedInUser});
   }
 
@@ -91,19 +91,23 @@ export default class Profile extends Component<Props> {
               backdropTransitionOutTiming={300}
               avoidKeyboard={true}
               onBackButtonPress={() => this.toggleScanner()}
+              style={{ margin: 0 }}
             >
             <ModalContent>
+              <View style={{ padding: 15, paddingBottom: 0 }}>
                 <ModalHeader
+                  heading="QR Scanner"
                   onBackButtonPress={() => this.toggleScanner()}
                 />
-                <ViewContainer>
-                  <QRCodeScanner
-                      ref={(node) => { this.scanner = node }}
-                      onRead={this.onScanSuccess.bind(this)}
-                    />
-                </ViewContainer>
+              </View>
+              <ViewContainer>
+                <QRCodeScanner
+                    ref={(node) => { this.scanner = node }}
+                    onRead={this.onScanSuccess.bind(this)}
+                  />
+              </ViewContainer>
             </ModalContent>
-            </Modal>
+          </Modal>
         )
     })();
 
@@ -117,60 +121,61 @@ export default class Profile extends Component<Props> {
                 return (
                   <ViewContainer>
                     <PadContainer>
-                      {this.state.user.user_data && <Heading>
-                          {fullName}
+                      {this.state.user.user_data && <Heading style={{ justifyContent: 'center' }}>
+                          { fullName }
                       </Heading>}
-                      <SubHeading>
+                      <SubHeading style={{ textAlign: 'center' }}>
                         Organizer
                       </SubHeading>
-                      <Button onPress={() => this.toggleScanner()}>
-                        Open Scanner
-                      </Button>
-                      <Button mode="contained" onPress={() => this.logout()}>
-                        Logout
-                      </Button>
                     </PadContainer>
+                    <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.toggleScanner()}>
+                      <Button text="Open Scanner" />
+                    </TouchableOpacity>
 
+                    <TouchableOpacity onPress={() => this.logout()}>
+                      <Button text="Logout" />
+                    </TouchableOpacity>
                   </ViewContainer>
                 );
 
             } else { // otherwise this person is a hacker
                 return (
                   <ViewContainer>
+                    <PadContainer>
                       {this.state.user.user_data && <Heading style={{ justifyContent: 'center' }}>
                           {fullName}
                       </Heading>}
                       <SubHeading style={{ textAlign: 'center' }}>
                         Your QR code
                       </SubHeading>
+                    </PadContainer>
+                    <View style={{
+                      alignItems: 'center',
+                    }}>
                       <View style={{
-                        alignItems: 'center',
+                        backgroundColor: 'white',
+                        padding: 20,
+                        borderRadius: 8,
+                        marginBottom: 20,
                       }}>
-                        <View style={{
-                          backgroundColor: 'white',
-                          padding: 20,
-                          borderRadius: 8,
-                          marginBottom: 20,
-                        }}>
-                          {
-                            this.state.user.user_data &&
-                            <QRCode
-                              value={fullName}
-                              size={180}
-                              bgColor='black'
-                              fgColor='white'
-                            />
-                          }
-                        </View>
-                        <H3 style={{ marginBottom: 40 }}>
-                          Use this code for check-in
-                        </H3>
+                        {
+                          this.state.user.user_data &&
+                          <QRCode
+                            value={fullName}
+                            size={180}
+                            bgColor='black'
+                            fgColor='white'
+                          />
+                        }
                       </View>
+                      <H3 style={{ marginBottom: 40 }}>
+                        Use this code for check-in
+                      </H3>
+                    </View>
 
-                      <TouchableOpacity onPress={() => this.logout()}>
-                        <Button text="Logout" />
-                      </TouchableOpacity>
-
+                    <TouchableOpacity onPress={() => this.logout()}>
+                      <Button text="Logout" />
+                    </TouchableOpacity>
                   </ViewContainer>
                 );
 
