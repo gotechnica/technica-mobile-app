@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import org.reactnative.camera.RNCameraPackage;
+import com.reactnative.photoview.PhotoViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNCameraPackage(),
+            new PhotoViewPackage(),
             new RNFirebasePackage(),
               new RNFirebaseNotificationsPackage(),
               new RNFirebaseMessagingPackage(),

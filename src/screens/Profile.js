@@ -6,7 +6,7 @@ import {
   View,
   AsyncStorage,
   Alert,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import { H1, H2, H3, H4, P } from '../components/Text';
 import {
@@ -17,8 +17,8 @@ import {
   PadContainer,
   ModalHeader,
   ModalContent,
+  Button
 } from '../components/Base';
-import { Button } from 'react-native-paper';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRCode from 'react-native-qrcode';
 import _ from 'lodash';
@@ -137,27 +137,40 @@ export default class Profile extends Component<Props> {
             } else { // otherwise this person is a hacker
                 return (
                   <ViewContainer>
-                    <PadContainer>
-                      {this.state.user.user_data && <Heading>
+                      {this.state.user.user_data && <Heading style={{ justifyContent: 'center' }}>
                           {fullName}
                       </Heading>}
-                      <SubHeading>
+                      <SubHeading style={{ textAlign: 'center' }}>
                         Your QR code
                       </SubHeading>
-                      <PadContainer style={{backgroundColor:colors.white, padding:1}}>
-                          {this.state.user.user_data && <QRCode
+                      <View style={{
+                        alignItems: 'center',
+                      }}>
+                        <View style={{
+                          backgroundColor: 'white',
+                          padding: 20,
+                          borderRadius: 8,
+                          marginBottom: 20,
+                        }}>
+                          {
+                            this.state.user.user_data &&
+                            <QRCode
                               value={fullName}
-                              size={200}
+                              size={180}
                               bgColor='black'
-                              fgColor='white'/>}
-                      </PadContainer>
-                      <SubHeading>
-                        Use this code for check-in
-                      </SubHeading>
-                      <Button mode="contained" onPress={() => this.logout()}>
-                        Logout
-                      </Button>
-                    </PadContainer>
+                              fgColor='white'
+                            />
+                          }
+                        </View>
+                        <H3 style={{ marginBottom: 40 }}>
+                          Use this code for check-in
+                        </H3>
+                      </View>
+
+                      <TouchableOpacity onPress={() => this.logout()}>
+                        <Button text="Logout" />
+                      </TouchableOpacity>
+
                   </ViewContainer>
                 );
 

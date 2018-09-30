@@ -39,10 +39,12 @@ const styles = StyleSheet.create({
   heading: {
     paddingTop: 60,
     marginBottom: 20,
+    flexDirection: 'row',
   },
   subHeading: {
     color: colors.fontGrey,
     marginBottom: 25,
+    flexDirection: 'row',
   },
   paper: {
     elevation: Platform.OS === 'ios' ? 4 : 6,
@@ -129,8 +131,8 @@ const Heading = (props) => (
 );
 
 const SubHeading = (props) => (
-  <View style={[props.style]}>
-    <H2 style={styles.subHeading}>
+  <View>
+    <H2 style={[styles.subHeading, props.style]}>
       {props.children}
     </H2>
   </View>
@@ -163,7 +165,7 @@ const Spacing = (props) => (
 );
 
 const ModalContent = (props) => (
-  <ScrollView style={styles.modal}>
+  <ScrollView style={[styles.modal, props.styles]}>
     {props.children}
   </ScrollView>
 )
