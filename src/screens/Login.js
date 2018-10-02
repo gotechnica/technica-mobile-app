@@ -208,6 +208,7 @@ export default class Login extends Component<Props> {
           <TextInput
             placeholder={this.state.placeholder}
             value={this.state.fieldValue}
+            underlineColorAndroid='rgba(0,0,0,0)'
             onChangeText={field => this.setState({ fieldValue: field })}
             placeholderTextColor={colors.borderGrey}
             keyboardType = 'numeric'

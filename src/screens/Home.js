@@ -162,7 +162,7 @@ export default class Home extends Component<Props> {
     const heading = 'Best for Beginners';
     const events = this.props.eventManager.getBeginnerEventsArray();
     return (
-      <View>
+      <View style={{ marginBottom: 40 }}>
         <PadContainer style={styles.subSection}>
           <H2>{heading}</H2>
         </PadContainer>
