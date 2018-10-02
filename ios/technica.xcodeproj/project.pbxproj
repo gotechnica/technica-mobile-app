@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -31,6 +32,7 @@
 		5538C915DBF84593847AD572 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A750B81AF9654E24ABD5CCE0 /* MaterialCommunityIcons.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		634B819A66B640B6970F55E7 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7D435B80FE44D79A21F52D4 /* libRNFirebase.a */; };
+		663EB6405BAF481BB643CE27 /* libRNPhotoView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A52464F51AAF4AB2B22E14D7 /* libRNPhotoView.a */; };
 		6C485C06238D476E849E7077 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5131714EE1C486981D98AB4 /* Poppins-Bold.ttf */; };
 		6CF8DB00D10344CAB56224BF /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 583E2F3111E04173AE375570 /* Poppins-Medium.ttf */; };
 		71023A8B231147D181A2DC0C /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A51AEF81CE42FEB819AAAF /* libRNVectorIcons.a */; };
@@ -50,7 +52,6 @@
 		DCF3FDD7EECB435CB611100C /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7B5BA6452244BC3BB10FCDB /* Ionicons.ttf */; };
 		DD2A71A646264DBFB4AADBD7 /* libRNAWSCognito.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E35112842D84FC0A03E8426 /* libRNAWSCognito.a */; };
 		E9DB9C1347854E328E21F5F5 /* DINPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 049F686795D642A5878F92B3 /* DINPro-Medium.otf */; };
-		663EB6405BAF481BB643CE27 /* libRNPhotoView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A52464F51AAF4AB2B22E14D7 /* libRNPhotoView.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -348,6 +349,13 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
+		F8E583D52163ECF1003F74F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD064AF970844AC1901DA7B3 /* RNPhotoView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNPhotoView;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -400,7 +408,9 @@
 		996DB03D22BA5E20D1810F97 /* Pods-technica-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technica-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-technica-tvOS/Pods-technica-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		9ED5C10F9F614ABEAFB231FD /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		A195D024E0A7B5A03A09A62F /* libPods-technica-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-technica-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A52464F51AAF4AB2B22E14D7 /* libRNPhotoView.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNPhotoView.a; sourceTree = "<group>"; };
 		A750B81AF9654E24ABD5CCE0 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		AD064AF970844AC1901DA7B3 /* RNPhotoView.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNPhotoView.xcodeproj; path = "../node_modules/react-native-photo-view/ios/RNPhotoView.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B328525B52481798170765B9 /* Pods-technica.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technica.debug.xcconfig"; path = "Pods/Target Support Files/Pods-technica/Pods-technica.debug.xcconfig"; sourceTree = "<group>"; };
 		B9AA7009DF15E31976FA53BF /* libPods-technica-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-technica-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -417,8 +427,6 @@
 		F9CF50CDDF5A4550A785FD92 /* libPods-technicaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-technicaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC70FCD806947CA99C06B75 /* DINPro-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DINPro-Bold.otf"; path = "../assets/fonts/DINPro-Bold.otf"; sourceTree = "<group>"; };
 		FB1B63A26D412DB69337A226 /* Pods-technica-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technica-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-technica-tvOS/Pods-technica-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		AD064AF970844AC1901DA7B3 /* RNPhotoView.xcodeproj */ = {isa = PBXFileReference; name = "RNPhotoView.xcodeproj"; path = "../node_modules/react-native-photo-view/ios/RNPhotoView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		A52464F51AAF4AB2B22E14D7 /* libRNPhotoView.a */ = {isa = PBXFileReference; name = "libRNPhotoView.a"; path = "libRNPhotoView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -741,6 +749,7 @@
 				F1A51AEF81CE42FEB819AAAF /* libRNVectorIcons.a */,
 				7E35112842D84FC0A03E8426 /* libRNAWSCognito.a */,
 				C7D435B80FE44D79A21F52D4 /* libRNFirebase.a */,
+				A52464F51AAF4AB2B22E14D7 /* libRNPhotoView.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -749,6 +758,14 @@
 			isa = PBXGroup;
 			children = (
 				F851A3D120D5DEB8008F04C2 /* libRNVectorIcons.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8E583D22163ECF1003F74F6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8E583D62163ECF1003F74F6 /* libRNPhotoView.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -869,6 +886,10 @@
 				{
 					ProductGroup = 3F934CF22117BD2F00B26D10 /* Products */;
 					ProjectRef = D7E1936C7FF14AC29555D894 /* RNFirebase.xcodeproj */;
+				},
+				{
+					ProductGroup = F8E583D22163ECF1003F74F6 /* Products */;
+					ProjectRef = AD064AF970844AC1901DA7B3 /* RNPhotoView.xcodeproj */;
 				},
 				{
 					ProductGroup = F851A3A820D5DEB8008F04C2 /* Products */;
@@ -1177,6 +1198,13 @@
 			remoteRef = F851A3D020D5DEB8008F04C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F8E583D62163ECF1003F74F6 /* libRNPhotoView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNPhotoView.a;
+			remoteRef = F8E583D52163ECF1003F74F6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1294,6 +1322,10 @@
 				);
 				INFOPLIST_FILE = technica/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/technica\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1304,10 +1336,6 @@
 				PROVISIONING_PROFILE = "6b6492c4-6f7b-4164-80db-62277df6e47a";
 				PROVISIONING_PROFILE_SPECIFIER = "Technica Development Provisioning Profile";
 				VERSIONING_SYSTEM = "apple-generic";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/technica\"",
-				);
 			};
 			name = Debug;
 		};
@@ -1330,6 +1358,10 @@
 				);
 				INFOPLIST_FILE = technica/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/technica\"",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1340,10 +1372,6 @@
 				PROVISIONING_PROFILE = "6b6492c4-6f7b-4164-80db-62277df6e47a";
 				PROVISIONING_PROFILE_SPECIFIER = "Technica Development Provisioning Profile";
 				VERSIONING_SYSTEM = "apple-generic";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/technica\"",
-				);
 			};
 			name = Release;
 		};
