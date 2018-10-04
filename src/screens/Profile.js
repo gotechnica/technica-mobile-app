@@ -25,6 +25,7 @@ import _ from 'lodash';
 import { colors } from '../components/Colors';
 import Modal from 'react-native-modal';
 
+const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
 const USER_DATA_STORE = 'USER_DATA_STORE';
 
@@ -35,14 +36,18 @@ export default class Profile extends Component<Props> {
     }
 
   async logout(){
-    await AsyncStorage.removeItem(USER_DATA_STORE);
     Alert.alert(
-    "Logged out.",
-    "Close and reopen the app to login.",
-    [
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
-    ],
-    { cancelable: false }
+      "Log Out",
+      "Are you sure you want to log out?",
+      [
+        {text: 'OK', onPress: () => {
+          AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
+            // RESTART APP
+          });
+        }},
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+      { cancelable: true }
     );
   }
 
@@ -67,7 +72,9 @@ export default class Profile extends Component<Props> {
 
   async componentDidMount(){
       var loggedInUser = JSON.parse(await AsyncStorage.getItem(USER_DATA_STORE));
-      // loggedInUser.user_data.organizer = false;
+      if (FORCE_NORMAL_USER) {
+        loggedInUser.user_data.organizer = false;
+      }
       this.setState({user: loggedInUser});
   }
 
@@ -133,7 +140,7 @@ export default class Profile extends Component<Props> {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.logout()}>
-                      <Button text="Logout" />
+                      <Button text="Log Out" />
                     </TouchableOpacity>
                   </ViewContainer>
                 );
