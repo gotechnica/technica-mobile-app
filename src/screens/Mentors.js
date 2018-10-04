@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
   TextInput,
   FlatList,
@@ -18,6 +17,7 @@ import { colors } from '../components/Colors';
 import firebase from 'react-native-firebase';
 import QuestionCard from '../components/QuestionCard'
 import { AsyncStorage } from "react-native"
+import { H1, H2, H3, H4, H6, P } from '../components/Text';
 
 export default class Mentors extends Component<Props> {
   constructor(props) {
@@ -118,18 +118,31 @@ export default class Mentors extends Component<Props> {
         style={{ margin: 0 }}
       >
         <View style={{ padding: 20 }}>
-          <Text style={{color: 'white'}}>Question</Text>
+          <H3 style={{ color: 'white', marginBottom: 10 }}>Question</H3>
           <TextInput
-                style={{height: 40, borderBottomColor: '#B6A1C4', borderBottomWidth: 1, color: 'white'}}
-                onChangeText={(text) => this.setState({question: text})}
-                value={question}
-                underlineColorAndroid='transparent'
+            style={{
+              borderColor: colors.white,
+              borderBottomWidth: 1,
+              paddingBottom: 8,
+              fontFamily: "DINPro-Medium",
+              fontSize: 24,
+              color: colors.white,
+            }}
+            onChangeText={(text) => this.setState({question: text})}
+            value={question}
+            underlineColorAndroid='transparent'
           />
           <View marginTop = {10}>
-            <Text style={{color: 'white'}}>Table Number</Text>
+            <H3 style={{ color: 'white', marginBottom: 10 }}>Table Number</H3>
             <TextInput
-              style={{height: 40, borderBottomColor: '#B6A1C4', borderBottomWidth: 1, color: 'white'}}
-              onChangeText={(text) => this.setState({tableNumber: text})}
+              style={{
+                borderColor: colors.white,
+                borderBottomWidth: 1,
+                paddingBottom: 8,
+                fontFamily: "DINPro-Medium",
+                fontSize: 24,
+                color: colors.white,
+              }}              onChangeText={(text) => this.setState({tableNumber: text})}
               value={tableNumber}
               underlineColorAndroid='transparent'
             />
@@ -188,19 +201,16 @@ export default class Mentors extends Component<Props> {
         {this.renderNewQuestionModal()}
       </PadContainer>
       <TouchableOpacity
-        onPress={() => {
-          this.toggleModal()
-        }}
+        onPress={() => { this.toggleModal() }}
+        style={{ marginBottom: 40 }}
       >
         <Button text="Ask a Question" />
       </TouchableOpacity>
       <PadContainer>
-        <View marginTop = {10}>
-        <FlatList
-            data = {this.state.listData}
-            renderItem={({item}) => <QuestionCard question = {item.question} status = {item.status}/>}
-          />
-        </View>
+      <FlatList
+          data = {this.state.listData}
+          renderItem={({item}) => <QuestionCard question = {item.question} status = {item.status}/>}
+        />
       </PadContainer>
     </ViewContainer>
     )
