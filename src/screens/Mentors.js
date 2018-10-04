@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  Button, 
   TextInput,
-  FlatList
+  FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import {
   ViewContainer,
   Heading,
   SubHeading,
+  Button,
   PadContainer,
 } from '../components/Base';
 import Modal from "react-native-modal";
@@ -18,7 +19,7 @@ import firebase from 'react-native-firebase';
 import QuestionCard from '../components/QuestionCard'
 import { AsyncStorage } from "react-native"
 
-export default class Mentors extends Component<Props> {  
+export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = { question: '', tableNumber: "", newQuestionScreen:false, listData: [] };
@@ -28,7 +29,7 @@ export default class Mentors extends Component<Props> {
   async componentDidMount() {
     const listData = [];
     const question = await AsyncStorage.getItem("questions");
-    const qList = JSON.parse(question) 
+    const qList = JSON.parse(question)
     this.setState({listData: qList})
   }
   clearInputs() {
@@ -103,50 +104,51 @@ export default class Mentors extends Component<Props> {
     const { question, tableNumber, newQuestionScreen  } = this.state;
     return (
       <Modal
-      isVisible={newQuestionScreen}
-      backdropColor={colors.black}
-      backdropOpacity={1}
-      animationInTiming={250}
-      animationIn="fadeInUp"
-      animationOut="fadeOutDown"
-      animationOutTiming={300}
-      backdropTransitionInTiming={250}
-      backdropTransitionOutTiming={300}
-      avoidKeyboard={true}
-      onBackButtonPress={() => this.toggleModal()}
-    >
-      <Text style={{color: 'white'}}>Question</Text>
-      <TextInput
-            style={{height: 40, borderBottomColor: '#B6A1C4', borderBottomWidth: 1, color: 'white'}}
-            onChangeText={(text) => this.setState({question: text})}
-            value={question}
-            underlineColorAndroid='transparent'
-      />
-      <View marginTop = {10}>
-        <Text style={{color: 'white'}}>Table Number</Text>
-        <TextInput
-          style={{height: 40, borderBottomColor: '#B6A1C4', borderBottomWidth: 1, color: 'white'}}
-          onChangeText={(text) => this.setState({tableNumber: text})}
-          value={tableNumber}
-          underlineColorAndroid='transparent'
-        />
-      </View>
-      <View marginTop = {10}>
-      <Button
-        buttonStyle={{color: 'white', backgroundColor: colors.pink}}
-        onPress={() => this.sendQuestion()}
-        title="Submit Question"
-        color = {colors.pink}
-      />
-      </View>
-      <View marginTop = {10}>
-        <Button
-          buttonStyle={{color:'white', backgroundColor: colors.pink}}
-          onPress={() => this.cancelQuestion()}
-          title="Cancel"
-          color = {colors.pink}
-      />
-      </View>
+        isVisible={newQuestionScreen}
+        backdropColor={colors.black}
+        backdropOpacity={1}
+        animationInTiming={250}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationOutTiming={300}
+        backdropTransitionInTiming={250}
+        backdropTransitionOutTiming={300}
+        avoidKeyboard={true}
+        onBackButtonPress={() => this.toggleModal()}
+        style={{ margin: 0 }}
+      >
+        <View style={{ padding: 20 }}>
+          <Text style={{color: 'white'}}>Question</Text>
+          <TextInput
+                style={{height: 40, borderBottomColor: '#B6A1C4', borderBottomWidth: 1, color: 'white'}}
+                onChangeText={(text) => this.setState({question: text})}
+                value={question}
+                underlineColorAndroid='transparent'
+          />
+          <View marginTop = {10}>
+            <Text style={{color: 'white'}}>Table Number</Text>
+            <TextInput
+              style={{height: 40, borderBottomColor: '#B6A1C4', borderBottomWidth: 1, color: 'white'}}
+              onChangeText={(text) => this.setState({tableNumber: text})}
+              value={tableNumber}
+              underlineColorAndroid='transparent'
+            />
+          </View>
+        </View>
+        <View marginTop = {10}>
+        <TouchableOpacity onPress={() => this.sendQuestion()}>
+          <Button
+            text="Submit Question"
+          />
+        </TouchableOpacity>
+        </View>
+        <View marginTop = {10}>
+          <TouchableOpacity onPress={() => this.cancelQuestion()}>
+            <Button
+              text="Cancel"
+            />
+          </TouchableOpacity>
+        </View>
       </Modal>
     )
   }
@@ -171,12 +173,12 @@ export default class Mentors extends Component<Props> {
           if (element.question == question){
             console.log("found!")
             element.status = "Responded!"
-          } 
+          }
         })
         // store update in local storage
         await AsyncStorage.setItem("questions", JSON.stringify(qList))
         this.setState({listData: qList})
-      } 
+      }
     });
 
       return (
@@ -184,20 +186,21 @@ export default class Mentors extends Component<Props> {
       <PadContainer>
         {this.renderHeading()}
         {this.renderNewQuestionModal()}
-      <Button
-          onPress={() => {
-            this.toggleModal()
-          }}
-          title="Ask a Question"
-          color = {colors.pink}
-          buttonStyle={{backgroundColor: colors.pink, width:buttonWidth }}
-        />
-      <View marginTop = {10}>
-      <FlatList
-          data = {this.state.listData}
-          renderItem={({item}) => <QuestionCard question = {item.question} status = {item.status}/>}
-        />
-      </View>
+      </PadContainer>
+      <TouchableOpacity
+        onPress={() => {
+          this.toggleModal()
+        }}
+      >
+        <Button text="Ask a Question" />
+      </TouchableOpacity>
+      <PadContainer>
+        <View marginTop = {10}>
+        <FlatList
+            data = {this.state.listData}
+            renderItem={({item}) => <QuestionCard question = {item.question} status = {item.status}/>}
+          />
+        </View>
       </PadContainer>
     </ViewContainer>
     )
