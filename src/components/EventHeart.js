@@ -25,12 +25,7 @@ export default class EventHeart extends Component {
     const { eventManager, eventID } = this.props;
 
     return (
-      <Fragment
-        ref={myHeart => {
-          this.myHeart = myHeart;
-          console.log(myHeart);
-          eventManager.registerComponentListener(myHeart);
-        }}>
+      <Fragment>
         <H3 style={{ marginRight: 8, marginTop: 2 }}>
           {eventManager.getSavedCount(eventID)}
         </H3>
