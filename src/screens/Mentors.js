@@ -4,6 +4,7 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {
   ViewContainer,
@@ -61,31 +62,42 @@ export default class Mentors extends Component<Props> {
   }
 
   async sendQuestion() {
-    const fcmToken = await AsyncStorage.getItem("FCMToken");
-    var questionObject = {
-      question: this.state.question,
-      tableNumber: this.state.tableNumber,
-      status: "Awaiting Response",
-      key: this.state.question,
-    }
-    if (fcmToken != null) {
-      questionObject.fcmToken = fcmToken
-    }
-    var questionString = JSON.stringify(questionObject)
-    fetch('https://technicamentorshipservertest.herokuapp.com/question', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: questionString,
-    }).catch(error => {
-      console.log(error)
-    })
-    this.storeQuestion(questionObject)
+    if (this.state.question === '' || this.state.tableNumber === '') {
+      Alert.alert(
+        "Try Again",
+        "Your question or location was empty.",
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      );
+    } else {
+      const fcmToken = await AsyncStorage.getItem("FCMToken");
+      var questionObject = {
+        question: this.state.question,
+        tableNumber: this.state.tableNumber,
+        status: "Awaiting Response",
+        key: this.state.question,
+      }
+      if (fcmToken != null) {
+        questionObject.fcmToken = fcmToken
+      }
+      var questionString = JSON.stringify(questionObject)
+      fetch('https://technicamentorshipservertest.herokuapp.com/question', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: questionString,
+      }).catch(error => {
+        console.log(error)
+      })
+      this.storeQuestion(questionObject)
 
-    // TODO: show popup with feedback
-    this.toggleModal()
+      // TODO: show popup with feedback
+      this.toggleModal()
+    }
   }
   renderHeading() {
     return (
