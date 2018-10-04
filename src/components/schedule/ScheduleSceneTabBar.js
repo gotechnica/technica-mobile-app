@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 25,
+    marginBottom: 40,
     // marginVertical: 10,
   },
   tabs: {
