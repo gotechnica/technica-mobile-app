@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { H3 } from './Text';
 import { colors } from './Colors';
@@ -22,12 +22,17 @@ export default class EventHeart extends Component {
   }
 
   render() {
-    const { savedCount, eventManager, eventID } = this.props;
+    const { eventManager, eventID } = this.props;
 
     return (
-      <Fragment>
+      <View
+        ref={myHeart => {
+          this.myHeart = myHeart;
+          console.log(myHeart);
+          eventManager.registerComponentListener(myHeart);
+        }}>
         <H3 style={{ marginRight: 8, marginTop: 2 }}>
-          {this.props.savedCount}
+          {eventManager.getSavedCount(eventID)}
         </H3>
         <TouchableOpacity onPress={this.handleHeartPress}>
           <Icon
@@ -36,7 +41,7 @@ export default class EventHeart extends Component {
             color={colors.pink}
           />
         </TouchableOpacity>
-      </Fragment>
+      </View>
     )
   }
 }

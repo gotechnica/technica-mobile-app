@@ -171,6 +171,7 @@ export default class EventsManager {
   // time in minutes to warn before event
   favoriteEvent(key, timeMin) {
     this.favoriteState[key] = true;
+    this.savedCounts[key]+= 1;
     updateObj = {};
     updateObj[key] = true;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
@@ -196,6 +197,7 @@ export default class EventsManager {
 
   unfavoriteEvent(key) {
     this.favoriteState[key] = false;
+    this.savedCounts[key]-= 1;
     updateObj = {};
     updateObj[key] = false;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
@@ -222,7 +224,7 @@ export default class EventsManager {
 
   updateComponents() {
     this.componentListeners.forEach((component, comp, set) => {
-      if (component !== null) {
+      if (component != null) {
         component.forceUpdate();
       }
     });

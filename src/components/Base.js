@@ -168,47 +168,60 @@ const ModalContent = (props) => (
   </ScrollView>
 )
 
-const ModalHeader = (props) => {
-  const {
-    onBackButtonPress,
-    heart,
-    savedCount,
-    eventID,
-    eventManager,
-    small
-  } = props;
+class ModalHeader extends Component<Props> {
+  constructor(props) {
+    super(props);
+  }
 
-  return (
-    <View style={styles.modalHeader}>
-      <View style={styles.modalHeaderNav}>
-        <TouchableOpacity onPress={onBackButtonPress}>
-          <FAIcon
-            name="chevron-left"
-            size={22}
-            color={colors.white}
-          />
-        </TouchableOpacity>
-        {
-          heart ?
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <EventHeart
-              savedCount={savedCount}
-              eventID={eventID}
-              eventManager={eventManager}
+  render () {
+    const {
+      onBackButtonPress,
+      heart,
+      eventID,
+      eventManager,
+      small
+    } = this.props;
+
+    return (
+      <View style={styles.modalHeader}>
+        <View style={styles.modalHeaderNav}>
+          <TouchableOpacity onPress={onBackButtonPress}>
+            <FAIcon
+              name="chevron-left"
+              size={22}
+              color={colors.white}
             />
-          </View>
-            :
+          </TouchableOpacity>
+          {
+            heart ?
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <EventHeart
+                ref={myHeart => {
+                  this.myHeart = myHeart;
+                  console.log(myHeart);
+                  eventManager.registerComponentListener(myHeart);
+                }}
+                eventID={eventID}
+                eventManager={eventManager}
+              />
+            </View>
+              :
+              null
+          }
+        </View>
+        {
+          small ?
             null
+            :
+            <H2 style={styles.modalHeadingText}>{props.heading}</H2>
         }
       </View>
-      {
-        small ?
-          null
-          :
-          <H2 style={styles.modalHeadingText}>{props.heading}</H2>
-      }
-    </View>
-  );
+    );
+  }
+
+  componentWillUnmount() {
+    this.props.eventManager.removeComponentListener(this.myHeart);
+  }
 }
 
 const Button = (props) => (

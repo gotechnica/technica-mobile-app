@@ -96,10 +96,6 @@ export default class AppContainer extends Component<Props> {
 
     return (
       <ScrollableTabView
-        ref={ref => {
-          this.myComponent = ref;
-          this.props.screenProps.eventManager.registerComponentListener(ref);
-        }}
         tabBarPosition="bottom"
         locked
         style={{ backgroundColor: colors.black }}
@@ -121,9 +117,5 @@ export default class AppContainer extends Component<Props> {
         <Profile tabLabel="user" />
       </ScrollableTabView>
     );
-  }
-
-  componentWillUnmount() {
-    this.props.screenProps.eventManager.removeComponentListener(this.myComponent);
   }
 }
