@@ -90,10 +90,10 @@ export default class Mentors extends Component<Props> {
     return (
       <React.Fragment>
         <Heading>
-          Ask a Question
+          Mentors
         </Heading>
         <SubHeading>
-          Our wonderful mentors are here to help!
+          Ask our mentors for help
         </SubHeading>
       </React.Fragment>
       )
@@ -151,9 +151,7 @@ export default class Mentors extends Component<Props> {
     )
   }
 
-  
   render() {
-    const { newQuestionScreen } = this.state;
     const dimensions = require('Dimensions').get('window');
     const buttonWidth = (dimensions.width / 2) - 30;
 
@@ -181,20 +179,11 @@ export default class Mentors extends Component<Props> {
       } 
     });
 
-    if ( newQuestionScreen ) {
-      return (
-        <ViewContainer>
-          <PadContainer>
-          {this.renderHeading()}
-         {this.renderNewQuestionModal() }
-          </PadContainer>
-        </ViewContainer>
-      );
-    } else {
       return (
       <ViewContainer>
       <PadContainer>
-      {this.renderHeading()}
+        {this.renderHeading()}
+        {this.renderNewQuestionModal()}
       <Button
           onPress={() => {
             this.toggleModal()
@@ -214,4 +203,3 @@ export default class Mentors extends Component<Props> {
     )
     }
   }
-}

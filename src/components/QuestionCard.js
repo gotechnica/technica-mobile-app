@@ -9,7 +9,7 @@ import {colors} from "./Colors"
 
 const styles = StyleSheet.create({
   question: {
-    backgroundColor: '#2F2F2F',
+    backgroundColor: colors.darkGrey,
     paddingBottom: 20,
     paddingTop: 20,
     paddingLeft: 20,
