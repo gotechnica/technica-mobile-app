@@ -24,6 +24,7 @@ import QRCode from 'react-native-qrcode';
 import _ from 'lodash';
 import { colors } from '../components/Colors';
 import Modal from 'react-native-modal';
+import RNRestart from 'react-native-restart';
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
@@ -42,7 +43,7 @@ export default class Profile extends Component<Props> {
       [
         {text: 'OK', onPress: () => {
           AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
-            // RESTART APP
+            RNRestart.Restart();
           });
         }},
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
