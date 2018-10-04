@@ -14,6 +14,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { PushNotificationIOS } from 'react-native';
 import Analytics from '@aws-amplify/analytics';
 import aws_exports from '../../aws-exports';
+import { AsyncStorage } from "react-native"
 
 import firebase from 'react-native-firebase';
 
@@ -63,6 +64,8 @@ export default class AppContainer extends Component<Props> {
       .then(fcmToken => {
         if (fcmToken) {
           console.log('fcm token: ', fcmToken);
+          // store FCMToken for use with mentorship notifications
+          AsyncStorage.setItem('FCMToken', fcmToken);
         } else {
           console.log('no token');
         }
