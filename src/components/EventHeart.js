@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { H3 } from './Text';
 import { colors } from './Colors';
@@ -25,7 +25,7 @@ export default class EventHeart extends Component {
     const { eventManager, eventID } = this.props;
 
     return (
-      <View
+      <Fragment
         ref={myHeart => {
           this.myHeart = myHeart;
           console.log(myHeart);
@@ -41,7 +41,7 @@ export default class EventHeart extends Component {
             color={colors.pink}
           />
         </TouchableOpacity>
-      </View>
+      </Fragment>
     )
   }
 }
