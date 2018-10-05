@@ -207,10 +207,11 @@ export default class Mentors extends Component<Props> {
         <Button text="Ask a Question" />
       </TouchableOpacity>
       <PadContainer>
-      <FlatList
-          data = {this.state.listData}
-          renderItem={({item}) => <QuestionCard question = {item.question} status = {item.status}/>}
-        />
+        <H2 style={{ marginBottom: 20 }}>Your Questions</H2>
+        <FlatList
+            data = {this.state.listData}
+            renderItem={({item}) => <QuestionCard question = {item.question} status = {item.status}/>}
+          />
       </PadContainer>
     </ViewContainer>
     )

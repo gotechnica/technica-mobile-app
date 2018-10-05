@@ -33,10 +33,109 @@ export default class Home extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
+      updates: [],
+      isUpdatesModalVisible: false, 
       isMapModalVisible: false,
     };
     this.toggleMapModal = this.toggleMapModal.bind(this);
+    this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
   }
+
+  componentDidMount() {
+    // TODO connect this to firebase properly
+    this.setState({
+      updates: [
+        {
+          id: 3,
+          time: '2:15pm, Saturday',
+          body: 'Lunch has beeen postponed until tomorrow.'
+        },
+        {
+          id: 2,
+          time: '12:00pm, Saturday',
+          body: 'Snacks have been remove from the facility'
+        },
+        {
+          id: 1,
+          time: '11:00am, Saturday',
+          body: 'Get your new chickens from the stand'
+        }
+      ]
+    });
+  }
+
+  toggleUpdatesModal() {
+    this.setState({ isUpdatesModalVisible: !this.state.isUpdatesModalVisible });
+  }
+   // Renders the full list view of all updates
+  renderUpdatesModal = () => (
+    <Modal
+      isVisible={this.state.isUpdatesModalVisible}
+      backdropColor={colors.black}
+      backdropOpacity={1}
+      animationInTiming={250}
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
+      animationOutTiming={300}
+      backdropTransitionInTiming={250}
+      backdropTransitionOutTiming={300}
+      avoidKeyboard={true}
+      onBackButtonPress={() => this.toggleUpdatesModal()}
+    >
+      <ModalContent>
+        <ModalHeader
+          onBackButtonPress={() => this.toggleUpdatesModal()}
+          heading="Recent Updates"
+        />
+        <Spacing />
+        {this.state.updates.map(update => (
+          <View key={update.id}>
+            <H4>{update.time}</H4>
+            <H6>{update.body}</H6>
+            <Spacing />
+            <HorizontalLine />
+            <Spacing />
+          </View>
+        ))}
+      </ModalContent>
+    </Modal>
+  );
+   // Does not render anything if there are no recent updates yet
+  renderUpdatesSection = () => {
+    const { updates } = this.state;
+    const numUpdates = updates.length;
+    return (
+      <View>
+        {this.renderUpdatesModal()}
+        {numUpdates > 0 ? (
+          <Fragment>
+            <PadContainer>
+              <H2 style={styles.heading}>Recent Updates</H2>
+            </PadContainer>
+            <TouchableOpacity onPress={() => this.toggleUpdatesModal()}>
+              <PaperSheet>
+                <H4>{updates[0].time}</H4>
+                <H6>{updates[0].body}</H6>
+                {numUpdates > 1 ? (
+                  <Fragment>
+                    <Spacing />
+                    <HorizontalLine />
+                    <Spacing />
+                    <H6>
+                      View {numUpdates - 1} other update{updates.length > 2
+                        ? 's'
+                        : null}
+                    </H6>
+                  </Fragment>
+                ) : null}
+              </PaperSheet>
+            </TouchableOpacity>
+          </Fragment>
+        ) : null}
+      </View>
+    );
+  };
+
 
   renderPopularEventsSection = () => {
     const heading = 'Popular Events';
@@ -103,6 +202,7 @@ export default class Home extends Component<Props> {
           isModalVisible={this.state.isMapModalVisible}
           toggleModal={this.toggleMapModal}
         />
+        {this.renderUpdatesSection()}
         {this.renderPopularEventsSection()}
         {this.renderBestForBeginnersSection()}
       </ViewContainer>
