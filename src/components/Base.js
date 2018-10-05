@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   subHeading: {
     color: colors.fontGrey,
-    marginBottom: 25,
+    marginBottom: 40,
   },
   paper: {
     elevation: Platform.OS === 'ios' ? 4 : 6,
@@ -163,7 +163,7 @@ const Spacing = (props) => (
 );
 
 const ModalContent = (props) => (
-  <ScrollView style={styles.modal}>
+  <ScrollView style={[styles.modal, props.styles]}>
     {props.children}
   </ScrollView>
 )

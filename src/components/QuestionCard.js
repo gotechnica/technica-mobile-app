@@ -35,7 +35,7 @@ export default class QuestionCard extends Component {
     const { question } = this.props;
     return (
       <View style = {styles.question}>
-        <H4 style={{color: 'white'}}>Question: {question}</H4>
+        <H4 style={{color: 'white'}}>{question}</H4>
         {this.renderStatus()}
       </View>
     );
