@@ -21,6 +21,7 @@ const USER_DATA_STORE = 'USER_DATA_STORE';
 
 
 const notificationBufferMins = 15;
+const savedCountRefreshInterval = 10 * 60 * 1000;
 
 const channelId = 'technica-push-notifications';
 
@@ -73,7 +74,6 @@ export default class EventsManager {
           firebase.database().ref('/Schedule')
             .on('value', async (snapshot) => {
               let data = snapshot.val();
-              console.log("Schedule object from firebase: ", data);
 
               //store new schedule on phone
               AsyncStorage.setItem(SCHEDULE_STORAGE_KEY, JSON.stringify(data), function(error){
@@ -94,7 +94,7 @@ export default class EventsManager {
       }
 
       this.fetchSavedCounts();
-      this.timer = setInterval(()=> this.fetchSavedCounts(), 10000)
+      this.timer = setInterval(()=> this.fetchSavedCounts(), savedCountRefreshInterval)
 
       this.updateEventComponents();
       this.updateHearts();

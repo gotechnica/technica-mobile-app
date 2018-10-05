@@ -167,7 +167,6 @@ export default class Login extends Component<Props> {
         });
         let responseJson = await response.json();
         if(responseJson.statusCode == 200){
-          console.log(responseJson);
           await AsyncStorage.setItem(USER_DATA_STORE, JSON.stringify(responseJson.body));
           await AsyncStorage.setItem(EVENT_FAVORITED_STORE, JSON.stringify(responseJson.body.user_data['fav_events']));
           this.setState({savedSMS: sms, fieldValue: ''});
