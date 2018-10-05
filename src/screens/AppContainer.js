@@ -14,6 +14,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { PushNotificationIOS } from 'react-native';
 import Analytics from '@aws-amplify/analytics';
 import aws_exports from '../../aws-exports';
+import { AsyncStorage, SafeAreaView } from "react-native"
 
 import firebase from 'react-native-firebase';
 
@@ -35,40 +36,42 @@ export default class AppContainer extends Component<Props> {
 
 		const eventManager = this.props.screenProps.eventManager;
 
-    return (
-      <ScrollableTabView
-        tabBarPosition="bottom"
-        locked
-        style={{ backgroundColor: colors.black }}
-        renderTabBar={() => <CustomTabBar />}
-      >
-        <Home
-					ref={myHome => {
-						this.myHome = myHome;
-						eventManager.registerEventChangeListener(myHome);
-					}}
-          eventManager={eventManager}
-          tabLabel="home"
-        />
-        <Schedule
-					ref={mySchedule => {
-						this.mySchedule = mySchedule;
-						eventManager.registerEventChangeListener(mySchedule);
-					}}
-          tabLabel="calendar"
-          eventManager={eventManager}
-        />
-        <Saved
-					ref={mySaved => {
-						this.mySaved = mySaved;
-						eventManager.registerEventChangeListener(mySaved);
-					}}
-          tabLabel="heart"
-          eventManager={eventManager}
-        />
-        <Mentors tabLabel="people" />
-        <Profile tabLabel="user" />
-      </ScrollableTabView>
+		return (
+			<SafeAreaView style={{flex: 1, backgroundColor: colors.black}}>
+	      <ScrollableTabView
+	        tabBarPosition="bottom"
+	        locked
+	        style={{ backgroundColor: colors.black }}
+	        renderTabBar={() => <CustomTabBar />}
+	      >
+	        <Home
+						ref={myHome => {
+							this.myHome = myHome;
+							eventManager.registerEventChangeListener(myHome);
+						}}
+	          eventManager={this.props.screenProps.eventManager}
+	          tabLabel="home"
+	        />
+	        <Schedule
+						ref={mySchedule => {
+							this.mySchedule = mySchedule;
+							eventManager.registerEventChangeListener(mySchedule);
+						}}
+	          tabLabel="calendar"
+	          eventManager={this.props.screenProps.eventManager}
+	        />
+	        <Saved
+						ref={mySaved => {
+							this.mySaved = mySaved;
+							eventManager.registerEventChangeListener(mySaved);
+						}}
+	          tabLabel="heart"
+	          eventManager={this.props.screenProps.eventManager}
+	        />
+	        <Mentors tabLabel="people" />
+	        <Profile tabLabel="user" />
+	      </ScrollableTabView>
+			</SafeAreaView>
     );
   }
 
@@ -112,6 +115,8 @@ export default class AppContainer extends Component<Props> {
       .then(fcmToken => {
         if (fcmToken) {
           console.log('fcm token: ', fcmToken);
+          // store FCMToken for use with mentorship notifications
+          AsyncStorage.setItem('FCMToken', fcmToken);
         } else {
           console.log('no token');
         }

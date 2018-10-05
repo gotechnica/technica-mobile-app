@@ -34,16 +34,15 @@ export default class Home extends Component<Props> {
     super(props);
     this.state = {
       updates: [],
-      isUpdatesModalVisible: false,
+      isUpdatesModalVisible: false, 
       isMapModalVisible: false,
     };
-    this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
     this.toggleMapModal = this.toggleMapModal.bind(this);
+    this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
   }
 
   componentDidMount() {
-    // TODO Wait for updates from API
-    // Push each update to front of the array
+    // TODO connect this to firebase properly
     this.setState({
       updates: [
         {
@@ -68,8 +67,7 @@ export default class Home extends Component<Props> {
   toggleUpdatesModal() {
     this.setState({ isUpdatesModalVisible: !this.state.isUpdatesModalVisible });
   }
-
-  // Renders the full list view of all updates
+   // Renders the full list view of all updates
   renderUpdatesModal = () => (
     <Modal
       isVisible={this.state.isUpdatesModalVisible}
@@ -102,8 +100,7 @@ export default class Home extends Component<Props> {
       </ModalContent>
     </Modal>
   );
-
-  // Does not render anything if there are no recent updates yet
+   // Does not render anything if there are no recent updates yet
   renderUpdatesSection = () => {
     const { updates } = this.state;
     const numUpdates = updates.length;
@@ -139,12 +136,13 @@ export default class Home extends Component<Props> {
     );
   };
 
+
   renderPopularEventsSection = () => {
     const heading = 'Popular Events';
     const events = this.props.eventManager.getTopEvents(10);
     return (
-      <View>
-        <PadContainer style={styles.subSection}>
+      <View style={styles.subSection}>
+        <PadContainer style={styles.subSectionHeading}>
           <H2>{heading}</H2>
         </PadContainer>
         <View>
@@ -162,8 +160,8 @@ export default class Home extends Component<Props> {
     const heading = 'Best for Beginners';
     const events = this.props.eventManager.getBeginnerEventsArray();
     return (
-      <View>
-        <PadContainer style={styles.subSection}>
+      <View style={styles.subSection}>
+        <PadContainer style={styles.subSectionHeading}>
           <H2>{heading}</H2>
         </PadContainer>
         <EventColumns
@@ -204,7 +202,6 @@ export default class Home extends Component<Props> {
           isModalVisible={this.state.isMapModalVisible}
           toggleModal={this.toggleMapModal}
         />
-
         {this.renderUpdatesSection()}
         {this.renderPopularEventsSection()}
         {this.renderBestForBeginnersSection()}
@@ -226,7 +223,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   subSection: {
-    paddingTop: 20,
+    // paddingTop: 20,
+    paddingBottom: 40
+  },
+  subSectionHeading: {
     paddingBottom: 20
   },
   columnContainer: {

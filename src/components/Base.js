@@ -13,6 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import EventHeart from './EventHeart';
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const styles = StyleSheet.create({
   bg: {
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   },
   subHeading: {
     color: colors.fontGrey,
-    marginBottom: 25,
+    marginBottom: 40,
   },
   paper: {
     elevation: Platform.OS === 'ios' ? 4 : 6,
@@ -71,7 +72,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.borderGrey,
   },
   modalHeader: {
-    marginTop: 20,
+    ...ifIphoneX({
+      marginTop: 40,
+    }, {
+      marginTop: 20,
+    })
   },
   modalHeaderNav: {
     justifyContent: 'space-between',

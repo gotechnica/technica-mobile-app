@@ -6,7 +6,8 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  View
+  View,
+  SafeAreaView
 } from 'react-native';
 import Images from '../../assets/imgs/index';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
