@@ -14,7 +14,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { PushNotificationIOS } from 'react-native';
 import Analytics from '@aws-amplify/analytics';
 import aws_exports from '../../aws-exports';
-import { AsyncStorage } from "react-native"
+import { AsyncStorage, SafeAreaView } from "react-native"
 
 import firebase from 'react-native-firebase';
 
@@ -98,31 +98,33 @@ export default class AppContainer extends Component<Props> {
     firebase.notifications().displayNotification(notification);
 
     return (
-      <ScrollableTabView
-        ref={ref => {
-          this.myComponent = ref;
-          this.props.screenProps.eventManager.registerComponentListener(ref);
-        }}
-        tabBarPosition="bottom"
-        locked
-        style={{ backgroundColor: colors.black }}
-        renderTabBar={() => <CustomTabBar />}
-      >
-        <Home
-          eventManager={this.props.screenProps.eventManager}
-          tabLabel="home"
-        />
-        <Schedule
-          tabLabel="calendar"
-          eventManager={this.props.screenProps.eventManager}
-        />
-        <Saved
-          tabLabel="heart"
-          eventManager={this.props.screenProps.eventManager}
-        />
-        <Mentors tabLabel="people" />
-        <Profile tabLabel="user" />
-      </ScrollableTabView>
+			<SafeAreaView style={{flex: 1, backgroundColor: colors.black}}>
+	      <ScrollableTabView
+	        ref={ref => {
+	          this.myComponent = ref;
+	          this.props.screenProps.eventManager.registerComponentListener(ref);
+	        }}
+	        tabBarPosition="bottom"
+	        locked
+	        style={{ backgroundColor: colors.black }}
+	        renderTabBar={() => <CustomTabBar />}
+	      >
+	        <Home
+	          eventManager={this.props.screenProps.eventManager}
+	          tabLabel="home"
+	        />
+	        <Schedule
+	          tabLabel="calendar"
+	          eventManager={this.props.screenProps.eventManager}
+	        />
+	        <Saved
+	          tabLabel="heart"
+	          eventManager={this.props.screenProps.eventManager}
+	        />
+	        <Mentors tabLabel="people" />
+	        <Profile tabLabel="user" />
+	      </ScrollableTabView>
+			</SafeAreaView>
     );
   }
 
