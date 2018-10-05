@@ -17,6 +17,8 @@ const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const SAVED_COUNT_STORE = APP_ID + 'SAVED_COUNT_STORE';
 const EVENT_ID_PREFIX = APP_ID + 'eventNotification-';
 const SCHEDULE_STORAGE_KEY = APP_ID + 'schedule';
+const USER_DATA_STORE = 'USER_DATA_STORE';
+
 
 const notificationBufferMins = 15;
 
@@ -87,17 +89,14 @@ export default class EventsManager {
 
     this.savedCounts = {};
     AsyncStorage.getItem(SAVED_COUNT_STORE, (err, result) => {
-      if (result === null) {
-        for (let i in this.combinedEvents) {
-          this.savedCounts[this.combinedEvents[i].eventID] = Math.floor(
-            Math.random() * 1000
-          );
-        }
-      } else {
-        this.savedCounts = result;
+      if(result != null) {
+        this.savedCounts = JSON.parse(result);
       }
 
-      // console.log('savedCounts', this.savedCounts);
+      this.fetchSavedCounts();
+      this.timer = setInterval(()=> this.fetchSavedCounts(), 10000)
+
+      this.updateEventComponents();
       this.updateHearts();
     });
 
@@ -127,8 +126,6 @@ export default class EventsManager {
 
       if(!_.isEqual(curEventObj, newEvent)) {
 
-        console.log("old", curEventObj);
-        console.log("new", newEvent);
         // if the start time has changed we need to create a new notification and delete the original one
         if(newEvent.startTime != curEventObj.startTime &&
            this.isFavorited[newEvent.eventID] &&
@@ -146,9 +143,6 @@ export default class EventsManager {
         curEventObj.beginnerFriendly = newEvent.beginnerFriendly;
         curEventObj.location = newEvent.location;
         curEventObj.img = newEvent.img;
-      } else if(newEvent.eventID == "100001") {
-        console.log("same", curEventObj);
-        console.log("and", newEvent);
       }
     })
 
@@ -158,6 +152,26 @@ export default class EventsManager {
     }
   }
 
+  fetchSavedCounts() {
+    fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/favorite-counts")
+      .then((response) => response.json())
+      .then((responseJson) => {
+        newSavedCount = JSON.parse(responseJson.body);
+        this.savedCounts = newSavedCount;
+        //store new favorite counts on phone
+        AsyncStorage.setItem(SAVED_COUNT_STORE, JSON.stringify(newSavedCount), function(error){
+          if (error){
+            console.log(error);
+          }
+        });
+
+        this.updateEventComponents();
+        this.updateHearts();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   getEventDays() {
     return this.eventDays;
   }
@@ -165,7 +179,7 @@ export default class EventsManager {
   getTopEvents(num) {
     topSorted = _.sortBy(
       this.combinedEvents,
-      event => -this.savedCounts[event.eventID]
+      event => -this.getSavedCount(event.eventID)
     );
 
     return topSorted.slice(0, num);
@@ -190,7 +204,7 @@ export default class EventsManager {
   // time in minutes to warn before event
   favoriteEvent(eventID) {
     this.favoriteState[eventID] = true;
-    this.savedCounts[eventID]+= 1;
+    this.savedCounts[eventID] = this.getSavedCount(eventID) + 1;
     updateObj = {};
     updateObj[eventID] = true;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
@@ -199,17 +213,50 @@ export default class EventsManager {
     this.createNotification(event);
 
     this.updateHearts();
+
+    AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
+      phone = JSON.parse(result).user_data.phone;
+
+      fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/favorite-event", {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          eventID: eventID,
+          phone: phone
+        })
+      });
+    });
+
   }
 
   unfavoriteEvent(eventID) {
     this.favoriteState[eventID] = false;
-    this.savedCounts[eventID]-= 1;
+    this.savedCounts[eventID]= this.getSavedCount(eventID) - 1;
     updateObj = {};
     updateObj[eventID] = false;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
 
     event = this.eventIDToEventMap[eventID];
     this.deleteNotification(event);
+
+    AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
+      phone = JSON.parse(result).user_data.phone;
+
+      fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/unfavorite-event", {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          eventID: eventID,
+          phone: phone
+        })
+      });
+    });
 
     this.updateHearts();
   }
@@ -242,7 +289,7 @@ export default class EventsManager {
   }
 
   getSavedCount(key) {
-    return this.savedCounts[key];
+    return this.savedCounts[key] == null ? 0 : this.savedCounts[key];
   }
 
   registerHeartListener(component) {
