@@ -81,14 +81,7 @@ export default class EventDescription extends Component<Props> {
   render() {
     const {
       disabled,
-      hasPassed,
-      title,
-      startTime,
-      endTime,
-      startTimeFormatted,
-      endTimeFormatted,
-      location,
-      eventID,
+      event,
       eventManager
     } = this.props;
 
@@ -97,27 +90,26 @@ export default class EventDescription extends Component<Props> {
         {this.renderModal()}
         <TouchableOpacity
           disabled={disabled}
-          style={hasPassed ? [this.props.style, styles.disabled] : this.props.style}
+          style={event.hasPassed ? [this.props.style, styles.disabled] : this.props.style}
           onPress={() => this.toggleModal()}
         >
           <View style={[styles.row]}>
             <View style={[styles.col, { flex: 4 }]}>
-              <H3>{title}</H3>
+              <H3>{event.title}</H3>
               <H4 style={{ color: colors.fontGrey }}>
-                {startTime == endTime
-                  ? `${startTimeFormatted}`
-                  : `${startTimeFormatted} - ${endTimeFormatted}`}
+                {event.startTime == event.endTime
+                  ? `${event.startTimeFormatted}`
+                  : `${event.startTimeFormatted} - ${event.endTimeFormatted}`}
               </H4>
-              <H4 style={{ color: colors.fontGrey }}>{location}</H4>
+              <H4 style={{ color: colors.fontGrey }}>{event.location}</H4>
             </View>
             <View style={[styles.row, { flex: 1, justifyContent: "flex-end" }]}>
               <EventHeart
                 ref={myHeart => {
                   this.myHeart = myHeart;
-                  console.log(myHeart);
-                  eventManager.registerComponentListener(myHeart);
+                  eventManager.registerHeartListener(myHeart);
                 }}
-                eventID={eventID}
+                eventID={event.eventID}
                 eventManager={eventManager}
               />
             </View>
@@ -128,6 +120,6 @@ export default class EventDescription extends Component<Props> {
   }
 
   componentWillUnmount() {
-    this.props.eventManager.removeComponentListener(this.myHeart);
+    this.props.eventManager.removeHeartListener(this.myHeart);
   }
 }

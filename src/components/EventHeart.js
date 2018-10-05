@@ -17,7 +17,7 @@ export default class EventHeart extends Component {
     if (eventManager.isFavorited(eventID)) {
       eventManager.unfavoriteEvent(eventID)
     } else {
-      eventManager.favoriteEvent(eventID, 10)
+      eventManager.favoriteEvent(eventID)
     }
   }
 
@@ -42,7 +42,6 @@ export default class EventHeart extends Component {
 }
 
 EventHeart.propTypes = {
-  eventID: PropTypes.number,
-  savedCount: PropTypes.number,
+  eventID: PropTypes.string,
   eventManager: PropTypes.object,
 };

@@ -8,5 +8,6 @@ target 'technica' do
   # Pods for technica
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  pod 'Firebase/Database', '~> 5.9.0'
 
 end

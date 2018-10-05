@@ -31,7 +31,56 @@ export default class AppContainer extends Component<Props> {
   render() {
     Analytics.configure(aws_exports);
 
-    //create notifications channel
+    this.configureNotificationSettings();
+
+		const eventManager = this.props.screenProps.eventManager;
+
+    return (
+      <ScrollableTabView
+        tabBarPosition="bottom"
+        locked
+        style={{ backgroundColor: colors.black }}
+        renderTabBar={() => <CustomTabBar />}
+      >
+        <Home
+					ref={myHome => {
+						this.myHome = myHome;
+						eventManager.registerEventChangeListener(myHome);
+					}}
+          eventManager={eventManager}
+          tabLabel="home"
+        />
+        <Schedule
+					ref={mySchedule => {
+						this.mySchedule = mySchedule;
+						eventManager.registerEventChangeListener(mySchedule);
+					}}
+          tabLabel="calendar"
+          eventManager={eventManager}
+        />
+        <Saved
+					ref={mySaved => {
+						this.mySaved = mySaved;
+						eventManager.registerEventChangeListener(mySaved);
+					}}
+          tabLabel="heart"
+          eventManager={eventManager}
+        />
+        <Mentors tabLabel="people" />
+        <Profile tabLabel="user" />
+      </ScrollableTabView>
+    );
+  }
+
+	componentWillUnmount() {
+		const eventManager = this.props.screenProps.eventManager;
+    eventManager.removeEventChangeListener(this.myHome);
+		eventManager.removeEventChangeListener(this.mySchedule);
+		eventManager.removeEventChangeListener(this.mySaved);
+  }
+
+	configureNotificationSettings() {
+		//create notifications channel
     const channel = new firebase.notifications.Android.Channel(
       channelId,
       channelName,
@@ -83,39 +132,5 @@ export default class AppContainer extends Component<Props> {
         notification.android.setChannelId(channelId);
         firebase.notifications().displayNotification(notification);
       });
-
-    const notification = new firebase.notifications.Notification()
-      .setNotificationId('notificationId')
-      .setTitle('Hello world')
-      .setBody('I love local notifications');
-
-    notification.android
-      .setChannelId(channelId)
-      .android.setSmallIcon('ic_launcher');
-    firebase.notifications().displayNotification(notification);
-
-    return (
-      <ScrollableTabView
-        tabBarPosition="bottom"
-        locked
-        style={{ backgroundColor: colors.black }}
-        renderTabBar={() => <CustomTabBar />}
-      >
-        <Home
-          eventManager={this.props.screenProps.eventManager}
-          tabLabel="home"
-        />
-        <Schedule
-          tabLabel="calendar"
-          eventManager={this.props.screenProps.eventManager}
-        />
-        <Saved
-          tabLabel="heart"
-          eventManager={this.props.screenProps.eventManager}
-        />
-        <Mentors tabLabel="people" />
-        <Profile tabLabel="user" />
-      </ScrollableTabView>
-    );
-  }
+	}
 }

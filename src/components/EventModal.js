@@ -24,7 +24,7 @@ export default class EventModal extends Component {
     const dimensions = require('Dimensions').get('window');
     const imageWidth = dimensions.width - 42;
     const imageHeight = Math.round((imageWidth * 38) / 67);
-    const img = props.img + "_big";
+    const img = props.event.img + "_big";
     return (
       <Modal
         isVisible={props.isModalVisible}
@@ -42,8 +42,7 @@ export default class EventModal extends Component {
         <ModalContent>
           <ModalHeader
             onBackButtonPress={() => props.toggleModal()}
-            savedCount={props.savedCount}
-            eventID={props.eventID}
+            eventID={props.event.eventID}
             eventManager={props.eventManager}
             heart
             small
@@ -61,24 +60,24 @@ export default class EventModal extends Component {
           />
           <ScrollView>
             <Spacing />
-            <H2>{props.title}</H2>
+            <H2>{props.event.title}</H2>
             <Spacing />
-            <H3>{props.startTimeFormatted} - {props.endTimeFormatted}</H3>
-            <H3 style={styles.subtext}>{moment(props.endTime).format('dddd')}</H3>
+            <H3>{props.event.startTimeFormatted} - {props.event.endTimeFormatted}</H3>
+            <H3 style={styles.subtext}>{moment(props.event.endTime).format('dddd')}</H3>
             <Spacing />
-            <H3>{props.location}</H3>
+            <H3>{props.event.location}</H3>
             <Spacing />
             <Spacing />
             <HorizontalLine />
             <Spacing />
             <Spacing />
-            {props.beginnerFriendly ? (
+            {props.event.beginnerFriendly ? (
               <Fragment>
                 <H4 style={{ color: colors.cyan }}>BEST FOR BEGINNERS</H4>
                 <Spacing />
               </Fragment>
             ) : null}
-            <P>{props.description}</P>
+            <P>{props.event.description}</P>
           </ScrollView>
         </ModalContent>
       </Modal>

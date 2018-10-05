@@ -6,6 +6,7 @@ import com.facebook.react.ReactApplication;
 import com.reactnative.photoview.PhotoViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import com.amazonaws.RNAWSCognitoPackage;
@@ -13,7 +14,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.technica.technica18.BuildConfig;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebasePackage(),
               new RNFirebaseNotificationsPackage(),
               new RNFirebaseMessagingPackage(),
+              new RNFirebaseDatabasePackage(),
               new RNAWSCognitoPackage(),
               new VectorIconsPackage()
       );

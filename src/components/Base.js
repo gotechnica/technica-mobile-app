@@ -198,8 +198,7 @@ class ModalHeader extends Component<Props> {
               <EventHeart
                 ref={myHeart => {
                   this.myHeart = myHeart;
-                  console.log(myHeart);
-                  eventManager.registerComponentListener(myHeart);
+                  eventManager.registerHeartListener(myHeart);
                 }}
                 eventID={eventID}
                 eventManager={eventManager}
@@ -213,14 +212,16 @@ class ModalHeader extends Component<Props> {
           small ?
             null
             :
-            <H2 style={styles.modalHeadingText}>{props.heading}</H2>
+            <H2 style={styles.modalHeadingText}>{this.props.heading}</H2>
         }
       </View>
     );
   }
 
   componentWillUnmount() {
-    this.props.eventManager.removeComponentListener(this.myHeart);
+    if(this.props.heart) {
+      this.props.eventManager.removeHeartListener(this.myHeart);
+    }
   }
 }
 
