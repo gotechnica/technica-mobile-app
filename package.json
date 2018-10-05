@@ -20,6 +20,7 @@
     "react-native-phone-input": "^0.2.1",
     "react-native-photo-view": "^1.5.2",
     "react-native-scrollable-tab-view": "^0.8.0",
+    "react-native-simple-toast": "0.0.8",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.13.0",
     "yo": "^2.0.3"

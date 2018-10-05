@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { H3 } from './Text';
 import { colors } from './Colors';
+import Toast from 'react-native-simple-toast';
 
 export default class EventHeart extends Component {
   constructor(props) {
@@ -15,8 +16,10 @@ export default class EventHeart extends Component {
     const { eventID, eventManager } = this.props;
 
     if (eventManager.isFavorited(eventID)) {
+      Toast.show('You will no longer be notified about this event.');
       eventManager.unfavoriteEvent(eventID)
     } else {
+      Toast.show('You will be notified 15 min before this event.');
       eventManager.favoriteEvent(eventID)
     }
   }
