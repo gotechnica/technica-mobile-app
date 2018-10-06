@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { H3 } from './Text';
 import { colors } from './Colors';
+import Toast from 'react-native-simple-toast';
 
 export default class EventHeart extends Component {
   constructor(props) {
@@ -15,19 +16,21 @@ export default class EventHeart extends Component {
     const { eventID, eventManager } = this.props;
 
     if (eventManager.isFavorited(eventID)) {
+      Toast.show('You will no longer be notified about this event.');
       eventManager.unfavoriteEvent(eventID)
     } else {
-      eventManager.favoriteEvent(eventID, 10)
+      Toast.show('You will be notified 15 min before this event.');
+      eventManager.favoriteEvent(eventID)
     }
   }
 
   render() {
-    const { savedCount, eventManager, eventID } = this.props;
+    const { eventManager, eventID } = this.props;
 
     return (
       <Fragment>
         <H3 style={{ marginRight: 8, marginTop: 2 }}>
-          {this.props.savedCount}
+          {eventManager.getSavedCount(eventID)}
         </H3>
         <TouchableOpacity onPress={this.handleHeartPress}>
           <Icon
@@ -42,7 +45,6 @@ export default class EventHeart extends Component {
 }
 
 EventHeart.propTypes = {
-  eventID: PropTypes.number,
-  savedCount: PropTypes.number,
+  eventID: PropTypes.string,
   eventManager: PropTypes.object,
 };
