@@ -34,34 +34,11 @@ export default class Home extends Component<Props> {
     super(props);
     this.state = {
       updates: [],
-      isUpdatesModalVisible: false, 
+      isUpdatesModalVisible: false,
       isMapModalVisible: false,
     };
     this.toggleMapModal = this.toggleMapModal.bind(this);
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
-  }
-
-  componentDidMount() {
-    // TODO connect this to firebase properly
-    this.setState({
-      updates: [
-        {
-          id: 3,
-          time: '2:15pm, Saturday',
-          body: 'Lunch has beeen postponed until tomorrow.'
-        },
-        {
-          id: 2,
-          time: '12:00pm, Saturday',
-          body: 'Snacks have been remove from the facility'
-        },
-        {
-          id: 1,
-          time: '11:00am, Saturday',
-          body: 'Get your new chickens from the stand'
-        }
-      ]
-    });
   }
 
   toggleUpdatesModal() {
@@ -88,7 +65,7 @@ export default class Home extends Component<Props> {
           heading="Recent Updates"
         />
         <Spacing />
-        {this.state.updates.map(update => (
+        {this.props.eventManager.getUpdates().map(update => (
           <View key={update.id}>
             <H4>{update.time}</H4>
             <H6>{update.body}</H6>
@@ -102,7 +79,7 @@ export default class Home extends Component<Props> {
   );
    // Does not render anything if there are no recent updates yet
   renderUpdatesSection = () => {
-    const { updates } = this.state;
+    const updates = this.props.eventManager.getUpdates();
     const numUpdates = updates.length;
     return (
       <View>

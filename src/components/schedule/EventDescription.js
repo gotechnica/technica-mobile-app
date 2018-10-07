@@ -42,26 +42,6 @@ export default class EventDescription extends Component<Props> {
       favorited: false,
       isModalVisible: false
     };
-
-    // this.customizeNotification = this.props.customizeNotification;
-    // this.scheduleNotification = this.props.scheduleNotification;
-
-    // AsyncStorage.getItem(EVENT_FAVORITED_KEY_PREFIX + this.props.eventID.toString(), (err, results) => {
-    //   //retrieve whether the event was favorited and update state to reflect change
-    //   if(results != null && results != 'null'){
-    //     console.log("myId: " + this.props.eventID.toString() + " isFavorited: " + results)
-    //     this.setState((prevState, props) => {return {favorited : JSON.parse(results)}});
-    //   } else {
-    //     this.setState((prevState, props) => {return {favorited : false}});
-    //
-    //     //update status to not favorited
-    //     AsyncStorage.setItem(EVENT_FAVORITED_KEY_PREFIX + this.props.eventID.toString(), JSON.stringify(false), function(error){
-    //       if(error){
-    //         console.log(error);
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   toggleModal() {

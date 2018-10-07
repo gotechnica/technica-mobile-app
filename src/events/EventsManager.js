@@ -18,6 +18,7 @@ const SAVED_COUNT_STORE = APP_ID + 'SAVED_COUNT_STORE';
 const EVENT_ID_PREFIX = APP_ID + 'eventNotification-';
 const SCHEDULE_STORAGE_KEY = APP_ID + 'schedule';
 const USER_DATA_STORE = 'USER_DATA_STORE';
+const UPDATES_STORE = 'RECENT_UPDATES_STORE';
 
 
 const notificationBufferMins = 15;
@@ -34,6 +35,7 @@ export default class EventsManager {
 
     this.heartListeners = new Set();
     this.eventListeners = new Set();
+    this.updatesListeners = new Set();
 
     for (let i in rawData) {
       this.eventDays.push(createEventDay(rawData[i]));
@@ -83,7 +85,7 @@ export default class EventsManager {
               });
 
               this.processNewEvents(data, true);
-            })
+          });
       });
     });
 
@@ -100,8 +102,31 @@ export default class EventsManager {
       this.updateHearts();
     });
 
-    this.getTopEvents.bind(this);
-    this.getBeginnerEventsArray.bind(this);
+    this.recentUpdates = [];
+    AsyncStorage.getItem(UPDATES_STORE, (err, result) => {
+      if(result != null) {
+        this.recentUpdates = JSON.parse(result);
+        this.updateUpdatesComponents();
+      }
+
+      firebase.database().ref('/Updates')
+        .on('value', async (snapshot) => {
+          let data = snapshot.val();
+          data = _.filter(data, (event => event != null));
+
+          //store new schedule on phone
+          AsyncStorage.setItem(UPDATES_STORE, JSON.stringify(data), function(error){
+            if (error){
+              console.log(error);
+            }
+          });
+
+          this.recentUpdates = data;
+          console.log(this.recentUpdates);
+
+          this.updateUpdatesComponents();
+      });
+    })
   }
 
   processNewEvents(rawData, rescheduleNotifications) {
@@ -172,6 +197,7 @@ export default class EventsManager {
         console.log(error);
       });
   }
+
   getEventDays() {
     return this.eventDays;
   }
@@ -194,6 +220,10 @@ export default class EventsManager {
       this.combinedEvents,
       event => this.favoriteState[event.eventID]
     );
+  }
+
+  getUpdates() {
+    return this.recentUpdates;
   }
 
   isFavorited(key) {
@@ -322,5 +352,21 @@ export default class EventsManager {
         component.forceUpdate();
       }
     });
+  }
+
+  registerUpdatesListener(component) {
+    this.updatesListeners.add(component);
+  }
+
+  removeUpdatesListener(component) {
+    this.updatesListeners.delete(component);
+  }
+
+  updateUpdatesComponents() {
+    this.updatesListeners.forEach((component, comp, set) => {
+      if (component != null) {
+        component.forceUpdate();
+      }
+    })
   }
 }

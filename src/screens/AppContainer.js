@@ -48,6 +48,7 @@ export default class AppContainer extends Component<Props> {
 						ref={myHome => {
 							this.myHome = myHome;
 							eventManager.registerEventChangeListener(myHome);
+							eventManager.registerUpdatesListener(myHome);
 						}}
 	          eventManager={this.props.screenProps.eventManager}
 	          tabLabel="home"
@@ -80,6 +81,8 @@ export default class AppContainer extends Component<Props> {
     eventManager.removeEventChangeListener(this.myHome);
 		eventManager.removeEventChangeListener(this.mySchedule);
 		eventManager.removeEventChangeListener(this.mySaved);
+
+		eventManager.removeUpdatesListener(this.myHome);
   }
 
 	configureNotificationSettings() {
