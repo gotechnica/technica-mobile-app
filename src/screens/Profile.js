@@ -7,6 +7,8 @@ import {
   AsyncStorage,
   Alert,
   TouchableOpacity,
+  ActivityIndicator,
+  Fragment,
 } from 'react-native';
 import { H1, H2, H3, H4, P } from '../components/Text';
 import {
@@ -214,6 +216,7 @@ export default class Profile extends Component<Props> {
             if(this.state.user.user_data.organizer){
                 return (
                   <ViewContainer>
+                    { scannerView }
                     <PadContainer>
                       {this.state.user.user_data &&
                         <View style={{alignItems: 'center'}}>
@@ -282,14 +285,21 @@ export default class Profile extends Component<Props> {
             }
 
         } else {
-            return(<ViewContainer><H1>Awaiting user data</H1></ViewContainer>);
+            return (
+              <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                padding: 10,
+                backgroundColor: colors.black
+              }}>
+                <ActivityIndicator size="large" color={colors.pink}/>
+              </View>
+            );
         }
     })();
 
-    if(this.state.scanner)
-        return(scannerView);
-    else
-        return(defaultView);
-
+    return (defaultView);
   }
 }
