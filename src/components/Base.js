@@ -127,8 +127,8 @@ const PadContainer = (props) => (
 )
 
 const Heading = (props) => (
-  <View style={[styles.heading, props.style]}>
-    <H1>
+  <View style={[styles.heading]}>
+    <H1 style={props.style}>
       {props.children}
     </H1>
   </View>
