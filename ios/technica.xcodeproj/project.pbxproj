@@ -279,6 +279,20 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		3F8A5601216AF6A600BD1560 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E1013E3DE64E41F6AB532AC9 /* LRDRCTSimpleToast.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 15209BEF1D250F63000D0F44;
+			remoteInfo = LRDRCTSimpleToast;
+		};
+		3F8A5631216AF6A700BD1560 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1886B6054C194618B0EE82A4 /* RCTRestart.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3245CDED1BFEE35C00EABF68;
+			remoteInfo = RCTRestart;
+		};
 		3F934C1121177A5000B26D10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7F35CF1E741F454F8BF60537 /* RNAWSCognito.xcodeproj */;
@@ -389,6 +403,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = technica/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1676D39AC30D4CC6BB21495C /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		1886B6054C194618B0EE82A4 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
 		2BA04434FC074BC1B1ADBAC8 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E53E75CBD9A784869950376 /* Pods-technicaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technicaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-technicaTests/Pods-technicaTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -427,6 +442,7 @@
 		CD089C76F8E24F588F1062E7 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		D10FAF459668C06E282AF0EE /* Pods-technica-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technica-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-technica-tvOSTests/Pods-technica-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D7E1936C7FF14AC29555D894 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
+		E1013E3DE64E41F6AB532AC9 /* LRDRCTSimpleToast.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = LRDRCTSimpleToast.xcodeproj; path = "../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast.xcodeproj"; sourceTree = "<group>"; };
 		F0F7C44BA21EDC6D933F1F76 /* Pods-technicaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technicaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-technicaTests/Pods-technicaTests.release.xcconfig"; sourceTree = "<group>"; };
 		F1A51AEF81CE42FEB819AAAF /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		F5131714EE1C486981D98AB4 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
@@ -599,6 +615,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3F8A55FD216AF6A600BD1560 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3F8A5602216AF6A600BD1560 /* libLRDRCTSimpleToast.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3F8A562E216AF6A700BD1560 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3F8A5632216AF6A700BD1560 /* libRCTRestart.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3F934C0E21177A4F00B26D10 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -662,7 +694,8 @@
 				7F35CF1E741F454F8BF60537 /* RNAWSCognito.xcodeproj */,
 				D7E1936C7FF14AC29555D894 /* RNFirebase.xcodeproj */,
 				AD064AF970844AC1901DA7B3 /* RNPhotoView.xcodeproj */,
-				48F5A0B8E0914EE7902CFDCD /* LRDRCTSimpleToast.xcodeproj */,
+				1886B6054C194618B0EE82A4 /* RCTRestart.xcodeproj */,
+				E1013E3DE64E41F6AB532AC9 /* LRDRCTSimpleToast.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -852,6 +885,10 @@
 					ProjectRef = 48F5A0B8E0914EE7902CFDCD /* LRDRCTSimpleToast.xcodeproj */;
 				},
 				{
+					ProductGroup = 3F8A55FD216AF6A600BD1560 /* Products */;
+					ProjectRef = E1013E3DE64E41F6AB532AC9 /* LRDRCTSimpleToast.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -882,6 +919,10 @@
 				{
 					ProductGroup = 3F934C222117829000B26D10 /* Products */;
 					ProjectRef = 3F934C212117829000B26D10 /* RCTPushNotification.xcodeproj */;
+				},
+				{
+					ProductGroup = 3F8A562E216AF6A700BD1560 /* Products */;
+					ProjectRef = 1886B6054C194618B0EE82A4 /* RCTRestart.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1152,6 +1193,20 @@
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		3F8A5602216AF6A600BD1560 /* libLRDRCTSimpleToast.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libLRDRCTSimpleToast.a;
+			remoteRef = 3F8A5601216AF6A600BD1560 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3F8A5632216AF6A700BD1560 /* libRCTRestart.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTRestart.a;
+			remoteRef = 3F8A5631216AF6A700BD1560 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3F934C1221177A5000B26D10 /* libRNAWSCognito.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1351,6 +1406,7 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
+					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
 				);
 				INFOPLIST_FILE = technica/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1366,8 +1422,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.technica.technica18;
 				PRODUCT_NAME = technica;
-				PROVISIONING_PROFILE = "ac80d34e-a547-4bb3-abc2-3c407ed31190";
-				PROVISIONING_PROFILE_SPECIFIER = "technica development profile";
+				PROVISIONING_PROFILE = "6b6492c4-6f7b-4164-80db-62277df6e47a";
+				PROVISIONING_PROFILE_SPECIFIER = "Technica Development Provisioning Profile";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1388,6 +1444,8 @@
 					"$(SRCROOT)/../node_modules/amazon-cognito-identity-js/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart/**",
+					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
 				);
 				INFOPLIST_FILE = technica/Info.plist;
@@ -1404,8 +1462,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.technica.technica18;
 				PRODUCT_NAME = technica;
-				PROVISIONING_PROFILE = "ac80d34e-a547-4bb3-abc2-3c407ed31190";
-				PROVISIONING_PROFILE_SPECIFIER = "technica development profile";
+				PROVISIONING_PROFILE = "6b6492c4-6f7b-4164-80db-62277df6e47a";
+				PROVISIONING_PROFILE_SPECIFIER = "Technica Development Provisioning Profile";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

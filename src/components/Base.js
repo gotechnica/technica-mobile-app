@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   heading: {
     paddingTop: 60,
     marginBottom: 20,
+    flexDirection: 'row',
   },
   subHeading: {
     color: colors.fontGrey,
@@ -134,8 +135,8 @@ const Heading = (props) => (
 );
 
 const SubHeading = (props) => (
-  <View style={[props.style]}>
-    <H2 style={styles.subHeading}>
+  <View>
+    <H2 style={[styles.subHeading, props.style]}>
       {props.children}
     </H2>
   </View>
