@@ -190,7 +190,7 @@ export default class Profile extends Component<Props> {
             }
 
         } else {
-            return(<ViewContainer>Awaiting user data</ViewContainer>);
+            return(<ViewContainer><H1>Awaiting user data</H1></ViewContainer>);
         }
     })();
 
