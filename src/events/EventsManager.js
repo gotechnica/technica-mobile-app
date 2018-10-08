@@ -105,8 +105,9 @@ export default class EventsManager {
     this.recentUpdates = [];
     AsyncStorage.getItem(UPDATES_STORE, (err, result) => {
       if(result != null) {
-        this.recentUpdates = JSON.parse(result);
-        this.updateUpdatesComponents();
+        this.processRecentUpdates(JSON.parse(result));
+        //recentUpdates = JSON.parse(result);
+        //this.updateUpdatesComponents();
       }
 
       firebase.database().ref('/Updates')
@@ -121,10 +122,7 @@ export default class EventsManager {
             }
           });
 
-          this.recentUpdates = data;
-          console.log(this.recentUpdates);
-
-          this.updateUpdatesComponents();
+          this.processRecentUpdates(data);
       });
     })
   }
@@ -175,6 +173,22 @@ export default class EventsManager {
       this.eventDays = newEventDays;
       this.updateEventComponents()
     }
+  }
+
+  processRecentUpdates(updatesArray) {
+
+    //sort events by time descending
+    sortedUpdates = _.sortBy(updatesArray, update => -moment(update.time).unix());
+
+    this.recentUpdates = _.map(sortedUpdates, update => {
+      return {
+        body: update.body,
+        id: update.id,
+        time: moment(update.time).format("h:mma, dddd")
+      }
+    });
+
+    this.updateUpdatesComponents();
   }
 
   fetchSavedCounts() {
