@@ -51,7 +51,7 @@ export default class MapModal extends Component {
           <PhotoView
             source={require('./images/floor_plan_final.png')}
             minimumZoomScale={1}
-            maximumZoomScale={3.5}
+            maximumZoomScale={8}
             androidScaleType="fitCenter"
             onLoad={() => console.log("Image loaded!")}
             style={{
