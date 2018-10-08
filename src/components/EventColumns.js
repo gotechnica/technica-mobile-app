@@ -52,9 +52,8 @@ export default class EventColumns extends Component {
       return (
         <View style={styles.halfColumn}>
           <EventCard
-            {...event}
+            event = {event}
             eventManager={this.props.eventManager}
-            savedCount={this.props.eventManager.getSavedCount(event.eventID)}
           />
         </View>
       );
@@ -113,7 +112,6 @@ export default class EventColumns extends Component {
   }
 
   renderModal() {
-    console.log('eventmanager', this.props);
     return (
       <Modal
         isVisible={this.state.showModal}

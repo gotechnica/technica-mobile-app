@@ -55,4 +55,4 @@ Because we are using AWS mobile hub in our project you will need to pull the req
 
 - React-Native
 
-- Redux 
+- "Flux" 

@@ -27,11 +27,9 @@ export default class EventGroupComponent extends Component<Props> {
             event = eventObj.item;
             return (
               <EventDescription
-                {...event}
-                hasPassed={event.hasPassed}
+                event = {event}
                 disabled={event.hasPassed}
                 eventManager={this.props.eventManager}
-                savedCount={this.props.eventManager.getSavedCount(event.eventID)}
               />
             );
           }}

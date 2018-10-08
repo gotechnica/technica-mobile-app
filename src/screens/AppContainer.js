@@ -12,6 +12,7 @@ import { colors } from '../components/Colors';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { PushNotificationIOS } from 'react-native';
+import { AsyncStorage, SafeAreaView } from "react-native"
 
 import firebase from 'react-native-firebase';
 
@@ -28,7 +29,61 @@ export default class AppContainer extends Component<Props> {
 
   render() {
 
-    //create notifications channel
+    this.configureNotificationSettings();
+
+		const eventManager = this.props.screenProps.eventManager;
+
+		return (
+			<SafeAreaView style={{flex: 1, backgroundColor: colors.black}}>
+	      <ScrollableTabView
+	        tabBarPosition="bottom"
+	        locked
+	        style={{ backgroundColor: colors.black }}
+	        renderTabBar={() => <CustomTabBar />}
+	      >
+	        <Home
+						ref={myHome => {
+							this.myHome = myHome;
+							eventManager.registerEventChangeListener(myHome);
+							eventManager.registerUpdatesListener(myHome);
+						}}
+	          eventManager={this.props.screenProps.eventManager}
+	          tabLabel="home"
+	        />
+	        <Schedule
+						ref={mySchedule => {
+							this.mySchedule = mySchedule;
+							eventManager.registerEventChangeListener(mySchedule);
+						}}
+	          tabLabel="calendar"
+	          eventManager={this.props.screenProps.eventManager}
+	        />
+	        <Saved
+						ref={mySaved => {
+							this.mySaved = mySaved;
+							eventManager.registerEventChangeListener(mySaved);
+						}}
+	          tabLabel="heart"
+	          eventManager={this.props.screenProps.eventManager}
+	        />
+	        <Mentors tabLabel="people" />
+	        <Profile tabLabel="user" />
+	      </ScrollableTabView>
+			</SafeAreaView>
+    );
+  }
+
+	componentWillUnmount() {
+		const eventManager = this.props.screenProps.eventManager;
+    eventManager.removeEventChangeListener(this.myHome);
+		eventManager.removeEventChangeListener(this.mySchedule);
+		eventManager.removeEventChangeListener(this.mySaved);
+
+		eventManager.removeUpdatesListener(this.myHome);
+  }
+
+	configureNotificationSettings() {
+		//create notifications channel
     const channel = new firebase.notifications.Android.Channel(
       channelId,
       channelName,
@@ -60,6 +115,8 @@ export default class AppContainer extends Component<Props> {
       .then(fcmToken => {
         if (fcmToken) {
           console.log('fcm token: ', fcmToken);
+          // store FCMToken for use with mentorship notifications
+          AsyncStorage.setItem('FCMToken', fcmToken);
         } else {
           console.log('no token');
         }
@@ -80,47 +137,5 @@ export default class AppContainer extends Component<Props> {
         notification.android.setChannelId(channelId);
         firebase.notifications().displayNotification(notification);
       });
-
-    const notification = new firebase.notifications.Notification()
-      .setNotificationId('notificationId')
-      .setTitle('Hello world')
-      .setBody('I love local notifications');
-
-    notification.android
-      .setChannelId(channelId)
-      .android.setSmallIcon('ic_launcher');
-    firebase.notifications().displayNotification(notification);
-
-    return (
-      <ScrollableTabView
-        ref={ref => {
-          this.myComponent = ref;
-          this.props.screenProps.eventManager.registerComponentListener(ref);
-        }}
-        tabBarPosition="bottom"
-        locked
-        style={{ backgroundColor: colors.black }}
-        renderTabBar={() => <CustomTabBar />}
-      >
-        <Home
-          eventManager={this.props.screenProps.eventManager}
-          tabLabel="home"
-        />
-        <Schedule
-          tabLabel="calendar"
-          eventManager={this.props.screenProps.eventManager}
-        />
-        <Saved
-          tabLabel="heart"
-          eventManager={this.props.screenProps.eventManager}
-        />
-        <Mentors tabLabel="people" />
-        <Profile tabLabel="user" />
-      </ScrollableTabView>
-    );
-  }
-
-  componentWillUnmount() {
-    this.props.screenProps.eventManager.removeComponentListener(this.myComponent);
-  }
+	}
 }

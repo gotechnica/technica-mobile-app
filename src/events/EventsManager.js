@@ -9,82 +9,33 @@ import EventDay from './EventDay';
 import EventGroup from './EventGroup';
 import Event from './Event';
 
-import { normalizeTimeLabel } from '../actions/util.js';
+import { normalizeTimeLabel, createEventGroup, createEventDay } from '../actions/util.js';
 import scheduleData from '../../assets/schedule.json';
 
-const EVENT_FAVORITED_STORE = 'EVENT_FAVORITED_STORE';
-const SAVED_COUNT_STORE = 'SAVED_COUNT_STORE';
-const EVENT_ID_PREFIX = 'eventNotification-';
+const APP_ID = '@com.technica.technica18:';
+const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
+const SAVED_COUNT_STORE = APP_ID + 'SAVED_COUNT_STORE';
+const EVENT_ID_PREFIX = APP_ID + 'eventNotification-';
+const SCHEDULE_STORAGE_KEY = APP_ID + 'schedule';
+const USER_DATA_STORE = 'USER_DATA_STORE';
+const UPDATES_STORE = 'RECENT_UPDATES_STORE';
+
+
+const notificationBufferMins = 15;
+const savedCountRefreshInterval = 10 * 60 * 1000;
 
 const channelId = 'technica-push-notifications';
 
 export default class EventsManager {
   constructor() {
     console.log('Initializing event manager');
-    // creates an EventGroup object from a collection of event json entries
-    // which have already been grouped
-    function createEventGroup(eventGroupLabel, rawEventArray) {
-      let eventArray = [];
-
-      for (let i in rawEventArray) {
-        rawEvent = rawEventArray[i];
-        eventArray.push(
-          new Event(
-            rawEvent.eventID,
-            rawEvent.title,
-            rawEvent.description,
-            rawEvent.startTime,
-            rawEvent.endTime,
-            rawEvent.beginnerFriendly,
-            rawEvent.location,
-            rawEvent.img
-          )
-        );
-      }
-
-      return new EventGroup(eventGroupLabel, eventArray);
-    }
-
-    // creates an EventDay object from an array of event json entries
-    function createEventDay(rawEventDay) {
-      dayLabel = rawEventDay[0];
-      sortedEvents = rawEventDay[1].sort((event1, event2) => {
-        start1 = moment(event1.startTime);
-        start2 = moment(event2.startTime);
-
-        end1 = moment(event1.endTime);
-        end2 = moment(event2.endTime);
-
-        if (start1 - start2 == 0) {
-          return end1 - end2;
-        }
-
-        return start1 - start2;
-      });
-
-      groupedData = _.groupBy(sortedEvents, event => {
-        return normalizeTimeLabel(event.startTime);
-      });
-
-      eventGroupLabels = Object.keys(groupedData);
-
-      eventGroupObjs = [];
-      for (let i = 0; i < eventGroupLabels.length; i++) {
-        eventGroupObjs.push(
-          createEventGroup(
-            eventGroupLabels[i],
-            groupedData[eventGroupLabels[i]]
-          )
-        );
-      }
-
-      return new EventDay(dayLabel, eventGroupObjs);
-    }
 
     rawData = scheduleData.Schedule;
     this.eventDays = [];
 
-    this.componentListeners = new Set();
+    this.heartListeners = new Set();
+    this.eventListeners = new Set();
+    this.updatesListeners = new Set();
 
     for (let i in rawData) {
       this.eventDays.push(createEventDay(rawData[i]));
@@ -98,13 +49,13 @@ export default class EventsManager {
       )
     );
 
-    this.keyToEventMap = {};
+    this.eventIDToEventMap = {};
 
     this.combinedEvents.forEach(event => {
-      this.keyToEventMap[event.eventID] = event;
+      this.eventIDToEventMap[event.eventID] = event;
     });
 
-    console.log('Combined events', this.combinedEvents);
+    // console.log('Combined events', this.combinedEvents);
 
     this.favoriteState = {};
     AsyncStorage.getItem(EVENT_FAVORITED_STORE, (err, result) => {
@@ -113,30 +64,138 @@ export default class EventsManager {
       } else {
         this.favoriteState = JSON.parse(result);
       }
-      console.log('favorites', this.favoriteState);
+      this.updateHearts();
+
+      //loads the copy of the schedule on the users phone
+      AsyncStorage.getItem(SCHEDULE_STORAGE_KEY, (err, result) => {
+          if(result != null){
+            this.processNewEvents(JSON.parse(result), false);
+          }
+
+          //after we load the local schedule we will finally add the database query listener for schedule
+          firebase.database().ref('/Schedule')
+            .on('value', async (snapshot) => {
+              let data = snapshot.val();
+
+              //store new schedule on phone
+              AsyncStorage.setItem(SCHEDULE_STORAGE_KEY, JSON.stringify(data), function(error){
+                if (error){
+                  console.log(error);
+                }
+              });
+
+              this.processNewEvents(data, true);
+          });
+      });
     });
 
     this.savedCounts = {};
     AsyncStorage.getItem(SAVED_COUNT_STORE, (err, result) => {
-      this.savedCounts = result;
-      if (result === null) {
-        this.savedCounts = {};
-
-        for (let i in this.combinedEvents) {
-          this.savedCounts[this.combinedEvents[i].eventID] = Math.floor(
-            Math.random() * 1000
-          );
-        }
-      } else {
-        this.savedCounts = result;
+      if(result != null) {
+        this.savedCounts = JSON.parse(result);
       }
 
-      console.log('savedCounts', this.savedCounts);
-      this.updateComponents();
+      this.fetchSavedCounts();
+      this.timer = setInterval(()=> this.fetchSavedCounts(), savedCountRefreshInterval)
+
+      this.updateEventComponents();
+      this.updateHearts();
     });
 
-    this.getTopEvents.bind(this);
-    this.getBeginnerEventsArray.bind(this);
+    this.recentUpdates = [];
+    AsyncStorage.getItem(UPDATES_STORE, (err, result) => {
+      if(result != null) {
+        this.recentUpdates = JSON.parse(result);
+        this.updateUpdatesComponents();
+      }
+
+      firebase.database().ref('/Updates')
+        .on('value', async (snapshot) => {
+          let data = snapshot.val();
+          data = _.filter(data, (event => event != null));
+
+          //store new schedule on phone
+          AsyncStorage.setItem(UPDATES_STORE, JSON.stringify(data), function(error){
+            if (error){
+              console.log(error);
+            }
+          });
+
+          this.recentUpdates = data;
+          console.log(this.recentUpdates);
+
+          this.updateUpdatesComponents();
+      });
+    })
+  }
+
+  processNewEvents(rawData, rescheduleNotifications) {
+    newEventDays = [];
+
+    //repeat process of scanning through events
+    for (let i in rawData) {
+      newEventDays.push(createEventDay(rawData[i]));
+    }
+
+    newCombinedEvents = _.flatten(
+      _.flatten(
+        _.map(newEventDays, eventDay =>
+          _.map(eventDay.eventGroups, eventGroup => eventGroup.events)
+        )
+      )
+    );
+
+    let changed = false;
+    newCombinedEvents.forEach(newEvent => {
+      curEventObj = this.eventIDToEventMap[newEvent.eventID];
+
+      if(!_.isEqual(curEventObj, newEvent)) {
+
+        // if the start time has changed we need to create a new notification and delete the original one
+        if(newEvent.startTime != curEventObj.startTime &&
+           this.isFavorited[newEvent.eventID] &&
+         rescheduleNotifications) {
+          this.deleteNotification(newEvent);
+          this.createNotification(newEvent);
+        }
+        changed = true;
+
+        //update Event object with new properties
+        curEventObj.title = newEvent.title;
+        curEventObj.description = newEvent.description;
+        curEventObj.startTime = newEvent.startTime;
+        curEventObj.endTime = newEvent.endTime;
+        curEventObj.beginnerFriendly = newEvent.beginnerFriendly;
+        curEventObj.location = newEvent.location;
+        curEventObj.img = newEvent.img;
+      }
+    })
+
+    if(changed) {
+      this.eventDays = newEventDays;
+      this.updateEventComponents()
+    }
+  }
+
+  fetchSavedCounts() {
+    fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/favorite-counts")
+      .then((response) => response.json())
+      .then((responseJson) => {
+        newSavedCount = JSON.parse(responseJson.body);
+        this.savedCounts = newSavedCount;
+        //store new favorite counts on phone
+        AsyncStorage.setItem(SAVED_COUNT_STORE, JSON.stringify(newSavedCount), function(error){
+          if (error){
+            console.log(error);
+          }
+        });
+
+        this.updateEventComponents();
+        this.updateHearts();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   getEventDays() {
@@ -146,7 +205,7 @@ export default class EventsManager {
   getTopEvents(num) {
     topSorted = _.sortBy(
       this.combinedEvents,
-      event => -this.savedCounts[event.eventID]
+      event => -this.getSavedCount(event.eventID)
     );
 
     return topSorted.slice(0, num);
@@ -163,23 +222,84 @@ export default class EventsManager {
     );
   }
 
+  getUpdates() {
+    return this.recentUpdates;
+  }
+
   isFavorited(key) {
     return this.favoriteState[key];
   }
 
   //key of event
   // time in minutes to warn before event
-  favoriteEvent(key, timeMin) {
-    this.favoriteState[key] = true;
+  favoriteEvent(eventID) {
+    this.favoriteState[eventID] = true;
+    this.savedCounts[eventID] = this.getSavedCount(eventID) + 1;
     updateObj = {};
-    updateObj[key] = true;
+    updateObj[eventID] = true;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
 
-    event = this.keyToEventMap[key];
+    event = this.eventIDToEventMap[eventID];
+    this.createNotification(event);
+
+    this.updateHearts();
+
+    AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
+      phone = JSON.parse(result).user_data.phone;
+
+      fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/favorite-event", {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          eventID: eventID,
+          phone: phone
+        })
+      });
+    });
+
+  }
+
+  unfavoriteEvent(eventID) {
+    this.favoriteState[eventID] = false;
+    this.savedCounts[eventID]= this.getSavedCount(eventID) - 1;
+    updateObj = {};
+    updateObj[eventID] = false;
+    AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
+
+    event = this.eventIDToEventMap[eventID];
+    this.deleteNotification(event);
+
+    AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
+      phone = JSON.parse(result).user_data.phone;
+
+      fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/unfavorite-event", {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          eventID: eventID,
+          phone: phone
+        })
+      });
+    });
+
+    this.updateHearts();
+  }
+
+  createNotification(event) {
+    if(event.hasPassed) {
+      return;
+    }
+
     let notification = new firebase.notifications.Notification()
-      .setNotificationId(EVENT_ID_PREFIX + key.toString())
+      .setNotificationId(EVENT_ID_PREFIX + event.eventID)
       .setTitle(event.title)
-      .setBody(timeMin + ' minutes until event starts.');
+      .setBody(notificationBufferMins + ' minutes until event starts.');
 
     notification.android
       .setChannelId(channelId)
@@ -187,44 +307,66 @@ export default class EventsManager {
 
     firebase.notifications().scheduleNotification(notification, {
       fireDate: moment(event.startTime)
-        .subtract(timeMin, 'minutes')
+        .subtract(notificationBufferMins, 'minutes')
         .valueOf()
     });
-
-    this.updateComponents();
   }
 
-  unfavoriteEvent(key) {
-    this.favoriteState[key] = false;
-    updateObj = {};
-    updateObj[key] = false;
-    AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
-
-    event = this.keyToEventMap[key];
+  deleteNotification(event) {
     firebase
       .notifications()
       .cancelNotification(EVENT_ID_PREFIX + event.eventID.toString());
-
-    this.updateComponents();
   }
 
   getSavedCount(key) {
-    return this.savedCounts[key];
+    return this.savedCounts[key] == null ? 0 : this.savedCounts[key];
   }
 
-  registerComponentListener(component) {
-    this.componentListeners.add(component);
+  registerHeartListener(component) {
+    this.heartListeners.add(component);
   }
 
-  removeComponentListener(component) {
-    this.componentListeners.delete(component);
+  removeHeartListener(component) {
+    this.heartListeners.delete(component);
   }
 
-  updateComponents() {
-    this.componentListeners.forEach((component, comp, set) => {
-      if (component !== null) {
+  updateHearts() {
+    this.heartListeners.forEach((component, comp, set) => {
+      if (component != null) {
         component.forceUpdate();
       }
     });
+  }
+
+  registerEventChangeListener(component) {
+    this.eventListeners.add(component);
+  }
+
+  removeEventChangeListener(component) {
+    this.eventListeners.delete(component);
+  }
+
+  updateEventComponents() {
+    this.eventListeners.forEach((component, comp, set) => {
+      if (component != null) {
+        component.forceUpdate();
+      }
+    });
+  }
+
+  registerUpdatesListener(component) {
+    this.updatesListeners.add(component);
+  }
+
+  removeUpdatesListener(component) {
+    this.updatesListeners.delete(component);
+  }
+
+  updateUpdatesComponents() {
+    this.updatesListeners.forEach((component, comp, set) => {
+      if (component != null) {
+        component.forceUpdate();
+      }
+    })
   }
 }

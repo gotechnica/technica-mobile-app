@@ -21,7 +21,7 @@ export default class Saved extends Component<Props> {
 
   render() {
     const { eventManager } = this.props;
-    const events = eventManager.getTopEvents(10);
+    const events = eventManager.getSavedEventsArray();
 
     return (
       <ViewContainer>
@@ -30,19 +30,17 @@ export default class Saved extends Component<Props> {
             Saved
           </Heading>
           <SubHeading>
-            12 events saved
+            {events.length} events saved
           </SubHeading>
         </PadContainer>
 
         <PadContainer>
           {
-            /* TODO replace this with the user's saved events, ordering them by ascending time */
             events.map((event) => (
               <EventCard
-                {...event}
                 key={event.eventID}
+                event = {event}
                 eventManager={eventManager}
-                savedCount={eventManager.getSavedCount(event.eventID)}
                 big
                 style={styles.eventCard}
               />

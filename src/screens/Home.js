@@ -37,39 +37,14 @@ export default class Home extends Component<Props> {
       isUpdatesModalVisible: false,
       isMapModalVisible: false,
     };
-    this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
     this.toggleMapModal = this.toggleMapModal.bind(this);
-  }
-
-  componentDidMount() {
-    // TODO Wait for updates from API
-    // Push each update to front of the array
-    this.setState({
-      updates: [
-        {
-          id: 3,
-          time: '2:15pm, Saturday',
-          body: 'Lunch has beeen postponed until tomorrow.'
-        },
-        {
-          id: 2,
-          time: '12:00pm, Saturday',
-          body: 'Snacks have been remove from the facility'
-        },
-        {
-          id: 1,
-          time: '11:00am, Saturday',
-          body: 'Get your new chickens from the stand'
-        }
-      ]
-    });
+    this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
   }
 
   toggleUpdatesModal() {
     this.setState({ isUpdatesModalVisible: !this.state.isUpdatesModalVisible });
   }
-
-  // Renders the full list view of all updates
+   // Renders the full list view of all updates
   renderUpdatesModal = () => (
     <Modal
       isVisible={this.state.isUpdatesModalVisible}
@@ -90,7 +65,7 @@ export default class Home extends Component<Props> {
           heading="Recent Updates"
         />
         <Spacing />
-        {this.state.updates.map(update => (
+        {this.props.eventManager.getUpdates().map(update => (
           <View key={update.id}>
             <H4>{update.time}</H4>
             <H6>{update.body}</H6>
@@ -102,10 +77,9 @@ export default class Home extends Component<Props> {
       </ModalContent>
     </Modal>
   );
-
-  // Does not render anything if there are no recent updates yet
+   // Does not render anything if there are no recent updates yet
   renderUpdatesSection = () => {
-    const { updates } = this.state;
+    const updates = this.props.eventManager.getUpdates();
     const numUpdates = updates.length;
     return (
       <View>
@@ -139,12 +113,13 @@ export default class Home extends Component<Props> {
     );
   };
 
+
   renderPopularEventsSection = () => {
     const heading = 'Popular Events';
     const events = this.props.eventManager.getTopEvents(10);
     return (
-      <View>
-        <PadContainer style={styles.subSection}>
+      <View style={styles.subSection}>
+        <PadContainer style={styles.subSectionHeading}>
           <H2>{heading}</H2>
         </PadContainer>
         <View>
@@ -162,8 +137,8 @@ export default class Home extends Component<Props> {
     const heading = 'Best for Beginners';
     const events = this.props.eventManager.getBeginnerEventsArray();
     return (
-      <View style={{ marginBottom: 40 }}>
-        <PadContainer style={styles.subSection}>
+      <View style={styles.subSection}>
+        <PadContainer style={styles.subSectionHeading}>
           <H2>{heading}</H2>
         </PadContainer>
         <EventColumns
@@ -204,7 +179,6 @@ export default class Home extends Component<Props> {
           isModalVisible={this.state.isMapModalVisible}
           toggleModal={this.toggleMapModal}
         />
-
         {this.renderUpdatesSection()}
         {this.renderPopularEventsSection()}
         {this.renderBestForBeginnersSection()}
@@ -226,7 +200,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   subSection: {
-    paddingTop: 20,
+    // paddingTop: 20,
+    paddingBottom: 40
+  },
+  subSectionHeading: {
     paddingBottom: 20
   },
   columnContainer: {

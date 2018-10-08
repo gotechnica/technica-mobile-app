@@ -41,24 +41,24 @@ export default class EventCard extends Component {
     return <EventModal
       isModalVisible={this.state.isModalVisible}
       toggleModal={this.toggleModal}
-      eventManager={this.eventManager}
-      {...this.props}
+      eventManager={this.props.eventManager}
+      event={this.props.event}
     />
   }
 
   render() {
-    const { title, savedCount, img, big } = this.props;
+    const { big, event, eventManager } = this.props;
     const dimensions = require('Dimensions').get('window');
     const imageWidth = big ? dimensions.width - 40 : dimensions.width / 2 - 30;
     const imageHeight = Math.round((imageWidth * 38) / 67);
 
-    let titleClipped = title;
+    let titleClipped = event.title;
     let titleLimit = 30;
     if (titleClipped && titleClipped.length > titleLimit) {
       titleClipped = titleClipped.substring(0, titleLimit) + "…";
     }
 
-    let imgName = big ? img + "_big" : img;
+    let imgName = big ? event.img + "_big" : event.img;
 
     return (
       <View>
@@ -79,7 +79,7 @@ export default class EventCard extends Component {
                 <H3>{titleClipped}</H3>
                 <H6 style={{ opacity: .8 }}>
                   <Icon name="heart" size={12} color={colors.white} />{' '}
-                  {savedCount}
+                  {eventManager.getSavedCount(event.eventID)}
                 </H6>
               </View>
             )}
@@ -89,7 +89,6 @@ export default class EventCard extends Component {
             <EventDescription
               {...this.props}
               disabled
-              savedCount={savedCount}
             />
             :
             null

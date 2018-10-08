@@ -30,7 +30,8 @@ import { colors } from '../components/Colors';
 import CountdownTimer from '../components/CountdownTimer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const EVENT_FAVORITED_STORE = 'EVENT_FAVORITED_STORE';
+const APP_ID = '@com.technica.technica18:';
+const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const USER_DATA_STORE = 'USER_DATA_STORE';
 
 export default class Login extends Component<Props> {
