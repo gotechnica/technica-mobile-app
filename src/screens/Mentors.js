@@ -177,7 +177,7 @@ export default class Mentors extends Component<Props> {
               }}              onChangeText={(text) => this.setState({tableNumber: text})}
               value={tableNumber}
               underlineColorAndroid='transparent'
-              placeholder="Table 12"
+              placeholder="Table B5"
               placeholderTextColor="#666666"
             />
           </View>
