@@ -33,7 +33,7 @@ const USER_DATA_STORE = 'USER_DATA_STORE';
 export default class Profile extends Component<Props> {
     constructor(props){
         super(props);
-        this.state = {user:{}, scanner:false, modalVisible:true};
+        this.state = {user:{}, scanner:false, modalVisible:true, userModal: false, modalContent: ""};
     }
 
   async logout(){
@@ -56,13 +56,46 @@ export default class Profile extends Component<Props> {
       this.setState({scanner: !this.state.scanner});
   }
 
-  async onScanSuccess(e) {
-      // TODO: verify that this hacker is registered
-      //const isRegistered = await verifyHacker(e.data);
-      //this.setState({modalVisible: true});
-      // TODO: should be a modal instead
-      // TODO: only do this on modal exit
-      alert(e.data);
+  async onScanSuccess(e) {mod
+      let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/login-user";
+      try {
+          let phoneNumber = e.data;
+          let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({'phone': phoneNumber})
+          });
+          let responseJson = await response.json();
+          if(responseJson.statusCode == 200){
+            let modal_content = [];
+            for (var user_var in responseJson.body){
+              modal_content += modal_content.push(<p> responseJson.body[user_var] </p>)
+            }
+            console.log(modal_content);
+          } else{
+            Alert.alert(
+              "Failed to login user",
+              "Please try again.",
+              [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ],
+              { cancelable: false }
+            );
+          }
+      } catch (error) {
+          Alert.alert(
+            "No internet connection.",
+            "Try again.",
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          );
+        }
+      
       this.scanner.reactivate();
   }
 
@@ -124,6 +157,7 @@ export default class Profile extends Component<Props> {
             const fullName = this.state.user.user_data ?
                 this.state.user.user_data.first_name + " " + this.state.user.user_data.last_name :
                 "";
+            const phone_number = this.state.user.user_data ? this.state.user.user_data.phone : "";
 
             if(this.state.user.user_data.organizer){
                 return (
@@ -169,7 +203,7 @@ export default class Profile extends Component<Props> {
                         {
                           this.state.user.user_data &&
                           <QRCode
-                            value={fullName}
+                            value={phone_number}
                             size={180}
                             bgColor='black'
                             fgColor='white'
