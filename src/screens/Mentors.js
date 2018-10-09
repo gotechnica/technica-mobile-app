@@ -216,10 +216,11 @@ export default class Mentors extends Component<Props> {
         let questions = await AsyncStorage.getItem("questions")
         var qList = JSON.parse(questions)
         // update status of question
-        qList.forEach(element => {
+        qList.forEach((element, index) => {
           if (element.question == question){
             console.log("found!")
             element.status = "Responded!"
+            qList[index] = element
           }
         })
         // store update in local storage
