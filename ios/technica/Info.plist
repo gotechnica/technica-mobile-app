@@ -29,13 +29,14 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
+    <dict>
+<!--      Uncomment this to build locally dev version -->
+<!--      <key>localhost</key>-->
+<!--         <dict>-->
+<!--           <key>NSExceptionAllowsInsecureHTTPLoads</key>-->
+<!--           <true/>-->
+<!--        </dict>-->
+    </dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
