@@ -5,7 +5,7 @@ import { SubHeading } from './Base';
  // when hacking begins
 const START_TIME = moment("2018-11-10 12:00");
 // when hacking ends
-const END_TIME = moment("2018-11-11 19:00");
+const END_TIME = moment("2018-11-11 12:00");
 
 export default class CountdownTimer extends Component {
   constructor(props) {
