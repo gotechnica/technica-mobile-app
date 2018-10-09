@@ -121,6 +121,9 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
     }
+    * currently using ./gradlew assembleRelease does not work due
+    * to react-navigation packaging error
+    * For now just click Build -> Generate Signed Apk in android studio
     signingConfigs {
         def pass = getPassword("Tal Davidi", "technica_keystore")
 
