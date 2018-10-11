@@ -10,7 +10,6 @@ import EventGroup from './EventGroup';
 import Event from './Event';
 
 import { normalizeTimeLabel, createEventGroup, createEventDay } from '../actions/util.js';
-import scheduleData from '../../assets/schedule.json';
 
 const APP_ID = '@com.technica.technica18:';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
@@ -30,34 +29,16 @@ export default class EventsManager {
   constructor() {
     console.log('Initializing event manager');
 
-    rawData = scheduleData.Schedule;
-    this.eventDays = [];
-
     this.heartListeners = new Set();
     this.eventListeners = new Set();
     this.updatesListeners = new Set();
 
-    for (let i in rawData) {
-      this.eventDays.push(createEventDay(rawData[i]));
-    }
-
-    this.combinedEvents = _.flatten(
-      _.flatten(
-        _.map(this.eventDays, eventDay =>
-          _.map(eventDay.eventGroups, eventGroup => eventGroup.events)
-        )
-      )
-    );
-
+    this.eventDays = [];
     this.eventIDToEventMap = {};
-
-    this.combinedEvents.forEach(event => {
-      this.eventIDToEventMap[event.eventID] = event;
-    });
-
-    // console.log('Combined events', this.combinedEvents);
+    this.combinedEvents = [];
 
     this.favoriteState = {};
+    // get the list of events which have been favorited
     AsyncStorage.getItem(EVENT_FAVORITED_STORE, (err, result) => {
       if (result === null) {
         this.favoriteState = {};
@@ -143,34 +124,46 @@ export default class EventsManager {
       )
     );
 
+    console.log('newEventDays', newEventDays);
+    console.log('new combined events', newCombinedEvents);
+
     let changed = false;
     newCombinedEvents.forEach(newEvent => {
-      curEventObj = this.eventIDToEventMap[newEvent.eventID];
+      let eventID = newEvent.eventID;
 
-      if(!_.isEqual(curEventObj, newEvent)) {
-
-        // if the start time has changed we need to create a new notification and delete the original one
-        if(newEvent.startTime != curEventObj.startTime &&
-           this.isFavorited[newEvent.eventID] &&
-         rescheduleNotifications) {
-          this.deleteNotification(newEvent);
-          this.createNotification(newEvent);
-        }
+      // this event hasn't been seen yet
+      if(this.eventIDToEventMap[eventID] == null) {
         changed = true;
+        this.eventIDToEventMap[eventID] = newEvent;
+      } else {
+        curEventObj = this.eventIDToEventMap[newEvent.eventID];
 
-        //update Event object with new properties
-        curEventObj.title = newEvent.title;
-        curEventObj.description = newEvent.description;
-        curEventObj.startTime = newEvent.startTime;
-        curEventObj.endTime = newEvent.endTime;
-        curEventObj.beginnerFriendly = newEvent.beginnerFriendly;
-        curEventObj.location = newEvent.location;
-        curEventObj.img = newEvent.img;
+        if(!_.isEqual(curEventObj, newEvent)) {
+
+          // if the start time has changed we need to create a new notification and delete the original one
+          if(newEvent.startTime != curEventObj.startTime &&
+             this.isFavorited[newEvent.eventID] &&
+           rescheduleNotifications) {
+            this.deleteNotification(newEvent);
+            this.createNotification(newEvent);
+          }
+          changed = true;
+
+          //update Event object with new properties
+          curEventObj.title = newEvent.title;
+          curEventObj.description = newEvent.description;
+          curEventObj.startTime = newEvent.startTime;
+          curEventObj.endTime = newEvent.endTime;
+          curEventObj.beginnerFriendly = newEvent.beginnerFriendly;
+          curEventObj.location = newEvent.location;
+          curEventObj.img = newEvent.img;
+        }
       }
-    })
+    });
 
     if(changed) {
       this.eventDays = newEventDays;
+      this.combinedEvents = newCombinedEvents;
       this.updateEventComponents()
     }
   }

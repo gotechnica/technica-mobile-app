@@ -12,7 +12,8 @@ import {
   PlainViewContainer,
   ViewContainer,
   PadContainer,
-  Heading
+  Heading,
+  CenteredActivityIndicator,
 } from '../components/Base';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import EventGroupComponent from '../components/schedule/EventGroupComponent';
@@ -53,58 +54,64 @@ export default class Schedule extends Component<Props> {
   }
 
   render() {
-    let tabNames = this.props.eventManager
-      .getEventDays()
-      .map(eventDay => eventDay.label);
-    return (
-      <PlainViewContainer>
-        <FlatList
-          data={this.props.eventManager.getEventDays()}
-          renderItem={this.renderScheduleForDay}
-          ListHeaderComponent={() => (
-            <PadContainer>
-              <Heading>Schedule</Heading>
-              <ScheduleSceneTabBar
-                goToSection={i => {
-                  this.scheduleListRef.scrollToIndex({
-                    index: i,
-                    viewOffset: 100,
-                    viewPosition: 0
-                  });
+    let eventDays = this.props.eventManager.getEventDays();
+    let tabNames = eventDays.map(eventDay => eventDay.label);
+
+    if(eventDays.length == 0) {
+      return (
+        <CenteredActivityIndicator/>
+      )
+    } else {
+      return (
+        <PlainViewContainer>
+          <FlatList
+            data={eventDays}
+            renderItem={this.renderScheduleForDay}
+            ListHeaderComponent={() => (
+              <PadContainer>
+                <Heading>Schedule</Heading>
+                <ScheduleSceneTabBar
+                  goToSection={i => {
+                    this.scheduleListRef.scrollToIndex({
+                      index: i,
+                      viewOffset: 100,
+                      viewPosition: 0
+                    });
+                  }}
+                  tabs={tabNames}
+                  activeTab={0}
+                />
+              </PadContainer>
+            )}
+            ItemSeparatorComponent={() => (
+              <PadContainer
+                style={{
+                  marginTop: 20,
+                  borderTopWidth: 1,
+                  borderColor: colors.borderGrey,
+                  paddingTop: 30,
                 }}
-                tabs={tabNames}
-                activeTab={0}
-              />
-            </PadContainer>
-          )}
-          ItemSeparatorComponent={() => (
-            <PadContainer
-              style={{
-                marginTop: 20,
-                borderTopWidth: 1,
-                borderColor: colors.borderGrey,
-                paddingTop: 30,
-              }}
-            >
-              <ScheduleSceneTabBar
-                goToSection={i => {
-                  this.scheduleListRef.scrollToIndex({
-                    index: i,
-                    viewOffset: 100,
-                    viewPosition: 0
-                  });
-                }}
-                tabs={tabNames}
-                activeTab={1}
-              />
-            </PadContainer>
-          )}
-          keyExtractor={(eventDay, index) => eventDay.label}
-          ref={ref => {
-            this.scheduleListRef = ref;
-          }}
-        />
-      </PlainViewContainer>
-    );
+              >
+                <ScheduleSceneTabBar
+                  goToSection={i => {
+                    this.scheduleListRef.scrollToIndex({
+                      index: i,
+                      viewOffset: 100,
+                      viewPosition: 0
+                    });
+                  }}
+                  tabs={tabNames}
+                  activeTab={1}
+                />
+              </PadContainer>
+            )}
+            keyExtractor={(eventDay, index) => eventDay.label}
+            ref={ref => {
+              this.scheduleListRef = ref;
+            }}
+          />
+        </PlainViewContainer>
+      );
+    }
   }
 }
