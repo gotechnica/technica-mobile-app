@@ -165,6 +165,18 @@ export default class Profile extends Component<Props> {
                 <QRCodeScanner
                     ref={(node) => { this.scanner = node }}
                     onRead={this.onScanSuccess.bind(this)}
+                    showMarker
+                    customMarker={
+                      <View
+                        style={{
+                          width: 240,
+                          height: 240,
+                          borderRadius: 8,
+                          borderWidth: 2,
+                          borderColor: colors.cyan,
+                        }}
+                      />
+                    }
                   />
               </ViewContainer>
             </ModalContent>
