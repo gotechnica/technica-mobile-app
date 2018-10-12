@@ -56,7 +56,7 @@ export default class Profile extends Component<Props> {
       this.setState({scanner: !this.state.scanner});
   }
 
-  async onScanSuccess(e) {mod
+  async onScanSuccess(e) {
       let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/login-user";
       try {
           let phoneNumber = e.data;
@@ -95,7 +95,7 @@ export default class Profile extends Component<Props> {
             { cancelable: false }
           );
         }
-      
+
       this.scanner.reactivate();
   }
 
