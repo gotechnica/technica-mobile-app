@@ -19,6 +19,7 @@ import {
   PadContainer,
   ModalHeader,
   ModalContent,
+  CenteredActivityIndicator,
   Button
 } from '../components/Base';
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -286,16 +287,7 @@ export default class Profile extends Component<Props> {
 
         } else {
             return (
-              <View style={{
-                flex: 1,
-                justifyContent: 'center',
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                padding: 10,
-                backgroundColor: colors.black
-              }}>
-                <ActivityIndicator size="large" color={colors.pink}/>
-              </View>
+              <CenteredActivityIndicator />
             );
         }
     })();
