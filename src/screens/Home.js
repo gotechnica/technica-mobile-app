@@ -82,12 +82,13 @@ export default class Home extends Component<Props> {
     const updates = this.props.eventManager.getUpdates();
     const numUpdates = updates.length;
     return (
-      <View>
+      // 20 less than real subsection padding to offset papersheet
+      <View style={{ paddingBottom: 20 }}>
         {this.renderUpdatesModal()}
         {numUpdates > 0 ? (
           <Fragment>
             <PadContainer>
-              <H2 style={styles.heading}>Recent Updates</H2>
+              <H2 style={styles.subSectionHeading}>Recent Updates</H2>
             </PadContainer>
             <TouchableOpacity onPress={() => this.toggleUpdatesModal()}>
               <PaperSheet>

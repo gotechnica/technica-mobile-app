@@ -7,6 +7,8 @@ import {
   AsyncStorage,
   Alert,
   TouchableOpacity,
+  ActivityIndicator,
+  Fragment,
 } from 'react-native';
 import { H1, H2, H3, H4, P } from '../components/Text';
 import {
@@ -17,6 +19,7 @@ import {
   PadContainer,
   ModalHeader,
   ModalContent,
+  CenteredActivityIndicator,
   Button
 } from '../components/Base';
 import QRCodeScanner from 'react-native-qrcode-scanner';
@@ -39,7 +42,14 @@ export default class Profile extends Component<Props> {
           modalVisible:true,
           userModal: false,
           modalContent: ""
+
+          // For fun...
+          devoolooperMode: false,
+          namePresses: 0,
+          nameColor: '#FFFFFF',
+          timeInterval: null,
         };
+        this.onNamePress = this.onNamePress.bind(this);
     }
 
   async logout(){
@@ -136,8 +146,83 @@ export default class Profile extends Component<Props> {
       this.setState({modalVisible:!this.state.modalVisible});
   }
 
-  render() {
+  onNamePress() {
+    this.setState({ namePresses: this.state.namePresses + 1 });
 
+    if (this.state.namePresses > 3) {
+
+      // If turning on devoolooperMode
+      if (!this.state.devoolooperMode) {
+        Alert.alert(
+          "Congratulations!",
+          "You have toggled devoolooper mode.",
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        );
+
+
+        let count = 0;;
+        let intervalID = setInterval(() => {
+           // Your logic here
+           this.setState({
+             nameColor: (this.state.nameColor !== colors.pink) ? colors.pink : colors.cyan
+           })
+           if (++count === 18) {
+               clearInterval(intervalID);
+               this.setState({
+                 nameColor: '#ffffff',
+               });
+           }
+        }, 250);
+      } else {
+        Alert.alert(
+          "Okay :(",
+          "You can be a normal person again.",
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+        );
+
+      }
+
+      this.setState({
+        devoolooperMode: !this.state.devoolooperMode,
+        namePresses: 0,
+      });
+    }
+  }
+
+  getDevoolooperName(name) {
+    // A, E, I, O, U
+    let vowels = new Set();
+    vowels.add('A');
+    vowels.add('E');
+    vowels.add('I');
+    vowels.add('O');
+    vowels.add('U');
+
+    name = name.toUpperCase();
+
+    let newName = '';
+    for (let i = 0; i < name.length; i++) {
+      if (vowels.has(name.charAt(i))) {
+        newName += 'oo';
+      } else {
+        newName += name.charAt(i);
+      }
+    }
+
+    // Turn to title case
+    return newName.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
+
+  render() {
     const scannerView = (() => {
         return(
             <Modal
@@ -194,10 +279,17 @@ export default class Profile extends Component<Props> {
             if(this.state.user.user_data.organizer){
                 return (
                   <ViewContainer>
+                    { scannerView }
                     <PadContainer>
-                      {this.state.user.user_data && <Heading style={{ justifyContent: 'center' }}>
-                          { fullName }
-                      </Heading>}
+                      {this.state.user.user_data &&
+                        <View style={{alignItems: 'center'}}>
+                          <TouchableOpacity onPress={this.onNamePress}>
+                            <Heading style={{ color: this.state.nameColor }}>
+                              { this.state.devoolooperMode ? this.getDevoolooperName(fullName) : fullName }
+                            </Heading>
+                          </TouchableOpacity>
+                        </View>
+                      }
                       <SubHeading style={{ textAlign: 'center' }}>
                         Organizer
                       </SubHeading>
@@ -256,14 +348,12 @@ export default class Profile extends Component<Props> {
             }
 
         } else {
-            return(<ViewContainer><H1>Awaiting user data</H1></ViewContainer>);
+            return (
+              <CenteredActivityIndicator />
+            );
         }
     })();
 
-    if(this.state.scanner)
-        return(scannerView);
-    else
-        return(defaultView);
-
+    return (defaultView);
   }
 }

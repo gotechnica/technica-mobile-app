@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
@@ -127,8 +128,8 @@ const PadContainer = (props) => (
 )
 
 const Heading = (props) => (
-  <View style={[styles.heading, props.style]}>
-    <H1>
+  <View style={[styles.heading]}>
+    <H1 style={props.style}>
       {props.children}
     </H1>
   </View>
@@ -231,6 +232,18 @@ class ModalHeader extends Component<Props> {
   }
 }
 
+const CenteredActivityIndicator = (props) => (
+  <View style={{
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+    backgroundColor: colors.black
+  }}>
+    <ActivityIndicator size="large" color={colors.pink}/>
+  </View>
+)
 const Button = (props) => (
   <View>
     <View style={styles.button}>
@@ -252,5 +265,6 @@ export {
   Spacing,
   ModalContent,
   ModalHeader,
+  CenteredActivityIndicator,
   Button
 };

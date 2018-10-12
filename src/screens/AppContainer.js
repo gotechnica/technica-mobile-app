@@ -122,6 +122,8 @@ export default class AppContainer extends Component<Props> {
         }
       });
 
+		firebase.messaging().subscribeToTopic("announcements");
+
     this.notificationDisplayedListener = firebase
       .notifications()
       .onNotificationDisplayed((notification: Notification) => {

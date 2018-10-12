@@ -19,12 +19,14 @@ import firebase from 'react-native-firebase';
 import QuestionCard from '../components/QuestionCard'
 import { AsyncStorage } from "react-native"
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
+import Toast from 'react-native-simple-toast';
 
 export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = { question: '', tableNumber: "", newQuestionScreen:false, listData: [] };
     this.sendQuestion = this.sendQuestion.bind(this);
+    this.showToast = this.showToast.bind(this);
   }
   // initially loads question data
   async componentDidMount() {
@@ -59,6 +61,16 @@ export default class Mentors extends Component<Props> {
       // Error saving data
       console.log(error)
     }
+  }
+
+  showToast() {
+    // Show toast after 600ms
+    // This 600ms delay ensures the toast loads after the modal animation close
+    // happens. There is a weird iOS issue where toast will vanish the moment
+    // modal closes. This is the best workaround I could make for now.
+    setTimeout(() => {
+      Toast.show('Question sent! Our next available mentor will come assist you.', Toast.LONG);
+    }, 400)
   }
 
   async sendQuestion() {
@@ -96,7 +108,10 @@ export default class Mentors extends Component<Props> {
       this.storeQuestion(questionObject)
 
       // TODO: show popup with feedback
+
+      this.showToast();
       this.toggleModal()
+
     }
   }
   renderHeading() {
@@ -130,33 +145,40 @@ export default class Mentors extends Component<Props> {
         style={{ margin: 0 }}
       >
         <View style={{ padding: 20 }}>
-          <H3 style={{ color: 'white', marginBottom: 10 }}>Question</H3>
+          <H3 style={{ color: 'white', marginBottom: 10 }}>How can we help you?</H3>
           <TextInput
             style={{
               borderColor: colors.white,
               borderBottomWidth: 1,
-              paddingBottom: 8,
-              fontFamily: "DINPro-Medium",
-              fontSize: 24,
+              padding: 0,
+              fontFamily: "Poppins-Regular",
+              paddingBottom: 2,
+              marginBottom: 20,
+              fontSize: 14,
               color: colors.white,
             }}
             onChangeText={(text) => this.setState({question: text})}
             value={question}
             underlineColorAndroid='transparent'
+            placeholder="How do I make X using Y?"
+            placeholderTextColor="#666666"
           />
           <View marginTop = {10}>
-            <H3 style={{ color: 'white', marginBottom: 10 }}>Table Number</H3>
+            <H3 style={{ color: 'white', marginBottom: 10 }}>Where can we find you?</H3>
             <TextInput
               style={{
                 borderColor: colors.white,
                 borderBottomWidth: 1,
-                paddingBottom: 8,
-                fontFamily: "DINPro-Medium",
-                fontSize: 24,
+                fontFamily: "Poppins-Regular",
+                padding: 0,
+                paddingBottom: 2,
+                fontSize: 14,
                 color: colors.white,
               }}              onChangeText={(text) => this.setState({tableNumber: text})}
               value={tableNumber}
               underlineColorAndroid='transparent'
+              placeholder="Table B5"
+              placeholderTextColor="#666666"
             />
           </View>
         </View>
@@ -194,10 +216,11 @@ export default class Mentors extends Component<Props> {
         let questions = await AsyncStorage.getItem("questions")
         var qList = JSON.parse(questions)
         // update status of question
-        qList.forEach(element => {
+        qList.forEach((element, index) => {
           if (element.question == question){
             console.log("found!")
             element.status = "Responded!"
+            qList[index] = element
           }
         })
         // store update in local storage
