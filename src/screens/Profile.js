@@ -33,7 +33,13 @@ const USER_DATA_STORE = 'USER_DATA_STORE';
 export default class Profile extends Component<Props> {
     constructor(props){
         super(props);
-        this.state = {user:{}, scanner:false, modalVisible:true, userModal: false, modalContent: ""};
+        this.state = {
+          user:{},
+          scanner:false,
+          modalVisible:true,
+          userModal: false,
+          modalContent: ""
+        };
     }
 
   async logout(){
@@ -70,11 +76,25 @@ export default class Profile extends Component<Props> {
           });
           let responseJson = await response.json();
           if(responseJson.statusCode == 200){
-            let modal_content = [];
-            for (var user_var in responseJson.body){
-              modal_content += modal_content.push(<p> responseJson.body[user_var] </p>)
-            }
-            console.log(modal_content);
+
+            const scannedUserData = responseJson.body.user_data;
+            const fullname = `${scannedUserData.first_name} ${scannedUserData.last_name}`;
+            const minorStatus = scannedUserData.minor_status;
+            const dietaryRestrictions = scannedUserData.dietary_restrictions;
+
+            console.log(scannedUserData);
+            console.log(fullname);
+            console.log(minorStatus);
+            console.log(dietaryRestrictions);
+
+            Alert.alert(
+              "hello",
+              "hi",
+              [
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+              ],
+              { cancelable: false }
+            );
           } else{
             Alert.alert(
               "Failed to login user",
