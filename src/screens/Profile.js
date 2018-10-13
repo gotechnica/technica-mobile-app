@@ -28,6 +28,7 @@ import _ from 'lodash';
 import { colors } from '../components/Colors';
 import Modal from 'react-native-modal';
 import RNRestart from 'react-native-restart';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
@@ -41,7 +42,10 @@ export default class Profile extends Component<Props> {
           scanner:false,
           modalVisible:true,
           userModal: false,
-          modalContent: ""
+          modalContent: "",
+
+          scannedUser: false,
+          scannedUserData: {},
 
           // For fun...
           devoolooperMode: false,
@@ -84,49 +88,40 @@ export default class Profile extends Component<Props> {
             },
             body: JSON.stringify({'phone': phoneNumber})
           });
+
           let responseJson = await response.json();
+
           if(responseJson.statusCode == 200){
+            const responseUserData = responseJson.body.user_data;
+            // Set state for SUCCESS modal
+            this.setState({
+              scannedUserData: {
+                fullName: `${responseUserData.first_name} ${responseUserData.last_name}`,
+                minorStatus: responseUserData.minor_status,
+                dietaryRestrictions: responseUserData.dietary_restrictions,
+              },
+              scannedUser: true,
+            })
 
-            const scannedUserData = responseJson.body.user_data;
-            const fullname = `${scannedUserData.first_name} ${scannedUserData.last_name}`;
-            const minorStatus = scannedUserData.minor_status;
-            const dietaryRestrictions = scannedUserData.dietary_restrictions;
-
-            console.log(scannedUserData);
-            console.log(fullname);
-            console.log(minorStatus);
-            console.log(dietaryRestrictions);
-
-            Alert.alert(
-              "hello",
-              "hi",
-              [
-                {text: 'OK', onPress: () => console.log('OK Pressed')},
-              ],
-              { cancelable: false }
-            );
           } else{
-            Alert.alert(
-              "Failed to login user",
-              "Please try again.",
-              [
-                {text: 'OK', onPress: () => console.log('OK Pressed')},
-              ],
-              { cancelable: false }
-            );
+            // Set state for NOT FOUND modal
+            this.setState({
+              scannedUserData: null,
+              scannedUser: true,
+            })
           }
       } catch (error) {
           Alert.alert(
             "No internet connection.",
             "Try again.",
             [
-              {text: 'OK', onPress: () => console.log('OK Pressed')},
+              {text: 'OK', onPress: () => {this.scanner.reactivate();}},
             ],
             { cancelable: false }
           );
         }
 
-      this.scanner.reactivate();
+      // this.scanner.reactivate();
   }
 
   async verifyHacker(){
@@ -251,6 +246,7 @@ export default class Profile extends Component<Props> {
                     ref={(node) => { this.scanner = node }}
                     onRead={this.onScanSuccess.bind(this)}
                     showMarker
+                    reactivate={false}
                     customMarker={
                       <View
                         style={{
@@ -262,6 +258,14 @@ export default class Profile extends Component<Props> {
                         }}
                       />
                     }
+                  />
+                  <ScanResponseModal
+                    isVisible={this.state.scannedUser}
+                    scannedUserData={this.state.scannedUserData}
+                    onBack={() => {
+                      this.setState({ scannedUser: false });
+                      this.scanner.reactivate();
+                    }}
                   />
               </ViewContainer>
             </ModalContent>
@@ -294,7 +298,7 @@ export default class Profile extends Component<Props> {
                         Organizer
                       </SubHeading>
                     </PadContainer>
-                    <TouchableOpacity style={{ marginBottom: 10 }} onPress={() => this.toggleScanner()}>
+                    <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => this.toggleScanner()}>
                       <Button text="Open Scanner" />
                     </TouchableOpacity>
 
@@ -356,4 +360,87 @@ export default class Profile extends Component<Props> {
 
     return (defaultView);
   }
+}
+
+// TODO make this code less redundant
+const ScanResponseModal = (props) => {
+
+  if (props.scannedUserData === null) {
+    return (
+      <Modal
+        isVisible={props.isVisible}
+        backdropColor={colors.white}
+        backdropOpacity={.6}
+        animationInTiming={200}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationOutTiming={200}
+        backdropTransitionInTiming={200}
+        backdropTransitionOutTiming={200}
+        avoidKeyboard={true}
+        onBackdropPress={props.onBack}
+        onBackButtonPress={props.onBack}
+        style={{ margin: 40 }}
+      >
+        <View style={{
+          backgroundColor: colors.black,
+          padding: 40,
+          borderRadius: 8,
+          alignItems: 'center',
+        }}>
+          <FAIcon
+            name="times"
+            size={48}
+            color={colors.white}
+            style={{ marginBottom: 10 }}
+          />
+          <H2 style={{ color: colors.white, marginBottom: 20 }}>NOT FOUND</H2>
+          <H3 style={{ color: colors.fontGrey }}>Send to check-in table.</H3>
+        </View>
+      </Modal>
+    )
+  }
+
+  return (
+    <Modal
+      isVisible={props.isVisible}
+      backdropColor={colors.cyan}
+      backdropOpacity={.6}
+      animationInTiming={200}
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
+      animationOutTiming={200}
+      backdropTransitionInTiming={200}
+      backdropTransitionOutTiming={200}
+      avoidKeyboard={true}
+      onBackdropPress={props.onBack}
+      onBackButtonPress={props.onBack}
+      style={{ margin: 40 }}
+    >
+      <View style={{
+        backgroundColor: colors.black,
+        padding: 40,
+        borderRadius: 8,
+        alignItems: 'center',
+      }}>
+        <FAIcon
+          name="check"
+          size={48}
+          color={colors.cyan}
+          style={{ marginBottom: 10 }}
+        />
+        <H2 style={{ color: colors.cyan, marginBottom: 20 }}>SUCCESS</H2>
+        <H1 style={{ marginBottom: 20 }}>{props.scannedUserData.fullName}</H1>
+        {
+          props.scannedUserData.minorStatus &&
+          <H3 style={{ color: colors.pink }}>+ Minor</H3>
+        }
+        {
+          props.scannedUserData.dietaryRestrictions != null &&
+          props.scannedUserData.dietaryRestrictions.length > 0 &&
+          <H3 style={{ color: colors.pink }}>+ Dietary Restrictions</H3>
+        }
+      </View>
+    </Modal>
+  );
 }
