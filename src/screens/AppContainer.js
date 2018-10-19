@@ -89,7 +89,7 @@ export default class AppContainer extends Component<Props> {
   }
 
   handleBackButtonClick() {
-    this.props.navigation.goBack(null);
+    //BackHandler.exitApp();
     return true;
   }
 
