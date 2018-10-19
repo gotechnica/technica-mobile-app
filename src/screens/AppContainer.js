@@ -12,7 +12,7 @@ import { colors } from '../components/Colors';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import { PushNotificationIOS } from 'react-native';
-import { AsyncStorage, SafeAreaView } from "react-native"
+import { AsyncStorage, SafeAreaView, BackHandler } from "react-native";
 
 import firebase from 'react-native-firebase';
 
@@ -25,6 +25,7 @@ export default class AppContainer extends Component<Props> {
 	};
   constructor(props) {
     super(props);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
 
   render() {
@@ -73,6 +74,10 @@ export default class AppContainer extends Component<Props> {
     );
   }
 
+  componentWillMount(){
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
 	componentWillUnmount() {
 		const eventManager = this.props.screenProps.eventManager;
     eventManager.removeEventChangeListener(this.myHome);
@@ -80,6 +85,12 @@ export default class AppContainer extends Component<Props> {
 		eventManager.removeEventChangeListener(this.mySaved);
 
 		eventManager.removeUpdatesListener(this.myHome);
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
   }
 
 	configureNotificationSettings() {
