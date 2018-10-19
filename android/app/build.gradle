@@ -79,19 +79,6 @@ project.ext.react = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 
-def getPassword(String currentUser, String keyChain) {
-    def stdout = new ByteArrayOutputStream()
-    def stderr = new ByteArrayOutputStream()
-    exec {
-        commandLine 'security', '-q', 'find-generic-password', '-a', currentUser, '-s', keyChain, '-w'
-        standardOutput = stdout
-        errorOutput = stderr
-        ignoreExitValue true
-    }
-    //noinspection GroovyAssignabilityCheck
-    stdout.toString().trim()
-}
-
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -115,8 +102,8 @@ android {
         applicationId "com.technica.technica18"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -127,14 +114,11 @@ android {
     * For now just click Build -> Generate Signed Apk in android studio
     */
     signingConfigs {
-        def pass = getPassword("Tal Davidi", "technica_keystore")
 
         release {
             if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
                 storeFile file(MYAPP_RELEASE_STORE_FILE)
-                storePassword pass
                 keyAlias MYAPP_RELEASE_KEY_ALIAS
-                keyPassword pass
             }
         }
     }
