@@ -312,12 +312,14 @@ export default class Profile extends Component<Props> {
                 return (
                   <ViewContainer>
                     <PadContainer>
-                      {this.state.user.user_data && <Heading style={{ justifyContent: 'center' }}>
-                          {fullName}
-                      </Heading>}
-                      <SubHeading style={{ textAlign: 'center' }}>
-                        Your QR code
-                      </SubHeading>
+                      <View style={{alignItems: 'center'}}>
+                        {this.state.user.user_data && <Heading style={{ justifyContent: 'center' }}>
+                            {fullName}
+                        </Heading>}
+                        <SubHeading style={{ textAlign: 'center' }}>
+                          Your QR code
+                        </SubHeading>
+                      </View>
                     </PadContainer>
                     <View style={{
                       alignItems: 'center',
@@ -438,6 +440,7 @@ const ScanResponseModal = (props) => {
         {
           props.scannedUserData.dietaryRestrictions != null &&
           props.scannedUserData.dietaryRestrictions.length > 0 &&
+          props.scannedUserData.dietaryRestrictions[0] !== "I Have No Food Restrictions" &&
           <H3 style={{ color: colors.pink }}>+ Dietary Restrictions</H3>
         }
       </View>
