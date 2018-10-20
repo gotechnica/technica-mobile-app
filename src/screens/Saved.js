@@ -23,9 +23,9 @@ export default class Saved extends Component<Props> {
 
   constructor(props) {
     super(props);
-    // this.state = {
-    //   refresh: false,
-    // };
+    this.state = {
+      refresh: false,
+    };
   }
 
   render() {
@@ -35,11 +35,11 @@ export default class Saved extends Component<Props> {
     return (
       <ScrollView>
         <PadContainer>
-          {/* <View style={styles.headingRow}> */}
+          <View style={styles.headingRow}>
             <Heading>
               Saved
             </Heading>
-            {/* <TouchableOpacity onPress={() => {this.setState({ refresh: !this.state.refresh })}}>
+            <TouchableOpacity onPress={() => {this.setState({ refresh: !this.state.refresh })}}>
               <Icon
                 name="refresh"
                 size={30}
@@ -50,8 +50,8 @@ export default class Saved extends Component<Props> {
                   opacity: .8,
                 }}
               />
-            </TouchableOpacity> */}
-          {/* </View> */}
+            </TouchableOpacity>
+          </View>
           <SubHeading>
             {events.length} events saved
           </SubHeading>
