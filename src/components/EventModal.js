@@ -38,6 +38,7 @@ export default class EventModal extends Component {
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
+        style={{ margin: 0 }}
       >
         <ModalContent>
           <ModalHeader

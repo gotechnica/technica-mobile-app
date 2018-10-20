@@ -58,6 +58,7 @@ export default class Home extends Component<Props> {
       backdropTransitionOutTiming={300}
       avoidKeyboard={true}
       onBackButtonPress={() => this.toggleUpdatesModal()}
+      style={{ margin: 0 }}
     >
       <ModalContent>
         <ModalHeader

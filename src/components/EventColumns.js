@@ -125,6 +125,7 @@ export default class EventColumns extends Component {
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
         onBackButtonPress={() => this.toggleModal()}
+        style={{ margin: 0 }}
       >
         <ModalContent>
           <ModalHeader

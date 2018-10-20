@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   modal: {
     flex: 1,
     backgroundColor: colors.black,
-    borderRadius: 4,
+    padding: 20,
   },
   spacing: {
     height: 15,
@@ -170,8 +170,10 @@ const Spacing = (props) => (
 );
 
 const ModalContent = (props) => (
-  <ScrollView style={[styles.modal, props.styles]}>
-    {props.children}
+  <ScrollView>
+    <View style={[styles.modal, props.styles]}>
+      {props.children}
+    </View>
   </ScrollView>
 )
 
