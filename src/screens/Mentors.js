@@ -89,7 +89,7 @@ export default class Mentors extends Component<Props> {
         question: this.state.question,
         tableNumber: this.state.tableNumber,
         status: "Awaiting Response",
-        key: this.state.question,
+        key: this.state.question
       }
       if (fcmToken != null) {
         questionObject.fcmToken = fcmToken
@@ -200,34 +200,60 @@ export default class Mentors extends Component<Props> {
     )
   }
 
-  render() {
-    const dimensions = require('Dimensions').get('window');
-    const buttonWidth = (dimensions.width / 2) - 30;
-
+  async createNotificationListener() {
+    // updates when app is in foreground
     this.notificationListener = firebase
     .notifications()
-    .onNotification(async (notification: Notification) => {
-      console.log('notification received', notification.body);
-      var msg = notification.body;
-      // checking that the message is for a question being claimed
-      if (msg.indexOf("Your question: ") != -1) {
-        var question = msg.substring(msg.indexOf("Your question: ") + 15, msg.indexOf("has been claimed!")-1)
-        console.log(question)
-        let questions = await AsyncStorage.getItem("questions")
-        var qList = JSON.parse(questions)
-        // update status of question
-        qList.forEach((element, index) => {
-          if (element.question == question){
-            console.log("found!")
-            element.status = "Responded!"
-            qList[index] = element
-          }
-        })
-        // store update in local storage
-        await AsyncStorage.setItem("questions", JSON.stringify(qList))
-        this.setState({listData: qList})
-      }
+    .onNotification(this.updateQuestionStatus);
+
+    // updates when app is in the background 
+    this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
+      this.updateQuestionStatus(notificationOpen.notification)
     });
+
+    // updates if app was previously closed
+    const notificationOpen = await firebase.notifications().getInitialNotification();
+    if (notificationOpen) {
+        this.updateQuestionStatus(notificationOpen.notification)
+    }
+  }
+
+  async updateQuestionStatus(notification) {
+    console.log('notification received', notification.body);
+    var msg = notification.body;
+    // checking that the message is for a question being claimed
+    if (msg.indexOf("Your question: ") != -1) {
+      var question = msg.substring(msg.indexOf("Your question: ") + 15, msg.indexOf("has been claimed!")-1)
+      console.log(question)
+      let questions = await AsyncStorage.getItem("questions")
+      var qList = JSON.parse(questions)
+      // update status of question
+      qList.forEach((element, index) => {
+        if (element.question == question){
+          console.log("found!")
+          element.status = "Responded!"
+          qList[index] = element
+        }
+      })
+      // store update in local storage
+      await AsyncStorage.setItem("questions", JSON.stringify(qList))
+      this.setState({listData: qList})
+    }
+  }
+
+  // TODO (seperate PR): Add user's name to question in Slack
+  // async getUserData() {
+  //   const value = await AsyncStorage.getItem("USER_DATA_STORE");
+  //   const first_name = value.user_data.first_name;
+  //   console.log(value)
+  //   console.log(first_name)
+  //   return first_name;
+  // }
+
+  render() {
+    { this.createNotificationListener() }
+    const dimensions = require('Dimensions').get('window');
+    const buttonWidth = (dimensions.width / 2) - 30;
 
       return (
       <ViewContainer>
