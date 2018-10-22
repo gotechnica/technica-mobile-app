@@ -17,6 +17,7 @@ import {
   SubHeading,
   PaperSheet,
   PadContainer,
+  modalStyle,
   ModalHeader,
   ModalContent,
   CenteredActivityIndicator,
@@ -232,10 +233,10 @@ export default class Profile extends Component<Props> {
               backdropTransitionOutTiming={300}
               avoidKeyboard={true}
               onBackButtonPress={() => this.toggleScanner()}
-              style={{ margin: 0 }}
+              style={modalStyle}
             >
-            <ModalContent>
-              <View style={{ padding: 15, paddingBottom: 0 }}>
+            <ModalContent style={{ padding: 0 }}>
+              <View style={{ padding: 20, paddingBottom: 0 }}>
                 <ModalHeader
                   heading="QR Scanner"
                   onBackButtonPress={() => this.toggleScanner()}

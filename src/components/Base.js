@@ -171,7 +171,7 @@ const Spacing = (props) => (
 
 const ModalContent = (props) => (
   <ScrollView>
-    <View style={[styles.modal, props.styles]}>
+    <View style={[styles.modal, props.style]}>
       {props.children}
     </View>
   </ScrollView>
@@ -194,7 +194,7 @@ class ModalHeader extends Component<Props> {
     return (
       <View style={styles.modalHeader}>
         <View style={styles.modalHeaderNav}>
-          <TouchableOpacity onPress={onBackButtonPress}>
+          <TouchableOpacity style={{ padding: 10 }} onPress={onBackButtonPress}>
             <FAIcon
               name="chevron-left"
               size={22}
@@ -256,6 +256,8 @@ const Button = (props) => (
   </View>
 )
 
+const modalStyle = { margin: 0 }
+
 export {
   PlainViewContainer,
   ViewContainer,
@@ -267,6 +269,7 @@ export {
   Spacing,
   ModalContent,
   ModalHeader,
+  modalStyle,
   CenteredActivityIndicator,
   Button
 };

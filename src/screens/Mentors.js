@@ -9,6 +9,7 @@ import {
 import {
   ViewContainer,
   Heading,
+  modalStyle,
   SubHeading,
   Button,
   PadContainer,
@@ -142,7 +143,7 @@ export default class Mentors extends Component<Props> {
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
         onBackButtonPress={() => this.toggleModal()}
-        style={{ margin: 0 }}
+        style={modalStyle}
       >
         <View style={{ padding: 20 }}>
           <H3 style={{ color: 'white', marginBottom: 10 }}>How can we help you?</H3>
@@ -206,7 +207,7 @@ export default class Mentors extends Component<Props> {
     .notifications()
     .onNotification(this.updateQuestionStatus);
 
-    // updates when app is in the background 
+    // updates when app is in the background
     this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
       this.updateQuestionStatus(notificationOpen.notification)
     });

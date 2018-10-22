@@ -5,6 +5,7 @@ import {
   Spacing,
   Button,
   ModalContent,
+  modalStyle,
   ModalHeader,
 } from './Base';
 import EventCard from './EventCard';
@@ -125,7 +126,7 @@ export default class EventColumns extends Component {
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
         onBackButtonPress={() => this.toggleModal()}
-        style={{ margin: 0 }}
+        style={modalStyle}
       >
         <ModalContent>
           <ModalHeader

@@ -13,7 +13,7 @@ import Images from '../../assets/imgs/index';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import { ModalContent, ModalHeader, HorizontalLine, Spacing } from './Base';
+import { ModalContent, ModalHeader, HorizontalLine, Spacing, modalStyle } from './Base';
 import { colors } from './Colors';
 import moment from 'moment';
 import PhotoView from 'react-native-photo-view';
@@ -39,10 +39,10 @@ export default class MapModal extends Component {
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
-        style={{ margin: 0 }}
+        style={modalStyle}
       >
-        <ModalContent style={{ backgroundColor: "#000000" }}>
-          <View style={{ padding: 15, paddingBottom: 0 }}>
+        <ModalContent style={{ padding: 0 }}>
+          <View style={{ padding: 20, paddingBottom: 0 }}>
             <ModalHeader
               heading="Venue Map"
               onBackButtonPress={() => props.toggleModal()}
