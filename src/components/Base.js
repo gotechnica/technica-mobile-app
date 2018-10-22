@@ -194,7 +194,7 @@ class ModalHeader extends Component<Props> {
     return (
       <View style={styles.modalHeader}>
         <View style={styles.modalHeaderNav}>
-          <TouchableOpacity style={{ padding: 10 }} onPress={onBackButtonPress}>
+          <TouchableOpacity style={{ padding: 10, marginLeft: -10 }} onPress={onBackButtonPress}>
             <FAIcon
               name="chevron-left"
               size={22}
