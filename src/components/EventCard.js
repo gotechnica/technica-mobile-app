@@ -66,12 +66,15 @@ export default class EventCard extends Component {
         <TouchableOpacity onPress={() => this.toggleModal()}>
           <View style={styles.event}>
             <Image
-              style={{
-                width: imageWidth,
-                height: imageHeight,
-                borderRadius: 4,
-                marginBottom: 5
-              }}
+              style={[
+                {
+                  width: imageWidth,
+                  height: big ? imageHeight / 2 : imageHeight,
+                  borderRadius: 4,
+                  marginBottom: 5,
+                },
+                this.props.imageStyle
+              ]}
               source={Images[imgName]}
             />
             {big ? null : (

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -12,12 +12,14 @@ import {
   ViewContainer,
   Heading,
   SubHeading,
+  Button,
   PaperSheet,
   PadContainer,
 } from '../components/Base';
 import EventCard from '../components/EventCard';
 import EventDescription from '../components/schedule/EventDescription';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import { colors } from '../components/Colors';
 
 export default class Saved extends Component<Props> {
 
@@ -25,12 +27,16 @@ export default class Saved extends Component<Props> {
     super(props);
     this.state = {
       refresh: false,
+      showPastEvents: false,
     };
   }
 
   render() {
     const { eventManager } = this.props;
     const events = eventManager.getSavedEventsArray();
+
+    const pastEvents = events.filter(event => event.hasPassed);
+    const upcomingEvents = events.filter(event => !event.hasPassed);
 
     return (
       <ScrollView>
@@ -55,13 +61,39 @@ export default class Saved extends Component<Props> {
           <SubHeading>
             {events.length} events saved
           </SubHeading>
-        </PadContainer>
-
-        <PadContainer>
-          <EventsList
-            events={events}
-            eventManager={eventManager}
-          />
+          {
+            (pastEvents.length > 0) &&
+              <Fragment>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({ showPastEvents: !this.state.showPastEvents});
+                  }}
+                >
+                  <Button
+                    text={`${this.state.showPastEvents ? 'Hide' : 'Show'} ${pastEvents.length} past event${pastEvents.length > 1 ? 's' : ''}`}
+                    style={styles.showPastEventsButton}
+                  />
+                </TouchableOpacity>
+              </Fragment>
+          }
+          {
+            (pastEvents.length > 0) && (this.state.showPastEvents) &&
+            <Fragment>
+              <EventsList
+                events={pastEvents}
+                eventManager={eventManager}
+              />
+            </Fragment>
+          }
+          {
+            (upcomingEvents.length > 0) &&
+            <Fragment>
+              <EventsList
+                events={upcomingEvents}
+                eventManager={eventManager}
+              />
+            </Fragment>
+          }
         </PadContainer>
 
       </ScrollView>
@@ -95,6 +127,7 @@ class EventsList extends Component<Props> {
               eventManager={eventManager}
               big
               style={styles.eventCard}
+              imageStyle={event.hasPassed ? styles.eventImgPassed : null}
             />
           ))
         }
@@ -109,6 +142,13 @@ const styles = StyleSheet.create({
   eventCard: {
     marginBottom: 20,
   },
+  eventImgPassed: {
+    opacity: .3,
+  },
+  subSectionHeading: {
+    paddingBottom: 20
+  },
+  showPastEventsButton: { marginLeft: 0, marginRight: 0, marginBottom: 20 },
   headingRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
