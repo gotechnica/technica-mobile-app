@@ -248,7 +248,7 @@ const CenteredActivityIndicator = (props) => (
 )
 const Button = (props) => (
   <View>
-    <View style={styles.button}>
+    <View style={[styles.button, props.style]}>
       <H3 style={styles.buttonText}>
         {props.text}
       </H3>

@@ -46,10 +46,8 @@ export default class Login extends Component<Props> {
       instruction: 'Enter the phone number you used to \nsign up for Technica.',
       nextPage: (
         <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
-          <Icon
-              name='chevron-right'
-              size={22}
-              color='white'
+          <Button
+              text="Next"
               style={styles.button}
             />
         </TouchableOpacity>),
@@ -111,8 +109,8 @@ export default class Login extends Component<Props> {
             this.setState({greeting: "Great!", instruction: "We've texted you a verification code. Please enter that code below to login.",
             nextPage: (
               <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)}>
-                  <Icon
-                      name='chevron-right'
+                  <Button
+                      text='Submit'
                       size={22}
                       color='white'
                       style={styles.button}
@@ -243,13 +241,8 @@ const styles = StyleSheet.create({
     flex: 1, flexDirection: 'row'
   },
   button: {
-    alignSelf: 'flex-end',
     marginTop: 20,
-    paddingTop: 5,
-    paddingRight: 5,
-    paddingLeft: 5,
-    paddingBottom: 5,
-    marginRight: 10,
+    backgroundColor: colors.pink,
   },
   column: {
     flex: 5,
