@@ -58,6 +58,6 @@ class AnimatedEllipsis extends Component {
   }
 
   render() {
-    return <H6>{`${this.props.status}${this.state.txt}`}</H6>;
+    return <H6 style={{ color: colors.lavender }}>{`${this.props.status}${this.state.txt}`}</H6>;
   }
 }
