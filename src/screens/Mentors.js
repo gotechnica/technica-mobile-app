@@ -269,7 +269,9 @@ export default class Mentors extends Component<Props> {
         <Button text="Ask a Question" />
       </TouchableOpacity>
       <PadContainer>
-        <H2 style={{ marginBottom: 20 }}>Your Questions</H2>
+        {
+          (this.state.listData) && (this.state.listData.length > 0) && <H2 style={{ marginBottom: 20 }}>Your Questions</H2>
+        }
         <FlatList
             data = {this.state.listData}
             renderItem={({item}) => <QuestionCard question = {item.question} status = {item.status}/>}
