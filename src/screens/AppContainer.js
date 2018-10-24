@@ -25,6 +25,9 @@ export default class AppContainer extends Component<Props> {
 	};
   constructor(props) {
     super(props);
+		this.state = {
+			page: 0
+		}
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
 
@@ -33,6 +36,7 @@ export default class AppContainer extends Component<Props> {
     this.configureNotificationSettings();
 
 		const eventManager = this.props.screenProps.eventManager;
+		const { navigate }  = this.props.navigation;
 
 		return (
 			<SafeAreaView style={{flex: 1, backgroundColor: colors.black}}>
@@ -68,7 +72,9 @@ export default class AppContainer extends Component<Props> {
 	          eventManager={this.props.screenProps.eventManager}
 	        />
 	        <Mentors tabLabel="people" />
-	        <Profile tabLabel="user" />
+	        <Profile
+						tabLabel="user"
+						navigation = {navigate}/>
 	      </ScrollableTabView>
 			</SafeAreaView>
     );

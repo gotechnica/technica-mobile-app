@@ -34,10 +34,12 @@ const APP_ID = '@com.technica.technica18:';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const USER_DATA_STORE = 'USER_DATA_STORE';
 
+
+
 export default class Login extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.state = {
+
+  createInitialState() {
+    return {
       savedPhone: '',
       savedSMS: '',
       fieldValue: '',
@@ -52,6 +54,11 @@ export default class Login extends Component<Props> {
             />
         </TouchableOpacity>),
     };
+  }
+  constructor(props) {
+    super(props);
+
+    this.state = this.createInitialState();
   }
 //
 //   async componentDidMount() {
@@ -170,6 +177,13 @@ export default class Login extends Component<Props> {
           this.setState({savedSMS: sms, fieldValue: ''});
           const { navigate } = this.props.navigation;
           navigate('AppContainer');
+
+          // this might happen after component is unmounted,
+          // however without a delay it will change back as it animates
+          // FYI this is kind of a hack since when the user navigates back we want to reset to the
+          // phone, not SMS if it does not unmount for some reason
+          setTimeout(() => {this.setState(this.createInitialState());}, 3000);
+
         } else{
           Alert.alert(
             "Failed to confirm pin.",

@@ -330,7 +330,7 @@ export default class EventsManager {
     if(! event.hasBegun) {
       Toast.show('You will no longer be notified about this event.');
     }
-    
+
     firebase
       .notifications()
       .cancelNotification(EVENT_ID_PREFIX + event.eventID.toString());
