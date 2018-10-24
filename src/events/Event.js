@@ -33,4 +33,8 @@ export default class Event {
   get hasPassed() {
     return hasTimePassed(this.endTime);
   }
+
+  get hasBegun() {
+    return hasTimePassed(this.startTime);
+  }
 }
