@@ -299,7 +299,7 @@ export default class EventsManager {
   }
 
   createNotification(event) {
-    if(event.hasPassed) {
+    if(event.hasBegun) {
       return;
     }
 
