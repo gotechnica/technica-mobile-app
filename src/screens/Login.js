@@ -29,6 +29,7 @@ import EventColumns from '../components/EventColumns';
 import { colors } from '../components/Colors';
 import CountdownTimer from '../components/CountdownTimer';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import PhoneInput from 'react-native-phone-input';
 
 const APP_ID = '@com.technica.technica18:';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
@@ -196,6 +197,10 @@ export default class Login extends Component<Props> {
 
 
   render() {
+    let phonePicker = (<PhoneInput ref='phone' />);
+    if (this.state.greeting === 'Great!'){
+        phonePicker = ();
+    }
     return (
       <ViewContainer>
         <PadContainer style={styles.subSection}>
@@ -205,6 +210,7 @@ export default class Login extends Component<Props> {
           <SubHeading>
             {this.state.instruction}
           </SubHeading>
+          {phonePicker}
           <TextInput
             placeholder={this.state.placeholder}
             value={this.state.fieldValue}
