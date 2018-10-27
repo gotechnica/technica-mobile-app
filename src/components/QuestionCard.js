@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   StyleSheet,
   Text,
@@ -26,9 +26,9 @@ export default class QuestionCard extends Component {
   renderStatus() {
     const { status } = this.props;
     if (status == "Responded!") {
-      return <H6 style = {{color: colors.cyan}}>{status}</H6>
+      return <H6 style={{color: colors.cyan}}>{status}</H6>
     } else {
-      return <H6 style = {{color: 'white'}}>{status}</H6>
+      return <AnimatedEllipsis status={status}/>
     }
   }
   render() {
@@ -39,5 +39,25 @@ export default class QuestionCard extends Component {
         {this.renderStatus()}
       </View>
     );
+  }
+}
+
+class AnimatedEllipsis extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      txt: '...'
+    }
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      const newTxt = this.state.txt === '. . .' ? '' : (this.state.txt === '') ? '.' : (this.state.txt === '.') ? '. .' : (this.state.txt === '. .') ? '. . .' : '';
+      this.setState({ txt: newTxt});
+    }, 600);
+  }
+
+  render() {
+    return <H6 style={{ color: colors.lavender }}>{`${this.props.status}${this.state.txt}`}</H6>;
   }
 }

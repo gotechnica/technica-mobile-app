@@ -1,61 +1,156 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   Platform,
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import { H1, H2, H3, H4, P } from '../components/Text';
 import {
   ViewContainer,
   Heading,
   SubHeading,
+  Button,
   PaperSheet,
   PadContainer,
 } from '../components/Base';
 import EventCard from '../components/EventCard';
 import EventDescription from '../components/schedule/EventDescription';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import { colors } from '../components/Colors';
 
 export default class Saved extends Component<Props> {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      refresh: false,
+      showPastEvents: false,
+    };
+  }
 
   render() {
     const { eventManager } = this.props;
     const events = eventManager.getSavedEventsArray();
 
+    const pastEvents = events.filter(event => event.hasPassed);
+    const upcomingEvents = events.filter(event => !event.hasPassed);
+
     return (
-      <ViewContainer>
+      <ScrollView>
         <PadContainer>
-          <Heading>
-            Saved
-          </Heading>
+          <View style={styles.headingRow}>
+            <Heading>
+              Saved
+            </Heading>
+            <TouchableOpacity onPress={() => {this.setState({ refresh: !this.state.refresh })}}>
+              <Icon
+                name="refresh"
+                size={30}
+                color="white"
+                style={{
+                  paddingTop: 64,
+                  marginBottom: 20,
+                  opacity: .8,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
           <SubHeading>
             {events.length} events saved
           </SubHeading>
-        </PadContainer>
-
-        <PadContainer>
           {
-            events.map((event) => (
-              <EventCard
-                key={event.eventID}
-                event = {event}
+            (pastEvents.length > 0) &&
+              <Fragment>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({ showPastEvents: !this.state.showPastEvents});
+                  }}
+                >
+                  <Button
+                    text={`${this.state.showPastEvents ? 'Hide' : 'Show'} ${pastEvents.length} past event${pastEvents.length > 1 ? 's' : ''}`}
+                    style={styles.showPastEventsButton}
+                  />
+                </TouchableOpacity>
+              </Fragment>
+          }
+          {
+            (pastEvents.length > 0) && (this.state.showPastEvents) &&
+            <Fragment>
+              <EventsList
+                events={pastEvents}
                 eventManager={eventManager}
-                big
-                style={styles.eventCard}
               />
-
-            ))
+            </Fragment>
+          }
+          {
+            (upcomingEvents.length > 0) &&
+            <Fragment>
+              <EventsList
+                events={upcomingEvents}
+                eventManager={eventManager}
+              />
+            </Fragment>
           }
         </PadContainer>
 
-      </ViewContainer>
+      </ScrollView>
     );
   }
 }
 
+class EventsList extends Component<Props> {
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillUnmount() {
+		this.props.eventManager.removeUpdatesListener(this.myEventsList);
+  }
+
+  render() {
+    const { events, eventManager } = this.props;
+    return (
+      <View
+        ref={myEventsList => {
+          this.myEventsList = myEventsList;
+          eventManager.registerUpdatesListener(myEventsList);
+        }}
+      >
+        {
+          events.map((event) => (
+            <EventCard
+              key={event.eventID}
+              event = {event}
+              eventManager={eventManager}
+              big
+              style={styles.eventCard}
+              imageStyle={event.hasPassed ? styles.eventImgPassed : null}
+            />
+          ))
+        }
+      </View>
+    )
+  }
+}
+
+
+
 const styles = StyleSheet.create({
   eventCard: {
     marginBottom: 20,
+  },
+  eventImgPassed: {
+    opacity: .3,
+  },
+  subSectionHeading: {
+    paddingBottom: 20
+  },
+  showPastEventsButton: { marginLeft: 0, marginRight: 0, marginBottom: 20 },
+  headingRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

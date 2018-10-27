@@ -3,7 +3,6 @@ import { DefaultTheme, BottomNavigation } from 'react-native-paper';
 import { YellowBox, AsyncStorage, ActivityIndicator } from 'react-native';
 import Home from './screens/Home';
 import Mentors from './screens/Mentors';
-import Profile from './screens/Profile';
 import Saved from './screens/Saved';
 import Schedule from './screens/Schedule';
 import Login from './screens/Login';
@@ -19,12 +18,6 @@ import { ViewContainer, CenteredActivityIndicator } from './components/Base';
 
 // NOTE dangerously ignore deprecated warning for now
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
-
-const AppNavigator = createStackNavigator({
-  Login: { screen: Login},
-  AppContainer: { screen: AppContainer},
-  Profile: {screen: Profile}
-});
 
 export default class App extends Component<Props> {
   constructor(props) {
@@ -56,10 +49,24 @@ export default class App extends Component<Props> {
       return (
         <CenteredActivityIndicator/>
       );
-    } else if (this.state.isLoggedIn === false) {
-      return <AppNavigator screenProps={this.props}/>;
     } else {
-      return <AppContainer screenProps={this.props}/>;
+
+      let initialPage;
+
+      if (this.state.isLoggedIn === false) {
+        initialPage = 'Login';
+      } else {
+        initialPage = 'AppContainer';
+      }
+
+      const AppNavigator = createStackNavigator({
+        Login: { screen: Login},
+        AppContainer: { screen: AppContainer},
+      }, {
+        initialRouteName: initialPage
+      });
+
+      return <AppNavigator screenProps={this.props}/>;
     }
   }
 }

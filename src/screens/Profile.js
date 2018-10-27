@@ -17,6 +17,7 @@ import {
   SubHeading,
   PaperSheet,
   PadContainer,
+  modalStyle,
   ModalHeader,
   ModalContent,
   CenteredActivityIndicator,
@@ -27,7 +28,6 @@ import QRCode from 'react-native-qrcode';
 import _ from 'lodash';
 import { colors } from '../components/Colors';
 import Modal from 'react-native-modal';
-import RNRestart from 'react-native-restart';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
@@ -63,7 +63,8 @@ export default class Profile extends Component<Props> {
       [
         {text: 'OK', onPress: () => {
           AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
-            RNRestart.Restart();
+            const navigate = this.props.navigation;
+            navigate('Login');
           });
         }},
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
@@ -232,10 +233,10 @@ export default class Profile extends Component<Props> {
               backdropTransitionOutTiming={300}
               avoidKeyboard={true}
               onBackButtonPress={() => this.toggleScanner()}
-              style={{ margin: 0 }}
+              style={modalStyle}
             >
-            <ModalContent>
-              <View style={{ padding: 15, paddingBottom: 0 }}>
+            <ModalContent style={{ padding: 0 }}>
+              <View style={{ padding: 20, paddingBottom: 0 }}>
                 <ModalHeader
                   heading="QR Scanner"
                   onBackButtonPress={() => this.toggleScanner()}

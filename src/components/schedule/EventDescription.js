@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   disabled: {
-    opacity: 0.4
+    opacity: 0.3
   }
 });
 

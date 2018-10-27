@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   modal: {
     flex: 1,
     backgroundColor: colors.black,
-    borderRadius: 4,
+    padding: 20,
   },
   spacing: {
     height: 15,
@@ -113,7 +113,9 @@ const PlainViewContainer = (props) => (
 
 const ViewContainer = (props) => (
   <PlainViewContainer>
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView
+      style={{ flex: 1 }}
+      keyboardShouldPersistTaps="always">
       <View style={[styles.container, props.style]}>
         {props.children}
       </View>
@@ -170,8 +172,10 @@ const Spacing = (props) => (
 );
 
 const ModalContent = (props) => (
-  <ScrollView style={[styles.modal, props.styles]}>
-    {props.children}
+  <ScrollView>
+    <View style={[styles.modal, props.style]}>
+      {props.children}
+    </View>
   </ScrollView>
 )
 
@@ -192,7 +196,7 @@ class ModalHeader extends Component<Props> {
     return (
       <View style={styles.modalHeader}>
         <View style={styles.modalHeaderNav}>
-          <TouchableOpacity onPress={onBackButtonPress}>
+          <TouchableOpacity style={{ padding: 10, marginLeft: -10 }} onPress={onBackButtonPress}>
             <FAIcon
               name="chevron-left"
               size={22}
@@ -246,13 +250,15 @@ const CenteredActivityIndicator = (props) => (
 )
 const Button = (props) => (
   <View>
-    <View style={styles.button}>
+    <View style={[styles.button, props.style]}>
       <H3 style={styles.buttonText}>
         {props.text}
       </H3>
     </View>
   </View>
 )
+
+const modalStyle = { margin: 0 }
 
 export {
   PlainViewContainer,
@@ -265,6 +271,7 @@ export {
   Spacing,
   ModalContent,
   ModalHeader,
+  modalStyle,
   CenteredActivityIndicator,
   Button
 };

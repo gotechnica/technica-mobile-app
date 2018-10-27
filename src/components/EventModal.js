@@ -12,7 +12,7 @@ import Images from '../../assets/imgs/index';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import { ModalContent, ModalHeader, HorizontalLine, Spacing } from './Base';
+import { ModalStyle, ModalContent, ModalHeader, HorizontalLine, Spacing, modalStyle } from './Base';
 import { colors } from './Colors';
 import moment from 'moment';
 
@@ -38,6 +38,7 @@ export default class EventModal extends Component {
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
+        style={modalStyle}
       >
         <ModalContent>
           <ModalHeader

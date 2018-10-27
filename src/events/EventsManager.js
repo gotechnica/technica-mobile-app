@@ -4,6 +4,8 @@ import { AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
 import moment from 'moment';
 import _ from 'lodash';
+import Toast from 'react-native-simple-toast';
+
 
 import EventDay from './EventDay';
 import EventGroup from './EventGroup';
@@ -300,26 +302,35 @@ export default class EventsManager {
 
   createNotification(event) {
     if(event.hasPassed) {
-      return;
+      Toast.show('This event has ended.');
+    } else if (event.hasBegun) {
+      Toast.show("This event is currently in progress");
+    } else {
+
+      let notification = new firebase.notifications.Notification()
+        .setNotificationId(EVENT_ID_PREFIX + event.eventID)
+        .setTitle(event.title)
+        .setBody(notificationBufferMins + ' minutes until event starts.');
+
+      notification.android
+        .setChannelId(channelId)
+        .android.setSmallIcon('ic_launcher');
+
+      firebase.notifications().scheduleNotification(notification, {
+        fireDate: moment(event.startTime)
+          .subtract(notificationBufferMins, 'minutes')
+          .valueOf()
+      });
+
+      Toast.show('You will be notified 15 min before this event.');
     }
-
-    let notification = new firebase.notifications.Notification()
-      .setNotificationId(EVENT_ID_PREFIX + event.eventID)
-      .setTitle(event.title)
-      .setBody(notificationBufferMins + ' minutes until event starts.');
-
-    notification.android
-      .setChannelId(channelId)
-      .android.setSmallIcon('ic_launcher');
-
-    firebase.notifications().scheduleNotification(notification, {
-      fireDate: moment(event.startTime)
-        .subtract(notificationBufferMins, 'minutes')
-        .valueOf()
-    });
   }
 
   deleteNotification(event) {
+    if(! event.hasBegun) {
+      Toast.show('You will no longer be notified about this event.');
+    }
+
     firebase
       .notifications()
       .cancelNotification(EVENT_ID_PREFIX + event.eventID.toString());

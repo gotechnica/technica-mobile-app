@@ -16,6 +16,7 @@ import {
   PaperSheet,
   PadContainer,
   HorizontalLine,
+  modalStyle,
   ModalContent,
   ModalHeader,
   Spacing,
@@ -58,6 +59,7 @@ export default class Home extends Component<Props> {
       backdropTransitionOutTiming={300}
       avoidKeyboard={true}
       onBackButtonPress={() => this.toggleUpdatesModal()}
+      style={modalStyle}
     >
       <ModalContent>
         <ModalHeader
