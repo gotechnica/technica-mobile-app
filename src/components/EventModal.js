@@ -63,7 +63,14 @@ export default class EventModal extends Component {
             <Spacing />
             <H2>{props.event.title}</H2>
             <Spacing />
-            <H3>{props.event.startTimeFormatted} - {props.event.endTimeFormatted}</H3>
+            <H3>
+              {
+                props.event.startTimeFormatted === props.event.endTimeFormatted ?
+                  `${props.event.startTimeFormatted}`
+                  :
+                  `${props.event.startTimeFormatted} - ${props.event.endTimeFormatted}`
+              }
+            </H3>
             <H3 style={styles.subtext}>{moment(props.event.endTime).format('dddd')}</H3>
             <Spacing />
             <H3>{props.event.location}</H3>
