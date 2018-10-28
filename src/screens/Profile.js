@@ -322,7 +322,7 @@ export default class Profile extends Component<Props> {
                             }
                           </View>
                           <H3 style={{ marginBottom: 40 }}>
-                            Use this code for check-in
+                            Use this code for TESTING.
                           </H3>
                         </View>
                       )
@@ -370,7 +370,7 @@ export default class Profile extends Component<Props> {
                         }
                       </View>
                       <H3 style={{ marginBottom: 40 }}>
-                        Use this code for debugging
+                        Use this code for check-in.
                       </H3>
                     </View>
 
