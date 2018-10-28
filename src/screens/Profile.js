@@ -299,11 +299,39 @@ export default class Profile extends Component<Props> {
                         Organizer
                       </SubHeading>
                     </PadContainer>
+                    {
+                      this.state.devoolooperMode &&
+                      (
+                        <View style={{
+                          alignItems: 'center',
+                        }}>
+                          <View style={{
+                            backgroundColor: 'white',
+                            padding: 20,
+                            borderRadius: 8,
+                            marginBottom: 20,
+                          }}>
+                            {
+                              this.state.user.user_data &&
+                              <QRCode
+                                value={phone_number}
+                                size={180}
+                                bgColor='black'
+                                fgColor='white'
+                              />
+                            }
+                          </View>
+                          <H3 style={{ marginBottom: 40 }}>
+                            Use this code for check-in
+                          </H3>
+                        </View>
+                      )
+                    }
                     <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => this.toggleScanner()}>
                       <Button text="Open Scanner" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => this.logout()}>
+                    <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => this.logout()}>
                       <Button text="Log Out" />
                     </TouchableOpacity>
                   </ViewContainer>
@@ -342,7 +370,7 @@ export default class Profile extends Component<Props> {
                         }
                       </View>
                       <H3 style={{ marginBottom: 40 }}>
-                        Use this code for check-in
+                        Use this code for debugging
                       </H3>
                     </View>
 
