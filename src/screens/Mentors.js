@@ -28,6 +28,7 @@ export default class Mentors extends Component<Props> {
     super(props);
     this.state = { question: '', tableNumber: "", newQuestionScreen:false, listData: [] };
     this.sendQuestion = this.sendQuestion.bind(this);
+    this.updateQuestionStatus = this.updateQuestionStatus.bind(this);
     this.showToast = this.showToast.bind(this);
   }
   // initially loads question data
@@ -89,15 +90,20 @@ export default class Mentors extends Component<Props> {
       );
     } else {
       const fcmToken = await AsyncStorage.getItem("FCMToken");
+      const value = await AsyncStorage.getItem("USER_DATA_STORE");
+      const jsonValue = JSON.parse(value);
+      const name = jsonValue.user_data.first_name + " " + jsonValue.user_data.last_name 
       var questionObject = {
         question: this.state.question,
         tableNumber: this.state.tableNumber,
         status: "Awaiting Response",
-        key: moment().format()
+        key: moment().format(),
+        name: name
       }
       if (fcmToken != null) {
         questionObject.fcmToken = fcmToken
       }
+      
       var questionString = JSON.stringify(questionObject)
       fetch('https://technicamentorshipservertest.herokuapp.com/question', {
         method: 'POST',
@@ -110,9 +116,6 @@ export default class Mentors extends Component<Props> {
         console.log(error)
       })
       this.storeQuestion(questionObject)
-
-      // TODO: show popup with feedback
-
       this.showToast();
       this.toggleModal()
 
@@ -224,35 +227,25 @@ export default class Mentors extends Component<Props> {
 
   async updateQuestionStatus(notification) {
     console.log('notification received', notification.body);
-    var msg = notification.body;
-    // checking that the message is for a question being claimed
-    if (msg.indexOf("Your question: ") != -1) {
-      var question = msg.substring(msg.indexOf("Your question: ") + 15, msg.indexOf("has been claimed!")-1)
-      console.log(question)
-      let questions = await AsyncStorage.getItem("questions")
-      var qList = JSON.parse(questions)
-      // update status of question
-      qList.forEach((element, index) => {
-        if (element.question == question){
-          console.log("found!")
-          element.status = "Responded!"
-          qList[index] = element
-        }
-      })
-      // store update in local storage
-      await AsyncStorage.setItem("questions", JSON.stringify(qList))
-      this.setState({listData: qList})
-    }
+    console.log(notification.data)
+    var question = notification.data.question
+    let questions = await AsyncStorage.getItem("questions")
+    var qList = JSON.parse(questions)
+    // update status of question
+    //TODO: add check for matching key (not good to just compare using question text in case of duplicates)
+    qList.forEach((element, index) => {
+      if (element.question == question) {
+        console.log("found!")
+        element.status = "Responded!"
+        qList[index] = element
+      }
+    })
+    // store update in local storage
+    await AsyncStorage.setItem("questions", JSON.stringify(qList))
+    this.setState({listData: qList})
   }
 
-  // TODO (seperate PR): Add user's name to question in Slack
-  // async getUserData() {
-  //   const value = await AsyncStorage.getItem("USER_DATA_STORE");
-  //   const first_name = value.user_data.first_name;
-  //   console.log(value)
-  //   console.log(first_name)
-  //   return first_name;
-  // }
+
 
   render() {
     { this.createNotificationListener() }
