@@ -25,7 +25,7 @@ export default class QuestionCard extends Component {
 
   renderStatus() {
     const { status } = this.props;
-    if (status == "Responded!") {
+    if (status.includes("Responded")) {
       return <H6 style={{color: colors.cyan}}>{status}</H6>
     } else {
       return <AnimatedEllipsis status={status}/>
@@ -51,10 +51,14 @@ class AnimatedEllipsis extends Component {
   }
 
   componentDidMount() {
-    setInterval(() => {
+    this.timerId = setInterval(() => {
       const newTxt = this.state.txt === '. . .' ? '' : (this.state.txt === '') ? '.' : (this.state.txt === '.') ? '. .' : (this.state.txt === '. .') ? '. . .' : '';
       this.setState({ txt: newTxt});
     }, 600);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
   }
 
   render() {

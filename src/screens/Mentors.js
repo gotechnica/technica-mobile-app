@@ -92,7 +92,7 @@ export default class Mentors extends Component<Props> {
       const fcmToken = await AsyncStorage.getItem("FCMToken");
       const value = await AsyncStorage.getItem("USER_DATA_STORE");
       const jsonValue = JSON.parse(value);
-      const name = jsonValue.user_data.first_name + " " + jsonValue.user_data.last_name 
+      const name = jsonValue.user_data.first_name + " " + jsonValue.user_data.last_name
       var questionObject = {
         question: this.state.question,
         tableNumber: this.state.tableNumber,
@@ -103,7 +103,7 @@ export default class Mentors extends Component<Props> {
       if (fcmToken != null) {
         questionObject.fcmToken = fcmToken
       }
-      
+
       var questionString = JSON.stringify(questionObject)
       fetch('https://technicamentorshipservertest.herokuapp.com/question', {
         method: 'POST',
@@ -228,16 +228,19 @@ export default class Mentors extends Component<Props> {
   async updateQuestionStatus(notification) {
     console.log('notification received', notification.body);
     console.log(notification.data)
-    var question = notification.data.question
-    let questions = await AsyncStorage.getItem("questions")
-    var qList = JSON.parse(questions)
+
+    const key = notification.data.key;
+    const mentorName = notification.data.mentor_name;
+
+    const questions = await AsyncStorage.getItem("questions");
+    const qList = JSON.parse(questions);
+
     // update status of question
-    //TODO: add check for matching key (not good to just compare using question text in case of duplicates)
     qList.forEach((element, index) => {
-      if (element.question == question) {
-        console.log("found!")
-        element.status = "Responded!"
-        qList[index] = element
+      if (element.key === key) {
+        console.log("found!");
+        element.status = `Responded by ${mentorName}!`;
+        qList[index] = element;
       }
     })
     // store update in local storage
