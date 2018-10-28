@@ -112,8 +112,9 @@ export default class Login extends Component<Props> {
             body: JSON.stringify({'phone': validNumber})
           });
           let responseJson = await response.json();
+          console.log("response json is", responseJson)
           if(responseJson.statusCode == 200){
-            this.setState({greeting: "Great!", instruction: "We've texted you a verification code. Please enter that code below to login.",
+            this.setState({greeting: "Great!", instruction: "We're texting you a verification code. Please enter that code below to login.",
             nextPage: (
               <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)}>
                   <Button
