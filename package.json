@@ -24,6 +24,7 @@
     "react-native-qrcode-scanner": "^1.1.0",
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-simple-toast": "0.0.8",
+    "react-native-swipeout": "^2.3.6",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.13.0",
     "yo": "2.0.3"

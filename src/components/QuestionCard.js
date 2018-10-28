@@ -1,24 +1,31 @@
 import React, { Component, Fragment } from 'react';
 import {
   StyleSheet,
+  TouchableOpacity,
   Text,
   View
 } from 'react-native';
 import { H4, H6 } from "./Text"
-
+import Swipeout from 'react-native-swipeout';
 import {colors} from "./Colors"
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
   question: {
     // backgroundColor: colors.darkGrey,
-    paddingBottom: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: colors.borderGrey,
+    padding: 20,
     // paddingLeft: 20,
     // paddingRight: 20,
     // marginBottom: 10
   },
+  questionContainer: {
+    borderTopWidth: 1,
+    borderTopColor: colors.borderGrey,
+  },
+  deleteButton: {
+    backgroundColor: colors.pink,
+    margin: 'auto',
+  }
 });
 
 export default class QuestionCard extends Component {
@@ -33,11 +40,47 @@ export default class QuestionCard extends Component {
   }
   render() {
     const { question } = this.props;
+    var swipeoutBtns = [
+      {
+        text: 'Remove',
+        backgroundColor: colors.black,
+        color: colors.white,
+        underlayColor: colors.black,
+        component: (
+          <View
+              style={{
+                flex: 1,
+                backgroundColor: colors.pink,
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
+              }}
+          >
+            <FAIcon
+              name="trash"
+              size={24}
+              color="white"
+            />
+          </View>
+        )
+      }
+    ];
+
+
+
     return (
-      <View style = {styles.question}>
-        <H4 style={{color: 'white'}}>{question}</H4>
-        {this.renderStatus()}
+      <View style={styles.questionContainer}>
+        <Swipeout
+          right={swipeoutBtns}
+          backgroundColor={colors.black}
+        >
+          <View style = {styles.question}>
+            <H4 style={{color: 'white'}}>{question}</H4>
+            {this.renderStatus()}
+          </View>
+        </Swipeout>
       </View>
+
     );
   }
 }
