@@ -21,6 +21,7 @@ import QuestionCard from '../components/QuestionCard'
 import { AsyncStorage } from "react-native"
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import Toast from 'react-native-simple-toast';
+import moment from 'moment';
 
 export default class Mentors extends Component<Props> {
   constructor(props) {
@@ -58,6 +59,8 @@ export default class Mentors extends Component<Props> {
       await AsyncStorage.setItem("questions", JSON.stringify(qList))
       this.setState({listData: qList})
       this.clearInputs()
+      console.log(this.state.listData);
+
     } catch (error) {
       // Error saving data
       console.log(error)
@@ -90,7 +93,7 @@ export default class Mentors extends Component<Props> {
         question: this.state.question,
         tableNumber: this.state.tableNumber,
         status: "Awaiting Response",
-        key: this.state.question
+        key: moment().format()
       }
       if (fcmToken != null) {
         questionObject.fcmToken = fcmToken
