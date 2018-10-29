@@ -4,7 +4,7 @@ import {
   Text,
   View
 } from 'react-native';
-import { H4, H6 } from "./Text";
+import { H4, H5, H6 } from "./Text";
 import moment from 'moment';
 import { colors } from "./Colors";
 
@@ -28,41 +28,44 @@ export default class QuestionCard extends Component {
     if (status.includes("claimed")) {
       return <H6 style={{color: colors.cyan}}>{status}</H6>
     } else {
-      return <AnimatedEllipsis status={status}/>
+      return <H6 style={{ color: colors.lavender }}>{status}</H6>
     }
   }
   render() {
-    const { question, time } = this.props;
+    const { question, location, time } = this.props;
+    console.log("MY PROPS", this.props);
     return (
       <View style = {styles.question}>
-        <H4 style={{color: colors.white}}>{question}</H4>
-        <H4 style={{color: colors.fontGrey}}>{moment(time).format("h:mma, dddd")}</H4>
+        <H4 style={{color: colors.white}}>"{question}"</H4>
+        <H4 style={{color: colors.white, opacity: .7}}>{location}</H4>
+        <H6 style={{color: colors.fontGrey, marginBottom: 10}}>{moment(time).format("h:mma, dddd")}</H6>
         {this.renderStatus()}
       </View>
     );
   }
 }
 
-class AnimatedEllipsis extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      txt: '...'
-    }
-  }
-
-  componentDidMount() {
-    this.timerId = setInterval(() => {
-      const newTxt = this.state.txt === ' . . .' ? '' : (this.state.txt === '') ? ' .' : (this.state.txt === ' .') ? ' . .' : (this.state.txt === ' . .') ? ' . . .' : '';
-      this.setState({ txt: newTxt});
-    }, 600);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  render() {
-    return <H6 style={{ color: colors.lavender }}>{`${this.props.status}${this.state.txt}`}</H6>;
-  }
-}
+// Deprecated until fixed, causes memory leaks
+// class AnimatedEllipsis extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       txt: '...'
+//     }
+//   }
+//
+//   componentDidMount() {
+//     this.timerId = setInterval(() => {
+//       const newTxt = this.state.txt === ' . . .' ? '' : (this.state.txt === '') ? ' .' : (this.state.txt === ' .') ? ' . .' : (this.state.txt === ' . .') ? ' . . .' : '';
+//       this.setState({ txt: newTxt});
+//     }, 600);
+//   }
+//
+//   componentWillUnmount() {
+//     clearInterval(this.timerID);
+//   }
+//
+//   render() {
+//     return <H6 style={{ color: colors.lavender }}>{`${this.props.status}${this.state.txt}`}</H6>;
+//   }
+// }

@@ -23,6 +23,8 @@ import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
 
+// TODO deprecate `tableNumber` naming to be `location`
+
 export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
@@ -181,7 +183,8 @@ export default class Mentors extends Component<Props> {
                 paddingBottom: 2,
                 fontSize: 14,
                 color: colors.white,
-              }}              onChangeText={(text) => this.setState({tableNumber: text})}
+              }}
+              onChangeText={(text) => this.setState({tableNumber: text})}
               value={tableNumber}
               underlineColorAndroid='transparent'
               placeholder="Table B5"
@@ -273,7 +276,14 @@ export default class Mentors extends Component<Props> {
         }
         <FlatList
             data = {this.state.listData}
-            renderItem={({item}) => <QuestionCard question={item.question} status={item.status} time={item.key}/>}
+            renderItem={({item}) =>
+              <QuestionCard
+                question={item.question}
+                status={item.status}
+                location={item.tableNumber}
+                time={item.key}
+              />
+            }
           />
       </PadContainer>
     </ViewContainer>
