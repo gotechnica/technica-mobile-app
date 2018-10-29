@@ -96,7 +96,7 @@ export default class Mentors extends Component<Props> {
       var questionObject = {
         question: this.state.question,
         tableNumber: this.state.tableNumber,
-        status: "Awaiting Response",
+        status: "Awaiting available mentors",
         key: moment().format(),
         name: name
       }
@@ -239,7 +239,7 @@ export default class Mentors extends Component<Props> {
     qList.forEach((element, index) => {
       if (element.key == key) {
         console.log("found!");
-        element.status = `Responded by ${mentorName}!`;
+        element.status = `${mentorName} has claimed your question!`;
         qList[index] = element;
       }
     })
@@ -273,7 +273,7 @@ export default class Mentors extends Component<Props> {
         }
         <FlatList
             data = {this.state.listData}
-            renderItem={({item}) => <QuestionCard question = {item.question} status = {item.status}/>}
+            renderItem={({item}) => <QuestionCard question={item.question} status={item.status} time={item.key}/>}
           />
       </PadContainer>
     </ViewContainer>

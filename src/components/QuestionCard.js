@@ -4,9 +4,9 @@ import {
   Text,
   View
 } from 'react-native';
-import { H4, H6 } from "./Text"
-
-import {colors} from "./Colors"
+import { H4, H6 } from "./Text";
+import moment from 'moment';
+import { colors } from "./Colors";
 
 const styles = StyleSheet.create({
   question: {
@@ -25,17 +25,18 @@ export default class QuestionCard extends Component {
 
   renderStatus() {
     const { status } = this.props;
-    if (status.includes("Responded")) {
+    if (status.includes("claimed")) {
       return <H6 style={{color: colors.cyan}}>{status}</H6>
     } else {
       return <AnimatedEllipsis status={status}/>
     }
   }
   render() {
-    const { question } = this.props;
+    const { question, time } = this.props;
     return (
       <View style = {styles.question}>
-        <H4 style={{color: 'white'}}>{question}</H4>
+        <H4 style={{color: colors.white}}>{question}</H4>
+        <H4 style={{color: colors.fontGrey}}>{moment(time).format("h:mma, dddd")}</H4>
         {this.renderStatus()}
       </View>
     );
@@ -52,7 +53,7 @@ class AnimatedEllipsis extends Component {
 
   componentDidMount() {
     this.timerId = setInterval(() => {
-      const newTxt = this.state.txt === '. . .' ? '' : (this.state.txt === '') ? '.' : (this.state.txt === '.') ? '. .' : (this.state.txt === '. .') ? '. . .' : '';
+      const newTxt = this.state.txt === ' . . .' ? '' : (this.state.txt === '') ? ' .' : (this.state.txt === ' .') ? ' . .' : (this.state.txt === ' . .') ? ' . . .' : '';
       this.setState({ txt: newTxt});
     }, 600);
   }
