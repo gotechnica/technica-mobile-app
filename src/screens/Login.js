@@ -54,6 +54,9 @@ export default class Login extends Component<Props> {
               style={styles.button}
             />
         </TouchableOpacity>),
+      value: "",
+      type: "",
+      valid: "",
     };
   }
   constructor(props) {
@@ -93,13 +96,21 @@ export default class Login extends Component<Props> {
       return "+" + phoneNumber;
     }
     phoneRegex = RegExp('^\\d{10}$');
-    if(phoneRegex.test(phoneNumber)){
-      return "+1" + phoneNumber;
+    if(phoneRegex.test(phoneNumber)){ 
+      return this.phone.getValue() + phoneNumber;
     }
+    
     return null;
   }
 
   async sendPhoneNumber(phoneNumber) {
+
+    this.setState({
+      valid: this.phone.isValidNumber(),
+      type: this.phone.getNumberType(),
+      value: this.phone.getValue()
+    });
+
     validNumber = this.validPhoneNumber(phoneNumber);
     if(validNumber != null){
       let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/check-status";
@@ -209,10 +220,6 @@ export default class Login extends Component<Props> {
 
 
   render() {
-    let phonePicker = (<PhoneInput ref='phone' />);
-    if (this.state.greeting === 'Great!'){
-        phonePicker = ();
-    }
     return (
       <ViewContainer>
         <PadContainer style={styles.subSection}>
@@ -222,7 +229,12 @@ export default class Login extends Component<Props> {
           <SubHeading>
             {this.state.instruction}
           </SubHeading>
-          {phonePicker}
+          { this.state.greeting !== 'Great!' && 
+
+            <PhoneInput ref={ref => {
+              this.phone = ref;
+            }} /> 
+          }
           <TextInput
             placeholder={this.state.placeholder}
             value={this.state.fieldValue}
