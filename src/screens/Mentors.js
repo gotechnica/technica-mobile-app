@@ -237,7 +237,7 @@ export default class Mentors extends Component<Props> {
 
     // update status of question
     qList.forEach((element, index) => {
-      if (element.key === key) {
+      if (element.key == key) {
         console.log("found!");
         element.status = `Responded by ${mentorName}!`;
         qList[index] = element;
