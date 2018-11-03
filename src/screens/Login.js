@@ -128,7 +128,7 @@ export default class Login extends Component<Props> {
           } else{
             Alert.alert(
               "Your phone number was not found.",
-              "Please try again.",
+              "If you recently registered for Technica, please try again in 24 hrs.",
               [
                 {text: 'OK', onPress: () => console.log('OK Pressed')},
               ],
