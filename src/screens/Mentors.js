@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   Alert,
+  AppState
 } from 'react-native';
 import {
   ViewContainer,
@@ -23,51 +24,65 @@ import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
 
-// TODO deprecate `tableNumber` naming to be `location`
+const serverURL = "https://technicamentorshipservertest.herokuapp.com"
 
 export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { question: '', tableNumber: "", newQuestionScreen:false, listData: [] };
+    this.state = { appState: AppState.currentState, question: '', location: "", newQuestionScreen:false, listData: [] };
     this.sendQuestion = this.sendQuestion.bind(this);
-    this.updateQuestionStatus = this.updateQuestionStatus.bind(this);
     this.showToast = this.showToast.bind(this);
+    this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
-  // initially loads question data
+
+  grabQuestionsFromDB(email) {
+    fetch(`${serverURL}/getquestions/${email}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    }).then(response => response.json()).then(async (responseJson) => {
+      console.log("questions found")
+      console.log(responseJson)
+      this.setState({listData: responseJson });
+  }).catch(err => {
+    console.log("ERROR GRABBING QUESTIONS")
+    console.log(err)
+  })
+
+  }
+
+  // initially loads question data from server
   async componentDidMount() {
-    const listData = [];
-    const question = await AsyncStorage.getItem("questions");
-    const qList = JSON.parse(question)
-    this.setState({listData: qList})
+    AppState.addEventListener('change', this._handleAppStateChange)
+    const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
+    const user_data_json = JSON.parse(user_data)
+    this.grabQuestionsFromDB(user_data_json.user_data.email)
   }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  async _handleAppStateChange(nextAppState){
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('App has come to the foreground!')
+      const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
+      const user_data_json = JSON.parse(user_data)
+      this.grabQuestionsFromDB(user_data_json.user_data.email)
+    }
+    this.setState({appState: nextAppState});
+  }
+
   clearInputs() {
-    this.setState({ question: '', tableNumber: ''});
+    this.setState({ question: '', location: ''});
   }
   cancelQuestion() {
     this.setState({ question: '', newQuestionScreen: !this.state.newQuestionScreen });
   }
   toggleModal() {
     this.setState({ newQuestionScreen: !this.state.newQuestionScreen });
-  }
-  storeQuestion = async (questionObject) => {
-    try {
-      let questions = await AsyncStorage.getItem("questions")
-      var qList
-      if (questions != null) {
-        qList = JSON.parse(questions)
-        qList.unshift(questionObject)
-      } else {
-        qList = [questionObject]
-      }
-      await AsyncStorage.setItem("questions", JSON.stringify(qList))
-      this.setState({listData: qList})
-      this.clearInputs()
-      console.log(this.state.listData);
-
-    } catch (error) {
-      // Error saving data
-      console.log(error)
-    }
   }
 
   showToast() {
@@ -81,7 +96,7 @@ export default class Mentors extends Component<Props> {
   }
 
   async sendQuestion() {
-    if (this.state.question === '' || this.state.tableNumber === '') {
+    if (this.state.question === '' || this.state.location === '') {
       Alert.alert(
         "Try Again",
         "Your question or location was empty.",
@@ -92,22 +107,23 @@ export default class Mentors extends Component<Props> {
       );
     } else {
       const fcmToken = await AsyncStorage.getItem("FCMToken");
-      const value = await AsyncStorage.getItem("USER_DATA_STORE");
-      const jsonValue = JSON.parse(value);
-      const name = jsonValue.user_data.first_name + " " + jsonValue.user_data.last_name
+      const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
+      const user_data_json = JSON.parse(user_data);
+      const name = user_data_json.user_data.first_name + " " + user_data_json.user_data.last_name
       var questionObject = {
         question: this.state.question,
-        tableNumber: this.state.tableNumber,
+        location: this.state.location,
         status: "Awaiting available mentors",
         key: moment().format(),
-        name: name
+        name: name,
+        email: user_data_json.user_data.email,
       }
       if (fcmToken != null) {
         questionObject.fcmToken = fcmToken
       }
 
       var questionString = JSON.stringify(questionObject)
-      fetch('https://technicamentorshipservertest.herokuapp.com/question', {
+      fetch(`${serverURL}/question`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -117,10 +133,11 @@ export default class Mentors extends Component<Props> {
       }).catch(error => {
         console.log(error)
       })
-      this.storeQuestion(questionObject)
+      this.clearInputs()
       this.showToast();
       this.toggleModal()
-
+      // make new question show up immediately at top of list
+      this.setState({listData: [questionObject].concat(this.state.listData)})
     }
   }
   renderHeading() {
@@ -137,7 +154,7 @@ export default class Mentors extends Component<Props> {
   }
 
   renderNewQuestionModal() {
-    const { question, tableNumber, newQuestionScreen  } = this.state;
+    const { question, location, newQuestionScreen  } = this.state;
     return (
       <Modal
         isVisible={newQuestionScreen}
@@ -184,8 +201,8 @@ export default class Mentors extends Component<Props> {
                 fontSize: 14,
                 color: colors.white,
               }}
-              onChangeText={(text) => this.setState({tableNumber: text})}
-              value={tableNumber}
+              onChangeText={(text) => this.setState({location: text})}
+              value={location}
               underlineColorAndroid='transparent'
               placeholder="Table B5"
               placeholderTextColor="#666666"
@@ -214,18 +231,12 @@ export default class Mentors extends Component<Props> {
     // updates when app is in foreground
     this.notificationListener = firebase
     .notifications()
-    .onNotification(this.updateQuestionStatus);
+    .onNotification(notification => {this.grabQuestionsFromDB(notification.data.email)});
 
     // updates when app is in the background
     this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
-      this.updateQuestionStatus(notificationOpen.notification)
+      this.grabQuestionsFromDB(notificationOpen.notification.data.email)
     });
-
-    // updates if app was previously closed
-    const notificationOpen = await firebase.notifications().getInitialNotification();
-    if (notificationOpen) {
-        this.updateQuestionStatus(notificationOpen.notification)
-    }
   }
 
   async updateQuestionStatus(notification) {
@@ -255,8 +266,6 @@ export default class Mentors extends Component<Props> {
 
   render() {
     { this.createNotificationListener() }
-    const dimensions = require('Dimensions').get('window');
-    const buttonWidth = (dimensions.width / 2) - 30;
 
       return (
       <ViewContainer>
@@ -280,7 +289,7 @@ export default class Mentors extends Component<Props> {
               <QuestionCard
                 question={item.question}
                 status={item.status}
-                location={item.tableNumber}
+                location={item.location}
                 time={item.key}
               />
             }
