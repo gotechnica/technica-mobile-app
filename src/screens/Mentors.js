@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   Alert,
+  AppState
 } from 'react-native';
 import {
   ViewContainer,
@@ -28,9 +29,10 @@ const serverURL = "https://technicamentorshipservertest.herokuapp.com"
 export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { question: '', location: "", newQuestionScreen:false, listData: [] };
+    this.state = { appState: AppState.currentState, question: '', location: "", newQuestionScreen:false, listData: [] };
     this.sendQuestion = this.sendQuestion.bind(this);
     this.showToast = this.showToast.bind(this);
+    this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
 
   grabQuestionsFromDB(email) {
@@ -50,11 +52,27 @@ export default class Mentors extends Component<Props> {
   })
 
   }
+
   // initially loads question data from server
   async componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange)
     const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
     const user_data_json = JSON.parse(user_data)
     this.grabQuestionsFromDB(user_data_json.user_data.email)
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  async _handleAppStateChange(nextAppState){
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('App has come to the foreground!')
+      const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
+      const user_data_json = JSON.parse(user_data)
+      this.grabQuestionsFromDB(user_data_json.user_data.email)
+    }
+    this.setState({appState: nextAppState});
   }
 
   clearInputs() {
