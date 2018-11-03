@@ -98,7 +98,7 @@ export default class Mentors extends Component<Props> {
         status: "Awaiting available mentors",
         key: moment().format(),
         name: name,
-        email: user_data_json.email,
+        email: user_data_json.user_data.email,
       }
       if (fcmToken != null) {
         questionObject.fcmToken = fcmToken
