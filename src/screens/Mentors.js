@@ -30,7 +30,7 @@ const serverURL = "https://841f641c.ngrok.io"
 export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { question: '', tableNumber: "", newQuestionScreen:false, listData: [] };
+    this.state = { question: '', location: "", newQuestionScreen:false, listData: [] };
     this.sendQuestion = this.sendQuestion.bind(this);
     this.showToast = this.showToast.bind(this);
   }
@@ -60,7 +60,7 @@ export default class Mentors extends Component<Props> {
   }
 
   clearInputs() {
-    this.setState({ question: '', tableNumber: ''});
+    this.setState({ question: '', location: ''});
   }
   cancelQuestion() {
     this.setState({ question: '', newQuestionScreen: !this.state.newQuestionScreen });
@@ -80,7 +80,7 @@ export default class Mentors extends Component<Props> {
   }
 
   async sendQuestion() {
-    if (this.state.question === '' || this.state.tableNumber === '') {
+    if (this.state.question === '' || this.state.location === '') {
       Alert.alert(
         "Try Again",
         "Your question or location was empty.",
@@ -96,8 +96,8 @@ export default class Mentors extends Component<Props> {
       const name = user_data_json.user_data.first_name + " " + user_data_json.user_data.last_name
       var questionObject = {
         question: this.state.question,
-        tableNumber: this.state.tableNumber,
-        status: "Awaiting Response",
+        location: this.state.location,
+        status: "Awaiting available mentors",
         key: moment().format(),
         name: name,
         email: user_data_json.email,
@@ -138,7 +138,7 @@ export default class Mentors extends Component<Props> {
   }
 
   renderNewQuestionModal() {
-    const { question, tableNumber, newQuestionScreen  } = this.state;
+    const { question, location, newQuestionScreen  } = this.state;
     return (
       <Modal
         isVisible={newQuestionScreen}
@@ -184,8 +184,9 @@ export default class Mentors extends Component<Props> {
                 paddingBottom: 2,
                 fontSize: 14,
                 color: colors.white,
-              }}              onChangeText={(text) => this.setState({tableNumber: text})}
-              value={tableNumber}
+              }}
+              onChangeText={(text) => this.setState({location: text})}
+              value={location}
               underlineColorAndroid='transparent'
               placeholder="Table B5"
               placeholderTextColor="#666666"
@@ -221,7 +222,32 @@ export default class Mentors extends Component<Props> {
       this.grabQuestionsFromDB(notificationOpen.notification.data.email)
     });
   }
-  
+
+  async updateQuestionStatus(notification) {
+    console.log('notification received', notification.body);
+    console.log(notification.data)
+
+    const key = notification.data.key;
+    const mentorName = notification.data.mentor_name;
+
+    const questions = await AsyncStorage.getItem("questions");
+    const qList = JSON.parse(questions);
+
+    // update status of question
+    qList.forEach((element, index) => {
+      if (element.key == key) {
+        console.log("found!");
+        element.status = `${mentorName} has claimed your question!`;
+        qList[index] = element;
+      }
+    })
+    // store update in local storage
+    await AsyncStorage.setItem("questions", JSON.stringify(qList))
+    this.setState({listData: qList})
+  }
+
+
+
   render() {
     { this.createNotificationListener() }
 
@@ -243,7 +269,14 @@ export default class Mentors extends Component<Props> {
         }
         <FlatList
             data = {this.state.listData}
-            renderItem={({item}) => <QuestionCard question = {item.question} status = {item.status}/>}
+            renderItem={({item}) =>
+              <QuestionCard
+                question={item.question}
+                status={item.status}
+                location={item.location}
+                time={item.key}
+              />
+            }
           />
       </PadContainer>
     </ViewContainer>

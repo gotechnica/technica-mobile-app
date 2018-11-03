@@ -43,7 +43,7 @@ export default class Login extends Component<Props> {
       savedPhone: '',
       savedSMS: '',
       fieldValue: '',
-      placeholder: '###-###-####',
+      placeholder: '',
       greeting: 'Welcome to \nTECHNICA 2018',
       instruction: 'Enter the phone number you used to \nsign up for Technica.',
       nextPage: (
@@ -149,7 +149,7 @@ export default class Login extends Component<Props> {
     }else{
       Alert.alert(
         "Invalid Phone Number.",
-        "Please enter your phone number in the format ##########.",
+        "Please enter a valid phone number.",
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],

@@ -12,6 +12,7 @@
     "moment": "^2.22.2",
     "react": "16.3.1",
     "react-native": "0.55.4",
+    "react-native-animated-ellipsis": "^1.1.0",
     "react-native-camera": "^1.2.0",
     "react-native-firebase": "^4.3.8",
     "react-native-iphone-x-helper": "^1.2.0",
