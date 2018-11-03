@@ -25,7 +25,7 @@ export default class QuestionCard extends Component {
 
   renderStatus() {
     const { status } = this.props;
-    if (status.includes("Responded")) {
+    if (status.includes("claimed")) {
       return <H6 style={{color: colors.cyan}}>{status}</H6>
     } else {
       return <AnimatedEllipsis status={status}/>

@@ -23,21 +23,42 @@ import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
 
+const serverURL = "https://841f641c.ngrok.io"
+// "https://technicamentorshipservertest.herokuapp.com"
+// https://technicamentorshipservertest.herokuapp.com
+
 export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = { question: '', tableNumber: "", newQuestionScreen:false, listData: [] };
     this.sendQuestion = this.sendQuestion.bind(this);
-    this.updateQuestionStatus = this.updateQuestionStatus.bind(this);
     this.showToast = this.showToast.bind(this);
   }
-  // initially loads question data
-  async componentDidMount() {
-    const listData = [];
-    const question = await AsyncStorage.getItem("questions");
-    const qList = JSON.parse(question)
-    this.setState({listData: qList})
+
+  grabQuestionsFromDB(email) {
+    fetch(`${serverURL}/getquestions/${email}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    }).then(response => response.json()).then(async (responseJson) => {
+      console.log("questions found")
+      console.log(responseJson)
+      this.setState({listData: responseJson });
+  }).catch(err => {
+    console.log("ERROR GRABBING QUESTIONS")
+    console.log(err)
+  })
+
   }
+  // initially loads question data from server
+  async componentDidMount() {
+    const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
+    const user_data_json = JSON.parse(user_data)
+    this.grabQuestionsFromDB(user_data_json.user_data.email)
+  }
+
   clearInputs() {
     this.setState({ question: '', tableNumber: ''});
   }
@@ -46,26 +67,6 @@ export default class Mentors extends Component<Props> {
   }
   toggleModal() {
     this.setState({ newQuestionScreen: !this.state.newQuestionScreen });
-  }
-  storeQuestion = async (questionObject) => {
-    try {
-      let questions = await AsyncStorage.getItem("questions")
-      var qList
-      if (questions != null) {
-        qList = JSON.parse(questions)
-        qList.unshift(questionObject)
-      } else {
-        qList = [questionObject]
-      }
-      await AsyncStorage.setItem("questions", JSON.stringify(qList))
-      this.setState({listData: qList})
-      this.clearInputs()
-      console.log(this.state.listData);
-
-    } catch (error) {
-      // Error saving data
-      console.log(error)
-    }
   }
 
   showToast() {
@@ -90,22 +91,23 @@ export default class Mentors extends Component<Props> {
       );
     } else {
       const fcmToken = await AsyncStorage.getItem("FCMToken");
-      const value = await AsyncStorage.getItem("USER_DATA_STORE");
-      const jsonValue = JSON.parse(value);
-      const name = jsonValue.user_data.first_name + " " + jsonValue.user_data.last_name
+      const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
+      const user_data_json = JSON.parse(user_data);
+      const name = user_data_json.user_data.first_name + " " + user_data_json.user_data.last_name
       var questionObject = {
         question: this.state.question,
         tableNumber: this.state.tableNumber,
         status: "Awaiting Response",
         key: moment().format(),
-        name: name
+        name: name,
+        email: user_data_json.email,
       }
       if (fcmToken != null) {
         questionObject.fcmToken = fcmToken
       }
 
       var questionString = JSON.stringify(questionObject)
-      fetch('https://technicamentorshipservertest.herokuapp.com/question', {
+      fetch(`${serverURL}/question`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -115,10 +117,11 @@ export default class Mentors extends Component<Props> {
       }).catch(error => {
         console.log(error)
       })
-      this.storeQuestion(questionObject)
+      this.clearInputs()
       this.showToast();
       this.toggleModal()
-
+      // make new question show up immediately at top of list
+      this.setState({listData: [questionObject].concat(this.state.listData)})
     }
   }
   renderHeading() {
@@ -211,49 +214,16 @@ export default class Mentors extends Component<Props> {
     // updates when app is in foreground
     this.notificationListener = firebase
     .notifications()
-    .onNotification(this.updateQuestionStatus);
+    .onNotification(notification => {this.grabQuestionsFromDB(notification.data.email)});
 
     // updates when app is in the background
     this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
-      this.updateQuestionStatus(notificationOpen.notification)
+      this.grabQuestionsFromDB(notificationOpen.notification.data.email)
     });
-
-    // updates if app was previously closed
-    const notificationOpen = await firebase.notifications().getInitialNotification();
-    if (notificationOpen) {
-        this.updateQuestionStatus(notificationOpen.notification)
-    }
   }
-
-  async updateQuestionStatus(notification) {
-    console.log('notification received', notification.body);
-    console.log(notification.data)
-
-    const key = notification.data.key;
-    const mentorName = notification.data.mentor_name;
-
-    const questions = await AsyncStorage.getItem("questions");
-    const qList = JSON.parse(questions);
-
-    // update status of question
-    qList.forEach((element, index) => {
-      if (element.key == key) {
-        console.log("found!");
-        element.status = `Responded by ${mentorName}!`;
-        qList[index] = element;
-      }
-    })
-    // store update in local storage
-    await AsyncStorage.setItem("questions", JSON.stringify(qList))
-    this.setState({listData: qList})
-  }
-
-
-
+  
   render() {
     { this.createNotificationListener() }
-    const dimensions = require('Dimensions').get('window');
-    const buttonWidth = (dimensions.width / 2) - 30;
 
       return (
       <ViewContainer>
