@@ -23,9 +23,7 @@ import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
 
-const serverURL = "https://841f641c.ngrok.io"
-// "https://technicamentorshipservertest.herokuapp.com"
-// https://technicamentorshipservertest.herokuapp.com
+const serverURL = "https://technicamentorshipservertest.herokuapp.com"
 
 export default class Mentors extends Component<Props> {
   constructor(props) {
