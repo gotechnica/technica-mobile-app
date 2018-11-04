@@ -114,8 +114,7 @@ const PlainViewContainer = (props) => (
 const ViewContainer = (props) => (
   <PlainViewContainer>
     <ScrollView
-      style={{ flex: 1 }}
-      keyboardShouldPersistTaps="always">
+      style={{ flex: 1 }}>
       <View style={[styles.container, props.style]}>
         {props.children}
       </View>
