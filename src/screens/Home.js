@@ -119,7 +119,7 @@ export default class Home extends Component<Props> {
 
   renderPopularEventsSection = () => {
     const heading = 'Popular Events';
-    const events = this.props.eventManager.getTopEvents(20);
+    const events = this.props.eventManager.getTopEvents(24);
     return (
       <View style={styles.subSection}>
         <PadContainer style={styles.subSectionHeading}>
