@@ -229,6 +229,7 @@ export default class Login extends Component<Props> {
               borderColor: colors.white,
               borderBottomWidth: 1,
               paddingBottom: 8,
+              marginBottom: 280,
               fontFamily: "DINPro-Medium",
               fontSize: 24,
               color: colors.white,
