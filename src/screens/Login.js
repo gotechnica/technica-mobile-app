@@ -50,7 +50,7 @@ export default class Login extends Component<Props> {
         <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Button
               text="Next"
-              style={styles.button}
+              style={{...styles.button}}
             />
         </TouchableOpacity>),
     };
@@ -211,7 +211,7 @@ export default class Login extends Component<Props> {
   render() {
     return (
       <ViewContainer>
-        <PadContainer style={styles.subSection}>
+        <PadContainer style={{...styles.subSection, marginBottom: 280}}>
           <Heading style={{ paddingBottom: 20 }}>
             {this.state.greeting}
           </Heading>
@@ -229,7 +229,6 @@ export default class Login extends Component<Props> {
               borderColor: colors.white,
               borderBottomWidth: 1,
               paddingBottom: 8,
-              marginBottom: 280,
               fontFamily: "DINPro-Medium",
               fontSize: 24,
               color: colors.white,
