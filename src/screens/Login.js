@@ -47,7 +47,7 @@ export default class Login extends Component<Props> {
       greeting: 'Welcome to \nTECHNICA 2018',
       instruction: 'Enter the phone number you used to \nsign up for Technica.',
       nextPage: (
-        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
+        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)} style={{marginTop: 280}}>
           <Button
               text="Next"
               style={{...styles.button}}
@@ -116,7 +116,7 @@ export default class Login extends Component<Props> {
           if(responseJson.statusCode == 200){
             this.setState({greeting: "Great!", instruction: "We're texting you a verification code. Please enter that code below to login.",
             nextPage: (
-              <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)}>
+              <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)} style={{marginTop: 280}}>
                   <Button
                       text='Submit'
                       size={22}
@@ -211,7 +211,7 @@ export default class Login extends Component<Props> {
   render() {
     return (
       <ViewContainer>
-        <PadContainer style={{...styles.subSection, marginBottom: 280}}>
+        <PadContainer style={styles.subSection}>
           <Heading style={{ paddingBottom: 20 }}>
             {this.state.greeting}
           </Heading>
