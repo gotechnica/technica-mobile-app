@@ -16,27 +16,27 @@ const styles = StyleSheet.create({
   },
   h2: {
     fontFamily: "AvenirLTStd-Black",
-    fontSize: 18,
+    fontSize: 21,
   },
   h3: {
     fontFamily: "AvenirLTStd-Medium",
-    fontSize: 14,
+    fontSize: 16,
   },
   h4: {
     fontFamily: "AvenirLTStd-Medium",
-    fontSize: 12,
+    fontSize: 13,
   },
   h5: {
     fontFamily: "Aleo-Regular",
-    fontSize: 10,
+    fontSize: 11,
   },
   h6: {
     fontFamily: "AvenirLTStd-Book",
-    fontSize: 12,
+    fontSize: 13,
   },
   p: {
     fontFamily: "AvenirLTStd-Book",
-    fontSize: 14,
+    fontSize: 15,
   },
 });
 
