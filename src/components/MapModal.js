@@ -29,7 +29,7 @@ export default class MapModal extends Component {
     return (
       <Modal
         isVisible={props.isModalVisible}
-        backdropColor="#000000"
+        backdropColor={colors.backgroundColor.normal}
         backdropOpacity={1}
         animationInTiming={250}
         animationIn="fadeInUp"

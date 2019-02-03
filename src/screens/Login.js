@@ -222,15 +222,15 @@ export default class Login extends Component<Props> {
             value={this.state.fieldValue}
             underlineColorAndroid='rgba(0,0,0,0)'
             onChangeText={field => this.setState({ fieldValue: field })}
-            placeholderTextColor={colors.borderGrey}
+            placeholderTextColor={colors.borderColor.light}
             keyboardType = 'numeric'
             style={{
-              borderColor: colors.white,
+              borderColor: colors.borderColor.normal,
               borderBottomWidth: 1,
               paddingBottom: 8,
               fontFamily: "DINPro-Medium",
               fontSize: 24,
-              color: colors.white,
+              color: colors.textColor.normal,
             }}
           />
         {this.state.nextPage}
@@ -249,14 +249,14 @@ const styles = StyleSheet.create({
   },
   subSection: {
     paddingTop: '30%',
-    backgroundColor: "#222"
+    backgroundColor: colors.backgroundColor.normal
   },
   columnContainer: {
     flex: 1, flexDirection: 'row'
   },
   button: {
     marginTop: 20,
-    backgroundColor: colors.pink,
+    backgroundColor: colors.primaryColor,
   },
   column: {
     flex: 5,

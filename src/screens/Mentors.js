@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   View,
   TextInput,
@@ -6,30 +6,36 @@ import {
   TouchableOpacity,
   Alert,
   AppState
-} from 'react-native';
+} from "react-native";
 import {
   ViewContainer,
   Heading,
   modalStyle,
   SubHeading,
   Button,
-  PadContainer,
-} from '../components/Base';
+  PadContainer
+} from "../components/Base";
 import Modal from "react-native-modal";
-import { colors } from '../components/Colors';
-import firebase from 'react-native-firebase';
-import QuestionCard from '../components/QuestionCard'
-import { AsyncStorage } from "react-native"
-import { H1, H2, H3, H4, H6, P } from '../components/Text';
-import Toast from 'react-native-simple-toast';
-import moment from 'moment';
+import { colors } from "../components/Colors";
+import firebase from "react-native-firebase";
+import QuestionCard from "../components/QuestionCard";
+import { AsyncStorage } from "react-native";
+import { H1, H2, H3, H4, H6, P } from "../components/Text";
+import Toast from "react-native-simple-toast";
+import moment from "moment";
 
-const serverURL = "https://technicamentorshipservertest.herokuapp.com"
+const serverURL = "https://technicamentorshipservertest.herokuapp.com";
 
 export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { appState: AppState.currentState, question: '', location: "", newQuestionScreen:false, listData: [] };
+    this.state = {
+      appState: AppState.currentState,
+      question: "",
+      location: "",
+      newQuestionScreen: false,
+      listData: []
+    };
     this.sendQuestion = this.sendQuestion.bind(this);
     this.showToast = this.showToast.bind(this);
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
@@ -37,49 +43,57 @@ export default class Mentors extends Component<Props> {
 
   grabQuestionsFromDB(email) {
     fetch(`${serverURL}/getquestions/${email}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-    }).then(response => response.json()).then(async (responseJson) => {
-      console.log("questions found")
-      console.log(responseJson)
-      this.setState({listData: responseJson });
-  }).catch(err => {
-    console.log("ERROR GRABBING QUESTIONS")
-    console.log(err)
-  })
-
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(async responseJson => {
+        console.log("questions found");
+        console.log(responseJson);
+        this.setState({ listData: responseJson });
+      })
+      .catch(err => {
+        console.log("ERROR GRABBING QUESTIONS");
+        console.log(err);
+      });
   }
 
   // initially loads question data from server
   async componentDidMount() {
-    AppState.addEventListener('change', this._handleAppStateChange)
+    AppState.addEventListener("change", this._handleAppStateChange);
     const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
-    const user_data_json = JSON.parse(user_data)
-    this.grabQuestionsFromDB(user_data_json.user_data.email)
+    const user_data_json = JSON.parse(user_data);
+    this.grabQuestionsFromDB(user_data_json.user_data.email);
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this._handleAppStateChange);
+    AppState.removeEventListener("change", this._handleAppStateChange);
   }
 
-  async _handleAppStateChange(nextAppState){
-    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      console.log('App has come to the foreground!')
+  async _handleAppStateChange(nextAppState) {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      console.log("App has come to the foreground!");
       const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
-      const user_data_json = JSON.parse(user_data)
-      this.grabQuestionsFromDB(user_data_json.user_data.email)
+      const user_data_json = JSON.parse(user_data);
+      this.grabQuestionsFromDB(user_data_json.user_data.email);
     }
-    this.setState({appState: nextAppState});
+    this.setState({ appState: nextAppState });
   }
 
   clearInputs() {
-    this.setState({ question: '', location: ''});
+    this.setState({ question: "", location: "" });
   }
   cancelQuestion() {
-    this.setState({ question: '', newQuestionScreen: !this.state.newQuestionScreen });
+    this.setState({
+      question: "",
+      newQuestionScreen: !this.state.newQuestionScreen
+    });
   }
   toggleModal() {
     this.setState({ newQuestionScreen: !this.state.newQuestionScreen });
@@ -91,74 +105,74 @@ export default class Mentors extends Component<Props> {
     // happens. There is a weird iOS issue where toast will vanish the moment
     // modal closes. This is the best workaround I could make for now.
     setTimeout(() => {
-      Toast.show('Question sent! Our next available mentor will come assist you.', Toast.LONG);
-    }, 400)
+      Toast.show(
+        "Question sent! Our next available mentor will come assist you.",
+        Toast.LONG
+      );
+    }, 400);
   }
 
   async sendQuestion() {
-    if (this.state.question === '' || this.state.location === '') {
+    if (this.state.question === "" || this.state.location === "") {
       Alert.alert(
         "Try Again",
         "Your question or location was empty.",
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
+        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
         { cancelable: false }
       );
     } else {
       const fcmToken = await AsyncStorage.getItem("FCMToken");
       const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
       const user_data_json = JSON.parse(user_data);
-      const name = user_data_json.user_data.first_name + " " + user_data_json.user_data.last_name
+      const name =
+        user_data_json.user_data.first_name +
+        " " +
+        user_data_json.user_data.last_name;
       var questionObject = {
         question: this.state.question,
         location: this.state.location,
         status: "Awaiting available mentors",
         key: moment().format(),
         name: name,
-        email: user_data_json.user_data.email,
-      }
+        email: user_data_json.user_data.email
+      };
       if (fcmToken != null) {
-        questionObject.fcmToken = fcmToken
+        questionObject.fcmToken = fcmToken;
       }
 
-      var questionString = JSON.stringify(questionObject)
+      var questionString = JSON.stringify(questionObject);
       fetch(`${serverURL}/question`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          Accept: "application/json",
+          "Content-Type": "application/json"
         },
-        body: questionString,
+        body: questionString
       }).catch(error => {
-        console.log(error)
-      })
-      this.clearInputs()
+        console.log(error);
+      });
+      this.clearInputs();
       this.showToast();
-      this.toggleModal()
+      this.toggleModal();
       // make new question show up immediately at top of list
-      this.setState({listData: [questionObject].concat(this.state.listData)})
+      this.setState({ listData: [questionObject].concat(this.state.listData) });
     }
   }
   renderHeading() {
     return (
       <React.Fragment>
-        <Heading>
-          Mentors
-        </Heading>
-        <SubHeading>
-          Ask our mentors for help
-        </SubHeading>
+        <Heading>Mentors</Heading>
+        <SubHeading>Ask our mentors for help</SubHeading>
       </React.Fragment>
-      )
+    );
   }
 
   renderNewQuestionModal() {
-    const { question, location, newQuestionScreen  } = this.state;
+    const { question, location, newQuestionScreen } = this.state;
     return (
       <Modal
         isVisible={newQuestionScreen}
-        backdropColor={colors.black}
+        backdropColor={colors.backgroundColor.normal}
         backdropOpacity={1}
         animationInTiming={250}
         animationIn="fadeInUp"
@@ -171,77 +185,81 @@ export default class Mentors extends Component<Props> {
         style={modalStyle}
       >
         <View style={{ padding: 20 }}>
-          <H3 style={{ color: 'white', marginBottom: 10 }}>How can we help you?</H3>
+          <H3 style={{ color: "white", marginBottom: 10 }}>
+            How can we help you?
+          </H3>
           <TextInput
             style={{
-              borderColor: colors.white,
+              borderColor: colors.borderColor.normal,
               borderBottomWidth: 1,
               padding: 0,
               fontFamily: "Poppins-Regular",
               paddingBottom: 2,
               marginBottom: 20,
               fontSize: 14,
-              color: colors.white,
+              color: colors.textColor.normal
             }}
-            onChangeText={(text) => this.setState({question: text})}
+            onChangeText={text => this.setState({ question: text })}
             value={question}
-            underlineColorAndroid='transparent'
+            underlineColorAndroid="transparent"
             placeholder="How do I make X using Y?"
-            placeholderTextColor="#666666"
+            placeholderTextColor={colors.textColor.light}
           />
-          <View marginTop = {10}>
-            <H3 style={{ color: 'white', marginBottom: 10 }}>Where can we find you?</H3>
+          <View marginTop={10}>
+            <H3 style={{ color: "white", marginBottom: 10 }}>
+              Where can we find you?
+            </H3>
             <TextInput
               style={{
-                borderColor: colors.white,
+                borderColor: colors.borderColor.normal,
                 borderBottomWidth: 1,
                 fontFamily: "Poppins-Regular",
                 padding: 0,
                 paddingBottom: 2,
                 fontSize: 14,
-                color: colors.white,
+                color: colors.textColor.white
               }}
-              onChangeText={(text) => this.setState({location: text})}
+              onChangeText={text => this.setState({ location: text })}
               value={location}
-              underlineColorAndroid='transparent'
+              underlineColorAndroid="transparent"
               placeholder="Table B5"
-              placeholderTextColor="#666666"
+              placeholderTextColor={colors.textColor.light}
             />
           </View>
         </View>
-        <View marginTop = {10}>
-        <TouchableOpacity onPress={() => this.sendQuestion()}>
-          <Button
-            text="Submit Question"
-          />
-        </TouchableOpacity>
+        <View marginTop={10}>
+          <TouchableOpacity onPress={() => this.sendQuestion()}>
+            <Button text="Submit Question" />
+          </TouchableOpacity>
         </View>
-        <View marginTop = {10}>
+        <View marginTop={10}>
           <TouchableOpacity onPress={() => this.cancelQuestion()}>
-            <Button
-              text="Cancel"
-            />
+            <Button text="Cancel" />
           </TouchableOpacity>
         </View>
       </Modal>
-    )
+    );
   }
 
   async createNotificationListener() {
     // updates when app is in foreground
     this.notificationListener = firebase
-    .notifications()
-    .onNotification(notification => {this.grabQuestionsFromDB(notification.data.email)});
+      .notifications()
+      .onNotification(notification => {
+        this.grabQuestionsFromDB(notification.data.email);
+      });
 
     // updates when app is in the background
-    this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
-      this.grabQuestionsFromDB(notificationOpen.notification.data.email)
-    });
+    this.notificationOpenedListener = firebase
+      .notifications()
+      .onNotificationOpened(notificationOpen => {
+        this.grabQuestionsFromDB(notificationOpen.notification.data.email);
+      });
   }
 
   async updateQuestionStatus(notification) {
-    console.log('notification received', notification.body);
-    console.log(notification.data)
+    console.log("notification received", notification.body);
+    console.log(notification.data);
 
     const key = notification.data.key;
     const mentorName = notification.data.mentor_name;
@@ -256,46 +274,48 @@ export default class Mentors extends Component<Props> {
         element.status = `${mentorName} has claimed your question!`;
         qList[index] = element;
       }
-    })
+    });
     // store update in local storage
-    await AsyncStorage.setItem("questions", JSON.stringify(qList))
-    this.setState({listData: qList})
+    await AsyncStorage.setItem("questions", JSON.stringify(qList));
+    this.setState({ listData: qList });
   }
 
-
-
   render() {
-    { this.createNotificationListener() }
+    {
+      this.createNotificationListener();
+    }
 
-      return (
+    return (
       <ViewContainer>
-      <PadContainer>
-        {this.renderHeading()}
-        {this.renderNewQuestionModal()}
-      </PadContainer>
-      <TouchableOpacity
-        onPress={() => { this.toggleModal() }}
-        style={{ marginBottom: 40 }}
-      >
-        <Button text="Ask a Question" />
-      </TouchableOpacity>
-      <PadContainer>
-        {
-          (this.state.listData) && (this.state.listData.length > 0) && <H2 style={{ marginBottom: 20 }}>Your Questions</H2>
-        }
-        <FlatList
-            data = {this.state.listData}
-            renderItem={({item}) =>
+        <PadContainer>
+          {this.renderHeading()}
+          {this.renderNewQuestionModal()}
+        </PadContainer>
+        <TouchableOpacity
+          onPress={() => {
+            this.toggleModal();
+          }}
+          style={{ marginBottom: 40 }}
+        >
+          <Button text="Ask a Question" />
+        </TouchableOpacity>
+        <PadContainer>
+          {this.state.listData && this.state.listData.length > 0 && (
+            <H2 style={{ marginBottom: 20 }}>Your Questions</H2>
+          )}
+          <FlatList
+            data={this.state.listData}
+            renderItem={({ item }) => (
               <QuestionCard
                 question={item.question}
                 status={item.status}
                 location={item.location}
                 time={item.key}
               />
-            }
+            )}
           />
-      </PadContainer>
-    </ViewContainer>
-    )
-    }
+        </PadContainer>
+      </ViewContainer>
+    );
   }
+}

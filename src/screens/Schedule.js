@@ -88,7 +88,7 @@ export default class Schedule extends Component<Props> {
                 style={{
                   marginTop: 20,
                   borderTopWidth: 1,
-                  borderColor: colors.borderGrey,
+                  borderColor: colors.borderColor.light,
                   paddingTop: 30,
                 }}
               >

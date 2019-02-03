@@ -33,7 +33,7 @@ export default class EventHeart extends Component {
           <Icon
             name={(eventManager.isFavorited(eventID)) ? 'heart' : 'heart-o'} // 'heart'
             size={22}
-            color={colors.pink}
+            color={colors.primaryColor}
           />
         </TouchableOpacity>
       </Fragment>

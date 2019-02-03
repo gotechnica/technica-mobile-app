@@ -7,11 +7,10 @@ import {
 
 const styles = StyleSheet.create({
   text: {
-    color: colors.white,
-    fontFamily: "Poppins-Regular",
-    fontSize: 12,
+    color: colors.textColor.normal,
   },
   h1: {
+    color: colors.primaryColor,
     fontFamily: "DINPro-Black",
     fontSize: 30,
   },

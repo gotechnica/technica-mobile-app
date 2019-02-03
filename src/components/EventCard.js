@@ -81,7 +81,7 @@ export default class EventCard extends Component {
               <View>
                 <H3>{titleClipped}</H3>
                 <H6 style={{ opacity: .8 }}>
-                  <Icon name="heart" size={12} color={colors.white} />{' '}
+                  <Icon name="heart" size={12} color={colors.iconColor} />{' '}
                   {eventManager.getSavedCount(event.eventID)}
                 </H6>
               </View>
