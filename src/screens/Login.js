@@ -47,7 +47,7 @@ export default class Login extends Component<Props> {
       greeting: 'Welcome to \nTECHNICA 2018',
       instruction: 'Enter the phone number you used to \nsign up for Technica.',
       nextPage: (
-        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)} style={{marginTop: Platform.OS === 'ios' ? -140 : 280 }}>
+        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Button
               text="Next"
               style={{...styles.button}}
@@ -116,7 +116,7 @@ export default class Login extends Component<Props> {
           if(responseJson.statusCode == 200){
             this.setState({greeting: "Great!", instruction: "We're texting you a verification code. Please enter that code below to login.",
             nextPage: (
-              <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)} style={{marginTop: 280}}>
+              <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)}>
                   <Button
                       text='Submit'
                       size={22}
@@ -210,7 +210,6 @@ export default class Login extends Component<Props> {
 
   render() {
     return (
-      <ViewContainer>
         <PadContainer style={styles.subSection}>
           <Heading style={{ paddingBottom: 20 }}>
             {this.state.greeting}
@@ -234,9 +233,8 @@ export default class Login extends Component<Props> {
               color: colors.white,
             }}
           />
-        </PadContainer>
         {this.state.nextPage}
-      </ViewContainer>
+        </PadContainer>
     );
   }
 }
@@ -250,7 +248,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   subSection: {
-    marginTop: '30%',
+    paddingTop: '30%',
+    backgroundColor: "#222"
   },
   columnContainer: {
     flex: 1, flexDirection: 'row'
