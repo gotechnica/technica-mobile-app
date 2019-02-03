@@ -10,11 +10,13 @@ import {
   ImageBackground,
   TouchableOpacity,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import EventHeart from './EventHeart';
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import Images from '../../assets/imgs/index';
 
 const styles = StyleSheet.create({
   bg: {
@@ -121,11 +123,25 @@ const PadContainer = props => (
   <View style={[styles.padContainer, props.style]}>{props.children}</View>
 );
 
-const Heading = props => (
-  <View style={[styles.heading]}>
-    <H1 style={props.style}>{props.children}</H1>
-  </View>
-);
+const Heading = props =>
+  props.logo ? (
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center"
+      }}
+    >
+      <Image
+        source={Images.bitcamp_logo}
+        style={{ width: 50, height: 50, marginBottom: -35 }}
+      />
+      <Heading style={{ marginLeft: 10 }}>{props.children}</Heading>
+    </View>
+  ) : (
+    <View style={[styles.heading]}>
+      <H1 style={props.style}>{props.children}</H1>
+    </View>
+  );
 
 const SubHeading = props => (
   <View>

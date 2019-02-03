@@ -160,7 +160,7 @@ export default class Home extends Component<Props> {
       <ViewContainer>
         <PadContainer>
           <View style={styles.headingRow}>
-            <Heading>Technica 2018</Heading>
+            <Heading logo>Bitcamp 2019</Heading>
             <TouchableOpacity onPress={this.toggleMapModal}>
               <Icon
                 name="map"
@@ -198,7 +198,8 @@ const styles = StyleSheet.create({
   },
   headingRow: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems:'center' 
   },
   subSection: {
     // paddingTop: 20,

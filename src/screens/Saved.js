@@ -42,7 +42,7 @@ export default class Saved extends Component<Props> {
       <ScrollView>
         <PadContainer>
           <View style={styles.headingRow}>
-            <Heading>
+            <Heading logo>
               Saved
             </Heading>
             <TouchableOpacity onPress={() => {this.setState({ refresh: !this.state.refresh })}}>

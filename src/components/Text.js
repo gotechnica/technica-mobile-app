@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   h1: {
     color: colors.primaryColor,
     fontFamily: "DINPro-Black",
-    fontSize: 30,
+    fontSize: 36,
   },
   h2: {
     fontFamily: "Poppins-Bold",

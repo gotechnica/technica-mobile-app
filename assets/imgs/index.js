@@ -16,6 +16,8 @@ const Images = {
     banner_demos_big: require('./Big_Banner06_Demos.png'),
     banner_sponsorship_big: require('./Big_Banner07_Sponsorship.png'),
     banner_fun_big: require('./Big_Banner08_FunCelebrate.png'),
+
+    bitcamp_logo: require('./bitcamp-logo-icon.png')
 };
 
 export default Images;
