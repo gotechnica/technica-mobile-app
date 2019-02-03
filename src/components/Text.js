@@ -11,31 +11,31 @@ const styles = StyleSheet.create({
   },
   h1: {
     color: colors.primaryColor,
-    fontFamily: "DINPro-Black",
+    fontFamily: "Aleo-Bold",
     fontSize: 36,
   },
   h2: {
-    fontFamily: "Poppins-Bold",
+    fontFamily: "AvenirLTStd-Black",
     fontSize: 18,
   },
   h3: {
-    fontFamily: "Poppins-SemiBold",
+    fontFamily: "AvenirLTStd-Medium",
     fontSize: 14,
   },
   h4: {
-    fontFamily: "Poppins-SemiBold",
+    fontFamily: "AvenirLTStd-Medium",
     fontSize: 12,
   },
   h5: {
-    fontFamily: "DINPro-Medium",
+    fontFamily: "Aleo-Regular",
     fontSize: 10,
   },
   h6: {
-    fontFamily: "Poppins-Regular",
+    fontFamily: "AvenirLTStd-Book",
     fontSize: 12,
   },
   p: {
-    fontFamily: "Poppins-Regular",
+    fontFamily: "AvenirLTStd-Book",
     fontSize: 14,
   },
 });

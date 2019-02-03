@@ -10,7 +10,7 @@ import {
   TouchableOpacity
 } from "react-native";
 
-import { H5 } from "./Text";
+import { P } from "./Text";
 import { colors } from "./Colors";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 
@@ -44,15 +44,15 @@ class CustomTabBar extends Component {
                     : colors.textColor.light
                 }
               />
-              <H5
+              <P
                 style={
                   this.props.activeTab === i
                     ? [styles.tabText, styles.tabActiveText]
                     : [styles.tabText]
                 }
               >
-                {LABELS[i].toUpperCase()}
-              </H5>
+                {LABELS[i]}
+              </P>
             </TouchableOpacity>
           );
         })}
