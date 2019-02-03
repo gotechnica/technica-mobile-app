@@ -47,7 +47,7 @@ export default class Login extends Component<Props> {
       greeting: 'Welcome to \nTECHNICA 2018',
       instruction: 'Enter the phone number you used to \nsign up for Technica.',
       nextPage: (
-        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)} style={{marginTop: Platform.OS === 'ios' ? -280 : 280 }}>
+        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)} style={{marginTop: Platform.OS === 'ios' ? -140 : 280 }}>
           <Button
               text="Next"
               style={{...styles.button}}
