@@ -167,7 +167,7 @@ export default class Home extends Component<Props> {
                 size={30}
                 color={colors.primaryColor}
                 style={{
-                  paddingTop: 64,
+                  paddingTop: 34,
                   marginBottom: 20,
                   opacity: 0.8
                 }}

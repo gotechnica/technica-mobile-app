@@ -51,7 +51,7 @@ export default class Saved extends Component<Props> {
                 size={30}
                 color="white"
                 style={{
-                  paddingTop: 64,
+                  paddingTop: 34,
                   marginBottom: 20,
                   opacity: .8,
                 }}

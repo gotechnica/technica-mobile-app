@@ -44,8 +44,8 @@ export default class Login extends Component<Props> {
       savedSMS: '',
       fieldValue: '',
       placeholder: '',
-      greeting: 'Welcome to \nTECHNICA 2018',
-      instruction: 'Enter the phone number you used to \nsign up for Technica.',
+      greeting: 'Welcome to \nBitcamp 2019',
+      instruction: 'Enter the phone number you used to \nsign up for Bitcamp.',
       nextPage: (
         <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Button
@@ -222,7 +222,7 @@ export default class Login extends Component<Props> {
             value={this.state.fieldValue}
             underlineColorAndroid='rgba(0,0,0,0)'
             onChangeText={field => this.setState({ fieldValue: field })}
-            placeholderTextColor={colors.borderColor.light}
+            placeholderTextColor={colors.textColor.light}
             keyboardType = 'numeric'
             style={{
               borderColor: colors.borderColor.normal,

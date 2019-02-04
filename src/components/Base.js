@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     height: 15,
   },
   heading: {
-    paddingTop: 60,
+    paddingTop: 30,
     marginBottom: 20,
     flexDirection: 'row',
   },
@@ -133,9 +133,9 @@ const Heading = props =>
     >
       <Image
         source={Images.bitcamp_logo}
-        style={{ width: 50, height: 50, marginBottom: -35 }}
+        style={{ width: 45, height: 45, marginBottom: -10 }}
       />
-      <Heading style={{ marginLeft: 10 }}>{props.children}</Heading>
+      <Heading style={{ marginLeft: 12 }}>{props.children}</Heading>
     </View>
   ) : (
     <View style={[styles.heading]}>
