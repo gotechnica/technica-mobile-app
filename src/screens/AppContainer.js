@@ -13,6 +13,7 @@ import Icon from "react-native-vector-icons/SimpleLineIcons";
 import ScrollableTabView from "react-native-scrollable-tab-view";
 import { PushNotificationIOS } from "react-native";
 import { AsyncStorage, SafeAreaView, BackHandler } from "react-native";
+import { Heading } from "../components/Base"
 
 import firebase from "react-native-firebase";
 
@@ -20,9 +21,14 @@ const channelId = "technica-push-notifications";
 const channelName = "Technica Announcements";
 
 export default class AppContainer extends Component<Props> {
-  static navigationOptions = {
-    header: null
-  };
+  static navigationOptions = ({ navigation }) => ({ 
+    headerTitle: <Heading logo>{navigation.state.params ? navigation.state.params.title : "Oh no"}</Heading>,
+    headerStyle: {
+      elevation: 0,
+      shadowOpacity: 0,
+    }
+  });
+
   constructor(props) {
     super(props);
     this.state = {
@@ -46,6 +52,11 @@ export default class AppContainer extends Component<Props> {
           locked
           style={{ backgroundColor: colors.backgroundColor.normal }}
           renderTabBar={() => <CustomTabBar />}
+          onChangeTab={(tab) => {
+            const tabIndex = tab.i
+            const tabNames = ["Bitcamp 2019", "Schedule", "Saved", "Mentors", "Profile"]
+            this.props.navigation.setParams({title: tabNames[tabIndex]})
+          }}
         >
           <Home
             ref={myHome => {

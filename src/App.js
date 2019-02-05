@@ -17,7 +17,7 @@ import { createStackNavigator} from 'react-navigation';
 import { ViewContainer, CenteredActivityIndicator } from './components/Base';
 
 // NOTE dangerously ignore deprecated warning for now
-YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader', 'Setting a timer']);
 
 export default class App extends Component<Props> {
   constructor(props) {
