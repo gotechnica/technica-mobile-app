@@ -128,7 +128,8 @@ const Heading = props =>
     <View
       style={{
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        ...props.style
       }}
     >
       <Image

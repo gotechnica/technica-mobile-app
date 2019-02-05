@@ -11,9 +11,10 @@ import { H5 } from "../components/Text";
 import { colors } from "../components/Colors";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import ScrollableTabView from "react-native-scrollable-tab-view";
-import { PushNotificationIOS } from "react-native";
+import { PushNotificationIOS, View, TouchableOpacity } from "react-native";
 import { AsyncStorage, SafeAreaView, BackHandler } from "react-native";
-import { Heading } from "../components/Base"
+import { Heading, PadContainer, ViewContainer } from "../components/Base";
+import MapModal from "../components/MapModal";
 
 import firebase from "react-native-firebase";
 
@@ -21,11 +22,58 @@ const channelId = "technica-push-notifications";
 const channelName = "Technica Announcements";
 
 export default class AppContainer extends Component<Props> {
-  static navigationOptions = ({ navigation }) => ({ 
-    headerTitle: <Heading logo>{navigation.state.params ? navigation.state.params.title : "Oh no"}</Heading>,
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: (
+      <View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
+          <Heading
+            style={{
+              paddingLeft: 20,
+              paddingTop: 20
+            }}
+            logo
+          >
+            {navigation.state.params
+              ? navigation.state.params.title
+              : "Bitcamp 2019"}
+          </Heading>
+
+          {navigation.state.params && navigation.state.params.showMapIcon ? (
+            <TouchableOpacity
+              onPress={() => navigation.state.params.toggleMapModal()}
+            >
+              <Icon
+                name="map"
+                size={30}
+                color={colors.primaryColor}
+                style={{
+                  paddingTop: 34,
+                  opacity: 0.8
+                }}
+              />
+            </TouchableOpacity>
+          ) : null}
+        </View>
+        <MapModal
+          isModalVisible={
+            navigation.state.params
+              ? navigation.state.params.isMapModalVisible
+              : false
+          }
+          toggleModal={() => navigation.state.params.toggleMapModal()}
+        />
+      </View>
+    ),
     headerStyle: {
       elevation: 0,
       shadowOpacity: 0,
+      backgroundColor: colors.backgroundColor.normal
     }
   });
 
@@ -35,7 +83,21 @@ export default class AppContainer extends Component<Props> {
       page: 0
     };
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+
+    this.toggleMapModal = this.toggleMapModal.bind(this);
+    this.props.navigation.setParams({
+      title: "Bitcamp 2019",
+      isMapModalVisible: false,
+      toggleMapModal: this.toggleMapModal,
+      showMapIcon: true
+    });
   }
+
+  toggleMapModal = () => {
+    this.props.navigation.setParams({
+      isMapModalVisible: !this.props.navigation.state.params.isMapModalVisible
+    });
+  };
 
   render() {
     this.configureNotificationSettings();
@@ -52,10 +114,21 @@ export default class AppContainer extends Component<Props> {
           locked
           style={{ backgroundColor: colors.backgroundColor.normal }}
           renderTabBar={() => <CustomTabBar />}
-          onChangeTab={(tab) => {
-            const tabIndex = tab.i
-            const tabNames = ["Bitcamp 2019", "Schedule", "Saved", "Mentors", "Profile"]
-            this.props.navigation.setParams({title: tabNames[tabIndex]})
+          onChangeTab={tab => {
+            const tabIndex = tab.i;
+            const tabNames = [
+              "Bitcamp 2019",
+              "Schedule",
+              "Saved",
+              "Mentors",
+              "Profile"
+            ];
+            this.props.navigation.setParams({ title: tabNames[tabIndex] });
+            if (tabIndex == 0) {
+              this.props.navigation.setParams({ showMapIcon: true });
+            } else {
+              this.props.navigation.setParams({ showMapIcon: false });
+            }
           }}
         >
           <Home
