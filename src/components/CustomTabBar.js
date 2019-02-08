@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import {
   Platform,
@@ -7,27 +7,27 @@ import {
   Text,
   View,
   Animated,
-  TouchableOpacity,
-} from 'react-native';
+  TouchableOpacity
+} from "react-native";
 
-import { H5 } from './Text';
-import { colors } from './Colors';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import { P } from "./Text";
+import { colors } from "./Colors";
+import Icon from "react-native-vector-icons/SimpleLineIcons";
 
-const LABELS = ['Home', 'Schedule', 'Saved', 'Mentors', 'Profile']
+const LABELS = ["Home", "Schedule", "Saved", "Mentors", "Profile"];
 
 const ICONS = {
-  'home': 'home',
-  'schedule': 'calendar',
-  'saved': 'heart',
-  'mentors': 'people',
-  'profile': 'user',
+  home: "home",
+  schedule: "calendar",
+  saved: "heart",
+  mentors: "people",
+  profile: "user"
 };
 
 class CustomTabBar extends Component {
   render() {
     return (
-      <View style={[styles.tabs, this.props.style, ]}>
+      <View style={[styles.tabs, this.props.style]}>
         {this.props.tabs.map((tab, i) => {
           return (
             <TouchableOpacity
@@ -39,21 +39,20 @@ class CustomTabBar extends Component {
                 name={tab}
                 size={20}
                 color={
-                  this.props.activeTab === i ?
-                    colors.white
-                    :
-                    colors.fontGrey}
+                  this.props.activeTab === i
+                    ? colors.primaryColor
+                    : colors.textColor.light
+                }
               />
-              <H5
+              <P
                 style={
-                  this.props.activeTab === i ?
-                    [styles.tabText, styles.tabActiveText]
-                    :
-                    [styles.tabText]
-                  }
+                  this.props.activeTab === i
+                    ? [styles.tabText, styles.tabActiveText]
+                    : [styles.tabText]
+                }
               >
-                {LABELS[i].toUpperCase()}
-              </H5>
+                {LABELS[i]}
+              </P>
             </TouchableOpacity>
           );
         })}
@@ -65,22 +64,22 @@ class CustomTabBar extends Component {
 const styles = StyleSheet.create({
   tab: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingTop: 12,
-    paddingBottom: 10,
+    paddingBottom: 10
   },
   tabText: {
     marginTop: 4,
-    color: colors.fontGrey,
+    color: colors.textColor.light
   },
   tabActiveText: {
-    color: colors.white,
+    color: colors.primaryColor
   },
   tabs: {
-    flexDirection: 'row',
-    backgroundColor: colors.mediumGrey,
-  },
+    flexDirection: "row",
+    backgroundColor: colors.backgroundColor.light
+  }
 });
 
 export default CustomTabBar;

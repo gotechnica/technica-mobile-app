@@ -10,11 +10,13 @@ import {
   ImageBackground,
   TouchableOpacity,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import EventHeart from './EventHeart';
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import Images from '../../assets/imgs/index';
 
 const styles = StyleSheet.create({
   bg: {
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: colors.black,
+    backgroundColor: colors.backgroundColor.normal
   },
   padContainer: {
     flex: 1,
@@ -32,20 +34,20 @@ const styles = StyleSheet.create({
   },
   modal: {
     flex: 1,
-    backgroundColor: colors.black,
-    padding: 20,
+    backgroundColor: colors.backgroundColor.normal,
+    padding: 20
   },
   spacing: {
     height: 15,
   },
   heading: {
-    paddingTop: 60,
+    paddingTop: 30,
     marginBottom: 20,
     flexDirection: 'row',
   },
   subHeading: {
-    color: colors.fontGrey,
-    marginBottom: 40,
+    color: colors.textColor.light,
+    marginBottom: 40
   },
   paper: {
     elevation: Platform.OS === 'ios' ? 4 : 6,
@@ -56,12 +58,12 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 2,
-    backgroundColor: colors.darkGrey,
+    backgroundColor: colors.backgroundColor.light
   },
   paperHead: {
     paddingLeft: 20,
     paddingBottom: 5,
-    color: colors.cyan,
+    color: colors.secondaryColor
   },
   paperBody: {
     padding: 15,
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
   },
   horizontalLine: {
     height: 1,
-    backgroundColor: colors.borderGrey,
+    backgroundColor: colors.borderColor.light
   },
   modalHeader: {
     ...ifIphoneX({
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: colors.darkGrey,
+    backgroundColor: colors.primaryColor,
     // borderWidth: 1,
     // borderColor: colors.lavender,
     padding: 8,
@@ -98,92 +100,83 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   buttonText: {
-    textAlign: 'center',
-    color: colors.white,
-  },
+    textAlign: "center",
+    color: colors.textColor.primary
+  }
 });
 
-
-const PlainViewContainer = (props) => (
-  <View style = {{ backgroundColor: colors.black, flex: 1}}>
+const PlainViewContainer = props => (
+  <View style={{ backgroundColor: colors.backgroundColor.normal, flex: 1 }}>
     {props.children}
   </View>
+);
 
-)
-
-const ViewContainer = (props) => (
+const ViewContainer = props => (
   <PlainViewContainer>
-    <ScrollView
-      style={{ flex: 1 }}>
-      <View style={[styles.container, props.style]}>
-        {props.children}
-      </View>
+    <ScrollView style={{ flex: 1 }}>
+      <View style={[styles.container, props.style]}>{props.children}</View>
     </ScrollView>
   </PlainViewContainer>
 );
 
-const PadContainer = (props) => (
-    <View style={[styles.padContainer, props.style]}>
-      {props.children}
+const PadContainer = props => (
+  <View style={[styles.padContainer, props.style]}>{props.children}</View>
+);
+
+const Heading = props =>
+  props.logo ? (
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        ...props.style
+      }}
+    >
+      <Image
+        source={Images.bitcamp_logo}
+        style={{ width: 45, height: 45, marginBottom: -10 }}
+      />
+      <Heading style={{ marginLeft: 12 }}>{props.children}</Heading>
     </View>
-)
+  ) : (
+    <View style={[styles.heading]}>
+      <H1 style={props.style}>{props.children}</H1>
+    </View>
+  );
 
-const Heading = (props) => (
-  <View style={[styles.heading]}>
-    <H1 style={props.style}>
-      {props.children}
-    </H1>
-  </View>
-);
-
-const SubHeading = (props) => (
+const SubHeading = props => (
   <View>
-    <H2 style={[styles.subHeading, props.style]}>
-      {props.children}
-    </H2>
+    <H2 style={[styles.subHeading, props.style]}>{props.children}</H2>
   </View>
 );
 
-const PaperSheet = (props) => (
+const PaperSheet = props => (
   <Fragment>
-    {
-      props.heading ?
-        <H4 style={styles.paperHead}>
-          {props.heading}
-        </H4>
-      :
-        null
-    }
+    {props.heading ? <H4 style={styles.paperHead}>{props.heading}</H4> : null}
     <Paper style={styles.paper}>
-      <View style={styles.paperBody}>
-        {props.children}
-      </View>
+      <View style={styles.paperBody}>{props.children}</View>
     </Paper>
   </Fragment>
 );
 
-const HorizontalLine = (props) => (
-  <View style={[props.style, styles.horizontalLine]}></View>
+const HorizontalLine = props => (
+  <View style={[props.style, styles.horizontalLine]} />
 );
 
-const Spacing = (props) => (
-  <View style={styles.spacing}></View>
-);
+const Spacing = props => <View style={styles.spacing} />;
 
-const ModalContent = (props) => (
+const ModalContent = props => (
   <ScrollView>
-    <View style={[styles.modal, props.style]}>
-      {props.children}
-    </View>
+    <View style={[styles.modal, props.style]}>{props.children}</View>
   </ScrollView>
-)
+);
 
 class ModalHeader extends Component<Props> {
   constructor(props) {
     super(props);
   }
 
-  render () {
+  render() {
     const {
       onBackButtonPress,
       heart,
@@ -195,12 +188,11 @@ class ModalHeader extends Component<Props> {
     return (
       <View style={styles.modalHeader}>
         <View style={styles.modalHeaderNav}>
-          <TouchableOpacity style={{ padding: 10, marginLeft: -10 }} onPress={onBackButtonPress}>
-            <FAIcon
-              name="chevron-left"
-              size={22}
-              color={colors.white}
-            />
+          <TouchableOpacity
+            style={{ padding: 10, marginLeft: -10 }}
+            onPress={onBackButtonPress}
+          >
+            <FAIcon name="chevron-left" size={22} color={colors.iconColor} />
           </TouchableOpacity>
           {
             heart ?
@@ -235,27 +227,27 @@ class ModalHeader extends Component<Props> {
   }
 }
 
-const CenteredActivityIndicator = (props) => (
-  <View style={{
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-    backgroundColor: colors.black
-  }}>
-    <ActivityIndicator size="large" color={colors.pink}/>
+const CenteredActivityIndicator = props => (
+  <View
+    style={{
+      flex: 1,
+      justifyContent: "center",
+      flexDirection: "row",
+      justifyContent: "space-around",
+      padding: 10,
+      backgroundColor: colors.backgroundColor.normal
+    }}
+  >
+    <ActivityIndicator size="large" color={colors.primaryColor} />
   </View>
-)
-const Button = (props) => (
+);
+const Button = props => (
   <View>
     <View style={[styles.button, props.style]}>
-      <H3 style={styles.buttonText}>
-        {props.text}
-      </H3>
+      <H3 style={styles.buttonText}>{props.text}</H3>
     </View>
   </View>
-)
+);
 
 const modalStyle = { margin: 0 }
 

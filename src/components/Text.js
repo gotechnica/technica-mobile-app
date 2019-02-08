@@ -7,37 +7,36 @@ import {
 
 const styles = StyleSheet.create({
   text: {
-    color: colors.white,
-    fontFamily: "Poppins-Regular",
-    fontSize: 12,
+    color: colors.textColor.normal,
   },
   h1: {
-    fontFamily: "DINPro-Black",
-    fontSize: 30,
+    color: colors.primaryColor,
+    fontFamily: "Aleo-Bold",
+    fontSize: 36,
   },
   h2: {
-    fontFamily: "Poppins-Bold",
-    fontSize: 18,
+    fontFamily: "AvenirLTStd-Black",
+    fontSize: 21,
   },
   h3: {
-    fontFamily: "Poppins-SemiBold",
-    fontSize: 14,
+    fontFamily: "AvenirLTStd-Medium",
+    fontSize: 16,
   },
   h4: {
-    fontFamily: "Poppins-SemiBold",
-    fontSize: 12,
+    fontFamily: "AvenirLTStd-Medium",
+    fontSize: 13,
   },
   h5: {
-    fontFamily: "DINPro-Medium",
-    fontSize: 10,
+    fontFamily: "Aleo-Regular",
+    fontSize: 11,
   },
   h6: {
-    fontFamily: "Poppins-Regular",
-    fontSize: 12,
+    fontFamily: "AvenirLTStd-Book",
+    fontSize: 13,
   },
   p: {
-    fontFamily: "Poppins-Regular",
-    fontSize: 14,
+    fontFamily: "AvenirLTStd-Book",
+    fontSize: 15,
   },
 });
 

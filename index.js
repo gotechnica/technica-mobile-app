@@ -10,7 +10,7 @@ export default (Main = () => {
   eventManager = new EventManager();
   return (
     <PaperProvider>
-      <StatusBar backgroundColor={colors.black} barStyle="light-content" />
+      <StatusBar backgroundColor={colors.primaryColor} barStyle="light-content" />
       <App eventManager={eventManager} />
     </PaperProvider>
   );

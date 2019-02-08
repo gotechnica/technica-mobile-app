@@ -75,6 +75,30 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>aleo-bold-webfont.ttf</string>
+		<string>Aleo-Bold.otf</string>
+		<string>aleo-bolditalic-webfont.ttf</string>
+		<string>Aleo-BoldItalic.otf</string>
+		<string>aleo-italic-webfont.ttf</string>
+		<string>Aleo-Italic.otf</string>
+		<string>aleo-light-webfont.ttf</string>
+		<string>Aleo-Light.otf</string>
+		<string>aleo-lightitalic-webfont.ttf</string>
+		<string>Aleo-LightItalic.otf</string>
+		<string>aleo-regular-webfont.ttf</string>
+		<string>Aleo-Regular.otf</string>
+		<string>AvenirLTStd-Black.otf</string>
+		<string>AvenirLTStd-BlackOblique.otf</string>
+		<string>AvenirLTStd-Book.otf</string>
+		<string>AvenirLTStd-BookOblique.otf</string>
+		<string>AvenirLTStd-Heavy.otf</string>
+		<string>AvenirLTStd-HeavyOblique.otf</string>
+		<string>AvenirLTStd-Light.otf</string>
+		<string>AvenirLTStd-LightOblique.otf</string>
+		<string>AvenirLTStd-Medium.otf</string>
+		<string>AvenirLTStd-MediumOblique.otf</string>
+		<string>AvenirLTStd-Oblique.otf</string>
+		<string>AvenirLTStd-Roman.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

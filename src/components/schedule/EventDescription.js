@@ -76,12 +76,12 @@ export default class EventDescription extends Component<Props> {
           <View style={[styles.row]}>
             <View style={[styles.col, { flex: 4 }]}>
               <H3>{event.title}</H3>
-              <H4 style={{ color: colors.fontGrey }}>
+              <H4 style={{ color: colors.textColor.light }}>
                 {event.startTime == event.endTime
                   ? `${event.startTimeFormatted}`
                   : `${event.startTimeFormatted} - ${event.endTimeFormatted}`}
               </H4>
-              <H4 style={{ color: colors.fontGrey }}>{event.location}</H4>
+              <H4 style={{ color: colors.textColor.light }}>{event.location}</H4>
             </View>
             <View style={[styles.row, { flex: 1, justifyContent: "flex-end" }]}>
               <EventHeart

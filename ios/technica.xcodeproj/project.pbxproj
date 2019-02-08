@@ -52,6 +52,30 @@
 		C9723FFDF678445FB69C7D8D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B8494620D24496FBF21954B /* Foundation.ttf */; };
 		DCF3FDD7EECB435CB611100C /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7B5BA6452244BC3BB10FCDB /* Ionicons.ttf */; };
 		E9DB9C1347854E328E21F5F5 /* DINPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 049F686795D642A5878F92B3 /* DINPro-Medium.otf */; };
+		FB0F665C3D764D0DB36F6E5C /* aleo-bold-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F87AA7CD9AC4868B821DFE6 /* aleo-bold-webfont.ttf */; };
+		DA2A45622B924B15ABEAC545 /* Aleo-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6EF9AFB169E34D9FAEF8ABDA /* Aleo-Bold.otf */; };
+		A54D970E5F464C329A05BCB5 /* aleo-bolditalic-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD114B7E0856445195872880 /* aleo-bolditalic-webfont.ttf */; };
+		F34CDF711E5B4D9A822CFD20 /* Aleo-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C6D3F60F3F84392B8094F01 /* Aleo-BoldItalic.otf */; };
+		2ABE07557321467EA03552C8 /* aleo-italic-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99BD32CB3A2B413D8B1EAF52 /* aleo-italic-webfont.ttf */; };
+		0818853C26DC49738B382B61 /* Aleo-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8051F7C7A18A42D1B6420E57 /* Aleo-Italic.otf */; };
+		7716041FEF72462A92BC96FA /* aleo-light-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6045F76AA3A44B2BAEB629BA /* aleo-light-webfont.ttf */; };
+		3E0405A4A509433AB46393E7 /* Aleo-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9A6B5821D81547C5ADE60834 /* Aleo-Light.otf */; };
+		09D9A6744DF140E093F2C494 /* aleo-lightitalic-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 007CC0471B204F4C920DDC23 /* aleo-lightitalic-webfont.ttf */; };
+		BA909FC9D7D345A9970077A6 /* Aleo-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E68BA4337AD5411F98C67C58 /* Aleo-LightItalic.otf */; };
+		64082AE614A2476D9D6647E5 /* aleo-regular-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76CFF51303104596B4AFBB59 /* aleo-regular-webfont.ttf */; };
+		D49FD1C70E9A4807B710C4FF /* Aleo-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 90B0E1EC1CD0410CB5EAE03A /* Aleo-Regular.otf */; };
+		C3C5E68535D14139B7ACC864 /* AvenirLTStd-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = F7CE32CFA56746C0939E7437 /* AvenirLTStd-Black.otf */; };
+		F6843383DAE54F74BFC1EFF1 /* AvenirLTStd-BlackOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4505017204AB4E8AA91371E4 /* AvenirLTStd-BlackOblique.otf */; };
+		95A64837706D467DBDCEEF40 /* AvenirLTStd-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5BE30D9A49540EA9E8E6185 /* AvenirLTStd-Book.otf */; };
+		EDC61D4C06EE491D867877AC /* AvenirLTStd-BookOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0526784403534ED489D82757 /* AvenirLTStd-BookOblique.otf */; };
+		4C27751EDD4044178BCFB87C /* AvenirLTStd-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98A517F0C0C0473788D6C985 /* AvenirLTStd-Heavy.otf */; };
+		070EC0B31501406AA7C85720 /* AvenirLTStd-HeavyOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = BDC820F169864A58A0F31DBF /* AvenirLTStd-HeavyOblique.otf */; };
+		F50F865E9AFE49DC9D043AD6 /* AvenirLTStd-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 82EF504C683B42C5B8ED5175 /* AvenirLTStd-Light.otf */; };
+		AD1F046F6F064EAEAB503B38 /* AvenirLTStd-LightOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 85C777968E8E4E65BD98553F /* AvenirLTStd-LightOblique.otf */; };
+		29FAF2FD81C04057BC4ED29D /* AvenirLTStd-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 449688A3F92944888B73ACCC /* AvenirLTStd-Medium.otf */; };
+		0018515A75EB434DBB048CAA /* AvenirLTStd-MediumOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = F6120CAA86504893BE776CDE /* AvenirLTStd-MediumOblique.otf */; };
+		22F0F0AD6647474CBC114F5D /* AvenirLTStd-Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = D53F96C54DC648CC9AE3CC57 /* AvenirLTStd-Oblique.otf */; };
+		5C08E19F69584DF589D8AACA /* AvenirLTStd-Roman.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9375273A7C9741AAAA0365DF /* AvenirLTStd-Roman.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -435,6 +459,30 @@
 		F9CF50CDDF5A4550A785FD92 /* libPods-technicaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-technicaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC70FCD806947CA99C06B75 /* DINPro-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DINPro-Bold.otf"; path = "../assets/fonts/DINPro-Bold.otf"; sourceTree = "<group>"; };
 		FB1B63A26D412DB69337A226 /* Pods-technica-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technica-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-technica-tvOS/Pods-technica-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		7F87AA7CD9AC4868B821DFE6 /* aleo-bold-webfont.ttf */ = {isa = PBXFileReference; name = "aleo-bold-webfont.ttf"; path = "../assets/fonts/aleo-bold-webfont.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6EF9AFB169E34D9FAEF8ABDA /* Aleo-Bold.otf */ = {isa = PBXFileReference; name = "Aleo-Bold.otf"; path = "../assets/fonts/Aleo-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FD114B7E0856445195872880 /* aleo-bolditalic-webfont.ttf */ = {isa = PBXFileReference; name = "aleo-bolditalic-webfont.ttf"; path = "../assets/fonts/aleo-bolditalic-webfont.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8C6D3F60F3F84392B8094F01 /* Aleo-BoldItalic.otf */ = {isa = PBXFileReference; name = "Aleo-BoldItalic.otf"; path = "../assets/fonts/Aleo-BoldItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		99BD32CB3A2B413D8B1EAF52 /* aleo-italic-webfont.ttf */ = {isa = PBXFileReference; name = "aleo-italic-webfont.ttf"; path = "../assets/fonts/aleo-italic-webfont.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8051F7C7A18A42D1B6420E57 /* Aleo-Italic.otf */ = {isa = PBXFileReference; name = "Aleo-Italic.otf"; path = "../assets/fonts/Aleo-Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6045F76AA3A44B2BAEB629BA /* aleo-light-webfont.ttf */ = {isa = PBXFileReference; name = "aleo-light-webfont.ttf"; path = "../assets/fonts/aleo-light-webfont.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9A6B5821D81547C5ADE60834 /* Aleo-Light.otf */ = {isa = PBXFileReference; name = "Aleo-Light.otf"; path = "../assets/fonts/Aleo-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		007CC0471B204F4C920DDC23 /* aleo-lightitalic-webfont.ttf */ = {isa = PBXFileReference; name = "aleo-lightitalic-webfont.ttf"; path = "../assets/fonts/aleo-lightitalic-webfont.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E68BA4337AD5411F98C67C58 /* Aleo-LightItalic.otf */ = {isa = PBXFileReference; name = "Aleo-LightItalic.otf"; path = "../assets/fonts/Aleo-LightItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		76CFF51303104596B4AFBB59 /* aleo-regular-webfont.ttf */ = {isa = PBXFileReference; name = "aleo-regular-webfont.ttf"; path = "../assets/fonts/aleo-regular-webfont.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		90B0E1EC1CD0410CB5EAE03A /* Aleo-Regular.otf */ = {isa = PBXFileReference; name = "Aleo-Regular.otf"; path = "../assets/fonts/Aleo-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F7CE32CFA56746C0939E7437 /* AvenirLTStd-Black.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-Black.otf"; path = "../assets/fonts/AvenirLTStd-Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4505017204AB4E8AA91371E4 /* AvenirLTStd-BlackOblique.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-BlackOblique.otf"; path = "../assets/fonts/AvenirLTStd-BlackOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F5BE30D9A49540EA9E8E6185 /* AvenirLTStd-Book.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-Book.otf"; path = "../assets/fonts/AvenirLTStd-Book.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0526784403534ED489D82757 /* AvenirLTStd-BookOblique.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-BookOblique.otf"; path = "../assets/fonts/AvenirLTStd-BookOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		98A517F0C0C0473788D6C985 /* AvenirLTStd-Heavy.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-Heavy.otf"; path = "../assets/fonts/AvenirLTStd-Heavy.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BDC820F169864A58A0F31DBF /* AvenirLTStd-HeavyOblique.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-HeavyOblique.otf"; path = "../assets/fonts/AvenirLTStd-HeavyOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		82EF504C683B42C5B8ED5175 /* AvenirLTStd-Light.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-Light.otf"; path = "../assets/fonts/AvenirLTStd-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		85C777968E8E4E65BD98553F /* AvenirLTStd-LightOblique.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-LightOblique.otf"; path = "../assets/fonts/AvenirLTStd-LightOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		449688A3F92944888B73ACCC /* AvenirLTStd-Medium.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-Medium.otf"; path = "../assets/fonts/AvenirLTStd-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F6120CAA86504893BE776CDE /* AvenirLTStd-MediumOblique.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-MediumOblique.otf"; path = "../assets/fonts/AvenirLTStd-MediumOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D53F96C54DC648CC9AE3CC57 /* AvenirLTStd-Oblique.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-Oblique.otf"; path = "../assets/fonts/AvenirLTStd-Oblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9375273A7C9741AAAA0365DF /* AvenirLTStd-Roman.otf */ = {isa = PBXFileReference; name = "AvenirLTStd-Roman.otf"; path = "../assets/fonts/AvenirLTStd-Roman.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -746,6 +794,30 @@
 				9ED5C10F9F614ABEAFB231FD /* Octicons.ttf */,
 				2F773E8B5F5E47E683C3AFA3 /* SimpleLineIcons.ttf */,
 				345DAA843FF54B53B50EDFA0 /* Zocial.ttf */,
+				7F87AA7CD9AC4868B821DFE6 /* aleo-bold-webfont.ttf */,
+				6EF9AFB169E34D9FAEF8ABDA /* Aleo-Bold.otf */,
+				FD114B7E0856445195872880 /* aleo-bolditalic-webfont.ttf */,
+				8C6D3F60F3F84392B8094F01 /* Aleo-BoldItalic.otf */,
+				99BD32CB3A2B413D8B1EAF52 /* aleo-italic-webfont.ttf */,
+				8051F7C7A18A42D1B6420E57 /* Aleo-Italic.otf */,
+				6045F76AA3A44B2BAEB629BA /* aleo-light-webfont.ttf */,
+				9A6B5821D81547C5ADE60834 /* Aleo-Light.otf */,
+				007CC0471B204F4C920DDC23 /* aleo-lightitalic-webfont.ttf */,
+				E68BA4337AD5411F98C67C58 /* Aleo-LightItalic.otf */,
+				76CFF51303104596B4AFBB59 /* aleo-regular-webfont.ttf */,
+				90B0E1EC1CD0410CB5EAE03A /* Aleo-Regular.otf */,
+				F7CE32CFA56746C0939E7437 /* AvenirLTStd-Black.otf */,
+				4505017204AB4E8AA91371E4 /* AvenirLTStd-BlackOblique.otf */,
+				F5BE30D9A49540EA9E8E6185 /* AvenirLTStd-Book.otf */,
+				0526784403534ED489D82757 /* AvenirLTStd-BookOblique.otf */,
+				98A517F0C0C0473788D6C985 /* AvenirLTStd-Heavy.otf */,
+				BDC820F169864A58A0F31DBF /* AvenirLTStd-HeavyOblique.otf */,
+				82EF504C683B42C5B8ED5175 /* AvenirLTStd-Light.otf */,
+				85C777968E8E4E65BD98553F /* AvenirLTStd-LightOblique.otf */,
+				449688A3F92944888B73ACCC /* AvenirLTStd-Medium.otf */,
+				F6120CAA86504893BE776CDE /* AvenirLTStd-MediumOblique.otf */,
+				D53F96C54DC648CC9AE3CC57 /* AvenirLTStd-Oblique.otf */,
+				9375273A7C9741AAAA0365DF /* AvenirLTStd-Roman.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1263,6 +1335,30 @@
 				48007E83B5064F4B9051D475 /* Octicons.ttf in Resources */,
 				3E2437571DF44AB08BB2EFF4 /* SimpleLineIcons.ttf in Resources */,
 				22616CE42C8D485D8AAA5128 /* Zocial.ttf in Resources */,
+				FB0F665C3D764D0DB36F6E5C /* aleo-bold-webfont.ttf in Resources */,
+				DA2A45622B924B15ABEAC545 /* Aleo-Bold.otf in Resources */,
+				A54D970E5F464C329A05BCB5 /* aleo-bolditalic-webfont.ttf in Resources */,
+				F34CDF711E5B4D9A822CFD20 /* Aleo-BoldItalic.otf in Resources */,
+				2ABE07557321467EA03552C8 /* aleo-italic-webfont.ttf in Resources */,
+				0818853C26DC49738B382B61 /* Aleo-Italic.otf in Resources */,
+				7716041FEF72462A92BC96FA /* aleo-light-webfont.ttf in Resources */,
+				3E0405A4A509433AB46393E7 /* Aleo-Light.otf in Resources */,
+				09D9A6744DF140E093F2C494 /* aleo-lightitalic-webfont.ttf in Resources */,
+				BA909FC9D7D345A9970077A6 /* Aleo-LightItalic.otf in Resources */,
+				64082AE614A2476D9D6647E5 /* aleo-regular-webfont.ttf in Resources */,
+				D49FD1C70E9A4807B710C4FF /* Aleo-Regular.otf in Resources */,
+				C3C5E68535D14139B7ACC864 /* AvenirLTStd-Black.otf in Resources */,
+				F6843383DAE54F74BFC1EFF1 /* AvenirLTStd-BlackOblique.otf in Resources */,
+				95A64837706D467DBDCEEF40 /* AvenirLTStd-Book.otf in Resources */,
+				EDC61D4C06EE491D867877AC /* AvenirLTStd-BookOblique.otf in Resources */,
+				4C27751EDD4044178BCFB87C /* AvenirLTStd-Heavy.otf in Resources */,
+				070EC0B31501406AA7C85720 /* AvenirLTStd-HeavyOblique.otf in Resources */,
+				F50F865E9AFE49DC9D043AD6 /* AvenirLTStd-Light.otf in Resources */,
+				AD1F046F6F064EAEAB503B38 /* AvenirLTStd-LightOblique.otf in Resources */,
+				29FAF2FD81C04057BC4ED29D /* AvenirLTStd-Medium.otf in Resources */,
+				0018515A75EB434DBB048CAA /* AvenirLTStd-MediumOblique.otf in Resources */,
+				22F0F0AD6647474CBC114F5D /* AvenirLTStd-Oblique.otf in Resources */,
+				5C08E19F69584DF589D8AACA /* AvenirLTStd-Roman.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

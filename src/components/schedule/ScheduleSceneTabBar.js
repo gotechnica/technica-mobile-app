@@ -48,10 +48,10 @@ ScheduleSceneTabBar.propTypes = {
 
 const styles = StyleSheet.create({
   activeText: {
-    color: colors.white,
+    color: colors.textColor.normal,
   },
   inactiveText: {
-    color: colors.fontGrey,
+    color: colors.textColor.light,
   },
   // bottomBorderInactive: {
   //   // alignSelf: 'stretch',

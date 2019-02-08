@@ -28,7 +28,7 @@ export default class EventModal extends Component {
     return (
       <Modal
         isVisible={props.isModalVisible}
-        backdropColor={colors.black}
+        backdropColor={colors.backgroundColor.normal}
         backdropOpacity={1}
         animationInTiming={250}
         animationIn="fadeInUp"
@@ -81,7 +81,7 @@ export default class EventModal extends Component {
             <Spacing />
             {props.event.beginnerFriendly ? (
               <Fragment>
-                <H4 style={{ color: colors.cyan }}>BEST FOR BEGINNERS</H4>
+                <H4 style={{ color: colors.secondaryColor }}>BEST FOR BEGINNERS</H4>
                 <Spacing />
               </Fragment>
             ) : null}
@@ -95,6 +95,6 @@ export default class EventModal extends Component {
 
 const styles = StyleSheet.create({
   subtext: {
-    color: colors.fontGrey,
+    color: colors.textColor.light,
   },
 });

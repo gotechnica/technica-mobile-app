@@ -44,10 +44,10 @@ export default class Login extends Component<Props> {
       savedSMS: '',
       fieldValue: '',
       placeholder: '',
-      greeting: 'Welcome to \nTECHNICA 2018',
-      instruction: 'Enter the phone number you used to \nsign up for Technica.',
+      greeting: 'Welcome to \nBitcamp 2019',
+      instruction: 'Enter the phone number you used to sign up for Bitcamp.',
       nextPage: (
-        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)} style={{marginTop: Platform.OS === 'ios' ? -280 : 280 }}>
+        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Button
               text="Next"
               style={{...styles.button}}
@@ -116,7 +116,7 @@ export default class Login extends Component<Props> {
           if(responseJson.statusCode == 200){
             this.setState({greeting: "Great!", instruction: "We're texting you a verification code. Please enter that code below to login.",
             nextPage: (
-              <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)} style={{marginTop: 280}}>
+              <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)}>
                   <Button
                       text='Submit'
                       size={22}
@@ -210,7 +210,6 @@ export default class Login extends Component<Props> {
 
   render() {
     return (
-      <ViewContainer>
         <PadContainer style={styles.subSection}>
           <Heading style={{ paddingBottom: 20 }}>
             {this.state.greeting}
@@ -223,20 +222,19 @@ export default class Login extends Component<Props> {
             value={this.state.fieldValue}
             underlineColorAndroid='rgba(0,0,0,0)'
             onChangeText={field => this.setState({ fieldValue: field })}
-            placeholderTextColor={colors.borderGrey}
+            placeholderTextColor={colors.textColor.light}
             keyboardType = 'numeric'
             style={{
-              borderColor: colors.white,
+              borderColor: colors.borderColor.normal,
               borderBottomWidth: 1,
               paddingBottom: 8,
               fontFamily: "DINPro-Medium",
               fontSize: 24,
-              color: colors.white,
+              color: colors.textColor.normal,
             }}
           />
-        </PadContainer>
         {this.state.nextPage}
-      </ViewContainer>
+        </PadContainer>
     );
   }
 }
@@ -250,14 +248,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   subSection: {
-    marginTop: '30%',
+    paddingTop: '30%',
+    backgroundColor: colors.backgroundColor.normal
   },
   columnContainer: {
     flex: 1, flexDirection: 'row'
   },
   button: {
     marginTop: 20,
-    backgroundColor: colors.pink,
+    backgroundColor: colors.primaryColor,
   },
   column: {
     flex: 5,

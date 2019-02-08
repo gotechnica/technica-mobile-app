@@ -69,7 +69,6 @@ export default class Schedule extends Component<Props> {
             renderItem={this.renderScheduleForDay}
             ListHeaderComponent={() => (
               <PadContainer>
-                <Heading>Schedule</Heading>
                 <ScheduleSceneTabBar
                   goToSection={i => {
                     this.scheduleListRef.scrollToIndex({
@@ -88,7 +87,7 @@ export default class Schedule extends Component<Props> {
                 style={{
                   marginTop: 20,
                   borderTopWidth: 1,
-                  borderColor: colors.borderGrey,
+                  borderColor: colors.borderColor.light,
                   paddingTop: 30,
                 }}
               >

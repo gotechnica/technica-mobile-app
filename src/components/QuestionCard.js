@@ -1,47 +1,49 @@
-import React, { Component, Fragment } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import React, { Component, Fragment } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { H4, H5, H6 } from "./Text";
-import moment from 'moment';
+import moment from "moment";
 import { colors } from "./Colors";
-import AnimatedEllipsis from 'react-native-animated-ellipsis';
+import AnimatedEllipsis from "react-native-animated-ellipsis";
 
 const styles = StyleSheet.create({
   question: {
-    // backgroundColor: colors.darkGrey,
+    // backgroundColor: colors.backgroundColor.light,
     paddingBottom: 20,
     paddingTop: 20,
     borderTopWidth: 1,
-    borderTopColor: colors.borderGrey,
+    borderTopColor: colors.borderColor.light
     // paddingLeft: 20,
     // paddingRight: 20,
     // marginBottom: 10
-  },
+  }
 });
 
 export default class QuestionCard extends Component {
-
   renderStatus() {
     const { status } = this.props;
     if (status.includes("claimed")) {
-      return <H6 style={{color: colors.cyan}}>{status}</H6>
+      return <H6 style={{ color: colors.secondaryColor }}>{status}</H6>;
     } else {
-      return <Fragment>
-        <H6 style={{ color: colors.lavender }}>{status}<AnimatedEllipsis style={{ fontSize: 12, marginLeft: -4 }}/></H6>
-      </Fragment>
+      return (
+        <Fragment>
+          <H6 style={{ color: colors.secondaryColor }}>
+            {status}
+            <AnimatedEllipsis style={{ fontSize: 12, marginLeft: -4 }} />
+          </H6>
+        </Fragment>
+      );
     }
   }
   render() {
     const { question, location, time } = this.props;
     console.log("MY PROPS", this.props);
     return (
-      <View style = {styles.question}>
-        <H4 style={{color: colors.white}}>"{question}"</H4>
-        <H4 style={{color: colors.fontGrey, marginBottom: 10}}>{location}</H4>
-        {/* // <H6 style={{color: colors.fontGrey, marginBottom: 10}}>{moment(time).format("h:mma, dddd")}</H6> */}
+      <View style={styles.question}>
+        <H4 style={{ color: colors.textColor.normal }}>"{question}"</H4>
+        <H4 style={{ color: colors.textColor.light, marginBottom: 10 }}>
+          {location}
+        </H4>
+        {/* // <H6 style={{color: colors.textColor.light, marginBottom: 10}}>{moment(time).format("h:mma, dddd")}</H6> */}
         {this.renderStatus()}
       </View>
     );
