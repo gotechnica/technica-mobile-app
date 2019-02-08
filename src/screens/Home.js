@@ -159,27 +159,8 @@ export default class Home extends Component<Props> {
     return (
       <ViewContainer>
         <PadContainer>
-          <View style={styles.headingRow}>
-            <Heading logo>Bitcamp 2019</Heading>
-            <TouchableOpacity onPress={this.toggleMapModal}>
-              <Icon
-                name="map"
-                size={30}
-                color={colors.primaryColor}
-                style={{
-                  paddingTop: 34,
-                  marginBottom: 20,
-                  opacity: 0.8
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-          <CountdownTimer />
+        <CountdownTimer />
         </PadContainer>
-        <MapModal
-          isModalVisible={this.state.isMapModalVisible}
-          toggleModal={this.toggleMapModal}
-        />
         {this.renderUpdatesSection()}
         {this.renderPopularEventsSection()}
         {this.renderBestForBeginnersSection()}

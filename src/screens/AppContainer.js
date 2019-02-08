@@ -24,7 +24,7 @@ const channelName = "Technica Announcements";
 export default class AppContainer extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: (
-      <View>
+      <View style={{flex: 1}}>
         <View
           style={{
             flexDirection: "row",
@@ -47,6 +47,7 @@ export default class AppContainer extends Component<Props> {
           {navigation.state.params && navigation.state.params.showMapIcon ? (
             <TouchableOpacity
               onPress={() => navigation.state.params.toggleMapModal()}
+              style={{marginRight: 20}}
             >
               <Icon
                 name="map"
@@ -74,7 +75,8 @@ export default class AppContainer extends Component<Props> {
       elevation: 0,
       shadowOpacity: 0,
       backgroundColor: colors.backgroundColor.normal
-    }
+    },
+    headerLeft: null
   });
 
   constructor(props) {
@@ -112,7 +114,7 @@ export default class AppContainer extends Component<Props> {
         <ScrollableTabView
           tabBarPosition="bottom"
           locked
-          style={{ backgroundColor: colors.backgroundColor.normal }}
+          style={{ backgroundColor: colors.backgroundColor.normal, paddingTop: 40 }}
           renderTabBar={() => <CustomTabBar />}
           onChangeTab={tab => {
             const tabIndex = tab.i;

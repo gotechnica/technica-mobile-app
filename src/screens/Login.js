@@ -45,7 +45,7 @@ export default class Login extends Component<Props> {
       fieldValue: '',
       placeholder: '',
       greeting: 'Welcome to \nBitcamp 2019',
-      instruction: 'Enter the phone number you used to \nsign up for Bitcamp.',
+      instruction: 'Enter the phone number you used to sign up for Bitcamp.',
       nextPage: (
         <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Button

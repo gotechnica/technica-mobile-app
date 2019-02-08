@@ -69,7 +69,6 @@ export default class Schedule extends Component<Props> {
             renderItem={this.renderScheduleForDay}
             ListHeaderComponent={() => (
               <PadContainer>
-                <Heading logo>Schedule</Heading>
                 <ScheduleSceneTabBar
                   goToSection={i => {
                     this.scheduleListRef.scrollToIndex({

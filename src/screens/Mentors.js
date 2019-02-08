@@ -161,7 +161,6 @@ export default class Mentors extends Component<Props> {
   renderHeading() {
     return (
       <React.Fragment>
-        <Heading logo>Mentors</Heading>
         <SubHeading>Ask our mentors for help</SubHeading>
       </React.Fragment>
     );
