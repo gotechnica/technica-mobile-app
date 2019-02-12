@@ -12,7 +12,7 @@ import { colors } from "../components/Colors";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import ScrollableTabView from "react-native-scrollable-tab-view";
 import { PushNotificationIOS, View, TouchableOpacity } from "react-native";
-import { AsyncStorage, SafeAreaView, BackHandler } from "react-native";
+import { AsyncStorage, SafeAreaView, BackHandler, Platform } from "react-native";
 import { Heading, PadContainer, ViewContainer } from "../components/Base";
 import MapModal from "../components/MapModal";
 
@@ -23,7 +23,7 @@ const channelName = "Technica Announcements";
 
 export default class AppContainer extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: (
+    headerTitle: Platform.OS == "ios" ? "Bitcamp 2019" : (
       <View style={{flex: 1}}>
         <View
           style={{
@@ -33,25 +33,25 @@ export default class AppContainer extends Component<Props> {
           }}
         >
           <Heading
-            //style={{marginLeft:"4%", marginTop: "4%"}}
+            style={{marginLeft:"4%", marginTop: "4%"}}
             logo
           >
             {navigation.state.params
               ? navigation.state.params.title
               : "Bitcamp 2019"}
           </Heading>
-
+    
           {navigation.state.params && navigation.state.params.showMapIcon ? (
             <TouchableOpacity
               onPress={() => navigation.state.params.toggleMapModal()}
-              //style={{marginRight: "4%"}}
+              style={{marginRight: "4%"}}
             >
               <Icon
                 name="map"
                 size={30}
                 color={colors.primaryColor}
                 style={{
-                  //marginTop: "100%",
+                  marginTop: "100%",
                   opacity: 0.8
                 }}
               />
