@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0018515A75EB434DBB048CAA /* AvenirLTStd-MediumOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = F6120CAA86504893BE776CDE /* AvenirLTStd-MediumOblique.otf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -76,6 +75,8 @@
 		F50F865E9AFE49DC9D043AD6 /* AvenirLTStd-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 82EF504C683B42C5B8ED5175 /* AvenirLTStd-Light.otf */; };
 		F6843383DAE54F74BFC1EFF1 /* AvenirLTStd-BlackOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4505017204AB4E8AA91371E4 /* AvenirLTStd-BlackOblique.otf */; };
 		FB0F665C3D764D0DB36F6E5C /* aleo-bold-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F87AA7CD9AC4868B821DFE6 /* aleo-bold-webfont.ttf */; };
+		E9C96B0EAF7B4CAAA5FCE4FC /* DINPro-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1E069C90397542EFA554EE70 /* DINPro-Light.otf */; };
+		0B3DB2C08EC34B93B06A42A9 /* DINPro-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = C4383EDEF9704B42AB46FB32 /* DINPro-Medium.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -483,6 +484,8 @@
 		FAC70FCD806947CA99C06B75 /* DINPro-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DINPro-Bold.otf"; path = "../assets/fonts/DINPro-Bold.otf"; sourceTree = "<group>"; };
 		FB1B63A26D412DB69337A226 /* Pods-technica-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technica-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-technica-tvOS/Pods-technica-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		FD114B7E0856445195872880 /* aleo-bolditalic-webfont.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "aleo-bolditalic-webfont.ttf"; path = "../assets/fonts/aleo-bolditalic-webfont.ttf"; sourceTree = "<group>"; };
+		1E069C90397542EFA554EE70 /* DINPro-Light.otf */ = {isa = PBXFileReference; name = "DINPro-Light.otf"; path = "../assets/fonts/DINPro-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C4383EDEF9704B42AB46FB32 /* DINPro-Medium.otf */ = {isa = PBXFileReference; name = "DINPro-Medium.otf"; path = "../assets/fonts/DINPro-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -818,6 +821,8 @@
 				F6120CAA86504893BE776CDE /* AvenirLTStd-MediumOblique.otf */,
 				D53F96C54DC648CC9AE3CC57 /* AvenirLTStd-Oblique.otf */,
 				9375273A7C9741AAAA0365DF /* AvenirLTStd-Roman.otf */,
+				1E069C90397542EFA554EE70 /* DINPro-Light.otf */,
+				C4383EDEF9704B42AB46FB32 /* DINPro-Medium.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1359,6 +1364,8 @@
 				0018515A75EB434DBB048CAA /* AvenirLTStd-MediumOblique.otf in Resources */,
 				22F0F0AD6647474CBC114F5D /* AvenirLTStd-Oblique.otf in Resources */,
 				5C08E19F69584DF589D8AACA /* AvenirLTStd-Roman.otf in Resources */,
+				E9C96B0EAF7B4CAAA5FCE4FC /* DINPro-Light.otf in Resources */,
+				0B3DB2C08EC34B93B06A42A9 /* DINPro-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
