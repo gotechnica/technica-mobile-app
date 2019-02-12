@@ -33,10 +33,7 @@ export default class AppContainer extends Component<Props> {
           }}
         >
           <Heading
-            style={{
-              paddingLeft: 20,
-              paddingTop: 20
-            }}
+            style={{marginLeft: 20, marginTop: 20}}
             logo
           >
             {navigation.state.params
@@ -54,7 +51,7 @@ export default class AppContainer extends Component<Props> {
                 size={30}
                 color={colors.primaryColor}
                 style={{
-                  paddingTop: 34,
+                  marginTop: 34,
                   opacity: 0.8
                 }}
               />
