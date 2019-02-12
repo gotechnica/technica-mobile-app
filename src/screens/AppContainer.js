@@ -33,7 +33,7 @@ export default class AppContainer extends Component<Props> {
           }}
         >
           <Heading
-            style={{marginLeft:"4%", marginTop: "4%"}}
+            //style={{marginLeft:"4%", marginTop: "4%"}}
             logo
           >
             {navigation.state.params
@@ -44,14 +44,14 @@ export default class AppContainer extends Component<Props> {
           {navigation.state.params && navigation.state.params.showMapIcon ? (
             <TouchableOpacity
               onPress={() => navigation.state.params.toggleMapModal()}
-              style={{marginRight: "4%"}}
+              //style={{marginRight: "4%"}}
             >
               <Icon
                 name="map"
                 size={30}
                 color={colors.primaryColor}
                 style={{
-                  marginTop: "100%",
+                  //marginTop: "100%",
                   opacity: 0.8
                 }}
               />
