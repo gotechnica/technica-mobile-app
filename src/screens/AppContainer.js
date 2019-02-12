@@ -18,8 +18,8 @@ import MapModal from "../components/MapModal";
 
 import firebase from "react-native-firebase";
 
-const channelId = "technica-push-notifications";
-const channelName = "Technica Announcements";
+const channelId = "bitcamp-push-notifications";
+const channelName = "Bitcamp Announcements";
 
 export default class AppContainer extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
@@ -194,7 +194,7 @@ export default class AppContainer extends Component<Props> {
       channelName,
       firebase.notifications.Android.Importance.Max
     ).setDescription(
-      "Technica notification channel for delivering important announcements"
+      "Bitcamp notification channel for delivering important announcements"
     );
 
     firebase.notifications().android.createChannel(channel);

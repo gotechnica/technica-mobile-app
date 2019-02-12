@@ -1,4 +1,4 @@
-package com.technica.technica18;
+package com.bitcamp.bitcamp19;
 
 import android.app.Application;
 

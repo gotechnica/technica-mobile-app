@@ -99,7 +99,7 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "com.technica.technica18"
+        applicationId "com.bitcamp.bitcamp19"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 9
