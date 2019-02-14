@@ -15,82 +15,22 @@ import { PushNotificationIOS, View, TouchableOpacity } from "react-native";
 import { AsyncStorage, SafeAreaView, BackHandler, Platform } from "react-native";
 import { Heading, PadContainer, ViewContainer } from "../components/Base";
 import MapModal from "../components/MapModal";
-
+import {Button} from "react-native"
 import firebase from "react-native-firebase";
 
 const channelId = "bitcamp-push-notifications";
 const channelName = "Bitcamp Announcements";
 
 export default class AppContainer extends Component<Props> {
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: Platform.OS == "ios" ? 
-      <View style={{ flex: 1 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center"
-          }}>
-            <Heading
-            style={{paddingTop: 0, marginBottom: 0}}
-            logo
-          >
-            {navigation.state.params
-              ? navigation.state.params.title
-              : "Bitcamp 2019"}
-          </Heading>
-        </View>
-      </View> : (
-      <View style={{flex: 1}}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center"
-          }}
-        >
-          <Heading
-            style={{marginLeft:"4%", marginTop: "4%"}}
-            logo
-          >
-            {navigation.state.params
-              ? navigation.state.params.title
-              : "Bitcamp 2019"}
-          </Heading>
-    
-          {navigation.state.params && navigation.state.params.showMapIcon ? (
-            <TouchableOpacity
-              onPress={() => navigation.state.params.toggleMapModal()}
-              style={{marginRight: "4%"}}
-            >
-              <Icon
-                name="map"
-                size={30}
-                color={colors.primaryColor}
-                style={{
-                  marginTop: "100%",
-                  opacity: 0.8
-                }}
-              />
-            </TouchableOpacity>
-          ) : null}
-        </View>
-        <MapModal
-          isModalVisible={
-            navigation.state.params
-              ? navigation.state.params.isMapModalVisible
-              : false
-          }
-          toggleModal={() => navigation.state.params.toggleMapModal()}
-        />
-      </View>
+  static navigationOptions = ({navigation}) => ({
+    headerTitle: navigation.getParam("title"),
+    headerRight: (
+      <Button
+        onPress={() => alert('This is a button!')}
+        title="Info"
+        color="#fff"
+      />
     ),
-    headerStyle: {
-      elevation: 0,
-      shadowOpacity: 0,
-      backgroundColor: colors.backgroundColor.normal
-    },
-    headerLeft: null
   });
 
   constructor(props) {
