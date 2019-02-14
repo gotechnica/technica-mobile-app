@@ -32,7 +32,7 @@ export default class AppContainer extends Component<Props> {
             alignItems: "center"
           }}>
             <Heading
-            style={{marginLeft:"4%", marginTop: "4%", paddingTop: 0, marginBottom: 0}}
+            style={{paddingTop: 0, marginBottom: 0}}
             logo
           >
             {navigation.state.params
