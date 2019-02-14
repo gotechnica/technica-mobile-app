@@ -23,7 +23,24 @@ const channelName = "Bitcamp Announcements";
 
 export default class AppContainer extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: Platform.OS == "ios" ? <View style={{flex: 1}}>Bitcamp 2019</View> : (
+    headerTitle: Platform.OS == "ios" ? 
+      <View style={{ flex: 1 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}>
+            <Heading
+            style={{marginLeft:"4%", marginTop: "4%", paddingTop: 0, marginBottom: 0}}
+            logo
+          >
+            {navigation.state.params
+              ? navigation.state.params.title
+              : "Bitcamp 2019"}
+          </Heading>
+        </View>
+      </View> : (
       <View style={{flex: 1}}>
         <View
           style={{
