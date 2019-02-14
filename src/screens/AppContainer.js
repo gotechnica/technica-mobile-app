@@ -23,7 +23,7 @@ const channelName = "Technica Announcements";
 
 export default class AppContainer extends Component<Props> {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: Platform.OS == "ios" ? "Bitcamp 2019" : (
+    headerTitle: Platform.OS == "ios" ? <View style={{flex: 1}}>Bitcamp 2019</View> : (
       <View style={{flex: 1}}>
         <View
           style={{
