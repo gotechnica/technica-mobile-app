@@ -6,12 +6,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import Toast from 'react-native-simple-toast';
 
-
-import EventDay from './EventDay';
-import EventGroup from './EventGroup';
-import Event from './Event';
-
-import { normalizeTimeLabel, createEventGroup, createEventDay } from '../actions/util.js';
+import { createEventDay } from '../actions/util.js';
 
 const APP_ID = '@com.technica.technica18:';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
@@ -51,15 +46,15 @@ export default class EventsManager {
 
       //loads the copy of the schedule on the users phone
       AsyncStorage.getItem(SCHEDULE_STORAGE_KEY, (err, result) => {
+          console.log("RESULT: " + result);
           if(result != null){
-            this.processNewEvents(JSON.parse(result), false);
+            //this.processNewEvents(JSON.parse(result), false);
           }
 
           //after we load the local schedule we will finally add the database query listener for schedule
           firebase.database().ref('/Schedule')
             .on('value', async (snapshot) => {
               let data = snapshot.val();
-
               //store new schedule on phone
               AsyncStorage.setItem(SCHEDULE_STORAGE_KEY, JSON.stringify(data), function(error){
                 if (error){
@@ -67,7 +62,7 @@ export default class EventsManager {
                 }
               });
 
-              this.processNewEvents(data, true);
+              //this.processNewEvents(data, true);
           });
       });
     });

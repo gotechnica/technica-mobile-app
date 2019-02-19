@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
 import { DefaultTheme, BottomNavigation } from 'react-native-paper';
 import { YellowBox, AsyncStorage, ActivityIndicator } from 'react-native';
-import Home from './screens/Home';
-import Mentors from './screens/Mentors';
-import Saved from './screens/Saved';
-import Schedule from './screens/Schedule';
 import Login from './screens/Login';
-import CustomTabBar from './components/CustomTabBar';
-import { H5 } from './components/Text';
-import { colors } from './components/Colors';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
 import AppContainer from './screens/AppContainer';
 import {View} from 'react-native'
 import { createStackNavigator} from 'react-navigation';

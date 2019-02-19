@@ -15,7 +15,8 @@ import { PushNotificationIOS, View, TouchableOpacity } from "react-native";
 import { AsyncStorage, SafeAreaView, BackHandler, Platform } from "react-native";
 import { Heading, PadContainer, ViewContainer } from "../components/Base";
 import MapModal from "../components/MapModal";
-import {Button} from "react-native"
+import SearchModal from "../components/SearchModal";
+import {Button, Image, Text, TouchableHighlight} from "react-native"
 import firebase from "react-native-firebase";
 
 const channelId = "bitcamp-push-notifications";
@@ -23,35 +24,112 @@ const channelName = "Bitcamp Announcements";
 
 export default class AppContainer extends Component<Props> {
   static navigationOptions = ({navigation}) => ({
-    headerTitle: navigation.getParam("title"),
-    headerRight: (
-      <Button
-        onPress={() => alert('This is a button!')}
-        title="Info"
-        color="#fff"
-      />
+    headerStyle: {
+      elevation: 0,
+      shadowOpacity: 0,
+      shadowColor: 'transparent'
+    },
+    headerTitleStyle: {
+      textAlign: 'left',
+      justifyContent: 'space-between',
+      fontFamily: 'Aleo-Bold',
+      fontSize: 25
+    },
+    headerRight:       
+    navigation.getParam("showMapIcon") ?
+    ( 
+      <View>
+        <View style={{flexDirection:"row", paddingRight: 15}}>
+          <View style={{flex:1}}>
+            <TouchableHighlight onPress={navigation.getParam("toggleMapModal")}>
+              <Icon
+                name="map"
+                size={30}
+                color="orange"
+              />
+            </TouchableHighlight>
+          </View>
+        </View>
+        <MapModal
+          isModalVisible={
+            navigation.state.params
+              ? navigation.getParam("isMapModalVisible")
+              : false
+          }
+          toggleModal={() => navigation.state.params.toggleMapModal()}
+        />
+      </View>
+    )
+    :
+    ( 
+      <View>
+        <View style={{flexDirection:"row", paddingRight: 15}}>
+          <View style={{flex:1}}>
+            <TouchableHighlight onPress={navigation.getParam("toggleSearchModal")}>
+              <Icon
+                name="magnifier"
+                size={30}
+                color="orange"
+              />
+            </TouchableHighlight>
+          </View>
+        </View>
+        <SearchModal
+          isModalVisible={
+            navigation.state.params
+              ? navigation.getParam("isSearchModalVisible")
+              : false
+          }
+          toggleModal={() => navigation.state.params.toggleSearchModal()}
+        />
+      </View>
+    ),
+    headerLeft: (
+      <View style={{flexDirection:"row", paddingLeft: 15}}>
+        <View style={{flex:1}}>
+          <Image
+            source={require('../../assets/imgs/bitcamp-logo-icon.png')}
+            style={{width: 40, height: 40}}
+          />
+        </View>
+        <View style={{flex:1, paddingLeft: 15, paddingTop: 5}}>
+          <Text style={{fontFamily: "Aleo-Bold", fontSize: 25}}>{navigation.getParam("title")}</Text>
+        </View>
+      </View>
     ),
   });
 
   constructor(props) {
     super(props);
+
     this.state = {
-      page: 0
+      page: 0,
+      isMapModalVisible: false
     };
-    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
 
     this.toggleMapModal = this.toggleMapModal.bind(this);
+    this.toggleSearchModal = this.toggleSearchModal.bind(this);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+
     this.props.navigation.setParams({
       title: "Bitcamp 2019",
+      showMapIcon: true,
       isMapModalVisible: false,
+      isSearchModalVisible: false,
       toggleMapModal: this.toggleMapModal,
-      showMapIcon: true
+      toggleSearchModal: this.toggleSearchModal
     });
   }
 
   toggleMapModal = () => {
     this.props.navigation.setParams({
-      isMapModalVisible: !this.props.navigation.state.params.isMapModalVisible
+      isMapModalVisible: !(this.props.navigation.getParam("isMapModalVisible"))
+    });
+  };
+
+  toggleSearchModal = () => {
+    this.props.navigation.setParams({
+      isSearchModalVisible: !(this.props.navigation.getParam("isSearchModalVisible"))
     });
   };
 
@@ -80,10 +158,10 @@ export default class AppContainer extends Component<Props> {
               "Profile"
             ];
             this.props.navigation.setParams({ title: tabNames[tabIndex] });
-            if (tabIndex == 0) {
-              this.props.navigation.setParams({ showMapIcon: true });
-            } else {
+            if (tabIndex == 1) {
               this.props.navigation.setParams({ showMapIcon: false });
+            } else {
+              this.props.navigation.setParams({ showMapIcon: true });
             }
           }}
         >
