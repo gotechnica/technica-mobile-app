@@ -177,7 +177,7 @@ export default class Profile extends Component<Props> {
                 ? colors.primaryColor
                 : colors.secondaryColor
           });
-          if (++count === 18) {
+          if(++count === 100 || !this.state.devoolooperMode) {
             clearInterval(intervalID);
             this.setState({
               nameColor: colors.textColor.normal
@@ -295,118 +295,75 @@ export default class Profile extends Component<Props> {
           ? this.state.user.user_data.phone
           : "";
 
-        if (this.state.user.user_data.organizer) {
-          return (
-            <ViewContainer>
-              {scannerView}
-              <PadContainer>
-                {this.state.user.user_data && (
-                  <View style={{ alignItems: "center" }}>
-                    <TouchableOpacity onPress={this.onNamePress}>
-                      <Heading style={{ color: this.state.nameColor }}>
-                        {this.state.devoolooperMode
-                          ? this.getDevoolooperName(fullName)
-                          : fullName}
-                      </Heading>
-                    </TouchableOpacity>
-                  </View>
-                )}
-                <SubHeading style={{ textAlign: "center" }}>
-                  Organizer
-                </SubHeading>
-              </PadContainer>
-              {this.state.devoolooperMode && (
-                <View
-                  style={{
-                    alignItems: "center"
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: "white",
-                      padding: 20,
-                      borderRadius: 8,
-                      marginBottom: 20
-                    }}
-                  >
-                    {this.state.user.user_data && (
-                      <QRCode
-                        value={phone_number}
-                        size={180}
-                        bgColor="black"
-                        fgColor="white"
-                      />
-                    )}
-                  </View>
-                  <H3 style={{ marginBottom: 40 }}>
-                    Use this code for TESTING.
-                  </H3>
-                </View>
-              )}
-              <TouchableOpacity
-                style={{ marginBottom: 20 }}
-                onPress={() => this.toggleScanner()}
+        const isOrganizer = this.state.user.user_data.organizer;
+        
+        return (
+          <ViewContainer>
+            {isOrganizer && 
+              scannerView}
+            <View style={{ alignItems: "center" }}>
+              <View
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 8,
+                  padding: 7
+                }}
               >
-                <Button text="Open Scanner" />
-              </TouchableOpacity>
-
+                {this.state.user.user_data && (
+                  <QRCode
+                    value={phone_number}
+                    size={190}
+                    bgColor="black"
+                    fgColor="white"
+                  />
+                )}
+              </View>
+              <H3 style={{ color: colors.textColor.light }}>
+                {isOrganizer 
+                  ? "Scan this code at check-in"
+                  : "Use this code for testing"
+                }
+              </H3>
+            </View>
+            <PadContainer>
+              {this.state.user.user_data && 
+                <View style={{ alignItems: "center" }}>
+                  <TouchableOpacity onPress={this.onNamePress}>
+                    <Heading style={{ 
+                      color: this.state.nameColor,
+                      textAlign: "center"
+                     }}
+                    >
+                      {this.state.devoolooperMode
+                        ? this.getDevoolooperName(fullName)
+                        : fullName}
+                    </Heading>
+                  </TouchableOpacity>
+                  <SubHeading style={{ textAlign: "center", marginTop: -10 }}>
+                    {this.state.user.user_data.email}
+                  </SubHeading>
+                </View>
+              }
+            </PadContainer>
+            <View style={{ justifyContent: "center" }}>
+              {isOrganizer && (
+                <TouchableOpacity
+                  style={{ marginBottom: 20 }}
+                  onPress={() => this.toggleScanner()}
+                >
+                  <Button text="Open Scanner" />
+                </TouchableOpacity>
+              )}
               <TouchableOpacity
                 style={{ marginBottom: 20 }}
                 onPress={() => this.logout()}
               >
                 <Button text="Log Out" />
               </TouchableOpacity>
-            </ViewContainer>
-          );
-        } else {
-          // otherwise this person is a hacker
-          return (
-            <ViewContainer>
-              <PadContainer>
-                <View style={{ alignItems: "center" }}>
-                  {this.state.user.user_data && (
-                    <Heading style={{ justifyContent: "center" }}>
-                      {fullName}
-                    </Heading>
-                  )}
-                  <SubHeading style={{ textAlign: "center" }}>
-                    Your QR code
-                  </SubHeading>
-                </View>
-              </PadContainer>
-              <View
-                style={{
-                  alignItems: "center"
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: "white",
-                    padding: 20,
-                    borderRadius: 8,
-                    marginBottom: 20
-                  }}
-                >
-                  {this.state.user.user_data && (
-                    <QRCode
-                      value={phone_number}
-                      size={180}
-                      bgColor="black"
-                      fgColor="white"
-                    />
-                  )}
-                </View>
-                <H3 style={{ marginBottom: 40 }}>
-                  Use this code for check-in.
-                </H3>
-              </View>
-
-              <TouchableOpacity onPress={() => this.logout()}>
-                <Button text="Logout" />
-              </TouchableOpacity>
-            </ViewContainer>
-          );
-        }
+            </View>
+          </ViewContainer>
+        );
+        
       } else {
         return <CenteredActivityIndicator />;
       }

@@ -161,7 +161,8 @@ export default class Mentors extends Component<Props> {
   renderHeading() {
     return (
       <React.Fragment>
-        <SubHeading>Ask our mentors for help</SubHeading>
+        <H2>Get help from a mentor</H2>
+        <P style={{ marginBottom: 20 }}>Bitcamp mentors are experts in helping you with your hack or answering any additional questions you might have.</P>
       </React.Fragment>
     );
   }
@@ -184,7 +185,7 @@ export default class Mentors extends Component<Props> {
         style={modalStyle}
       >
         <View style={{ padding: 20 }}>
-          <H3 style={{ color: "white", marginBottom: 10 }}>
+          <H3 style={{ color: "black", marginBottom: 10 }}>
             How can we help you?
           </H3>
           <TextInput
@@ -296,7 +297,7 @@ export default class Mentors extends Component<Props> {
           }}
           style={{ marginBottom: 40 }}
         >
-          <Button text="Ask a Question" />
+          <Button style={{ padding: 20 }} text="Ask a Question" />
         </TouchableOpacity>
         <PadContainer>
           {this.state.listData && this.state.listData.length > 0 && (
