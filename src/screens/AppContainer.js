@@ -81,6 +81,7 @@ export default class AppContainer extends Component<Props> {
               : false
           }
           toggleModal={() => navigation.state.params.toggleSearchModal()}
+          eventDays={navigation.getParam("eventDays")}
         />
       </View>
     ),
@@ -110,14 +111,15 @@ export default class AppContainer extends Component<Props> {
     this.toggleMapModal = this.toggleMapModal.bind(this);
     this.toggleSearchModal = this.toggleSearchModal.bind(this);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-
+    console.log(this.props.screenProps.eventManager.getEventDays());
     this.props.navigation.setParams({
       title: "Bitcamp 2019",
       showMapIcon: true,
       isMapModalVisible: false,
       isSearchModalVisible: false,
       toggleMapModal: this.toggleMapModal,
-      toggleSearchModal: this.toggleSearchModal
+      toggleSearchModal: this.toggleSearchModal,
+      eventDays: this.props.screenProps.eventManager.getEventDays()
     });
   }
 
@@ -135,10 +137,8 @@ export default class AppContainer extends Component<Props> {
 
   render() {
     this.configureNotificationSettings();
-
     const eventManager = this.props.screenProps.eventManager;
     const { navigate } = this.props.navigation;
-
     return (
       <SafeAreaView
         style={{ flex: 1, backgroundColor: colors.backgroundColor.normal }}

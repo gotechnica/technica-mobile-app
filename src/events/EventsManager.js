@@ -46,9 +46,8 @@ export default class EventsManager {
 
       //loads the copy of the schedule on the users phone
       AsyncStorage.getItem(SCHEDULE_STORAGE_KEY, (err, result) => {
-          console.log("RESULT: " + result);
           if(result != null){
-            //this.processNewEvents(JSON.parse(result), false);
+            this.processNewEvents(JSON.parse(result), false);
           }
 
           //after we load the local schedule we will finally add the database query listener for schedule
@@ -62,7 +61,7 @@ export default class EventsManager {
                 }
               });
 
-              //this.processNewEvents(data, true);
+              this.processNewEvents(data, true);
           });
       });
     });

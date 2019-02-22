@@ -23,7 +23,7 @@ export default class EventGroupComponent extends Component<Props> {
       <PaperSheet heading={this.props.header}>
         <FlatList
           data={this.props.events}
-          renderItem={eventObj => {
+          renderItem={ (eventObj) => {
             event = eventObj.item;
             return (
               <EventDescription
@@ -36,7 +36,7 @@ export default class EventGroupComponent extends Component<Props> {
           ItemSeparatorComponent={() => {
             return <HorizontalLine style={{ marginVertical: 10 }} />;
           }}
-          keyExtractor={(event, index) => event.eventID.toString()}
+          //keyExtractor={(event, index) => event.eventID.toString()}
         />
       </PaperSheet>
     );
