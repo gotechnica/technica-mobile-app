@@ -21,7 +21,8 @@ import {
   ModalHeader,
   ModalContent,
   CenteredActivityIndicator,
-  Button
+  Button,
+  PlainViewContainer
 } from "../components/Base";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import QRCode from "react-native-qrcode";
@@ -29,6 +30,7 @@ import _ from "lodash";
 import { colors } from "../components/Colors";
 import Modal from "react-native-modal";
 import FAIcon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/SimpleLineIcons";
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
@@ -320,8 +322,8 @@ export default class Profile extends Component<Props> {
               </View>
               <H3 style={{ color: colors.textColor.light }}>
                 {isOrganizer 
-                  ? "Scan this code at check-in"
-                  : "Use this code for testing"
+                  ? "Use this code for testing"
+                  : "Scan this code at check-in"
                 }
               </H3>
             </View>
@@ -345,21 +347,45 @@ export default class Profile extends Component<Props> {
                 </View>
               }
             </PadContainer>
-            <View style={{ justifyContent: "center" }}>
+            <View style={{ justifyContent: 'space-evenly', flexDirection: "row" }}>
               {isOrganizer && (
-                <TouchableOpacity
-                  style={{ marginBottom: 20 }}
-                  onPress={() => this.toggleScanner()}
-                >
-                  <Button text="Open Scanner" />
-                </TouchableOpacity>
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                  <TouchableOpacity
+                    style={{
+                      marginBottom: 5,
+                      borderRadius: 20,
+                      padding: 20,
+                      backgroundColor: "#d2d1d7"
+                    }}
+                    onPress={() => this.toggleScanner()}
+                  >
+                    <Icon
+                      name="camera"
+                      size={45}
+                      color="black"
+                    />
+                  </TouchableOpacity>
+                  <H3 style={{ fontWeight: 'bold' }}>Scanner</H3>
+                </View>
               )}
-              <TouchableOpacity
-                style={{ marginBottom: 20 }}
-                onPress={() => this.logout()}
-              >
-                <Button text="Log Out" />
-              </TouchableOpacity>
+              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <TouchableOpacity
+                  style={{
+                    marginBottom: 5,
+                    borderRadius: 20,
+                    padding: 20,
+                    backgroundColor: "red"
+                  }}
+                  onPress={() => this.logout()}
+                >
+                  <Icon
+                      name="logout"
+                      size={45}
+                      color="white"
+                  />
+                </TouchableOpacity>
+                <H3 style={{fontWeight: "bold" }}>Sign Out</H3>
+              </View>
             </View>
           </ViewContainer>
         );
