@@ -33,6 +33,7 @@ export default class SearchModal extends Component {
 
 
   filterEvents(query) {
+    query = query.toLowerCase();
     eventDays = this.state.schedule;
     newSchedule = []
     for (ed in eventDays) {
@@ -43,7 +44,7 @@ export default class SearchModal extends Component {
         newEventGroup = new EventGroup(eventGroup.label, [])
         for (eventIndex in eventGroup.events) {
           event = eventGroup.events[eventIndex];
-          if (event.title.search(query) >= 0) {
+          if (event.title.toLowerCase().search(query) >= 0) {
             newEventGroup.events.push(event);
           }
         }
