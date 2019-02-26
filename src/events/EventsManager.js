@@ -106,7 +106,7 @@ export default class EventsManager {
 
   processNewEvents(rawData, rescheduleNotifications) {
     newEventDays = [];
-
+    console.log(rawData);
     //repeat process of scanning through events
     for (let i in rawData) {
       newEventDays.push(createEventDay(rawData[i]));
