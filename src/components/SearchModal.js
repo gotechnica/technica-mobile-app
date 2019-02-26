@@ -15,12 +15,47 @@ import { ModalContent, ModalHeader, HorizontalLine, Spacing, modalStyle } from '
 import { colors } from './Colors';
 import { Searchbar } from 'react-native-paper';
 import EventGroupComponent from '../components/schedule/EventGroupComponent';
+import EventDay from '../events/EventDay';
+import EventGroup from '../events/EventGroup';
 
 export default class SearchModal extends Component {
 
   constructor(props) {
     super(props);
     this.renderScheduleForDay = this.renderScheduleForDay.bind(this);
+    this.filterEvents = this.filterEvents.bind(this);
+    this.state = {
+      schedule: this.props.eventDays,
+      newScheule: {}
+    }
+
+  }
+
+
+  filterEvents(query) {
+    eventDays = this.state.schedule;
+    newSchedule = []
+    for (ed in eventDays) {
+      day = eventDays[ed];
+      newEventDay = new EventDay(day.label, [])
+      for (eventGroupIndex in day.eventGroups) {
+        eventGroup = day.eventGroups[eventGroupIndex];
+        newEventGroup = new EventGroup(eventGroup.label, [])
+        for (eventIndex in eventGroup.events) {
+          event = eventGroup.events[eventIndex];
+          if (event.title.search(query) >= 0) {
+            newEventGroup.events.push(event);
+          }
+        }
+        if (newEventGroup.events.length > 0) {
+          newEventDay.eventGroups.push(newEventGroup);
+        }
+      }
+      newSchedule.push(newEventDay);
+    }
+    this.setState({
+      newSchedule: newSchedule
+    });
   }
 
   renderScheduleForDay(eventDayObj) {
@@ -47,13 +82,13 @@ export default class SearchModal extends Component {
     );
   }
 
+
   render() {
     const props = this.props;
     const dimensions = require('Dimensions').get('window');
     const imageWidth = dimensions.width - 42;
     const imageHeight = Math.round((imageWidth * 38) / 67);
     const styles = {width: window.width, height: window.height, overflow:'visible'};
-    eventDays = props.eventDays;
     return (
       <Modal
         isVisible={props.isModalVisible}
@@ -78,11 +113,14 @@ export default class SearchModal extends Component {
           </View>
           <Searchbar
             placeholder="Search"
+            onChangeText={query => this.filterEvents(query)}
           />
           <FlatList
-            data={eventDays}
+            data={this.state.newSchedule}
             renderItem={this.renderScheduleForDay}
-          />
+            style={{padingTop: 10}}
+            
+            />
         </ModalContent>
       </Modal>
     );

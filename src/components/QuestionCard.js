@@ -36,7 +36,6 @@ export default class QuestionCard extends Component {
   }
   render() {
     const { question, location, time } = this.props;
-    // console.log("MY PROPS", this.props);
     return (
       <View style={styles.question}>
         <H4 style={{ color: colors.textColor.normal }}>"{question}"</H4>

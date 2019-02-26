@@ -122,7 +122,6 @@ export default class AppContainer extends Component<Props> {
       eventDays: this.props.screenProps.eventManager.getEventDays(),
       eventManager: this.props.screenProps.eventManager
     });
-    console.log("TEST: " + this.props.screenProps.eventManager.getEventDays());
   }
 
   toggleMapModal = () => {
@@ -206,7 +205,6 @@ export default class AppContainer extends Component<Props> {
       this.handleBackButtonClick
     );
     const eventManager = this.props.screenProps.eventManager;
-    console.log("COMPONENT: " + eventManager.getEventDays());
   }
 
   componentWillUnmount() {

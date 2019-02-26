@@ -3,9 +3,9 @@ import moment from 'moment';
 import { SubHeading } from './Base';
 
 // when hacking begins
-const START_TIME = moment("2018-11-10 12:00");
+const START_TIME = moment("2019-04-12 21:00");
 // when hacking ends
-const END_TIME = moment("2018-11-11 12:00");
+const END_TIME = moment("2019-04-14 09:00");
 
 export default class CountdownTimer extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ export default class CountdownTimer extends Component {
     // If hacking hasn't begun
     if (this.state.time < startTime) {
       return (
-        <SubHeading>November 10-11</SubHeading>
+        <SubHeading>Bitcamp is April 12-14</SubHeading>
       );
 
     // If hacking is over
