@@ -89,7 +89,7 @@ export default class EventDescription extends Component<Props> {
                   this.myHeart = myHeart;
                   eventManager.registerHeartListener(myHeart);
                 }}
-                eventID={event.eventID}
+                eventID={event.eventID.toString()}
                 eventManager={eventManager}
               />
             </View>

@@ -24,7 +24,7 @@ export function createEventGroup(eventGroupLabel, rawEventArray) {
     rawEvent = rawEventArray[i];
     eventArray.push(
       new Event(
-        rawEvent.eventID,
+        rawEvent.key,
         rawEvent.title,
         rawEvent.description,
         rawEvent.startTime,

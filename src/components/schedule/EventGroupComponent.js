@@ -36,7 +36,7 @@ export default class EventGroupComponent extends Component<Props> {
           ItemSeparatorComponent={() => {
             return <HorizontalLine style={{ marginVertical: 10 }} />;
           }}
-          //keyExtractor={(event, index) => event.eventID.toString()}
+          keyExtractor={(event, index) => event.eventID.toString()}
         />
       </PaperSheet>
     );

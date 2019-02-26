@@ -82,6 +82,7 @@ export default class AppContainer extends Component<Props> {
           }
           toggleModal={() => navigation.state.params.toggleSearchModal()}
           eventDays={navigation.getParam("eventDays")}
+          eventManager={navigation.getParam("eventManager")}
         />
       </View>
     ),
@@ -111,7 +112,6 @@ export default class AppContainer extends Component<Props> {
     this.toggleMapModal = this.toggleMapModal.bind(this);
     this.toggleSearchModal = this.toggleSearchModal.bind(this);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-    console.log(this.props.screenProps.eventManager.getEventDays());
     this.props.navigation.setParams({
       title: "Bitcamp 2019",
       showMapIcon: true,
@@ -119,7 +119,8 @@ export default class AppContainer extends Component<Props> {
       isSearchModalVisible: false,
       toggleMapModal: this.toggleMapModal,
       toggleSearchModal: this.toggleSearchModal,
-      eventDays: this.props.screenProps.eventManager.getEventDays()
+      eventDays: this.props.screenProps.eventManager.getEventDays(),
+      eventManager: this.props.screenProps.eventManager
     });
   }
 
@@ -159,7 +160,7 @@ export default class AppContainer extends Component<Props> {
             ];
             this.props.navigation.setParams({ title: tabNames[tabIndex] });
             if (tabIndex == 1) {
-              this.props.navigation.setParams({ showMapIcon: false });
+              this.props.navigation.setParams({ showMapIcon: false, eventDays: eventManager.getEventDays() });
             } else {
               this.props.navigation.setParams({ showMapIcon: true });
             }
@@ -181,6 +182,7 @@ export default class AppContainer extends Component<Props> {
             }}
             tabLabel="calendar"
             eventManager={this.props.screenProps.eventManager}
+            navigation={this.props.navigation}
           />
           <Saved
             ref={mySaved => {
@@ -202,6 +204,7 @@ export default class AppContainer extends Component<Props> {
       "hardwareBackPress",
       this.handleBackButtonClick
     );
+    const eventManager = this.props.screenProps.eventManager;
   }
 
   componentWillUnmount() {
