@@ -50,15 +50,15 @@ const styles = StyleSheet.create({
     marginBottom: 40
   },
   paper: {
-    elevation: Platform.OS === 'ios' ? 4 : 6,
-    borderRadius: 4,
+    //elevation: Platform.OS === 'ios' ? 4 : 6,
+    //borderRadius: 4,
     // shadowColor: 'rgba(0, 0, 0, .6)',
-    shadowOpacity: .18,
-    marginBottom: 20,
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 2,
-    backgroundColor: colors.backgroundColor.light
+    //shadowOpacity: .18,
+    //marginBottom: 20,
+    //marginLeft: 20,
+    //marginRight: 20,
+    //marginTop: 2,
+    backgroundColor: colors.backgroundColor.white
   },
   paperHead: {
     paddingLeft: 20,

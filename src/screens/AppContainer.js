@@ -16,7 +16,7 @@ import { AsyncStorage, SafeAreaView, BackHandler, Platform } from "react-native"
 import { Heading, PadContainer, ViewContainer } from "../components/Base";
 import MapModal from "../components/MapModal";
 import SearchModal from "../components/SearchModal";
-import {Button, Image, Text, TouchableHighlight} from "react-native"
+import {Button, Image, Text, TouchableHighlight} from "react-native";
 import firebase from "react-native-firebase";
 
 const channelId = "bitcamp-push-notifications";
@@ -35,9 +35,9 @@ export default class AppContainer extends Component<Props> {
       fontFamily: 'Aleo-Bold',
       fontSize: 25
     },
-    headerRight:       
+    headerRight:
     navigation.getParam("showMapIcon") ?
-    ( 
+    (
       <View>
         <View style={{flexDirection:"row", paddingRight: 15}}>
           <View style={{flex:1}}>
@@ -61,7 +61,7 @@ export default class AppContainer extends Component<Props> {
       </View>
     )
     :
-    ( 
+    (
       <View>
         <View style={{flexDirection:"row", paddingRight: 15}}>
           <View style={{flex:1}}>
@@ -146,7 +146,7 @@ export default class AppContainer extends Component<Props> {
         <ScrollableTabView
           tabBarPosition="bottom"
           locked
-          style={{ backgroundColor: colors.backgroundColor.normal, paddingTop: 40 }}
+          style={{ backgroundColor: colors.backgroundColor.normal/*, paddingTop: 40*/ }}
           renderTabBar={() => <CustomTabBar />}
           onChangeTab={tab => {
             const tabIndex = tab.i;

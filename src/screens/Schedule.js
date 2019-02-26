@@ -15,10 +15,11 @@ import {
   Heading,
   CenteredActivityIndicator,
 } from '../components/Base';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import EventGroupComponent from '../components/schedule/EventGroupComponent';
 import ScheduleSceneTabBar from '../components/schedule/ScheduleSceneTabBar';
 import { colors } from '../components/Colors';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Schedule extends Component<Props> {
   constructor(props) {
@@ -64,7 +65,7 @@ export default class Schedule extends Component<Props> {
     } else {
       return (
         <PlainViewContainer>
-          <FlatList
+          {/*<FlatList
             data={eventDays}
             renderItem={this.renderScheduleForDay}
             ListHeaderComponent={() => (
@@ -108,7 +109,24 @@ export default class Schedule extends Component<Props> {
             ref={ref => {
               this.scheduleListRef = ref;
             }}
-          />
+          />*/}
+          <ScrollableTabView
+            initialPage={0}
+            renderTabBar={() =>
+              <ScrollableTabBar
+                activeTextColor={colors.primaryColor}
+                underlineStyle={{backgroundColor: colors.primaryColor}}
+                textStyle={{fontSize: 20}}/>
+              }
+          >
+            <FlatList tabLabel='Friday'
+              data={eventDays}
+              renderItem={this.renderScheduleForDay}/>
+            <Text tabLabel='Saturday'>favorite</Text>
+            <Text tabLabel='Sunday'>project</Text>
+            <Text tabLabel='star'>
+            </Text>
+          </ScrollableTabView>
         </PlainViewContainer>
       );
     }
