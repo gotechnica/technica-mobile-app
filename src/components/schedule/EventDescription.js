@@ -20,7 +20,7 @@ import { colors } from "../Colors";
 import Icon from "react-native-vector-icons/FontAwesome";
 import EventModal from "../EventModal";
 import { normalizeTimeLabel } from "../../actions/util.js";
-import EventHeart from "../EventHeart";
+import EventStar from "../EventStar";
 
 const styles = StyleSheet.create({
   column: {
@@ -84,7 +84,7 @@ export default class EventDescription extends Component<Props> {
               <H4 style={{ color: colors.textColor.light }}>{event.location}</H4>
             </View>
             <View style={[styles.row, { flex: 1, justifyContent: "flex-end" }]}>
-              <EventHeart
+              <EventStar
                 ref={myHeart => {
                   this.myHeart = myHeart;
                   eventManager.registerHeartListener(myHeart);

@@ -161,7 +161,7 @@ export default class Mentors extends Component<Props> {
   renderHeading() {
     return (
       <React.Fragment>
-        <H2>Get help from a mentor</H2>
+        <H2 style={{marginTop: 20}}>Get help from a mentor</H2>
         <P style={{ marginBottom: 20 }}>Bitcamp mentors are experts in helping you with your hack or answering any additional questions you might have.</P>
       </React.Fragment>
     );

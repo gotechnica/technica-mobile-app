@@ -18,6 +18,7 @@ import MapModal from "../components/MapModal";
 import SearchModal from "../components/SearchModal";
 import {Button, Image, Text, TouchableHighlight} from "react-native";
 import firebase from "react-native-firebase";
+import EventsManager from "../events/EventsManager";
 
 const channelId = "bitcamp-push-notifications";
 const channelName = "Bitcamp Announcements";
@@ -28,6 +29,7 @@ export default class AppContainer extends Component<Props> {
       elevation: 0,
       shadowOpacity: 0,
       shadowColor: 'transparent',
+      borderBottomWidth: 0,
     },
     headerTitleStyle: {
       textAlign: 'left',
@@ -142,7 +144,7 @@ export default class AppContainer extends Component<Props> {
     const { navigate } = this.props.navigation;
     return (
       <SafeAreaView
-        style={{ flex: 1, backgroundColor: colors.backgroundColor.normal, paddingBottom: 100 }}
+        style={{ flex: 1, backgroundColor: colors.backgroundColor.normal }}
       >
         <ScrollableTabView
           tabBarPosition="bottom"

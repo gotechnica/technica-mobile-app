@@ -106,7 +106,6 @@ export default class EventsManager {
 
   processNewEvents(rawData, rescheduleNotifications) {
     newEventDays = [];
-    console.log(rawData);
     //repeat process of scanning through events
     for (let i in rawData) {
       newEventDays.push(createEventDay(rawData[i]));
@@ -205,17 +204,22 @@ export default class EventsManager {
     return this.eventDays;
   }
 
-  getTopEvents(num) {
+  getTopEvents() {
     topSorted = _.sortBy(
       this.combinedEvents,
       event => -this.getSavedCount(event.eventID)
     );
 
-    return topSorted.slice(0, num);
+    return topSorted.slice(0, 10);
   }
 
   getBeginnerEventsArray() {
     return _.filter(this.combinedEvents, event => event.beginnerFriendly);
+  }
+
+  getHappeningNow() {
+    var currentDateTime = moment(moment().format("YYYY-DD-MM HH:mm"));
+    return _.filter(this.combinedEvents, event => currentDateTime.isBetween(moment(event.startTime), moment(event.endTime)));
   }
 
   getSavedEventsArray() {

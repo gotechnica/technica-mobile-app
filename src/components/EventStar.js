@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { H3 } from './Text';
 import { colors } from './Colors';
 
-export default class EventHeart extends Component {
+export default class EventStar extends Component {
   constructor(props) {
     super(props);
     this.handleHeartPress = this.handleHeartPress.bind(this);
@@ -26,14 +26,14 @@ export default class EventHeart extends Component {
 
     return (
       <Fragment>
-        <H3 style={{ marginRight: 8, marginTop: 2 }}>
+        <H3 style={{ marginRight: 8, marginTop: 5 }}>
           {eventManager.getSavedCount(eventID)}
         </H3>
         <TouchableOpacity onPress={this.handleHeartPress}>
           <Icon
-            name={(eventManager.isFavorited(eventID)) ? 'heart' : 'heart-o'} // 'heart'
+            name={'star'}
             size={22}
-            color={colors.primaryColor}
+            color={(eventManager.isFavorited(eventID)) ? colors.starColor.selected : colors.starColor.unselected}
           />
         </TouchableOpacity>
       </Fragment>
@@ -41,7 +41,7 @@ export default class EventHeart extends Component {
   }
 }
 
-EventHeart.propTypes = {
+EventStar.propTypes = {
   eventID: PropTypes.string,
   eventManager: PropTypes.object,
 };

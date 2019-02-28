@@ -17,6 +17,7 @@ const bitcampColorPalette = {
     yellow: "#FFAF3F" // yellow-orange
   },
   yellow: "#FFEF3F",
+  darkYellow: "#FFD83F",
   blue: {
     midnight: "#1A2E33",
     medium: "#528CA5",
@@ -26,6 +27,10 @@ const bitcampColorPalette = {
 
 // "light" refers to a more subtle color
 export const colors = {
+  starColor: {
+    selected: bitcampColorPalette.darkYellow,
+    unselected: bitcampColorPalette.darkGrey
+  },
   textColor: {
     primary: bitcampColorPalette.white, // on primary background
 

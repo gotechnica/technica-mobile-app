@@ -58,7 +58,8 @@ export default class EventCard extends Component {
       titleClipped = titleClipped.substring(0, titleLimit) + "…";
     }
 
-    let imgName = big ? event.img + "_big" : event.img;
+    //let imgName = big ? event.img + "_big" : event.img;
+    let imgName = '';
 
     return (
       <View>
@@ -75,7 +76,7 @@ export default class EventCard extends Component {
                 },
                 this.props.imageStyle
               ]}
-              source={Images[imgName]}
+              source={require('../../assets/imgs/filler.png')}
             />
             {big ? null : (
               <View>

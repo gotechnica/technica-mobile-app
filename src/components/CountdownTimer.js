@@ -41,7 +41,8 @@ export default class CountdownTimer extends Component {
     // If hacking hasn't begun
     if (this.state.time < startTime) {
       return (
-        <SubHeading>Bitcamp is April 12-14</SubHeading>
+        <SubHeading
+        style={{paddingTop: 20}}>Bitcamp is April 12-14</SubHeading>
       );
 
     // If hacking is over

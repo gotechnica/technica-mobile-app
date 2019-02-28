@@ -57,7 +57,7 @@ export default class Schedule extends Component<Props> {
   render() {
     let eventDays = this.props.eventManager.getEventDays();
     let tabNames = eventDays.map(eventDay => eventDay.label);
-
+    console.log(eventDays);
     if(eventDays.length == 0) {
       return (
         <CenteredActivityIndicator/>
@@ -121,7 +121,9 @@ export default class Schedule extends Component<Props> {
           >
             <FlatList tabLabel='Friday'
               data={eventDays}
-              renderItem={this.renderScheduleForDay}/>
+              renderItem={this.renderScheduleForDay}
+              keyExtractor={(event, index) => index.toString()}
+            />
             <Text tabLabel='Saturday'>favorite</Text>
             <Text tabLabel='Sunday'>project</Text>
             <Text tabLabel='star'>

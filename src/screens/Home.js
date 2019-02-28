@@ -117,7 +117,7 @@ export default class Home extends Component<Props> {
 
   renderPopularEventsSection = () => {
     const heading = "Popular Events";
-    const events = this.props.eventManager.getTopEvents(24);
+    const events = this.props.eventManager.getTopEvents();
     return (
       <View style={styles.subSection}>
         <PadContainer style={styles.subSectionHeading}>
@@ -135,8 +135,25 @@ export default class Home extends Component<Props> {
   };
 
   renderBestForBeginnersSection = () => {
-    const heading = "Best for Beginners";
+    const heading = "Featured Workshops";
     const events = this.props.eventManager.getBeginnerEventsArray();
+    return (
+      <View style={styles.subSection}>
+        <PadContainer style={styles.subSectionHeading}>
+          <H2>{heading}</H2>
+        </PadContainer>
+        <EventColumns
+          heading={heading}
+          eventsArr={events}
+          eventManager={this.props.eventManager}
+        />
+      </View>
+    );
+  };
+
+  renderHappeningNow = () => {
+    const heading = "Happening Now";
+    const events = this.props.eventManager.getHappeningNow();
     return (
       <View style={styles.subSection}>
         <PadContainer style={styles.subSectionHeading}>
@@ -161,7 +178,7 @@ export default class Home extends Component<Props> {
         <PadContainer>
         <CountdownTimer />
         </PadContainer>
-        {this.renderUpdatesSection()}
+        {this.renderHappeningNow()}
         {this.renderPopularEventsSection()}
         {this.renderBestForBeginnersSection()}
       </ViewContainer>

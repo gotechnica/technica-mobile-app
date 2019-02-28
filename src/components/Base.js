@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
-import EventHeart from './EventHeart';
+import EventStar from './EventStar';
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Images from '../../assets/imgs/index';
 
@@ -197,7 +197,7 @@ class ModalHeader extends Component<Props> {
           {
             heart ?
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <EventHeart
+              <EventStar
                 ref={myHeart => {
                   this.myHeart = myHeart;
                   eventManager.registerHeartListener(myHeart);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import {
   PadContainer,
   Spacing,
@@ -48,12 +48,17 @@ export default class EventColumns extends Component {
     });
   }
 
-  getCardCol(event) {
+  getCardCol(event, index) {
     if (event) {
       return (
-        <View style={styles.halfColumn}>
-          <EventCard event={event} eventManager={this.props.eventManager} />
-        </View>
+        <PadContainer
+          key={index}
+          style={styles.row}
+        >
+          <View style={styles.halfColumn}>
+            <EventCard event={event} eventManager={this.props.eventManager} />
+          </View>
+        </PadContainer>
       );
     } else {
       return null;
@@ -109,6 +114,24 @@ export default class EventColumns extends Component {
     return [rows, viewAllButton];
   }
 
+  getRowOfEvents() {
+    rowEventsList = this.props.eventsArr.map((event, index) => this.getCardCol(event, index));
+    if (rowEventsList.length == 0) {
+      return (
+        <H3 style={{ textAlign: "left", marginLeft: 20, opacity: 0.8 }}>
+          No events at this time.
+        </H3>
+      );
+    }
+    return (
+      <ScrollView
+        horizontal={true}
+        style={{paddingRight: 10}}>
+        {rowEventsList}
+      </ScrollView>
+    );
+  }
+
   renderModal() {
     return (
       <Modal
@@ -142,7 +165,7 @@ export default class EventColumns extends Component {
     return (
       <View style={{ flex: 1 }}>
         {this.renderModal()}
-        {this.getRows(true)}
+        {this.getRowOfEvents()}
       </View>
     );
   }

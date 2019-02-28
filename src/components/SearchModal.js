@@ -120,7 +120,7 @@ export default class SearchModal extends Component {
             data={this.state.newSchedule}
             renderItem={this.renderScheduleForDay}
             style={{padingTop: 10}}
-            
+            keyExtractor={(event, index) => index.toString()}
             />
         </ModalContent>
       </Modal>
