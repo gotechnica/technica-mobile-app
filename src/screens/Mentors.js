@@ -23,6 +23,7 @@ import { AsyncStorage } from "react-native";
 import { H1, H2, H3, H4, H6, P } from "../components/Text";
 import Toast from "react-native-simple-toast";
 import moment from "moment";
+import { StyleSheet } from "react-native";
 
 const serverURL = "https://technicamentorshipservertest.herokuapp.com";
 
@@ -161,7 +162,7 @@ export default class Mentors extends Component<Props> {
   renderHeading() {
     return (
       <React.Fragment>
-        <H2 style={{marginTop: 20}}>Get help from a mentor</H2>
+        <H2 style={{ marginTop: 20, marginBottom: 5 }}>Get help from a mentor</H2>
         <P style={{ marginBottom: 20 }}>Bitcamp mentors are experts in helping you with your hack or answering any additional questions you might have.</P>
       </React.Fragment>
     );
@@ -169,10 +170,31 @@ export default class Mentors extends Component<Props> {
 
   renderNewQuestionModal() {
     const { question, location, newQuestionScreen } = this.state;
+    const modalStyles = StyleSheet.create({
+      textInput: {
+        backgroundColor: colors.backgroundColor.normal,
+        paddingBottom: 2,
+        fontSize: 14,
+        fontFamily: "Poppins-Regular",
+        color: colors.textColor.normal,
+        justifyContent: "flex-start",
+        padding: 15
+      },
+      textInputGroup: {
+        marginBottom: 20,
+      },
+      textInputTitle: {
+        color: "black", 
+        marginBottom: 10,
+        paddingLeft: 15,
+      }
+
+    });
+
     return (
       <Modal
         isVisible={newQuestionScreen}
-        backdropColor={colors.backgroundColor.normal}
+        backdropColor={colors.backgroundColor.light}
         backdropOpacity={1}
         animationInTiming={250}
         animationIn="fadeInUp"
@@ -184,41 +206,23 @@ export default class Mentors extends Component<Props> {
         onBackButtonPress={() => this.toggleModal()}
         style={modalStyle}
       >
-        <View style={{ padding: 20 }}>
-          <H3 style={{ color: "black", marginBottom: 10 }}>
-            How can we help you?
+        <View style={modalStyles.textInputGroup}>
+          <H3 style={modalStyles.textInputTitle}>
+            Question
           </H3>
           <TextInput
-            style={{
-              borderColor: colors.borderColor.normal,
-              borderBottomWidth: 1,
-              padding: 0,
-              fontFamily: "Poppins-Regular",
-              paddingBottom: 2,
-              marginBottom: 20,
-              fontSize: 14,
-              color: colors.textColor.normal
-            }}
+            style={modalStyles.textInput}
+            multiline={true}
+            numberOfLines={10}
             onChangeText={text => this.setState({ question: text })}
             value={question}
             underlineColorAndroid="transparent"
             placeholder="How do I make X using Y?"
             placeholderTextColor={colors.textColor.light}
           />
-          <View marginTop={10}>
-            <H3 style={{ color: "white", marginBottom: 10 }}>
-              Where can we find you?
-            </H3>
+          <View style={modalStyles.textInputGroup} marginTop={10}>
             <TextInput
-              style={{
-                borderColor: colors.borderColor.normal,
-                borderBottomWidth: 1,
-                fontFamily: "Poppins-Regular",
-                padding: 0,
-                paddingBottom: 2,
-                fontSize: 14,
-                color: colors.textColor.white
-              }}
+              style={modalStyles.textInput}
               onChangeText={text => this.setState({ location: text })}
               value={location}
               underlineColorAndroid="transparent"
@@ -297,7 +301,11 @@ export default class Mentors extends Component<Props> {
           }}
           style={{ marginBottom: 40 }}
         >
-          <Button style={{ padding: 20 }} text="Ask a Question" />
+          <Button style={{ 
+            padding: 16, 
+            borderRadius: 10,
+            fontWeight: 800
+          }} text="Ask a Question" />
         </TouchableOpacity>
         <PadContainer>
           {this.state.listData && this.state.listData.length > 0 && (
