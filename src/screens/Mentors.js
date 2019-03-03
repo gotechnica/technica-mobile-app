@@ -303,7 +303,7 @@ export default class Mentors extends Component<Props> {
         >
           <Button style={{ 
             padding: 16, 
-            borderRadius: 10,
+            borderRadius: 8,
             fontWeight: 800
           }} text="Ask a Question" />
         </TouchableOpacity>
