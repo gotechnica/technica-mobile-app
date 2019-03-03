@@ -7,7 +7,7 @@ const bitcampColorPalette = {
   white: "#FFFFFF",
 
   // the 3 colors below are not part of the 2019 Style Guide
-  lightGrey: "#f0eff5",
+  lightGrey: "#f9f9f9",
   darkGrey: "#8d8c92",
   black: "#000000",
   
