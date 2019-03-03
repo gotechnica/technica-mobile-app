@@ -8,7 +8,12 @@ import {
   View,
   Alert,
   AsyncStorage,
-  TextInput
+  TextInput,
+  Animated,
+  Dimensions,
+  Keyboard,
+  UIManager,
+  KeyboardAvoidingView
 } from 'react-native';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import {
@@ -33,7 +38,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const APP_ID = '@com.technica.technica18:';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const USER_DATA_STORE = 'USER_DATA_STORE';
-
+const { State: TextInputState } = TextInput;
 
 
 export default class Login extends Component<Props> {
@@ -45,7 +50,8 @@ export default class Login extends Component<Props> {
       fieldValue: '',
       placeholder: '',
       greeting: 'Welcome to \nBitcamp 2019',
-      instruction: 'Enter the phone number you used to sign up for Bitcamp.',
+      instruction: 'Enter the email you used to sign up for Bitcamp.',
+      keyboardShown: false,
       nextPage: (
         <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Button
@@ -59,6 +65,8 @@ export default class Login extends Component<Props> {
     super(props);
 
     this.state = this.createInitialState();
+    this._keyboardDidShow = this._keyboardDidShow.bind(this);
+    this._keyboardDidHide = this._keyboardDidHide.bind(this);
   }
 //
 //   async componentDidMount() {
@@ -114,7 +122,7 @@ export default class Login extends Component<Props> {
           let responseJson = await response.json();
           console.log("response json is", responseJson)
           if(responseJson.statusCode == 200){
-            this.setState({greeting: "Great!", instruction: "We're texting you a verification code. Please enter that code below to login.",
+            this.setState({greeting: "Great!", instruction: "We're sent a verification code to your email. Please enter that code below to login.",
             nextPage: (
               <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)}>
                   <Button
@@ -127,8 +135,12 @@ export default class Login extends Component<Props> {
               savedPhone: validNumber, fieldValue: '', placeholder: 'xxxxxx'});
           } else{
             Alert.alert(
+<<<<<<< HEAD
+              "Your email was not found.",
+=======
               "Your phone number was not found.",
-              "If you recently registered for Technica, please try again in 24 hrs.",
+>>>>>>> 77d4b2859342f85b360925fb48368da654248724
+              "If you recently registered for Bitcamp, please try again in 24 hrs.",
               [
                 {text: 'OK', onPress: () => console.log('OK Pressed')},
               ],
@@ -207,10 +219,33 @@ export default class Login extends Component<Props> {
       }
   }
 
+  componentWillMount () {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  }
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow () {
+    if (this.state.keyboardShown == false) {
+      this.setState({keyboardShown: true});
+    }
+    console.log("keyboard opened");
+  }
+
+  _keyboardDidHide () {
+    if (this.state.keyboardShown == true) {
+      this.setState({keyboardShown: false});
+    }
+  }
 
   render() {
     return (
-        <PadContainer style={styles.subSection}>
+      
+        <PadContainer style={this.state.keyboardShown ? styles.subSection2 : styles.subSection}>
           <Heading style={{ paddingBottom: 20 }}>
             {this.state.greeting}
           </Heading>
@@ -233,8 +268,11 @@ export default class Login extends Component<Props> {
               color: colors.textColor.normal,
             }}
           />
+        
         {this.state.nextPage}
+        </KeyboardAvoidingView>
         </PadContainer>
+        
     );
   }
 }
@@ -249,6 +287,9 @@ const styles = StyleSheet.create({
   },
   subSection: {
     paddingTop: '30%',
+    backgroundColor: colors.backgroundColor.normal
+  },
+  subSection2: {
     backgroundColor: colors.backgroundColor.normal
   },
   columnContainer: {
