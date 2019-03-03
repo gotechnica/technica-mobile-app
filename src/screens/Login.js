@@ -8,7 +8,12 @@ import {
   View,
   Alert,
   AsyncStorage,
-  TextInput
+  TextInput,
+  Animated,
+  Dimensions,
+  Keyboard,
+  UIManager,
+  KeyboardAvoidingView
 } from 'react-native';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import {
@@ -33,7 +38,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const APP_ID = '@com.technica.technica18:';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const USER_DATA_STORE = 'USER_DATA_STORE';
-
+const { State: TextInputState } = TextInput;
 
 
 export default class Login extends Component<Props> {
@@ -128,7 +133,7 @@ export default class Login extends Component<Props> {
           } else{
             Alert.alert(
               "Your phone number was not found.",
-              "If you recently registered for Technica, please try again in 24 hrs.",
+              "If you recently registered for Bitcamp, please try again in 24 hrs.",
               [
                 {text: 'OK', onPress: () => console.log('OK Pressed')},
               ],
@@ -210,7 +215,9 @@ export default class Login extends Component<Props> {
 
   render() {
     return (
+        
         <PadContainer style={styles.subSection}>
+          <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
           <Heading style={{ paddingBottom: 20 }}>
             {this.state.greeting}
           </Heading>
@@ -233,8 +240,11 @@ export default class Login extends Component<Props> {
               color: colors.textColor.normal,
             }}
           />
+        
         {this.state.nextPage}
+        </KeyboardAvoidingView>
         </PadContainer>
+        
     );
   }
 }
