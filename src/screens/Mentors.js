@@ -23,7 +23,7 @@ import { AsyncStorage } from "react-native";
 import { H1, H2, H3, H4, H6, P } from "../components/Text";
 import Toast from "react-native-simple-toast";
 import moment from "moment";
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar, Switch } from "react-native";
 
 const serverURL = "https://technicamentorshipservertest.herokuapp.com";
 
@@ -34,6 +34,8 @@ export default class Mentors extends Component<Props> {
       appState: AppState.currentState,
       question: "",
       location: "",
+      needsInPersonAssistance: false,
+      slackUsername: "",
       newQuestionScreen: false,
       listData: []
     };
@@ -98,6 +100,8 @@ export default class Mentors extends Component<Props> {
   }
   toggleModal() {
     this.setState({ newQuestionScreen: !this.state.newQuestionScreen });
+    StatusBar.setBarStyle('dark-content', true);
+    StatusBar.setBackgroundColor(colors.backgroundColor.normal, true);
   }
 
   showToast() {
@@ -132,6 +136,8 @@ export default class Mentors extends Component<Props> {
       var questionObject = {
         question: this.state.question,
         location: this.state.location,
+        slackUsername: this.state.slackUsername,
+        needsInPersonAssistance: this.state.needsInPersonAssistance,
         status: "Awaiting available mentors",
         key: moment().format(),
         name: name,
@@ -169,27 +175,7 @@ export default class Mentors extends Component<Props> {
   }
 
   renderNewQuestionModal() {
-    const { question, location, newQuestionScreen } = this.state;
-    const modalStyles = StyleSheet.create({
-      textInput: {
-        backgroundColor: colors.backgroundColor.normal,
-        paddingBottom: 2,
-        fontSize: 14,
-        fontFamily: "Poppins-Regular",
-        color: colors.textColor.normal,
-        justifyContent: "flex-start",
-        padding: 15
-      },
-      textInputGroup: {
-        marginBottom: 20,
-      },
-      textInputTitle: {
-        color: "black", 
-        marginBottom: 10,
-        paddingLeft: 15,
-      }
-
-    });
+    const { question, location, newQuestionScreen, slackUsername, needsInPersonAssistance } = this.state;
 
     return (
       <Modal
@@ -206,12 +192,34 @@ export default class Mentors extends Component<Props> {
         onBackButtonPress={() => this.toggleModal()}
         style={modalStyle}
       >
-        <View style={modalStyles.textInputGroup}>
-          <H3 style={modalStyles.textInputTitle}>
-            Question
+        <View style={modalStyles.menu}>
+          <TouchableOpacity 
+            onPress={() => this.cancelQuestion()}
+            style={modalStyles.menuItem}
+          >
+            <P style={modalStyles.menuLink}>Cancel</P>
+          </TouchableOpacity>
+          <H3 style={modalStyles.menuItem}>Request Help</H3>
+          <TouchableOpacity 
+            style={modalStyles.menuItem}
+            onPress={() => this.sendQuestion()}
+          >
+            <P style={[
+              modalStyles.menuLink,
+              {
+                fontWeight: 'bold'
+              }
+            ]}>
+              Submit
+            </P>
+          </TouchableOpacity>
+        </View>
+        <View style={modalStyles.inputGroup}>
+          <H3 style={modalStyles.inputGroupTitle}>
+            QUESTION
           </H3>
           <TextInput
-            style={modalStyles.textInput}
+            style={modalStyles.input}
             multiline={true}
             numberOfLines={10}
             onChangeText={text => this.setState({ question: text })}
@@ -220,26 +228,51 @@ export default class Mentors extends Component<Props> {
             placeholder="How do I make X using Y?"
             placeholderTextColor={colors.textColor.light}
           />
-          <View style={modalStyles.textInputGroup} marginTop={10}>
-            <TextInput
-              style={modalStyles.textInput}
-              onChangeText={text => this.setState({ location: text })}
-              value={location}
-              underlineColorAndroid="transparent"
-              placeholder="Table B5"
-              placeholderTextColor={colors.textColor.light}
+        </View>
+        <View style={modalStyles.inputGroup} marginTop={10}>
+          <H3 style={modalStyles.inputGroupTitle}>
+            TABLE INFO
+          </H3>
+          <TouchableOpacity style={[
+            modalStyles.input, 
+            {
+              borderBottom: 0.25, 
+              borderBottomColor: colors.borderStyle
+            }]}
+            onPress={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
+            activeOpacity={1}
+          >
+            <Switch
+              trackColor={colors.primaryColor}
+              value={needsInPersonAssistance}
+              onValueChange={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
             />
-          </View>
-        </View>
-        <View marginTop={10}>
-          <TouchableOpacity onPress={() => this.sendQuestion()}>
-            <Button text="Submit Question" />
+            <P>I'd like in person assistance please</P>
           </TouchableOpacity>
+          <TextInput
+            style={modalStyles.input}
+            onChangeText={text => this.setState({ location: text })}
+            value={location}
+            underlineColorAndroid="transparent"
+            placeholder="Table B5"
+            placeholderTextColor={colors.textColor.light}
+          />
         </View>
-        <View marginTop={10}>
-          <TouchableOpacity onPress={() => this.cancelQuestion()}>
-            <Button text="Cancel" />
-          </TouchableOpacity>
+        <View style={modalStyles.inputGroup} marginTop={10}>
+          <H3 style={modalStyles.inputGroupTitle}>
+            SLACK USERNAME
+          </H3>
+          <TextInput
+            style={modalStyles.input}
+            onChangeText={text => this.setState({ slackUsername: text })}
+            value={slackUsername}
+            underlineColorAndroid="transparent"
+            placeholder="bitcamper123"
+            placeholderTextColor={colors.textColor.light}
+          />
+          <P style={modalStyles.inputDescription}>
+            A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
+          </P>
         </View>
       </Modal>
     );
@@ -327,3 +360,50 @@ export default class Mentors extends Component<Props> {
     );
   }
 }
+
+const modalStyles = StyleSheet.create({
+  input: {
+    backgroundColor: colors.backgroundColor.normal,
+    paddingBottom: 2,
+    fontSize: 14,
+    fontFamily: "Poppins-Regular",
+    color: colors.textColor.normal,
+    textAlignVertical: 'top',
+    padding: 15,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  inputGroup: {
+    marginBottom: 20,
+  },
+  inputGroupTitle: {
+    color: colors.textColor.normal, 
+    marginBottom: 5,
+    paddingLeft: 15,
+    fontSize: 14,
+  },
+  inputDescription: {
+    padding: 15,
+    paddingTop: 8
+  },
+  menu: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    borderBottomWidth: 0.25,
+    borderBottomColor: colors.borderColor.normal,
+  },
+  menuItem: {
+    fontWeight: 'bold',
+    margin: 15,
+    marginBottom: 10,
+  },
+  menuLink: {
+    color: colors.primaryColor,
+  }
+});
