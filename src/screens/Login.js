@@ -135,7 +135,11 @@ export default class Login extends Component<Props> {
               savedPhone: validNumber, fieldValue: '', placeholder: 'xxxxxx'});
           } else{
             Alert.alert(
+<<<<<<< HEAD
               "Your email was not found.",
+=======
+              "Your phone number was not found.",
+>>>>>>> 77d4b2859342f85b360925fb48368da654248724
               "If you recently registered for Bitcamp, please try again in 24 hrs.",
               [
                 {text: 'OK', onPress: () => console.log('OK Pressed')},
@@ -266,6 +270,7 @@ export default class Login extends Component<Props> {
           />
         
         {this.state.nextPage}
+        </KeyboardAvoidingView>
         </PadContainer>
         
     );
