@@ -17,7 +17,7 @@ import {
 } from '../components/Base';
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import EventGroupComponent from '../components/schedule/EventGroupComponent';
-import ScheduleSceneTabBar from '../components/schedule/ScheduleSceneTabBar';
+import CustomScheduleTabBar from '../components/schedule/CustomScheduleTabBar';
 import { colors } from '../components/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -126,8 +126,7 @@ export default class Schedule extends Component<Props> {
             />
             <Text tabLabel='Saturday'>favorite</Text>
             <Text tabLabel='Sunday'>project</Text>
-            <Text tabLabel='star'>
-            </Text>
+            <Text tabLabel='hello'></Text>
           </ScrollableTabView>
         </PlainViewContainer>
       );
