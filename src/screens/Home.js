@@ -142,13 +142,9 @@ export default class Home extends Component<Props> {
   };
 
   renderHappeningNow = () => {
-    const heading = "Happening Now";
     const events = this.state.happeningNow.length == 0 ? this.props.eventManager.getHappeningNow() : this.state.happeningNow;
     return (
       <View style={styles.subSection}>
-        <PadContainer style={styles.subSectionHeading}>
-          <H2>{heading}</H2>
-        </PadContainer>
         <HappeningNowSlideshow 
           dataSource={events}
           eventManager={this.props.eventManager}
