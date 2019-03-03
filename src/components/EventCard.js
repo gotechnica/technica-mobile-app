@@ -19,7 +19,6 @@ import EventDescription from './schedule/EventDescription';
 
 const styles = StyleSheet.create({
   event: {
-    // backgroundColor: 'black',
     marginBottom: 15
   }
 });
@@ -52,6 +51,7 @@ export default class EventCard extends Component {
     const imageWidth = big ? dimensions.width - 40 : dimensions.width / 2 - 30;
     const imageHeight = Math.round((imageWidth * 38) / 67);
 
+
     let titleClipped = event.title;
     let titleLimit = 30;
     if (titleClipped && titleClipped.length > titleLimit) {
@@ -82,7 +82,7 @@ export default class EventCard extends Component {
               <View>
                 <H3>{titleClipped}</H3>
                 <H6 style={{ opacity: .8 }}>
-                  <Icon name="heart" size={12} color={colors.iconColor} />{' '}
+                  <Icon name="star" size={12} color={colors.iconColor} />{' '}
                   {eventManager.getSavedCount(event.eventID)}
                 </H6>
               </View>

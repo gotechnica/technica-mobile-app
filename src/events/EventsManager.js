@@ -219,13 +219,7 @@ export default class EventsManager {
 
   getHappeningNow() {
     var currentDateTime = moment(moment().format("YYYY-MM-DD HH:mm"));
-    events = _.filter(this.combinedEvents, event => currentDateTime.isBetween(moment(event.startTime), moment(event.endTime)));
-    eventsData = [];
-    for (i = 0; i < events.length; i++) {
-      newEventData = {title: events[i].title, url: 'http://placeimg.com/640/480/any'}
-      eventsData.push(newEventData);
-    }
-    return eventsData;
+    return events = _.filter(this.combinedEvents, event => currentDateTime.isBetween(moment(event.startTime), moment(event.endTime)));
   }
 
   getSavedEventsArray() {

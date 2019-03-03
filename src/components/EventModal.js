@@ -57,7 +57,7 @@ export default class EventModal extends Component {
               marginBottom: 20
             }}
             // source={Image[img]}
-            source={Images[img]}
+            source={require('../../assets/imgs/filler.png')}
           />
           <ScrollView>
             <Spacing />

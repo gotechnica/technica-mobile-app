@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { H3 } from "../components/Text";
+import { H3, H6 } from "../components/Text";
 import PropTypes from 'prop-types';
 import Swiper from 'react-native-swiper';
 import {
@@ -7,6 +7,7 @@ import {
     View,
     Image,
 } from 'react-native';
+import EventCard from "./EventCard";
 
 const { width } = require("Dimensions").get("window");
 
@@ -15,13 +16,9 @@ const styles = {
         flex: 1,
         justifyContent: 'center',
         backgroundColor: 'transparent',
-        paddingLeft: 10
+        paddingLeft: 20
       },
     wrapper: {
-    },
-    image: {
-        width,
-        flex: 1
     },
     text: {
         color: '#fff',
@@ -71,19 +68,7 @@ export default class HappeningNowSlideshow extends Component {
         slideshow_content = []
         for (i = 0; i < this.props.dataSource.length; i++) {
             slideshow_content.push(
-                <View key={i} style={styles.slide} title={<Text numberOfLines={1}>{this.props.dataSource[i].title}</Text>}>
-                    <Image
-                        style={[
-                            {
-                            width: imageWidth,
-                            height: big ? imageHeight / 2 : imageHeight,
-                            borderRadius: 4,
-                            marginBottom: 5,
-                            },
-                        ]}
-                        source={require('../../assets/imgs/filler.png')}
-                        />
-                </View>
+                <EventCard key={i} event={this.props.dataSource[i]} eventManager={this.props.eventManager} big={true} />
             )
         }
         return (

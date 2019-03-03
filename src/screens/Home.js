@@ -143,7 +143,6 @@ export default class Home extends Component<Props> {
   renderHappeningNow = () => {
     const heading = "Happening Now";
     const events = this.props.eventManager.getHappeningNow();
-    console.log("EV: " + JSON.stringify(events));
     return (
       <View style={styles.subSection}>
         <PadContainer style={styles.subSectionHeading}>
@@ -151,6 +150,7 @@ export default class Home extends Component<Props> {
         </PadContainer>
         <HappeningNowSlideshow 
           dataSource={events}
+          eventManager={this.props.eventManager}
         />
       </View>
     );
