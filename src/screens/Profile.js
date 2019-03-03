@@ -306,6 +306,7 @@ export default class Profile extends Component<Props> {
             <View style={{ alignItems: "center" }}>
               <View
                 style={{
+                  marginTop: 30,
                   backgroundColor: "white",
                   borderRadius: 8,
                   padding: 7
