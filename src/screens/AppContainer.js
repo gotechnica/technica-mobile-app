@@ -13,10 +13,10 @@ import Icon from "react-native-vector-icons/SimpleLineIcons";
 import ScrollableTabView from "react-native-scrollable-tab-view";
 import { PushNotificationIOS, View, TouchableOpacity } from "react-native";
 import { AsyncStorage, SafeAreaView, BackHandler, Platform } from "react-native";
-import { Heading, PadContainer, ViewContainer } from "../components/Base";
+import { Heading, PadContainer, ViewContainer, CenteredActivityIndicator } from "../components/Base";
 import MapModal from "../components/MapModal";
 import SearchModal from "../components/SearchModal";
-import {Button, Image, Text, TouchableHighlight} from "react-native";
+import {Button, Image, Text, TouchableHighlight, StatusBar} from "react-native";
 import firebase from "react-native-firebase";
 import EventsManager from "../events/EventsManager";
 
@@ -29,14 +29,13 @@ export default class AppContainer extends Component<Props> {
       elevation: 0,
       shadowOpacity: 0,
       shadowColor: 'transparent',
-      borderBottomWidth: 0,
+      borderBottomWidth: 0.5,
+      backgroundColor: colors.backgroundColor.light,
+      borderColor: colors.borderColor.normal,
+      height: 80,
     },
-    headerTitleStyle: {
-      textAlign: 'left',
-      justifyContent: 'space-between',
-      fontFamily: 'Aleo-Bold',
-      fontSize: 25
-    },
+    headerLayoutPreset: 'center',
+    headerTintColor: colors.primaryColor,
     headerRight:
     navigation.getParam("showMapIcon") ?
     (
@@ -47,7 +46,7 @@ export default class AppContainer extends Component<Props> {
               <Icon
                 name="map"
                 size={30}
-                color="orange"
+                color={colors.primaryColor}
               />
             </TouchableHighlight>
           </View>
@@ -71,7 +70,7 @@ export default class AppContainer extends Component<Props> {
               <Icon
                 name="magnifier"
                 size={30}
-                color="orange"
+                color={colors.primaryColor}
               />
             </TouchableHighlight>
           </View>
@@ -93,11 +92,18 @@ export default class AppContainer extends Component<Props> {
         <View style={{flex:1}}>
           <Image
             source={require('../../assets/imgs/bitcamp-logo-icon.png')}
-            style={{width: 40, height: 40}}
+            style={{width: 50, height: 50}}
           />
         </View>
-        <View style={{flex:1, paddingLeft: 15, paddingTop: 5}}>
-          <Text style={{fontFamily: "Aleo-Bold", fontSize: 25}}>{navigation.getParam("title")}</Text>
+        <View style={{flex:1, paddingLeft: 20, paddingTop: 5}}>
+          <Text style={{
+            textAlign: 'left',
+            fontFamily: 'Aleo-Bold',
+            fontSize: 40, 
+            color: colors.primaryColor,
+          }}>
+            {navigation.getParam("title")}
+          </Text>
         </View>
       </View>
     ),
@@ -114,8 +120,8 @@ export default class AppContainer extends Component<Props> {
     this.toggleMapModal = this.toggleMapModal.bind(this);
     this.toggleSearchModal = this.toggleSearchModal.bind(this);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-    this.props.navigation.setParams({
-      title: "Bitcamp 2019",
+    this.props.navigation.setParams({ 
+      title: "Bitcamp",
       showMapIcon: true,
       isMapModalVisible: false,
       isSearchModalVisible: false,
@@ -146,6 +152,9 @@ export default class AppContainer extends Component<Props> {
       <SafeAreaView
         style={{ flex: 1, backgroundColor: colors.backgroundColor.normal }}
       >
+        <StatusBar
+          barStyle="dark-content"
+        />
         <ScrollableTabView
           tabBarPosition="bottom"
           locked
@@ -154,7 +163,7 @@ export default class AppContainer extends Component<Props> {
           onChangeTab={tab => {
             const tabIndex = tab.i;
             const tabNames = [
-              "Bitcamp 2019",
+              "Bitcamp",
               "Schedule",
               "Saved",
               "Mentors",
