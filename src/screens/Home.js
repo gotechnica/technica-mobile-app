@@ -1,34 +1,22 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import Modal from 'react-native-modal';
+
 import {
-  Platform,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  View,
-  Alert
-} from "react-native";
-import { H1, H2, H3, H4, H6, P } from "../components/Text";
-import {
-  ViewContainer,
-  Heading,
-  SubHeading,
-  PaperSheet,
-  PadContainer,
   HorizontalLine,
-  modalStyle,
   ModalContent,
   ModalHeader,
+  modalStyle,
+  PadContainer,
+  PaperSheet,
   Spacing,
-  Button
-} from "../components/Base";
-import Modal from "react-native-modal";
-import EventCard from "../components/EventCard";
-import EventColumns from "../components/EventColumns";
-import { colors } from "../components/Colors";
-import MapModal from "../components/MapModal";
-import CountdownTimer from "../components/CountdownTimer";
-import Icon from "react-native-vector-icons/SimpleLineIcons";
+  ViewContainer,
+} from '../components/Base';
+import { colors } from '../components/Colors';
+import CountdownTimer from '../components/CountdownTimer';
+import EventColumns from '../components/EventColumns';
+import { H2, H4, H6 } from '../components/Text';
+import HappeningNowSlideshow from '../components/HappeningNowSlideshow';
 
 export default class Home extends Component<Props> {
   constructor(props) {
@@ -36,7 +24,8 @@ export default class Home extends Component<Props> {
     this.state = {
       updates: [],
       isUpdatesModalVisible: false,
-      isMapModalVisible: false
+      isMapModalVisible: false,
+      happeningNow: []
     };
     this.toggleMapModal = this.toggleMapModal.bind(this);
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
@@ -154,15 +143,14 @@ export default class Home extends Component<Props> {
   renderHappeningNow = () => {
     const heading = "Happening Now";
     const events = this.props.eventManager.getHappeningNow();
+    console.log("EV: " + JSON.stringify(events));
     return (
       <View style={styles.subSection}>
         <PadContainer style={styles.subSectionHeading}>
           <H2>{heading}</H2>
         </PadContainer>
-        <EventColumns
-          heading={heading}
-          eventsArr={events}
-          eventManager={this.props.eventManager}
+        <HappeningNowSlideshow 
+          dataSource={events}
         />
       </View>
     );
