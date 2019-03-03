@@ -69,7 +69,7 @@ export default class Mentors extends Component<Props> {
     AppState.addEventListener("change", this._handleAppStateChange);
     const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
     const user_data_json = JSON.parse(user_data);
-    this.grabQuestionsFromDB(user_data_json.user_data.email);
+    this.grabQuestionsFromDB(user_data_json.profile.email);
   }
 
   componentWillUnmount() {
@@ -84,7 +84,7 @@ export default class Mentors extends Component<Props> {
       console.log("App has come to the foreground!");
       const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
       const user_data_json = JSON.parse(user_data);
-      this.grabQuestionsFromDB(user_data_json.user_data.email);
+      this.grabQuestionsFromDB(user_data_json.profile.email);
     }
     this.setState({ appState: nextAppState });
   }
@@ -130,9 +130,9 @@ export default class Mentors extends Component<Props> {
       const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
       const user_data_json = JSON.parse(user_data);
       const name =
-        user_data_json.user_data.first_name +
+        user_data_json.profile.firstName +
         " " +
-        user_data_json.user_data.last_name;
+        user_data_json.profile.lastName;
       var questionObject = {
         question: this.state.question,
         location: this.state.location,
@@ -141,7 +141,7 @@ export default class Mentors extends Component<Props> {
         status: "Awaiting available mentors",
         key: moment().format(),
         name: name,
-        email: user_data_json.user_data.email
+        email: user_data_json.profile.email
       };
       if (fcmToken != null) {
         questionObject.fcmToken = fcmToken;

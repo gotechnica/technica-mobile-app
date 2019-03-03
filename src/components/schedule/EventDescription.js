@@ -85,9 +85,9 @@ export default class EventDescription extends Component<Props> {
             </View>
             <View style={[styles.row, { flex: 1, justifyContent: "flex-end" }]}>
               <EventStar
-                ref={myHeart => {
-                  this.myHeart = myHeart;
-                  eventManager.registerHeartListener(myHeart);
+                ref={myStar => {
+                  this.myStar = myStar;
+                  eventManager.registerHeartListener(myStar);
                 }}
                 eventID={event.eventID.toString()}
                 eventManager={eventManager}
@@ -100,6 +100,6 @@ export default class EventDescription extends Component<Props> {
   }
 
   componentWillUnmount() {
-    this.props.eventManager.removeHeartListener(this.myHeart);
+    this.props.eventManager.removeHeartListener(this.myStar);
   }
 }

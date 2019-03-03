@@ -31,6 +31,8 @@ import { colors } from "../components/Colors";
 import Modal from "react-native-modal";
 import FAIcon from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
+import RNRestart from 'react-native-restart'; // Import package from node modules
+
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
@@ -68,7 +70,8 @@ export default class Profile extends Component<Props> {
           onPress: () => {
             AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
               const navigate = this.props.navigation;
-              navigate("Login");
+              RNRestart.Restart();
+              //navigate("Login");
             });
           }
         },
@@ -147,8 +150,9 @@ export default class Profile extends Component<Props> {
 
   async componentDidMount() {
     var loggedInUser = JSON.parse(await AsyncStorage.getItem(USER_DATA_STORE));
+    console.log(loggedInUser);
     if (FORCE_NORMAL_USER) {
-      loggedInUser.user_data.organizer = false;
+      loggedInUser.admin = false;
     }
     this.setState({ user: loggedInUser });
   }
@@ -287,17 +291,23 @@ export default class Profile extends Component<Props> {
     })();
 
     const defaultView = (() => {
-      if (this.state.user.user_data) {
-        const fullName = this.state.user.user_data
-          ? this.state.user.user_data.first_name +
+      if (this.state.user.profile) {
+        const fullName = this.state.user.profile
+          ? this.state.user.profile.firstName +
             " " +
-            this.state.user.user_data.last_name
+            this.state.user.profile.lastName
           : "";
-        const phone_number = this.state.user.user_data
-          ? this.state.user.user_data.phone
+        const phone_number = this.state.user.profile.phoneNumber
+          ? this.state.user.profile.phoneNumber
           : "";
 
-        const isOrganizer = this.state.user.user_data.organizer;
+        const id = this.state.user.id
+          ? this.state.user.id
+          : "";
+
+        console.log(id);
+
+        const isOrganizer = this.state.user.admin;
         
         return (
           <ViewContainer>
@@ -311,9 +321,9 @@ export default class Profile extends Component<Props> {
                   padding: 7
                 }}
               >
-                {this.state.user.user_data && (
+                {this.state.user.profile && (
                   <QRCode
-                    value={phone_number}
+                    value={id}
                     size={190}
                     bgColor="black"
                     fgColor="white"
@@ -328,7 +338,7 @@ export default class Profile extends Component<Props> {
               </H3>
             </View>
             <PadContainer>
-              {this.state.user.user_data && 
+              {this.state.user.profile && 
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity onPress={this.onNamePress}>
                     <Heading style={{ 
@@ -342,7 +352,7 @@ export default class Profile extends Component<Props> {
                     </Heading>
                   </TouchableOpacity>
                   <SubHeading style={{ textAlign: "center", marginTop: -10 }}>
-                    {this.state.user.user_data.email}
+                    {this.state.user.email}
                   </SubHeading>
                 </View>
               }

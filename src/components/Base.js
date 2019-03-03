@@ -198,9 +198,9 @@ class ModalHeader extends Component<Props> {
             heart ?
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <EventStar
-                ref={myHeart => {
-                  this.myHeart = myHeart;
-                  eventManager.registerHeartListener(myHeart);
+                ref={myStar => {
+                  this.myStar = myStar;
+                  eventManager.registerHeartListener(myStar);
                 }}
                 eventID={eventID}
                 eventManager={eventManager}
@@ -222,7 +222,7 @@ class ModalHeader extends Component<Props> {
 
   componentWillUnmount() {
     if(this.props.heart) {
-      this.props.eventManager.removeHeartListener(this.myHeart);
+      this.props.eventManager.removeHeartListener(this.myStar);
     }
   }
 }

@@ -71,6 +71,8 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Protobuf (3.6.1)
+  - RCTRestart (0.0.9):
+    - React
   - React (0.57.8):
     - React/Core (= 0.57.8)
   - react-native-camera (1.2.0):
@@ -125,6 +127,7 @@ DEPENDENCIES:
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - GoogleAppMeasurement (~> 5.2.0)
+  - RCTRestart (from `../node_modules/react-native-restart/ios`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
@@ -158,6 +161,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  RCTRestart:
+    :path: "../node_modules/react-native-restart/ios"
   React:
     :path: "../node_modules/react-native"
   react-native-camera:
@@ -183,11 +188,12 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
+  RCTRestart: 2f9ddcfd9abb887f123b6580cec64d72fb6cccaa
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
   react-native-camera: 68ad5143d2d0636236d46c7de8d2a6455ca52a36
   ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 8b4bee8e2558bd40b4a4826e43c75775ebc04b82
+PODFILE CHECKSUM: a811b98a60cd0ee35d241ed30cff4236152e878f
 
 COCOAPODS: 1.5.3

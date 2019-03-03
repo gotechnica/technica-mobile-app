@@ -245,26 +245,28 @@ export default class EventsManager {
     updateObj = {};
     updateObj[eventID] = true;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
-
+    console.log("HERE");
     event = this.eventIDToEventMap[eventID];
     this.createNotification(event);
 
     this.updateHearts();
 
     AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
-      phone = JSON.parse(result).user_data.phone;
+      id = JSON.parse(result).id;
 
-      fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/favorite-event", {
+      let response = await fetch("http://35.174.30.108/api/users/5c7b77b976b48e36303c61fd/favoriteEvent/5c7b77b976b48e36303c61fe", {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          'x-access-token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjVjN2I3N2I5NzZiNDhlMzYzMDNjNjFmZCI.EW6HCP5_cUKttZGf-AwGAsnMBwjY7cUnI7dnjRBXStc'
         },
         body: JSON.stringify({
-          eventID: eventID,
-          phone: phone
+          eventID: '5c7b77b976b48e36303c61fe',
+          id: id
         })
       });
+      console.log(response);
     });
 
   }
@@ -280,7 +282,7 @@ export default class EventsManager {
     this.deleteNotification(event);
 
     AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
-      phone = JSON.parse(result).user_data.phone;
+      id = JSON.parse(result).id;
 
       fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/unfavorite-event", {
         method: 'POST',
@@ -290,7 +292,7 @@ export default class EventsManager {
         },
         body: JSON.stringify({
           eventID: eventID,
-          phone: phone
+          id: id
         })
       });
     });

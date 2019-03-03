@@ -119,12 +119,11 @@ export default class Schedule extends Component<Props> {
             renderTabBar={() => <CustomScheduleTabBar/> }
           >
             {eventDays.map((eventDay,index) =>
-              <ScrollView tabLabel={eventDay.label} style={styles.tabView}>
+              <ScrollView key={index} tabLabel={eventDay.label} style={styles.tabView}>
                 <FlatList
-                  key={index}
                   data={[eventDay]}
                   renderItem={this.renderScheduleForDay}
-                  keyExtractor={(event, index) => index.toString()}
+                  keyExtractor={(event, index) => event.eventID.toString()}
                 />
               </ScrollView>
             )}

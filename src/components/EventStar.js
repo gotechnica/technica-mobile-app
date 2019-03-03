@@ -13,12 +13,12 @@ export default class EventStar extends Component {
 
   handleHeartPress() {
     const { eventID, eventManager } = this.props;
-
-    if (eventManager.isFavorited(eventID)) {
-      eventManager.unfavoriteEvent(eventID)
-    } else {
-      eventManager.favoriteEvent(eventID)
-    }
+    console.log("HERE");
+    // if (eventManager.isFavorited(eventID)) {
+    //   eventManager.unfavoriteEvent(eventID)
+    // } else {
+    //   eventManager.favoriteEvent(eventID)
+    // }
   }
 
   render() {
@@ -29,7 +29,10 @@ export default class EventStar extends Component {
         <H3 style={{ marginRight: 8, marginTop: 5 }}>
           {eventManager.getSavedCount(eventID)}
         </H3>
-        <TouchableOpacity onPress={this.handleHeartPress}>
+        <TouchableOpacity onPress={() => {
+          this.handleHeartPress();
+          console.log("ONPRESS");
+        }}>
           <Icon
             name={'star'}
             size={22}

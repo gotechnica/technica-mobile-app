@@ -45,15 +45,15 @@ export default class Login extends Component<Props> {
 
   createInitialState() {
     return {
-      savedPhone: '',
-      savedSMS: '',
+      savedEmail: '',
+      savedCode: '',
       fieldValue: '',
       placeholder: '',
       greeting: 'Welcome to \nBitcamp 2019',
       instruction: 'Enter the email you used to sign up for Bitcamp.',
       keyboardShown: false,
       nextPage: (
-        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
+        <TouchableOpacity onPress={() => this.sendEmail(this.state.fieldValue)}>
           <Button
               text="Next"
               style={{...styles.button}}
@@ -91,25 +91,19 @@ export default class Login extends Component<Props> {
     header: null,
   };
 
-  validPhoneNumber(phoneNumber){
-    // Clean spaces, dashes, and parenthesis from phone numbers
-    phoneNumber = phoneNumber.replace(/-| |\(|\)/gm,"");
-
-    var phoneRegex = RegExp('^\\d{11,}$');
-    if(phoneRegex.test(phoneNumber)){
-      return "+" + phoneNumber;
-    }
-    phoneRegex = RegExp('^\\d{10}$');
-    if(phoneRegex.test(phoneNumber)){
-      return "+1" + phoneNumber;
+  validEmail(email){
+    var emailRegex = RegExp('^.+@.+\.com');
+    if(emailRegex.test(email)){
+      return email;
     }
     return null;
   }
 
-  async sendPhoneNumber(phoneNumber) {
-    validNumber = this.validPhoneNumber(phoneNumber);
-    if(validNumber != null){
-      let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/check-status";
+  async sendEmail(email) {
+    validEmail = this.validEmail(email);
+    if(validEmail != null){
+      let url = "http://35.174.30.108/auth/login/requestCode";
+      console.log(url);
       try {
           let response = await fetch(url, {
             method: 'POST',
@@ -117,14 +111,12 @@ export default class Login extends Component<Props> {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({'phone': validNumber})
+            body: JSON.stringify({'email': validEmail})
           });
-          let responseJson = await response.json();
-          console.log("response json is", responseJson)
-          if(responseJson.statusCode == 200){
-            this.setState({greeting: "Great!", instruction: "We're sent a verification code to your email. Please enter that code below to login.",
+          if(response.status == 200){
+            this.setState({greeting: "Great!", instruction: "We've sent a verification code to your email. Please enter that code below to login.",
             nextPage: (
-              <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)}>
+              <TouchableOpacity onPress={() => this.sendReceivedCode(this.state.fieldValue)}>
                   <Button
                       text='Submit'
                       size={22}
@@ -132,7 +124,7 @@ export default class Login extends Component<Props> {
                       style={styles.button}
                     />
                 </TouchableOpacity>),
-              savedPhone: validNumber, fieldValue: '', placeholder: 'xxxxxx'});
+              savedEmail: validEmail, fieldValue: '', placeholder: 'xxxxxx'});
           } else{
             Alert.alert(
               "Your email was not found.",
@@ -143,7 +135,6 @@ export default class Login extends Component<Props> {
               { cancelable: false }
             );
           }
-          console.log("RESPONSE: " + JSON.stringify(responseJson));
       } catch (error) {
           Alert.alert(
             "No internet connection.",
@@ -167,23 +158,24 @@ export default class Login extends Component<Props> {
 
   }
 
-  async sendReceivedText(sms){
+  async sendReceivedCode(code){
 
-    let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/confirm-pin";
+    let url = "http://35.174.30.108/auth/login/code";
     try {
-        let phoneNumber = this.state.savedPhone;
+        let email = this.state.savedEmail;
         let response = await fetch(url, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({'phone': phoneNumber, 'pin': sms})
+          body: JSON.stringify({'email': email, 'code': code})
         });
         let responseJson = await response.json();
-        if(responseJson.statusCode == 200){
-          await AsyncStorage.setItem(USER_DATA_STORE, JSON.stringify(responseJson.body));
-          this.setState({savedSMS: sms, fieldValue: ''});
+        console.log(response);
+        if(response.status == 200){
+          await AsyncStorage.setItem(USER_DATA_STORE, JSON.stringify(responseJson.user));
+          this.setState({savedCode: code, fieldValue: ''});
           const { navigate } = this.props.navigation;
           navigate('AppContainer');
 
@@ -254,7 +246,7 @@ export default class Login extends Component<Props> {
             underlineColorAndroid='rgba(0,0,0,0)'
             onChangeText={field => this.setState({ fieldValue: field })}
             placeholderTextColor={colors.textColor.light}
-            keyboardType = 'numeric'
+            keyboardType = 'email-address'
             style={{
               borderColor: colors.borderColor.normal,
               borderBottomWidth: 1,
