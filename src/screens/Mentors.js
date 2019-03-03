@@ -23,6 +23,7 @@ import { AsyncStorage } from "react-native";
 import { H1, H2, H3, H4, H6, P } from "../components/Text";
 import Toast from "react-native-simple-toast";
 import moment from "moment";
+import { StyleSheet, StatusBar, Switch } from "react-native";
 
 const serverURL = "https://technicamentorshipservertest.herokuapp.com";
 
@@ -33,6 +34,8 @@ export default class Mentors extends Component<Props> {
       appState: AppState.currentState,
       question: "",
       location: "",
+      needsInPersonAssistance: false,
+      slackUsername: "",
       newQuestionScreen: false,
       listData: []
     };
@@ -97,6 +100,8 @@ export default class Mentors extends Component<Props> {
   }
   toggleModal() {
     this.setState({ newQuestionScreen: !this.state.newQuestionScreen });
+    StatusBar.setBarStyle('dark-content', true);
+    StatusBar.setBackgroundColor(colors.backgroundColor.normal, true);
   }
 
   showToast() {
@@ -131,6 +136,8 @@ export default class Mentors extends Component<Props> {
       var questionObject = {
         question: this.state.question,
         location: this.state.location,
+        slackUsername: this.state.slackUsername,
+        needsInPersonAssistance: this.state.needsInPersonAssistance,
         status: "Awaiting available mentors",
         key: moment().format(),
         name: name,
@@ -161,18 +168,19 @@ export default class Mentors extends Component<Props> {
   renderHeading() {
     return (
       <React.Fragment>
-        <H2 style={{marginTop: 20}}>Get help from a mentor</H2>
+        <H2 style={{ marginTop: 20, marginBottom: 5 }}>Get help from a mentor</H2>
         <P style={{ marginBottom: 20 }}>Bitcamp mentors are experts in helping you with your hack or answering any additional questions you might have.</P>
       </React.Fragment>
     );
   }
 
   renderNewQuestionModal() {
-    const { question, location, newQuestionScreen } = this.state;
+    const { question, location, newQuestionScreen, slackUsername, needsInPersonAssistance } = this.state;
+
     return (
       <Modal
         isVisible={newQuestionScreen}
-        backdropColor={colors.backgroundColor.normal}
+        backdropColor={colors.backgroundColor.light}
         backdropOpacity={1}
         animationInTiming={250}
         animationIn="fadeInUp"
@@ -184,58 +192,87 @@ export default class Mentors extends Component<Props> {
         onBackButtonPress={() => this.toggleModal()}
         style={modalStyle}
       >
-        <View style={{ padding: 20 }}>
-          <H3 style={{ color: "black", marginBottom: 10 }}>
-            How can we help you?
+        <View style={modalStyles.menu}>
+          <TouchableOpacity 
+            onPress={() => this.cancelQuestion()}
+            style={modalStyles.menuItem}
+          >
+            <P style={modalStyles.menuLink}>Cancel</P>
+          </TouchableOpacity>
+          <H3 style={modalStyles.menuItem}>Request Help</H3>
+          <TouchableOpacity 
+            style={modalStyles.menuItem}
+            onPress={() => this.sendQuestion()}
+          >
+            <P style={[
+              modalStyles.menuLink,
+              {
+                fontWeight: 'bold'
+              }
+            ]}>
+              Submit
+            </P>
+          </TouchableOpacity>
+        </View>
+        <View style={modalStyles.inputGroup}>
+          <H3 style={modalStyles.inputGroupTitle}>
+            QUESTION
           </H3>
           <TextInput
-            style={{
-              borderColor: colors.borderColor.normal,
-              borderBottomWidth: 1,
-              padding: 0,
-              fontFamily: "Poppins-Regular",
-              paddingBottom: 2,
-              marginBottom: 20,
-              fontSize: 14,
-              color: colors.textColor.normal
-            }}
+            style={modalStyles.input}
+            multiline={true}
+            numberOfLines={10}
             onChangeText={text => this.setState({ question: text })}
             value={question}
             underlineColorAndroid="transparent"
             placeholder="How do I make X using Y?"
             placeholderTextColor={colors.textColor.light}
           />
-          <View marginTop={10}>
-            <H3 style={{ color: "white", marginBottom: 10 }}>
-              Where can we find you?
-            </H3>
-            <TextInput
-              style={{
-                borderColor: colors.borderColor.normal,
-                borderBottomWidth: 1,
-                fontFamily: "Poppins-Regular",
-                padding: 0,
-                paddingBottom: 2,
-                fontSize: 14,
-                color: colors.textColor.white
-              }}
-              onChangeText={text => this.setState({ location: text })}
-              value={location}
-              underlineColorAndroid="transparent"
-              placeholder="Table B5"
-              placeholderTextColor={colors.textColor.light}
+        </View>
+        <View style={modalStyles.inputGroup} marginTop={10}>
+          <H3 style={modalStyles.inputGroupTitle}>
+            TABLE INFO
+          </H3>
+          <TouchableOpacity style={[
+            modalStyles.input, 
+            {
+              borderBottom: 0.25, 
+              borderBottomColor: colors.borderStyle
+            }]}
+            onPress={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
+            activeOpacity={1}
+          >
+            <Switch
+              trackColor={colors.primaryColor}
+              value={needsInPersonAssistance}
+              onValueChange={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
             />
-          </View>
-        </View>
-        <View marginTop={10}>
-          <TouchableOpacity onPress={() => this.sendQuestion()}>
-            <Button text="Submit Question" />
+            <P>I'd like in person assistance please</P>
           </TouchableOpacity>
+          <TextInput
+            style={modalStyles.input}
+            onChangeText={text => this.setState({ location: text })}
+            value={location}
+            underlineColorAndroid="transparent"
+            placeholder="Table B5"
+            placeholderTextColor={colors.textColor.light}
+          />
         </View>
-        <View marginTop={10}>
-          <TouchableOpacity onPress={() => this.cancelQuestion()}>
-            <Button text="Cancel" />
-          </TouchableOpacity>
+        <View style={modalStyles.inputGroup} marginTop={10}>
+          <H3 style={modalStyles.inputGroupTitle}>
+            SLACK USERNAME
+          </H3>
+          <TextInput
+            style={modalStyles.input}
+            onChangeText={text => this.setState({ slackUsername: text })}
+            value={slackUsername}
+            underlineColorAndroid="transparent"
+            placeholder="bitcamper123"
+            placeholderTextColor={colors.textColor.light}
+          />
+          <P style={modalStyles.inputDescription}>
+            A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
+          </P>
         </View>
       </Modal>
     );
@@ -297,7 +334,11 @@ export default class Mentors extends Component<Props> {
           }}
           style={{ marginBottom: 40 }}
         >
-          <Button style={{ padding: 20 }} text="Ask a Question" />
+          <Button style={{ 
+            padding: 16, 
+            borderRadius: 8,
+            fontWeight: 800
+          }} text="Ask a Question" />
         </TouchableOpacity>
         <PadContainer>
           {this.state.listData && this.state.listData.length > 0 && (
@@ -319,3 +360,50 @@ export default class Mentors extends Component<Props> {
     );
   }
 }
+
+const modalStyles = StyleSheet.create({
+  input: {
+    backgroundColor: colors.backgroundColor.normal,
+    paddingBottom: 2,
+    fontSize: 14,
+    fontFamily: "Poppins-Regular",
+    color: colors.textColor.normal,
+    textAlignVertical: 'top',
+    padding: 15,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  inputGroup: {
+    marginBottom: 20,
+  },
+  inputGroupTitle: {
+    color: colors.textColor.normal, 
+    marginBottom: 5,
+    paddingLeft: 15,
+    fontSize: 14,
+  },
+  inputDescription: {
+    padding: 15,
+    paddingTop: 8
+  },
+  menu: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    borderBottomWidth: 0.25,
+    borderBottomColor: colors.borderColor.normal,
+  },
+  menuItem: {
+    fontWeight: 'bold',
+    margin: 15,
+    marginBottom: 10,
+  },
+  menuLink: {
+    color: colors.primaryColor,
+  }
+});
