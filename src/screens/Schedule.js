@@ -5,9 +5,10 @@ import {
   Text,
   FlatList,
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  ScrollView,
 } from 'react-native';
-import { H1, H2, H3, H4, P } from '../components/Text';
+
 import {
   PlainViewContainer,
   ViewContainer,
@@ -18,8 +19,10 @@ import {
 import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view';
 import EventGroupComponent from '../components/schedule/EventGroupComponent';
 import ScheduleSceneTabBar from '../components/schedule/ScheduleSceneTabBar';
+import CustomScheduleTabBar from '../components/schedule/CustomScheduleTabBar';
 import { colors } from '../components/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Saved from "./Saved";
 
 export default class Schedule extends Component<Props> {
   constructor(props) {
@@ -32,6 +35,7 @@ export default class Schedule extends Component<Props> {
 
   renderScheduleForDay(eventDayObj) {
     eventDay = eventDayObj.item;
+    //console.log(eventDayObj);
     return (
       <FlatList
         key={eventDay.label}
@@ -112,25 +116,50 @@ export default class Schedule extends Component<Props> {
           />*/}
           <ScrollableTabView
             initialPage={0}
-            renderTabBar={() =>
-              <ScrollableTabBar
-                activeTextColor={colors.primaryColor}
-                underlineStyle={{backgroundColor: colors.primaryColor}}
-                textStyle={{fontSize: 20}}/>
-              }
+            renderTabBar={() => <CustomScheduleTabBar/> }
           >
-            <FlatList tabLabel='Friday'
-              data={eventDays}
-              renderItem={this.renderScheduleForDay}
-              keyExtractor={(event, index) => index.toString()}
+            {eventDays.map((eventDay,index) =>
+              <ScrollView tabLabel={eventDay.label} style={styles.tabView}>
+                <FlatList
+                  key={index}
+                  data={[eventDay]}
+                  renderItem={this.renderScheduleForDay}
+                  keyExtractor={(event, index) => index.toString()}
+                />
+              </ScrollView>
+            )}
+            <ScrollView tabLabel="star" style={styles.tabView}>
+            <Saved
+              ref={mySaved => {
+                this.mySaved = mySaved;
+                this.props.eventManager.registerEventChangeListener(mySaved);
+              }}
+              eventManager={this.props.eventManager}
             />
-            <Text tabLabel='Saturday'>favorite</Text>
-            <Text tabLabel='Sunday'>project</Text>
-            <Text tabLabel='star'>
-            </Text>
+            </ScrollView>
           </ScrollableTabView>
         </PlainViewContainer>
       );
     }
   }
 }
+
+const styles = StyleSheet.create({
+  tabView: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: 'rgba(0,0,0,0.01)'
+  },
+  card: {
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    borderColor: 'rgba(0,0,0,0.1)',
+    margin: 5,
+    height: 150,
+    padding: 15,
+    shadowColor: '#ccc',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 3
+  }
+})
