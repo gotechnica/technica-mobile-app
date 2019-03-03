@@ -1,85 +1,90 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-
+import React, {Component} from 'react'
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
-  Animated,
   TouchableOpacity
-} from "react-native";
+} from 'react-native'
+import { colors } from '../Colors';
+import Icon from 'react-native-vector-icons/FontAwesome'
 
-import { P } from "./Text";
-import { colors } from "./Colors";
-import Icon from "react-native-vector-icons/SimpleLineIcons";
+export default class CustomScheduleTabBar extends Component {
 
-const LABELS = ["Home", "Schedule", "Saved", "Mentors", "Profile"];
+  constructor(props) {
+    super(props)
+    this.setAnimationValue = this.setAnimationValue.bind(this)
+  }
 
-const ICONS = {
-  home: "home",
-  schedule: "calendar",
-  saved: "heart",
-  mentors: "people",
-  profile: "user"
-};
+  componentDidMount() {
+    this._listener = this.props.scrollValue.addListener(this.setAnimationValue)
+  }
 
-class CustomScheduleTabBar extends Component {
+  setAnimationValue({value}) {
+  }
+
   render() {
     return (
-      <View style={[styles.tabs, this.props.style]}>
-        {this.props.tabs.map((tab, i) => {
-          return (
-            <TouchableOpacity
-              key={tab}
-              onPress={() => this.props.goToPage(i)}
-              style={styles.tab}
-            >
-              {/*}<Icon
-                name={tab}
-                size={20}
-                color={
-                  this.props.activeTab === i
-                    ? colors.primaryColor
-                    : colors.textColor.light
-                }
-              />*/}
-              <P
-                style={
-                  this.props.activeTab === i
-                    ? [styles.tabText, styles.tabActiveText]
-                    : [styles.tabText]
-                }
-              >
-                {LABELS[i]}
-              </P>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    );
+    <View style={[styles.tabs, this.props.style]}>
+      {this.props.tabs.map((tab, i) => {
+        return (
+        <TouchableOpacity
+          key={tab}
+          onPress={() => this.props.goToPage(i)}
+          style={[
+            styles.tab,
+            (this.props.activeTab === i ? styles.activetab : styles.inactivetab),
+            (tab == 'star' ? styles.star : styles.weekdays)
+          ]}>
+          { tab != 'star' ?
+          <Text style={[(this.props.activeTab === i) && styles.textActive, styles.text]}>
+            {tab}
+          </Text>
+          :
+          <Icon
+            name={tab}
+            size={27.5}
+            color={this.props.activeTab === i ? colors.primaryColor : colors.textColor.light}
+          />}
+        </TouchableOpacity>)
+      })}
+    </View>)
   }
 }
 
 const styles = StyleSheet.create({
   tab: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 10,
+    borderBottomWidth: 5,
+  },
+  weekdays: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 12,
-    paddingBottom: 10
   },
-  tabText: {
-    marginTop: 4,
-    color: colors.textColor.light
+  star: {
+    width: 70,
   },
-  tabActiveText: {
-    color: colors.primaryColor
+  inactivetab: {
+    borderBottomColor: 'transparent',
+  },
+  activetab: {
+    borderBottomColor: colors.primaryColor,
   },
   tabs: {
-    flexDirection: "row",
-    backgroundColor: colors.backgroundColor.light
+    height: 45,
+    flexDirection: 'row',
+    paddingTop: 5,
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderBottomColor: 'rgba(0,0,0,0.05)'
+  },
+  text: {
+    fontSize: 20,
+  },
+  textActive: {
+    color: colors.primaryColor,
+    fontWeight: 'bold',
   }
-});
-
-export default CustomScheduleTabBar;
+})
