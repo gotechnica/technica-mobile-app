@@ -156,7 +156,7 @@ export default class AppContainer extends Component<Props> {
             const tabNames = [
               "Bitcamp 2019",
               "Schedule",
-              "Saved",
+              /*"Saved",*/
               "Mentors",
               "Profile"
             ];
@@ -186,14 +186,14 @@ export default class AppContainer extends Component<Props> {
             eventManager={this.props.screenProps.eventManager}
             navigation={this.props.navigation}
           />
-          <Saved
+          {/*<Saved
             ref={mySaved => {
               this.mySaved = mySaved;
               eventManager.registerEventChangeListener(mySaved);
             }}
             tabLabel="heart"
             eventManager={this.props.screenProps.eventManager}
-          />
+          />*/}
           <Mentors tabLabel="people" />
           <Profile tabLabel="user" navigation={navigate} />
         </ScrollableTabView>

@@ -14,12 +14,12 @@ import { P } from "./Text";
 import { colors } from "./Colors";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 
-const LABELS = ["Home", "Schedule", "Saved", "Mentors", "Profile"];
+const LABELS = ["Home", "Schedule", /*"Saved",*/ "Mentors", "Profile"];
 
 const ICONS = {
   home: "home",
   schedule: "calendar",
-  saved: "heart",
+  /*saved: "heart",*/
   mentors: "people",
   profile: "user"
 };
