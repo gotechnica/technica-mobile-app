@@ -25,10 +25,11 @@ export default class Home extends Component<Props> {
       updates: [],
       isUpdatesModalVisible: false,
       isMapModalVisible: false,
-      happeningNow: []
+      happeningNow: this.props.eventManager.getHappeningNow(),
     };
     this.toggleMapModal = this.toggleMapModal.bind(this);
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
+    this.timer = setInterval(() => this.setState({happeningNow: this.props.eventManager.getHappeningNow()}), 1000*60);
   }
 
   toggleUpdatesModal() {
@@ -142,7 +143,7 @@ export default class Home extends Component<Props> {
 
   renderHappeningNow = () => {
     const heading = "Happening Now";
-    const events = this.props.eventManager.getHappeningNow();
+    const events = this.state.happeningNow.length == 0 ? this.props.eventManager.getHappeningNow() : this.state.happeningNow;
     return (
       <View style={styles.subSection}>
         <PadContainer style={styles.subSectionHeading}>

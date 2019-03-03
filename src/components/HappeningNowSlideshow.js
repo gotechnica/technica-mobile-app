@@ -30,28 +30,8 @@ const styles = {
 export default class HappeningNowSlideshow extends Component {
     constructor(props) {
       super(props);
-  
-      this.state = {
-        position: 1,
-        interval: null,
-        dataSource: props.dataSource,
-      };
     }
-   
-    componentWillMount() {
-      this.setState({
-        interval: setInterval(() => {
-          this.setState({
-            position: this.state.position === this.state.dataSource.length ? 0 : this.state.position + 1
-          });
-        }, 2000)
-      });
-    }
-   
-    componentWillUnmount() {
-      clearInterval(this.state.interval);
-    }
-   
+    
     render() {
         const { big, event, eventManager } = this.props;
         const dimensions = require('Dimensions').get('window');
