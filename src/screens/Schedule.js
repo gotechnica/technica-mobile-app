@@ -123,7 +123,7 @@ export default class Schedule extends Component<Props> {
                 <FlatList
                   data={[eventDay]}
                   renderItem={this.renderScheduleForDay}
-                  keyExtractor={(event, index) => event.eventID.toString()}
+                  keyExtractor={(event, index) => index.toString()}
                 />
               </ScrollView>
             )}

@@ -239,7 +239,7 @@ export default class EventsManager {
 
   //key of event
   // time in minutes to warn before event
-  favoriteEvent(eventID) {
+  async favoriteEvent(eventID) {
     this.favoriteState[eventID] = true;
     this.savedCounts[eventID] = this.getSavedCount(eventID) + 1;
     updateObj = {};
@@ -251,10 +251,10 @@ export default class EventsManager {
 
     this.updateHearts();
 
-    AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
+    await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       id = JSON.parse(result).id;
 
-      let response = await fetch("http://35.174.30.108/api/users/5c7b77b976b48e36303c61fd/favoriteEvent/5c7b77b976b48e36303c61fe", {
+      let response = fetch("http://35.174.30.108/api/users/5c7b77b976b48e36303c61fd/favoriteEvent/5c7b77b976b48e36303c61fe", {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -265,8 +265,9 @@ export default class EventsManager {
           eventID: '5c7b77b976b48e36303c61fe',
           id: id
         })
-      });
-      console.log(response);
+      }).then(function(myJson) {
+        console.log(JSON.stringify(myJson));
+      });;
     });
 
   }

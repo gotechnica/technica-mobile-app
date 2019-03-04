@@ -14,11 +14,11 @@ export default class EventStar extends Component {
   handleHeartPress() {
     const { eventID, eventManager } = this.props;
     console.log("HERE");
-    // if (eventManager.isFavorited(eventID)) {
-    //   eventManager.unfavoriteEvent(eventID)
-    // } else {
-    //   eventManager.favoriteEvent(eventID)
-    // }
+    if (eventManager.isFavorited(eventID)) {
+      eventManager.unfavoriteEvent(eventID)
+    } else {
+      eventManager.favoriteEvent(eventID)
+    }
   }
 
   render() {
