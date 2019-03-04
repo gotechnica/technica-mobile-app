@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0018515A75EB434DBB048CAA /* AvenirLTStd-MediumOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = F6120CAA86504893BE776CDE /* AvenirLTStd-MediumOblique.otf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -79,6 +78,10 @@
 		F50F865E9AFE49DC9D043AD6 /* AvenirLTStd-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 82EF504C683B42C5B8ED5175 /* AvenirLTStd-Light.otf */; };
 		F6843383DAE54F74BFC1EFF1 /* AvenirLTStd-BlackOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4505017204AB4E8AA91371E4 /* AvenirLTStd-BlackOblique.otf */; };
 		FB0F665C3D764D0DB36F6E5C /* aleo-bold-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F87AA7CD9AC4868B821DFE6 /* aleo-bold-webfont.ttf */; };
+		1D852FE951734B658133E55E /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 233F6164282D47D0A09DC2A4 /* AntDesign.ttf */; };
+		3F8C244DE78B47FBA69949F5 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 640B8EC9C2B14E45ACF418CA /* FontAwesome5_Brands.ttf */; };
+		808A71D5AEEC4F8A8BD26F92 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 22F4C64124964AA192EBF1D3 /* FontAwesome5_Regular.ttf */; };
+		3855C64D6D00483697F9B8D9 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4C84143EA4C4F5DB85C5379 /* FontAwesome5_Solid.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -497,6 +500,10 @@
 		FAC70FCD806947CA99C06B75 /* DINPro-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DINPro-Bold.otf"; path = "../assets/fonts/DINPro-Bold.otf"; sourceTree = "<group>"; };
 		FB1B63A26D412DB69337A226 /* Pods-technica-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technica-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-technica-tvOS/Pods-technica-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		FD114B7E0856445195872880 /* aleo-bolditalic-webfont.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "aleo-bolditalic-webfont.ttf"; path = "../assets/fonts/aleo-bolditalic-webfont.ttf"; sourceTree = "<group>"; };
+		233F6164282D47D0A09DC2A4 /* AntDesign.ttf */ = {isa = PBXFileReference; name = "AntDesign.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		640B8EC9C2B14E45ACF418CA /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Brands.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		22F4C64124964AA192EBF1D3 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Regular.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E4C84143EA4C4F5DB85C5379 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; name = "FontAwesome5_Solid.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -836,6 +843,10 @@
 				9375273A7C9741AAAA0365DF /* AvenirLTStd-Roman.otf */,
 				4EB83BF26D114A4381D80E42 /* DINPro-Light.otf */,
 				9D4226F31AFF406CB2F6290E /* DINPro-Medium.otf */,
+				233F6164282D47D0A09DC2A4 /* AntDesign.ttf */,
+				640B8EC9C2B14E45ACF418CA /* FontAwesome5_Brands.ttf */,
+				22F4C64124964AA192EBF1D3 /* FontAwesome5_Regular.ttf */,
+				E4C84143EA4C4F5DB85C5379 /* FontAwesome5_Solid.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1399,6 +1410,10 @@
 				5C08E19F69584DF589D8AACA /* AvenirLTStd-Roman.otf in Resources */,
 				90F38D1A91BE4C2381E20C8C /* DINPro-Light.otf in Resources */,
 				4E53D1A9F76C4F4E93E307D2 /* DINPro-Medium.otf in Resources */,
+				1D852FE951734B658133E55E /* AntDesign.ttf in Resources */,
+				3F8C244DE78B47FBA69949F5 /* FontAwesome5_Brands.ttf in Resources */,
+				808A71D5AEEC4F8A8BD26F92 /* FontAwesome5_Regular.ttf in Resources */,
+				3855C64D6D00483697F9B8D9 /* FontAwesome5_Solid.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

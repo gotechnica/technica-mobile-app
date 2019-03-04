@@ -99,6 +99,10 @@
 		<string>AvenirLTStd-MediumOblique.otf</string>
 		<string>AvenirLTStd-Oblique.otf</string>
 		<string>AvenirLTStd-Roman.otf</string>
+		<string>AntDesign.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
