@@ -68,12 +68,12 @@ export default class EventCard extends Component {
     return (
       <View>
         {this.renderModal()}
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => this.toggleModal()}
           activeOpacity={inSlideshow ? 0.7 : 0.2}
         >
           <View style={styles.event}>
-            {!inSlideshow ? 
+            {!inSlideshow ?
               (<React.Fragment>
                 <Image
                   style={[
@@ -96,7 +96,7 @@ export default class EventCard extends Component {
                     </H6>
                   </View>
                 }
-              </React.Fragment>) 
+              </React.Fragment>)
               : (
               <ImageBackground
                 style={{
@@ -115,7 +115,7 @@ export default class EventCard extends Component {
                     top: 0,
                     backgroundColor: 'rgba(0,0,0,0.45)',
                   }}
-                > 
+                >
                   <PadContainer
                     style={{
                       position: 'absolute',

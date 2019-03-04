@@ -99,7 +99,7 @@ export default class AppContainer extends Component<Props> {
           <Text style={{
             textAlign: 'left',
             fontFamily: 'Aleo-Bold',
-            fontSize: 40, 
+            fontSize: 40,
             color: colors.primaryColor,
           }}>
             {navigation.getParam("title")}
@@ -120,7 +120,7 @@ export default class AppContainer extends Component<Props> {
     this.toggleMapModal = this.toggleMapModal.bind(this);
     this.toggleSearchModal = this.toggleSearchModal.bind(this);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
-    this.props.navigation.setParams({ 
+    this.props.navigation.setParams({
       title: "Bitcamp",
       showMapIcon: true,
       isMapModalVisible: false,

@@ -4,6 +4,7 @@ export default class Event {
   constructor(
     eventID,
     title,
+    category,
     description,
     startTime,
     endTime,
@@ -13,6 +14,7 @@ export default class Event {
   ) {
     this.eventID = eventID;
     this.title = title;
+    this.category = category;
     this.description = description;
     this.startTime = startTime;
     this.endTime = endTime;

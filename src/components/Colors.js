@@ -10,7 +10,7 @@ const bitcampColorPalette = {
   lightGrey: "#f9f9f9",
   darkGrey: "#8d8c92",
   black: "#000000",
-  
+
   red: "#FF3F46",
   orange: {
     bitcamp: "#FF6F3F",
@@ -29,7 +29,7 @@ const bitcampColorPalette = {
 export const colors = {
   starColor: {
     selected: bitcampColorPalette.darkYellow,
-    unselected: bitcampColorPalette.darkGrey
+    unselected: '#b7b7bb'
   },
   textColor: {
     primary: bitcampColorPalette.white, // on primary background
@@ -38,7 +38,7 @@ export const colors = {
     normal: bitcampColorPalette.black,
   },
   borderColor: {
-    light: bitcampColorPalette.lightGrey, 
+    light: bitcampColorPalette.lightGrey,
     normal: bitcampColorPalette.darkGrey
   },
   backgroundColor: {
@@ -47,5 +47,10 @@ export const colors = {
   },
   iconColor: bitcampColorPalette.red,
   secondaryColor: bitcampColorPalette.orange.yellow,
-  primaryColor: bitcampColorPalette.orange.bitcamp
+  primaryColor: bitcampColorPalette.orange.bitcamp,
+  blues: {
+    midnight: bitcampColorPalette.blue.midnight,
+    medium: bitcampColorPalette.blue.medium,
+    sky: bitcampColorPalette.blue.sky
+  }
 };

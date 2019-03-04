@@ -6,7 +6,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { colors } from '../Colors';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class CustomScheduleTabBar extends Component {
 
@@ -33,9 +33,9 @@ export default class CustomScheduleTabBar extends Component {
           style={[
             styles.tab,
             (this.props.activeTab === i ? styles.activetab : styles.inactivetab),
-            (tab == 'star' ? styles.star : styles.weekdays)
+            (tab == 'ios-star' ? styles.star : styles.weekdays)
           ]}>
-          { tab != 'star' ?
+          { tab != 'ios-star' ?
           <Text style={[(this.props.activeTab === i) && styles.textActive, styles.text]}>
             {tab}
           </Text>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 10,
+    paddingBottom: 5,
     borderBottomWidth: 5,
   },
   weekdays: {
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.primaryColor,
   },
   tabs: {
-    height: 45,
+    height: 60,
     flexDirection: 'row',
     paddingTop: 5,
     borderWidth: 1,

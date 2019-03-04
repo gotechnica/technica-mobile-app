@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { H3 } from './Text';
 import { colors } from './Colors';
 
@@ -26,7 +26,7 @@ export default class EventStar extends Component {
 
     return (
       <Fragment>
-        <H3 style={{ marginRight: 8, marginTop: 5 }}>
+        <H3 style={{ marginRight: 8, marginTop: 5, fontSize: 17.5, color: '#b7b7bb'}}>
           {eventManager.getSavedCount(eventID)}
         </H3>
         <TouchableOpacity onPress={() => {
@@ -34,11 +34,17 @@ export default class EventStar extends Component {
           console.log("ONPRESS");
         }}>
           <Icon
-            name={'star'}
-            size={22}
+            name={'ios-star'}
+            size={30}
             color={(eventManager.isFavorited(eventID)) ? colors.starColor.selected : colors.starColor.unselected}
           />
         </TouchableOpacity>
+        <Icon
+          style={{ marginLeft: 12}}
+          name={'ios-arrow-forward'}
+          size={20}
+          color={'#b7b7bb'}
+        />
       </Fragment>
     )
   }

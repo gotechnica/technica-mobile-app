@@ -109,6 +109,7 @@ export default class EventsManager {
     //repeat process of scanning through events
     for (let i in rawData) {
       newEventDays.push(createEventDay(rawData[i]));
+      //console.log(rawData[i])
     }
 
     newCombinedEvents = _.flatten(
@@ -125,14 +126,12 @@ export default class EventsManager {
     let changed = false;
     newCombinedEvents.forEach(newEvent => {
       let eventID = newEvent.eventID;
-
       // this event hasn't been seen yet
       if(this.eventIDToEventMap[eventID] == null) {
         changed = true;
         this.eventIDToEventMap[eventID] = newEvent;
       } else {
         curEventObj = this.eventIDToEventMap[newEvent.eventID];
-
         if(!_.isEqual(curEventObj, newEvent)) {
 
           // if the start time has changed we need to create a new notification and delete the original one
@@ -143,9 +142,10 @@ export default class EventsManager {
             this.createNotification(newEvent);
           }
           changed = true;
-
+          //console.log(newEvent);
           //update Event object with new properties
           curEventObj.title = newEvent.title;
+          curEventObj.category = newEvent.category;
           curEventObj.description = newEvent.description;
           curEventObj.startTime = newEvent.startTime;
           curEventObj.endTime = newEvent.endTime;

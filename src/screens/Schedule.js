@@ -21,7 +21,7 @@ import EventGroupComponent from '../components/schedule/EventGroupComponent';
 import ScheduleSceneTabBar from '../components/schedule/ScheduleSceneTabBar';
 import CustomScheduleTabBar from '../components/schedule/CustomScheduleTabBar';
 import { colors } from '../components/Colors';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Saved from "./Saved";
 
 export default class Schedule extends Component<Props> {
@@ -127,7 +127,7 @@ export default class Schedule extends Component<Props> {
                 />
               </ScrollView>
             )}
-            <ScrollView tabLabel="star" style={styles.tabView}>
+            <ScrollView tabLabel="ios-star" style={styles.tabView}>
             <Saved
               ref={mySaved => {
                 this.mySaved = mySaved;
@@ -146,19 +146,20 @@ export default class Schedule extends Component<Props> {
 const styles = StyleSheet.create({
   tabView: {
     flex: 1,
-    padding: 10,
+    //padding: 10,
     backgroundColor: 'rgba(0,0,0,0.01)'
   },
   card: {
     borderWidth: 1,
-    backgroundColor: '#fff',
-    borderColor: 'rgba(0,0,0,0.1)',
-    margin: 5,
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderBottomWidth: 2,
     height: 150,
-    padding: 15,
-    shadowColor: '#ccc',
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 3
+    paddingLeft: 15,
+    paddingRight: 15,
+    //shadowColor: '#ccc',
+    //shadowOffset: {width: 2, height: 2},
+    //shadowOpacity: 0.5,
+    //shadowRadius: 3
   }
 })

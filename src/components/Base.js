@@ -61,9 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundColor.white
   },
   paperHead: {
-    paddingLeft: 20,
-    paddingBottom: 5,
-    color: colors.secondaryColor
+
   },
   paperBody: {
     padding: 15,
@@ -152,7 +150,7 @@ const SubHeading = props => (
 
 const PaperSheet = props => (
   <Fragment>
-    {props.heading ? <H4 style={styles.paperHead}>{props.heading}</H4> : null}
+    {/*props.heading ? <H2 style={styles.paperHead}>{props.heading}</H2> : null*/}
     <Paper style={styles.paper}>
       <View style={styles.paperBody}>{props.children}</View>
     </Paper>
