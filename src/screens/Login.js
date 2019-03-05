@@ -28,6 +28,7 @@ import {
   Spacing,
   Button,
 } from '../components/Base';
+import KeyboardShift from '../components/KeyboardShift';
 import Modal from "react-native-modal";
 import EventCard from '../components/EventCard';
 import EventColumns from '../components/EventColumns';
@@ -51,7 +52,6 @@ export default class Login extends Component<Props> {
       placeholder: '',
       greeting: 'Welcome to \nBitcamp 2019',
       instruction: 'Enter the email you used to sign up for Bitcamp.',
-      keyboardShown: false,
       nextPage: (
         <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Button
@@ -65,8 +65,6 @@ export default class Login extends Component<Props> {
     super(props);
 
     this.state = this.createInitialState();
-    this._keyboardDidShow = this._keyboardDidShow.bind(this);
-    this._keyboardDidHide = this._keyboardDidHide.bind(this);
   }
 //
 //   async componentDidMount() {
@@ -215,59 +213,37 @@ export default class Login extends Component<Props> {
       }
   }
 
-  componentWillMount () {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-  }
-
-  componentWillUnmount () {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
-
-  _keyboardDidShow () {
-    if (this.state.keyboardShown == false) {
-      this.setState({keyboardShown: true});
-    }
-    console.log("keyboard opened");
-  }
-
-  _keyboardDidHide () {
-    if (this.state.keyboardShown == true) {
-      this.setState({keyboardShown: false});
-    }
-  }
-
   render() {
     return (
       
-        <PadContainer style={this.state.keyboardShown ? styles.subSection2 : styles.subSection}>
-          <Heading style={{ paddingBottom: 20 }}>
-            {this.state.greeting}
-          </Heading>
-          <SubHeading>
-            {this.state.instruction}
-          </SubHeading>
-          <TextInput
-            placeholder={this.state.placeholder}
-            value={this.state.fieldValue}
-            underlineColorAndroid='rgba(0,0,0,0)'
-            onChangeText={field => this.setState({ fieldValue: field })}
-            placeholderTextColor={colors.textColor.light}
-            keyboardType = 'numeric'
-            style={{
-              borderColor: colors.borderColor.normal,
-              borderBottomWidth: 1,
-              paddingBottom: 8,
-              fontFamily: "DINPro-Medium",
-              fontSize: 24,
-              color: colors.textColor.normal,
-            }}
-          />
-        
-        {this.state.nextPage}
-        </PadContainer>
-        
+        <KeyboardShift>
+          <PadContainer>
+            <Heading style={{ paddingBottom: 20 }}>
+              {this.state.greeting}
+            </Heading>
+            <SubHeading>
+              {this.state.instruction}
+            </SubHeading>
+            <TextInput
+              placeholder={this.state.placeholder}
+              value={this.state.fieldValue}
+              underlineColorAndroid='rgba(0,0,0,0)'
+              onChangeText={field => this.setState({ fieldValue: field })}
+              placeholderTextColor={colors.textColor.light}
+              keyboardType = 'numeric'
+              style={{
+                borderColor: colors.borderColor.normal,
+                borderBottomWidth: 1,
+                paddingBottom: 8,
+                fontFamily: "DINPro-Medium",
+                fontSize: 24,
+                color: colors.textColor.normal,
+              }}
+            />
+          
+          {this.state.nextPage}
+          </PadContainer>
+        </KeyboardShift>
     );
   }
 }

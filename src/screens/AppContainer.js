@@ -154,6 +154,7 @@ export default class AppContainer extends Component<Props> {
       >
         <StatusBar
           barStyle="dark-content"
+          backgroundColor={colors.backgroundColor.light}
         />
         <ScrollableTabView
           tabBarPosition="bottom"
