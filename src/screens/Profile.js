@@ -155,6 +155,12 @@ export default class Profile extends Component<Props> {
       loggedInUser.admin = false;
     }
     this.setState({ user: loggedInUser });
+    if (!this.state.user.profile) {
+      AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
+        const navigate = this.props.navigation;
+        RNRestart.Restart();
+      });
+    }
   }
 
   toggleModal() {
@@ -233,6 +239,7 @@ export default class Profile extends Component<Props> {
   }
 
   render() {
+
     const scannerView = (() => {
       return (
         <Modal

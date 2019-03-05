@@ -9,11 +9,6 @@ import {
 } from "react-native";
 
 import {
-  Badge,
-  Text as BadgeText
-} from 'native-base';
-
-import {
   GradientBackground,
   ViewContainer,
   PadContainer,
@@ -132,13 +127,9 @@ export default class EventDescription extends Component<Props> {
                   : `${event.startTimeFormatted} - ${event.endTimeFormatted}`}
               </H4>*/}
               <H4 style={{ fontSize: 17.5, color: colors.textColor.light }}>{event.location}</H4>
-              <Badge
-                style={[styles.badge, {backgroundColor: badgeStyles[event.category].bgColor}]}>
-                <BadgeText
-                  style={[styles.badgeTxt, {color: badgeStyles[event.category].text}]}>
+                  <Text>
                   {(event.category == 'Misc' ? 'Mini-Event' : event.category).toUpperCase()}
-                </BadgeText>
-              </Badge>
+                  </Text>
             </View>
             <View style={[styles.row, { flex: 1, justifyContent: "flex-end", alignItems: 'center'}]}>
               <EventStar
