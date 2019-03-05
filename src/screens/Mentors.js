@@ -24,6 +24,8 @@ import { H1, H2, H3, H4, H6, P } from "../components/Text";
 import Toast from "react-native-simple-toast";
 import moment from "moment";
 import { StyleSheet, StatusBar, Switch } from "react-native";
+import { ifIphoneX } from 'react-native-iphone-x-helper';
+import { red100 } from "react-native-paper/src/styles/colors";
 
 const serverURL = "https://technicamentorshipservertest.herokuapp.com";
 
@@ -99,9 +101,12 @@ export default class Mentors extends Component<Props> {
     });
   }
   toggleModal() {
-    this.setState({ newQuestionScreen: !this.state.newQuestionScreen });
-    StatusBar.setBarStyle('dark-content', true);
-    StatusBar.setBackgroundColor(colors.backgroundColor.normal, true);
+    const newQuestionScreen = this.state.newQuestionScreen
+    this.setState({ newQuestionScreen: !newQuestionScreen });
+    StatusBar.setBarStyle(newQuestionScreen ? 'dark-content' : 'light-content', true);
+    StatusBar.setBackgroundColor( newQuestionScreen ? 
+      colors.backgroundColor.normal : colors.backgroundColor.light, 
+      true);
   }
 
   showToast() {
@@ -192,7 +197,7 @@ export default class Mentors extends Component<Props> {
         onBackButtonPress={() => this.toggleModal()}
         style={modalStyle}
       >
-        <View style={modalStyles.menu}>
+        <View style={[ modalStyles.menu ]}>
           <TouchableOpacity 
             onPress={() => this.cancelQuestion()}
             style={modalStyles.menuItem}
@@ -219,7 +224,7 @@ export default class Mentors extends Component<Props> {
             QUESTION
           </H3>
           <TextInput
-            style={modalStyles.input}
+            style={[ modalStyles.input, modalStyles.textArea ]}
             multiline={true}
             numberOfLines={10}
             onChangeText={text => this.setState({ question: text })}
@@ -233,12 +238,14 @@ export default class Mentors extends Component<Props> {
           <H3 style={modalStyles.inputGroupTitle}>
             TABLE INFO
           </H3>
-          <TouchableOpacity style={[
-            modalStyles.input, 
-            {
-              borderBottom: 0.25, 
-              borderBottomColor: colors.borderStyle
-            }]}
+          <TouchableOpacity 
+            style={[
+              modalStyles.input,
+              {
+                borderBottomColor: colors.borderColor.light,
+                borderBottomWidth: 1,
+              }
+            ]}
             onPress={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
             activeOpacity={1}
           >
@@ -246,6 +253,7 @@ export default class Mentors extends Component<Props> {
               trackColor={colors.primaryColor}
               value={needsInPersonAssistance}
               onValueChange={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
+              style={{ marginRight: 10, }}
             />
             <P>I'd like in person assistance please</P>
           </TouchableOpacity>
@@ -269,6 +277,7 @@ export default class Mentors extends Component<Props> {
             underlineColorAndroid="transparent"
             placeholder="bitcamper123"
             placeholderTextColor={colors.textColor.light}
+            autoCapitalize="none"
           />
           <P style={modalStyles.inputDescription}>
             A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
@@ -364,14 +373,17 @@ export default class Mentors extends Component<Props> {
 const modalStyles = StyleSheet.create({
   input: {
     backgroundColor: colors.backgroundColor.normal,
-    paddingBottom: 2,
     fontSize: 14,
     fontFamily: "Poppins-Regular",
     color: colors.textColor.normal,
-    textAlignVertical: 'top',
     padding: 15,
+    minHeight: 40,
     flexDirection: 'row',
     alignItems: 'center'
+  },
+  textArea: {
+    textAlignVertical: 'top',
+    minHeight: 200,
   },
   inputGroup: {
     marginBottom: 20,
@@ -397,6 +409,11 @@ const modalStyles = StyleSheet.create({
     alignItems: 'baseline',
     borderBottomWidth: 0.25,
     borderBottomColor: colors.borderColor.normal,
+    ...ifIphoneX({
+      paddingTop: 40,
+    }, {
+      paddingTop: 20,
+    })
   },
   menuItem: {
     fontWeight: 'bold',
