@@ -12,6 +12,7 @@ import Home from './Home';
 import Mentors from './Mentors';
 import Profile from './Profile';
 import Schedule from './Schedule';
+import { Colors } from 'react-native-paper';
 
 const channelId = "bitcamp-push-notifications";
 const channelName = "Bitcamp Announcements";
@@ -35,7 +36,10 @@ export default class AppContainer extends Component<Props> {
       <View>
         <View style={{flexDirection:"row", paddingRight: 15}}>
           <View style={{flex:1}}>
-            <TouchableHighlight onPress={navigation.getParam("toggleMapModal")}>
+            <TouchableHighlight 
+            onPress={navigation.getParam("toggleMapModal")}
+            underlayColor={Colors.white}
+            >
               <Icon
                 name="map"
                 size={30}
@@ -59,7 +63,10 @@ export default class AppContainer extends Component<Props> {
       <View>
         <View style={{flexDirection:"row", paddingRight: 15}}>
           <View style={{flex:1}}>
-            <TouchableHighlight onPress={navigation.getParam("toggleSearchModal")}>
+          <TouchableHighlight 
+            onPress={navigation.getParam("toggleSearchModal")}
+            underlayColor={Colors.white}
+            >
               <Icon
                 name="magnifier"
                 size={30}
