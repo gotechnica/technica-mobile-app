@@ -1,24 +1,17 @@
-import React, { Component } from "react";
-import { DefaultTheme, BottomNavigation } from "react-native-paper";
-import Home from "./Home";
-import Mentors from "./Mentors";
-import Profile from "./Profile";
-import Saved from "./Saved";
-import Schedule from "./Schedule";
-import Login from "./Login";
-import CustomTabBar from "../components/CustomTabBar";
-import { H5 } from "../components/Text";
-import { colors } from "../components/Colors";
-import Icon from "react-native-vector-icons/SimpleLineIcons";
-import ScrollableTabView from "react-native-scrollable-tab-view";
-import { PushNotificationIOS, View, TouchableOpacity } from "react-native";
-import { AsyncStorage, SafeAreaView, BackHandler, Platform } from "react-native";
-import { Heading, PadContainer, ViewContainer, CenteredActivityIndicator } from "../components/Base";
-import MapModal from "../components/MapModal";
-import SearchModal from "../components/SearchModal";
-import {Button, Image, Text, TouchableHighlight, StatusBar} from "react-native";
-import firebase from "react-native-firebase";
-import EventsManager from "../events/EventsManager";
+import React, { Component } from 'react';
+import { AsyncStorage, BackHandler, Image, SafeAreaView, StatusBar, Text, TouchableHighlight, View } from 'react-native';
+import firebase from 'react-native-firebase';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+
+import { colors } from '../components/Colors';
+import CustomTabBar from '../components/CustomTabBar';
+import MapModal from '../components/MapModal';
+import SearchModal from '../components/SearchModal';
+import Home from './Home';
+import Mentors from './Mentors';
+import Profile from './Profile';
+import Schedule from './Schedule';
 
 const channelId = "bitcamp-push-notifications";
 const channelName = "Bitcamp Announcements";
@@ -62,7 +55,7 @@ export default class AppContainer extends Component<Props> {
       </View>
     )
     :
-    (
+    navigation.getParam("showSearchIcon") ? (
       <View>
         <View style={{flexDirection:"row", paddingRight: 15}}>
           <View style={{flex:1}}>
@@ -86,7 +79,10 @@ export default class AppContainer extends Component<Props> {
           eventManager={navigation.getParam("eventManager")}
         />
       </View>
-    ),
+    )
+    :
+    (<View>
+    </View>),
     headerLeft: (
       <View style={{flexDirection:"row", paddingLeft: 15}}>
         <View style={{flex:1}}>
@@ -128,7 +124,8 @@ export default class AppContainer extends Component<Props> {
       toggleMapModal: this.toggleMapModal,
       toggleSearchModal: this.toggleSearchModal,
       eventDays: this.props.screenProps.eventManager.getEventDays(),
-      eventManager: this.props.screenProps.eventManager
+      eventManager: this.props.screenProps.eventManager,
+      showSearchIcon: false,
     });
   }
 
@@ -166,15 +163,16 @@ export default class AppContainer extends Component<Props> {
             const tabNames = [
               "Bitcamp",
               "Schedule",
-              /*"Saved",*/
               "Mentors",
               "Profile"
             ];
             this.props.navigation.setParams({ title: tabNames[tabIndex] });
             if (tabIndex == 1) {
-              this.props.navigation.setParams({ showMapIcon: false, eventDays: eventManager.getEventDays() });
+              this.props.navigation.setParams({ showMapIcon: false, showSearchIcon: true, eventDays: eventManager.getEventDays() });
+            } else if (tabIndex == 0) {
+              this.props.navigation.setParams({ showMapIcon: true, showSearchIcon: false });
             } else {
-              this.props.navigation.setParams({ showMapIcon: true });
+              this.props.navigation.setParams({ showMapIcon: false, showSearchIcon: false });
             }
           }}
         >
@@ -196,14 +194,6 @@ export default class AppContainer extends Component<Props> {
             eventManager={this.props.screenProps.eventManager}
             navigation={this.props.navigation}
           />
-          {/*<Saved
-            ref={mySaved => {
-              this.mySaved = mySaved;
-              eventManager.registerEventChangeListener(mySaved);
-            }}
-            tabLabel="heart"
-            eventManager={this.props.screenProps.eventManager}
-          />*/}
           <Mentors tabLabel="people" />
           <Profile tabLabel="user" navigation={navigate} />
         </ScrollableTabView>

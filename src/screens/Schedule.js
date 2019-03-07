@@ -69,51 +69,6 @@ export default class Schedule extends Component<Props> {
     } else {
       return (
         <PlainViewContainer>
-          {/*<FlatList
-            data={eventDays}
-            renderItem={this.renderScheduleForDay}
-            ListHeaderComponent={() => (
-              <PadContainer>
-                <ScheduleSceneTabBar
-                  goToSection={i => {
-                    this.scheduleListRef.scrollToIndex({
-                      index: i,
-                      viewOffset: 100,
-                      viewPosition: 0
-                    });
-                  }}
-                  tabs={tabNames}
-                  activeTab={0}
-                />
-              </PadContainer>
-            )}
-            ItemSeparatorComponent={() => (
-              <PadContainer
-                style={{
-                  marginTop: 20,
-                  borderTopWidth: 1,
-                  borderColor: colors.borderColor.light,
-                  paddingTop: 30,
-                }}
-              >
-                <ScheduleSceneTabBar
-                  goToSection={i => {
-                    this.scheduleListRef.scrollToIndex({
-                      index: i,
-                      viewOffset: 100,
-                      viewPosition: 0
-                    });
-                  }}
-                  tabs={tabNames}
-                  activeTab={1}
-                />
-              </PadContainer>
-            )}
-            keyExtractor={(eventDay, index) => eventDay.label}
-            ref={ref => {
-              this.scheduleListRef = ref;
-            }}
-          />*/}
           <ScrollableTabView
             initialPage={0}
             renderTabBar={() => <CustomScheduleTabBar/> }

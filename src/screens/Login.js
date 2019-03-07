@@ -207,35 +207,35 @@ export default class Login extends Component<Props> {
 
   render() {
     return (
-      
         <KeyboardShift>
-          <PadContainer>
-            <Heading style={{ paddingBottom: 20 }}>
-              {this.state.greeting}
-            </Heading>
-            <SubHeading>
-              {this.state.instruction}
-            </SubHeading>
-            <TextInput
-              placeholder={this.state.placeholder}
-              value={this.state.fieldValue}
-              underlineColorAndroid='rgba(0,0,0,0)'
-              onChangeText={field => this.setState({ fieldValue: field })}
-              placeholderTextColor={colors.textColor.light}
-              keyboardType = 'numeric'
-              style={{
-                borderColor: colors.borderColor.normal,
-                borderBottomWidth: 1,
-                paddingBottom: 8,
-                fontFamily: "DINPro-Medium",
-                fontSize: 24,
-                color: colors.textColor.normal,
-              }}
-            />
-          
-          {this.state.nextPage}
-          </PadContainer>
-        </KeyboardShift>
+          <PadContainer style={this.state.keyboardShown ? styles.subSection2 : styles.subSection}>
+          <Heading style={{ paddingBottom: 20 }}>
+            {this.state.greeting}
+          </Heading>
+          <SubHeading>
+            {this.state.instruction}
+          </SubHeading>
+          <TextInput
+            placeholder={this.state.placeholder}
+            value={this.state.fieldValue}
+            underlineColorAndroid='rgba(0,0,0,0)'
+            onChangeText={field => this.setState({ fieldValue: field })}
+            placeholderTextColor={colors.textColor.light}
+            keyboardType = 'email-address'
+            autoCapitalize = 'none'
+            style={{
+              borderColor: colors.borderColor.normal,
+              borderBottomWidth: 1,
+              paddingBottom: 8,
+              fontFamily: "DINPro-Medium",
+              fontSize: 24,
+              color: colors.textColor.normal,
+            }}
+          />
+        
+        {this.state.nextPage}
+        </PadContainer>
+      </KeyboardShift>
     );
   }
 }
