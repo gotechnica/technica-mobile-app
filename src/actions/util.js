@@ -19,7 +19,6 @@ export function hasTimePassed(t) {
 // which have already been grouped
 export function createEventGroup(eventGroupLabel, rawEventArray) {
   let eventArray = [];
-  console.log(rawEventArray)
   for (let i in rawEventArray) {
     rawEvent = rawEventArray[i];
     eventArray.push(

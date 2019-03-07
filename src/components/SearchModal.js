@@ -44,7 +44,7 @@ export default class SearchModal extends Component {
         newEventGroup = new EventGroup(eventGroup.label, [])
         for (eventIndex in eventGroup.events) {
           event = eventGroup.events[eventIndex];
-          if (event.title.toLowerCase().search(query) >= 0) {
+          if (event.title.toLowerCase().search(query) >= 0 || event.category.toLowerCase().search(query) >= 0) {
             newEventGroup.events.push(event);
           }
         }
