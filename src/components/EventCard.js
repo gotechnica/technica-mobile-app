@@ -23,6 +23,22 @@ import { white } from 'react-native-paper/src/styles/colors';
 const styles = StyleSheet.create({
   event: {
     marginBottom: 15,
+  },
+  darkImageMask: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    backgroundColor: 'rgba(0,0,0,0.45)',
+  },
+  textGroup: {
+    marginBottom: 40,
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  imageBg: {
+    position: 'relative',
   }
 });
 
@@ -99,30 +115,14 @@ export default class EventCard extends Component {
               </React.Fragment>)
               : (
               <ImageBackground
-                style={{
-                  width: imageWidth,
-                  height: imageHeight,
-                  position: 'relative',
-                }}
+                style={[
+                  styles.imageBg,
+                  { width: imageWidth, height: imageHeight,}
+                ]}
                 source={require('../../assets/imgs/filler.png')}
               >
-                <View
-                  style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    backgroundColor: 'rgba(0,0,0,0.45)',
-                  }}
-                >
-                  <PadContainer
-                    style={{
-                      position: 'absolute',
-                      bottom: 20,
-                      left: 0,
-                    }}
-                  >
+                <View style={styles.darkImageMask}>
+                  <PadContainer style={styles.textGroup}>
                     <H3 style={{ color: colors.textColor.primary, }}>HAPPENING NOW</H3>
                     <H2 style={{ color: colors.textColor.primary, }}>{titleClipped}</H2>
                   </PadContainer>
