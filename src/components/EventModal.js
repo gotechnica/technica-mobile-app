@@ -84,7 +84,7 @@ export default class EventModal extends Component {
                 </H3>
               </View>
             </View>
-            {!props.event.beginnerFriendly && (
+            {props.event.beginnerFriendly && (
               <View style={styles.viewWithSpacing}>
                 <H4 style={{ color: colors.secondaryColor }}>BEST FOR BEGINNERS</H4>
               </View>

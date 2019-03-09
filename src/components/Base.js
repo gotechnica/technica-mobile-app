@@ -193,8 +193,7 @@ class ModalHeader extends Component<Props> {
           >
             <FAIcon name="chevron-left" size={22} color={colors.iconColor} />
           </TouchableOpacity>
-          {
-            heart ?
+          {heart &&
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <EventStar
                 ref={myStar => {
@@ -206,8 +205,6 @@ class ModalHeader extends Component<Props> {
                 discludeArrow={noArrow}
               />
             </View>
-              :
-              null
           }
         </View>
         {
