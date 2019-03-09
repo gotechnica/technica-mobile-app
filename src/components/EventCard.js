@@ -13,7 +13,7 @@ import Images from '../../assets/imgs/index';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from 'react-native-modal';
-import { ModalContent, ModalHeader, HorizontalLine, Spacing, PadContainer } from './Base';
+import { PadContainer } from './Base';
 import { colors } from './Colors';
 import EventModal from './EventModal';
 import EventDescription from './schedule/EventDescription';
@@ -39,6 +39,10 @@ const styles = StyleSheet.create({
   },
   imageBg: {
     position: 'relative',
+  },
+  happeningTitle: {
+    fontWeight: 'bold',
+    color: colors.textColor.primary,
   }
 });
 
@@ -123,7 +127,7 @@ export default class EventCard extends Component {
               >
                 <View style={styles.darkImageMask}>
                   <PadContainer style={styles.textGroup}>
-                    <H3 style={{ color: colors.textColor.primary, }}>HAPPENING NOW</H3>
+                    <H3 style={styles.happeningTitle}>HAPPENING NOW</H3>
                     <H2 style={{ color: colors.textColor.primary, }}>{titleClipped}</H2>
                   </PadContainer>
                 </View>

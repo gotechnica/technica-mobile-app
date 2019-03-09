@@ -178,6 +178,7 @@ class ModalHeader extends Component<Props> {
     const {
       onBackButtonPress,
       heart,
+      noArrow,
       eventID,
       eventManager,
       small
@@ -202,6 +203,7 @@ class ModalHeader extends Component<Props> {
                 }}
                 eventID={eventID}
                 eventManager={eventManager}
+                discludeArrow={noArrow}
               />
             </View>
               :
