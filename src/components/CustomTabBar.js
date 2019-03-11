@@ -1,18 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Animated,
-  TouchableOpacity
-} from "react-native";
-
-import { P } from "./Text";
-import { colors } from "./Colors";
-import Icon from "react-native-vector-icons/SimpleLineIcons";
+import { colors } from './Colors';
+import { P } from './Text';
 
 const LABELS = ["Home", "Schedule", /*"Saved",*/ "Mentors", "Profile"];
 

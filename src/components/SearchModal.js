@@ -1,22 +1,13 @@
 import React, { Component, Fragment } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  View,
-  FlatList,
-  SafeAreaView
-} from 'react-native';
+import { FlatList, View } from 'react-native';
 import Modal from 'react-native-modal';
-import { ModalContent, ModalHeader, HorizontalLine, Spacing, modalStyle } from './Base';
-import { colors } from './Colors';
 import { Searchbar } from 'react-native-paper';
+
 import EventGroupComponent from '../components/schedule/EventGroupComponent';
 import EventDay from '../events/EventDay';
 import EventGroup from '../events/EventGroup';
+import { ModalContent, ModalHeader, modalStyle } from './Base';
+import { colors } from './Colors';
 
 export default class SearchModal extends Component {
 

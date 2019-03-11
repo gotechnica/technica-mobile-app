@@ -181,6 +181,7 @@ class ModalHeader extends Component<Props> {
       noArrow,
       eventID,
       eventManager,
+      goToSchedule,
       small
     } = this.props;
 

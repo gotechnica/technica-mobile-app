@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AsyncStorage, BackHandler, Image, SafeAreaView, StatusBar, Text, TouchableHighlight, View } from 'react-native';
 import firebase from 'react-native-firebase';
+import { Colors } from 'react-native-paper';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
@@ -12,7 +13,6 @@ import Home from './Home';
 import Mentors from './Mentors';
 import Profile from './Profile';
 import Schedule from './Schedule';
-import { Colors } from 'react-native-paper';
 
 const channelId = "bitcamp-push-notifications";
 const channelName = "Bitcamp Announcements";
