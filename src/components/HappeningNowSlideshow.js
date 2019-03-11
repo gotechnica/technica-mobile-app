@@ -5,9 +5,7 @@ import Swiper from 'react-native-swiper';
 import { StyleSheet } from 'react-native';
 import { PadContainer } from "../components/Base";
 import EventCard from "./EventCard";
-import { PadContainer } from '../components/Base';
 import { H2, H3 } from '../components/Text';
-import EventCard from './EventCard';
 
 const styles = StyleSheet.create({
     textIfNoEvents: {

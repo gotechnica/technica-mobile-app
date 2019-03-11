@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { Component, Fragment } from 'react';
-import { Image, ScrollView, StyleSheet } from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
 import Modal from 'react-native-modal';
 
 import { H2, H3, H4, P } from '../components/Text';
