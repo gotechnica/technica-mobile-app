@@ -178,6 +178,7 @@ class ModalHeader extends Component<Props> {
     const {
       onBackButtonPress,
       heart,
+      noArrow,
       eventID,
       eventManager,
       goToSchedule,
@@ -193,9 +194,7 @@ class ModalHeader extends Component<Props> {
           >
             <FAIcon name="chevron-left" size={22} color={colors.iconColor} />
           </TouchableOpacity>
-          {this.props.goToSchedule ? (<H2 style={styles.modalHeadingText}>{this.props.heading}</H2>) : (<View></View>)}
-          {
-            heart ?
+          {heart &&
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <EventStar
                 ref={myStar => {
@@ -204,10 +203,9 @@ class ModalHeader extends Component<Props> {
                 }}
                 eventID={eventID}
                 eventManager={eventManager}
+                discludeArrow={noArrow}
               />
             </View>
-              :
-              null
           }
         </View>
         {

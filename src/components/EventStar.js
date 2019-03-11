@@ -12,7 +12,7 @@ export default class EventStar extends Component {
   }
 
   handleHeartPress() {
-    const { eventID, eventManager } = this.props;
+    const { eventID, eventManager, hasArrow } = this.props;
     console.log("HERE");
     if (eventManager.isFavorited(eventID)) {
       eventManager.unfavoriteEvent(eventID)
@@ -22,7 +22,7 @@ export default class EventStar extends Component {
   }
 
   render() {
-    const { eventManager, eventID } = this.props;
+    const { eventManager, eventID, discludeArrow } = this.props;
 
     return (
       <Fragment>
@@ -39,12 +39,14 @@ export default class EventStar extends Component {
             color={(eventManager.isFavorited(eventID)) ? colors.starColor.selected : colors.starColor.unselected}
           />
         </TouchableOpacity>
-        <Icon
-          style={{ marginLeft: 12}}
-          name={'ios-arrow-forward'}
-          size={20}
-          color={'#b7b7bb'}
-        />
+        { !discludeArrow &&
+          <Icon
+            style={{ marginLeft: 12}}
+            name={'ios-arrow-forward'}
+            size={20}
+            color={'#b7b7bb'}
+          />
+        }
       </Fragment>
     )
   }

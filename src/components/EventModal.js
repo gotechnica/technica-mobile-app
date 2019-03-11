@@ -13,7 +13,7 @@ export default class EventModal extends Component {
   render() {
     const props = this.props;
     const dimensions = require('Dimensions').get('window');
-    const imageWidth = dimensions.width - 42;
+    const imageWidth = dimensions.width;
     const imageHeight = Math.round((imageWidth * 38) / 67);
     const img = props.event.img + "_big";
     return (
@@ -37,46 +37,52 @@ export default class EventModal extends Component {
             eventID={props.event.eventID.toString()}
             eventManager={props.eventManager}
             heart
+            noArrow
             small
           />
           <Image
-            style={{
-              width: imageWidth,
-              height: imageHeight,
-              marginTop: 20,
-              borderRadius: 4,
-              marginBottom: 20
-            }}
-            // source={Image[img]}
-            source={require('../../assets/imgs/filler.png')}
-          />
+              style={[
+                styles.banner,
+                {
+                  width: imageWidth,
+                  height: imageHeight,
+                }
+              ]}
+              // source={Image[img]}
+              source={require('../../assets/imgs/filler.png')}
+            />
           <ScrollView>
-            <Spacing />
-            <H2>{props.event.title}</H2>
-            <Spacing />
-            <H3>
-              {
-                props.event.startTimeFormatted === props.event.endTimeFormatted ?
-                  `${props.event.startTimeFormatted}`
-                  :
-                  `${props.event.startTimeFormatted} - ${props.event.endTimeFormatted}`
-              }
-            </H3>
-            <H3 style={styles.subtext}>{moment(props.event.endTime).format('dddd')}</H3>
-            <Spacing />
-            <H3>{props.event.location}</H3>
-            <Spacing />
-            <Spacing />
-            <HorizontalLine />
-            <Spacing />
-            <Spacing />
-            {props.event.beginnerFriendly ? (
-              <Fragment>
+            <View style={styles.viewWithSpacing}>
+              <View>
+                <H2>{props.event.title}</H2>
+                <H3 style={styles.location}>{props.event.location}</H3>
+              </View>
+              {/*TODO replace with actual pill*/}
+              <H3>{props.event.category}</H3>
+            </View>
+            <View style={styles.viewWithSpacing}>
+              <View>
+                <H3 style={styles.date}>
+                  {moment(props.event.endTime).format('dddd, MMMM D, YYYY')}
+                </H3>
+                <H3 style={styles.date}>
+                  {
+                    props.event.startTimeFormatted === props.event.endTimeFormatted ?
+                      `${props.event.startTimeFormatted}`
+                      :
+                      `from ${props.event.startTimeFormatted} - ${props.event.endTimeFormatted}`
+                  }
+                </H3>
+              </View>
+            </View>
+            {props.event.beginnerFriendly && (
+              <View style={styles.viewWithSpacing}>
                 <H4 style={{ color: colors.secondaryColor }}>BEST FOR BEGINNERS</H4>
-                <Spacing />
-              </Fragment>
-            ) : null}
-            <P>{props.event.description}</P>
+              </View>
+            )}
+            <P style={styles.viewWithSpacing}>{
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+            /*props.event.description*/}</P>
           </ScrollView>
         </ModalContent>
       </Modal>
@@ -85,7 +91,24 @@ export default class EventModal extends Component {
 }
 
 const styles = StyleSheet.create({
-  subtext: {
+  date: {
     color: colors.textColor.light,
   },
+  banner: {
+    marginLeft: -20, // Used to offset the padding on everything else in the modal
+    marginTop: 5,
+  },
+  viewWithSpacing: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start'
+  },
+  location: {
+    color: colors.primaryColor,
+    marginVertical: 3,
+  },
+  eventTitle: {
+    fontSize: 25,
+  }
 });

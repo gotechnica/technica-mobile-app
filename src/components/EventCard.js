@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Image, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import Modal from 'react-native-modal';
 import { H2, H3, H6 } from '../components/Text';
 import { PadContainer } from './Base';
 import { colors } from './Colors';
@@ -11,6 +11,26 @@ import EventDescription from './schedule/EventDescription';
 const styles = StyleSheet.create({
   event: {
     marginBottom: 15,
+  },
+  darkImageMask: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    backgroundColor: 'rgba(0,0,0,0.45)',
+  },
+  textGroup: {
+    marginBottom: 40,
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  imageBg: {
+    position: 'relative',
+  },
+  happeningTitle: {
+    fontWeight: 'bold',
+    color: colors.textColor.primary,
   }
 });
 
@@ -87,31 +107,15 @@ export default class EventCard extends Component {
               </React.Fragment>)
               : (
               <ImageBackground
-                style={{
-                  width: imageWidth,
-                  height: imageHeight,
-                  position: 'relative',
-                }}
+                style={[
+                  styles.imageBg,
+                  { width: imageWidth, height: imageHeight,}
+                ]}
                 source={require('../../assets/imgs/filler.png')}
               >
-                <View
-                  style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    backgroundColor: 'rgba(0,0,0,0.45)',
-                  }}
-                >
-                  <PadContainer
-                    style={{
-                      position: 'absolute',
-                      bottom: 20,
-                      left: 0,
-                    }}
-                  >
-                    <H3 style={{ color: colors.textColor.primary, }}>HAPPENING NOW</H3>
+                <View style={styles.darkImageMask}>
+                  <PadContainer style={styles.textGroup}>
+                    <H3 style={styles.happeningTitle}>HAPPENING NOW</H3>
                     <H2 style={{ color: colors.textColor.primary, }}>{titleClipped}</H2>
                   </PadContainer>
                 </View>
