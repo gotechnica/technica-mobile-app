@@ -109,7 +109,6 @@ export default class EventDescription extends Component<Props> {
       event,
       eventManager
     } = this.props;
-    console.log(event)
     return (
       <Fragment>
         {this.renderModal()}

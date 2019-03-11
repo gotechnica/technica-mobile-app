@@ -1,24 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  View,
-  ImageBackground
-} from 'react-native';
-import Images from '../../assets/imgs/index';
-import { H1, H2, H3, H4, H6, P } from '../components/Text';
+import { Image, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Modal from 'react-native-modal';
-import { ModalContent, ModalHeader, HorizontalLine, Spacing, PadContainer } from './Base';
+
+import { H2, H3, H6 } from '../components/Text';
+import { PadContainer } from './Base';
 import { colors } from './Colors';
 import EventModal from './EventModal';
 import EventDescription from './schedule/EventDescription';
-import { relativeTimeRounding } from 'moment';
-import { white } from 'react-native-paper/src/styles/colors';
 
 const styles = StyleSheet.create({
   event: {

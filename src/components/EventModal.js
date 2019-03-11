@@ -1,20 +1,11 @@
-import React, { Component, Fragment } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  View
-} from 'react-native';
-import Images from '../../assets/imgs/index';
-import { H1, H2, H3, H4, H6, P } from '../components/Text';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Modal from 'react-native-modal';
-import { ModalStyle, ModalContent, ModalHeader, HorizontalLine, Spacing, modalStyle } from './Base';
-import { colors } from './Colors';
 import moment from 'moment';
+import React, { Component, Fragment } from 'react';
+import { Image, ScrollView, StyleSheet } from 'react-native';
+import Modal from 'react-native-modal';
+
+import { H2, H3, H4, P } from '../components/Text';
+import { HorizontalLine, ModalContent, ModalHeader, modalStyle, Spacing } from './Base';
+import { colors } from './Colors';
 
 // TODO TECH DEBT: Replace <Spacing /> with proper margins
 

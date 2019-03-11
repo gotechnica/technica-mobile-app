@@ -180,6 +180,7 @@ class ModalHeader extends Component<Props> {
       heart,
       eventID,
       eventManager,
+      goToSchedule,
       small
     } = this.props;
 
@@ -192,6 +193,7 @@ class ModalHeader extends Component<Props> {
           >
             <FAIcon name="chevron-left" size={22} color={colors.iconColor} />
           </TouchableOpacity>
+          {this.props.goToSchedule ? (<H2 style={styles.modalHeadingText}>{this.props.heading}</H2>) : (<View></View>)}
           {
             heart ?
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

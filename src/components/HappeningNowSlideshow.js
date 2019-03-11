@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
-import { H2, H3, H6 } from "../components/Text";
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import {
-    Text,
-    View,
-    ImageBackground
-} from 'react-native';
 
-import { PadContainer } from "../components/Base";
-import EventCard from "./EventCard";
+import { PadContainer } from '../components/Base';
+import { H2, H3 } from '../components/Text';
+import EventCard from './EventCard';
 
 const { width } = require("Dimensions").get("window");
 
