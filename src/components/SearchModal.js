@@ -17,34 +17,39 @@ export default class SearchModal extends Component {
     this.filterEvents = this.filterEvents.bind(this);
     this.state = {
       schedule: this.props.eventDays,
-      newScheule: {}
+      newSchedule: {}
     }
 
   }
-
 
   filterEvents(query) {
     query = query.toLowerCase();
     eventDays = this.state.schedule;
     newSchedule = []
-    for (ed in eventDays) {
-      day = eventDays[ed];
-      newEventDay = new EventDay(day.label, [])
-      for (eventGroupIndex in day.eventGroups) {
-        eventGroup = day.eventGroups[eventGroupIndex];
-        newEventGroup = new EventGroup(eventGroup.label, [])
-        for (eventIndex in eventGroup.events) {
-          event = eventGroup.events[eventIndex];
-          if (event.title.toLowerCase().search(query) >= 0 || event.category.toLowerCase().search(query) >= 0) {
-            newEventGroup.events.push(event);
+
+    // We apologize for this mess :(
+    if(query !== "") {
+      for (ed in eventDays) {
+        day = eventDays[ed];
+        newEventDay = new EventDay(day.label, [])
+        for (eventGroupIndex in day.eventGroups) {
+          eventGroup = day.eventGroups[eventGroupIndex];
+          newEventGroup = new EventGroup(eventGroup.label, [])
+          for (eventIndex in eventGroup.events) {
+            event = eventGroup.events[eventIndex];
+            if (event.title.toLowerCase().search(query) >= 0 || 
+                event.category.toLowerCase().search(query) >= 0) {
+              newEventGroup.events.push(event);
+            }
+          }
+          if (newEventGroup.events.length > 0) {
+            newEventDay.eventGroups.push(newEventGroup);
           }
         }
-        if (newEventGroup.events.length > 0) {
-          newEventDay.eventGroups.push(newEventGroup);
-        }
+        newSchedule.push(newEventDay);
       }
-      newSchedule.push(newEventDay);
     }
+    
     this.setState({
       newSchedule: newSchedule
     });
