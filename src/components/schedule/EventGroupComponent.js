@@ -23,7 +23,7 @@ export default class EventGroupComponent extends Component<Props> {
     let AM_or_PM = ( this.props.header.endsWith('am') ? ' AM' : ' PM');
     return (
       <Fragment>
-      <H2 style={styles.header}>{headerWithoutAM_PM + AM_or_PM}</H2>
+      <Text style={styles.header}>{headerWithoutAM_PM + AM_or_PM}</Text>
         <FlatList
           data={this.props.events}
           renderItem={ (eventObj) => {
@@ -33,6 +33,7 @@ export default class EventGroupComponent extends Component<Props> {
                 event = {event}
                 disabled={event.hasPassed}
                 eventManager={this.props.eventManager}
+                origin={this.props.origin}
               />
             );
           }}
@@ -52,6 +53,8 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingTop: 5,
     color: 'black',
-    backgroundColor: '#f7f7f7'
+    backgroundColor: '#f7f7f7',
+    fontWeight: '500',
+    fontSize: 20
   }
 });

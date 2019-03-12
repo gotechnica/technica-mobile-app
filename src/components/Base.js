@@ -11,9 +11,10 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 import EventStar from './EventStar';
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Images from '../../assets/imgs/index';
@@ -75,9 +76,9 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     ...ifIphoneX({
-      marginTop: 40,
-    }, {
       marginTop: 20,
+    }, {
+      //marginTop: 20,
     })
   },
   modalHeaderNav: {
@@ -192,7 +193,15 @@ class ModalHeader extends Component<Props> {
             style={{ padding: 10, marginLeft: -10 }}
             onPress={onBackButtonPress}
           >
-            <FAIcon name="chevron-left" size={22} color={colors.iconColor} />
+          <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+          <IonIcon
+            name={'ios-arrow-back'}
+            size={40}
+            color={colors.primaryColor}
+            style={{paddingRight: 5}}
+          />
+          <H3 style={{color: colors.primaryColor, fontSize: 20, alignSelf: 'center'}}>{this.props.origin}</H3>
+          </View>
           </TouchableOpacity>
           {heart &&
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

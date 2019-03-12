@@ -46,6 +46,7 @@ export default class MapModal extends Component {
             <ModalHeader
               heading="Venue Map"
               onBackButtonPress={() => props.toggleModal()}
+              origin={'Home'}
             />
           </View>
           <PhotoView

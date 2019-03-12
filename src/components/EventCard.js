@@ -53,6 +53,7 @@ export default class EventCard extends Component {
       toggleModal={this.toggleModal}
       eventManager={this.props.eventManager}
       event={this.props.event}
+      origin={'Home'}
     />
   }
 

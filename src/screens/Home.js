@@ -55,6 +55,7 @@ export default class Home extends Component<Props> {
         <ModalHeader
           onBackButtonPress={() => this.toggleUpdatesModal()}
           heading="Recent Updates"
+          origin={'Home'}
         />
         <Spacing />
         {this.props.eventManager.getUpdates().map(update => (
@@ -145,7 +146,7 @@ export default class Home extends Component<Props> {
     const events = this.state.happeningNow.length == 0 ? this.props.eventManager.getHappeningNow() : this.state.happeningNow;
     return (
       <View style={styles.subSection}>
-        <HappeningNowSlideshow 
+        <HappeningNowSlideshow
           dataSource={events}
           eventManager={this.props.eventManager}
         />
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
   headingRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems:'center' 
+    alignItems:'center'
   },
   subSection: {
     // paddingTop: 20,

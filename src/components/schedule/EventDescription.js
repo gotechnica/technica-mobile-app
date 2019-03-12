@@ -73,6 +73,7 @@ export default class EventDescription extends Component<Props> {
       <EventModal
         isModalVisible={this.state.isModalVisible}
         toggleModal={this.toggleModal}
+        origin={this.props.origin}
         {...this.props}
       />
     );
