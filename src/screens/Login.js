@@ -1,42 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  View,
-  Alert,
-  AsyncStorage,
-  TextInput,
-  Animated,
-  Dimensions,
-  Keyboard,
-  UIManager,
-  KeyboardAvoidingView
-} from 'react-native';
-import { H1, H2, H3, H4, H6, P } from '../components/Text';
-import {
-  ViewContainer,
-  Heading,
-  SubHeading,
-  PaperSheet,
-  PadContainer,
-  HorizontalLine,
-  ModalContent,
-  ModalHeader,
-  Spacing,
-  Button,
-} from '../components/Base';
-import KeyboardShift from '../components/KeyboardShift';
-import Modal from "react-native-modal";
-import EventCard from '../components/EventCard';
-import EventColumns from '../components/EventColumns';
+import { Alert, AsyncStorage, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+
+import { Button, Heading, PadContainer, SubHeading } from '../components/Base';
 import { colors } from '../components/Colors';
-import CountdownTimer from '../components/CountdownTimer';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import KeyboardShift from '../components/KeyboardShift';
 
 const APP_ID = '@com.technica.technica18:';
+const USER_TOKEN = APP_ID + 'JWT';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const USER_DATA_STORE = 'USER_DATA_STORE';
 const { State: TextInputState } = TextInput;
@@ -66,24 +36,6 @@ export default class Login extends Component<Props> {
 
     this.state = this.createInitialState();
   }
-//
-//   async componentDidMount() {
-// /*
-//     await AsyncStorage.removeItem(USER_DATA_STORE);
-//     this.setState({loadPage: true});*/
-//
-//     try {
-//       const value = await AsyncStorage.getItem(USER_DATA_STORE);
-//       if (value !== null) {
-//         const { navigate } = this.props.navigation;
-//         navigate('AppContainer');
-//       }
-//       this.setState({loadPage: true});
-//     } catch (error) {
-//        console.log(error);
-//     }
-//
-//   }
 
   static navigationOptions = {
     header: null,
@@ -101,7 +53,6 @@ export default class Login extends Component<Props> {
     validEmail = this.validEmail(email);
     if(validEmail != null){
       let url = "http://35.174.30.108/auth/login/requestCode";
-      console.log(url);
       try {
           let response = await fetch(url, {
             method: 'POST',
@@ -170,9 +121,9 @@ export default class Login extends Component<Props> {
           body: JSON.stringify({'email': email, 'code': code})
         });
         let responseJson = await response.json();
-        console.log(response);
         if(response.status == 200){
           await AsyncStorage.setItem(USER_DATA_STORE, JSON.stringify(responseJson.user));
+          await AsyncStorage.setItem(USER_TOKEN, JSON.stringify(JSON.parse(response._bodyInit).token));
           this.setState({savedCode: code, fieldValue: ''});
           const { navigate } = this.props.navigation;
           navigate('AppContainer');

@@ -10,6 +10,19 @@ import { ViewContainer, CenteredActivityIndicator } from './components/Base';
 // NOTE dangerously ignore deprecated warning for now
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader', 'Setting a timer', "Warning: Can't"]);
 
+XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
+    GLOBAL.originalXMLHttpRequest :
+    GLOBAL.XMLHttpRequest;
+
+  // fetch logger
+global._fetch = fetch;
+global.fetch = function (uri, options, ...args) {
+  return global._fetch(uri, options, ...args).then((response) => {
+    console.log('Fetch', { request: { uri, options, ...args }, response });
+    return response;
+  });
+};
+
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
