@@ -10,6 +10,7 @@ import { ModalContent, ModalHeader, modalStyle } from './Base';
 import { colors } from './Colors';
 import PillBadge from './PillBadge';
 import {badgeStyles} from './PillBadge.js';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class SearchModal extends Component {
 
@@ -120,17 +121,17 @@ export default class SearchModal extends Component {
         style={modalStyle}
       >
         <ModalContent style={{ padding: 0 }}>
-          {/*}<View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }}>
+          {Platform.OS === 'ios' ? <View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }}>
             <ModalHeader
-              heading="Search for events"
+              heading=''
               onBackButtonPress={() => props.toggleModal()}
               origin={'Schedule'}
               isSearch={true}
             />
-          </View>*/}
+          </View>: <Fragment></Fragment>}
           <SearchBar
             placeholder="Search"
-            platform={'ios'}
+            platform={Platform.OS}
             onChangeText={query => this.filterEvents(query)}
             onClear={query => this.filterEvents('')}
             value={this.state.search}

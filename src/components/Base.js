@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     ...ifIphoneX({
-      marginTop: 20,
+      marginTop: 40,
     }, {
       //marginTop: 20,
     })
@@ -193,8 +193,6 @@ class ModalHeader extends Component<Props> {
             style={{ padding: 10, marginLeft: -10 }}
             onPress={onBackButtonPress}
           >
-          {this.props.isSearch === true ? <Fragment></Fragment>
-          :
           <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
             <IonIcon
               name={'ios-arrow-back'}
@@ -203,7 +201,7 @@ class ModalHeader extends Component<Props> {
               style={{paddingRight: 5}}
             />
             <H3 style={{color: colors.primaryColor, fontSize: 20, alignSelf: 'center'}}>{this.props.origin}</H3>
-          </View>}
+          </View>
           </TouchableOpacity>
           {heart &&
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -223,7 +221,7 @@ class ModalHeader extends Component<Props> {
           small ?
             null
             :
-            <H2 style={styles.modalHeadingText}>{this.props.heading}</H2>
+            (this.props.isSearch ? <Fragment></Fragment> : <H2 style={styles.modalHeadingText}>{this.props.heading}</H2>)
         }
       </View>
     );
