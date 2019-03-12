@@ -6,6 +6,7 @@ const badgeColors = {
   yellow: '255, 149, 0',
   green: '79, 217, 100',
   blue: '0, 122, 255',
+  turquoise: '0, 212, 255',
   purple: '208, 40, 255'
 };
 
@@ -15,17 +16,18 @@ const badgeStyle = {
   red: { bgColor: 'rgba(' + badgeColors.red + opacity + ')', text: 'rgb(' + badgeColors.red + ')' },
   yellow: { bgColor: 'rgba(' + badgeColors.yellow + opacity + ')', text: 'rgb(' + badgeColors.yellow + ')' },
   green: { bgColor: 'rgba(' + badgeColors.green + opacity + ')', text: 'rgb(' + badgeColors.green + ')' },
+  turquoise: { bgColor: 'rgba(' + badgeColors.turquoise + opacity + ')', text: 'rgb(' + badgeColors.turquoise + ')' },
   blue: { bgColor: 'rgba(' + badgeColors.blue + opacity + ')', text: 'rgb(' + badgeColors.blue + ')' },
   purple: { bgColor: 'rgba(' + badgeColors.purple + opacity + ')', text: 'rgb(' + badgeColors.purple + ')' }
 };
 
-const badgeStyles = {
+export const badgeStyles = {
   'Main': badgeStyle.green,
   'Food': badgeStyle.red,
-  'Misc': badgeStyle.purple,
+  'Campfire': badgeStyle.yellow,
   'Sponsor': badgeStyle.blue,
-  'Mentor': badgeStyle.blue,
-  'Campfire': badgeStyle.yellow
+  'Mentor': badgeStyle.turquoise,
+  'Misc': badgeStyle.purple,
 };
 
 const styles = StyleSheet.create({
@@ -55,7 +57,11 @@ export default class PillBadge extends Component<Props> {
 
   render() {
     return (
-      <View style={[(this.props.from === 'Modal' ? styles.modal : styles.description), styles.width,{backgroundColor: badgeStyles[this.props.category].bgColor}]}>
+      <View style={[
+        (this.props.from === 'Modal' ? styles.modal : styles.description),
+        styles.width,
+        {backgroundColor: badgeStyles[this.props.category].bgColor, marginLeft: (this.props.margin !== null ? this.props.margin : 0)}
+      ]}>
         <Text style={[styles.width,styles.text,{color: badgeStyles[this.props.category].text}]}>
             {(this.props.category === 'Misc' ? 'miscellaneous' : this.props.category).toUpperCase()}
         </Text>

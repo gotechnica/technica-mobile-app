@@ -56,7 +56,7 @@ export default class EventColumns extends Component {
           style={styles.row}
         >
           <View style={styles.halfColumn}>
-            <EventCard event={event} eventManager={this.props.eventManager} />
+            <EventCard event={event} eventManager={this.props.eventManager} origin={this.props.origin}/>
           </View>
         </PadContainer>
       );

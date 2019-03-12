@@ -119,6 +119,7 @@ export default class Home extends Component<Props> {
             heading={heading}
             eventsArr={events}
             eventManager={this.props.eventManager}
+            origin={'Home'}
           />
         </View>
       </View>

@@ -193,15 +193,17 @@ class ModalHeader extends Component<Props> {
             style={{ padding: 10, marginLeft: -10 }}
             onPress={onBackButtonPress}
           >
+          {this.props.isSearch === true ? <Fragment></Fragment>
+          :
           <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <IonIcon
-            name={'ios-arrow-back'}
-            size={40}
-            color={colors.primaryColor}
-            style={{paddingRight: 5}}
-          />
-          <H3 style={{color: colors.primaryColor, fontSize: 20, alignSelf: 'center'}}>{this.props.origin}</H3>
-          </View>
+            <IonIcon
+              name={'ios-arrow-back'}
+              size={40}
+              color={colors.primaryColor}
+              style={{paddingRight: 5}}
+            />
+            <H3 style={{color: colors.primaryColor, fontSize: 20, alignSelf: 'center'}}>{this.props.origin}</H3>
+          </View>}
           </TouchableOpacity>
           {heart &&
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

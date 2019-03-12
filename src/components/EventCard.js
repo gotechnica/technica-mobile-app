@@ -53,7 +53,7 @@ export default class EventCard extends Component {
       toggleModal={this.toggleModal}
       eventManager={this.props.eventManager}
       event={this.props.event}
-      origin={'Home'}
+      origin={this.props.origin}
     />
   }
 
@@ -100,7 +100,7 @@ export default class EventCard extends Component {
                   <View>
                     <H3>{titleClipped}</H3>
                     <H6 style={{ opacity: .8 }}>
-                      <Icon name="star" size={12} color={colors.iconColor} />{' '}
+                      <Icon name="star" size={12} color={colors.starColor.selected} />{' '}
                       {eventManager.getSavedCount(event.eventID)}
                     </H6>
                   </View>
