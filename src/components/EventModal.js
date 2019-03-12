@@ -6,6 +6,7 @@ import Modal from 'react-native-modal';
 import { H2, H3, H4, P } from '../components/Text';
 import { HorizontalLine, ModalContent, ModalHeader, modalStyle, Spacing } from './Base';
 import { colors } from './Colors';
+import PillBadge from "./PillBadge";
 
 // TODO TECH DEBT: Replace <Spacing /> with proper margins
 
@@ -58,7 +59,7 @@ export default class EventModal extends Component {
                 <H3 style={styles.location}>{props.event.location}</H3>
               </View>
               {/*TODO replace with actual pill*/}
-              <H3>{props.event.category}</H3>
+              <PillBadge category={props.event.category} from={'Modal'}/>
             </View>
             <View style={styles.viewWithSpacing}>
               <View>

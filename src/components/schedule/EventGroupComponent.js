@@ -19,9 +19,11 @@ export default class EventGroupComponent extends Component<Props> {
   }
 
   render() {
+    let headerWithoutAM_PM = this.props.header.substring(0, this.props.header.length - 2);
+    let AM_or_PM = ( this.props.header.endsWith('am') ? ' AM' : ' PM');
     return (
       <Fragment>
-      <H2 style={styles.header}>{this.props.header}</H2>
+      <H2 style={styles.header}>{headerWithoutAM_PM + AM_or_PM}</H2>
         <FlatList
           data={this.props.events}
           renderItem={ (eventObj) => {
