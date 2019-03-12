@@ -12,8 +12,7 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import EventStar from './EventStar';
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Images from '../../assets/imgs/index';
@@ -192,7 +191,7 @@ class ModalHeader extends Component<Props> {
             style={{ padding: 10, marginLeft: -10 }}
             onPress={onBackButtonPress}
           >
-            <FAIcon name="chevron-left" size={22} color={colors.iconColor} />
+            <Icon name="chevron-left" size={22} color={colors.iconColor} />
           </TouchableOpacity>
           {heart &&
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
