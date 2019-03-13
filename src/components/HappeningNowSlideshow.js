@@ -17,8 +17,8 @@ export default class HappeningNowSlideshow extends Component {
   constructor(props) {
     super(props);
   }
-  
-  
+
+
   render() {
     if (this.props.dataSource.length == 0) {
         return (
@@ -32,10 +32,11 @@ export default class HappeningNowSlideshow extends Component {
     slideshow_content = []
     for (i = 0; i < this.props.dataSource.length; i++) {
         slideshow_content.push(
-          <EventCard 
-            key={i} 
-            event={this.props.dataSource[i]} 
-            eventManager={this.props.eventManager} 
+          <EventCard
+            key={i}
+            event={this.props.dataSource[i]}
+            eventManager={this.props.eventManager}
+            origin={'Home'}
             inSlideshow
           />
         )

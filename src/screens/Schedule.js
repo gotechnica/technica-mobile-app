@@ -37,6 +37,7 @@ export default class Schedule extends Component<Props> {
         header={eventGroup.label}
         events={eventGroup.events}
         eventManager={this.props.eventManager}
+        origin={'Schedule'}
       />
     );
   }

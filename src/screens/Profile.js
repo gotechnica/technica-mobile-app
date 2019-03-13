@@ -36,6 +36,8 @@ import RNRestart from 'react-native-restart'; // Import package from node module
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
+const APP_ID = '@com.technica.technica18:';
+const USER_TOKEN = APP_ID + 'JWT';
 const USER_DATA_STORE = "USER_DATA_STORE";
 
 export default class Profile extends Component<Props> {
@@ -156,7 +158,8 @@ export default class Profile extends Component<Props> {
     }
     this.setState({ user: loggedInUser });
     if (!this.state.user.profile) {
-      AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
+      keys = [USER_DATA_STORE, USER_TOKEN];
+      AsyncStorage.multiRemove(keys).then(() => {
         const navigate = this.props.navigation;
         RNRestart.Restart();
       });

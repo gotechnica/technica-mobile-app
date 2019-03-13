@@ -125,6 +125,7 @@ class EventsList extends Component<Props> {
               big
               style={styles.eventCard}
               imageStyle={event.hasPassed ? styles.eventImgPassed : null}
+              origin={'Saved'}
             />
           ))
         }

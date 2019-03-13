@@ -21,6 +21,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import EventModal from "../EventModal";
 import { normalizeTimeLabel } from "../../actions/util.js";
 import EventStar from "../EventStar";
+import PillBadge from "../PillBadge";
 
 const styles = StyleSheet.create({
   column: {
@@ -53,32 +54,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const badgeColors = {
-  red: '255, 59, 48',
-  yellow: '255, 149, 0',
-  green: '79, 217, 100',
-  blue: '0, 122, 255',
-};
-
-const opacity = ', 0.2';
-
-const badgeStyle = {
-  red: { bgColor: 'rgba(' + badgeColors.red + opacity + ')', text: 'rgb(' + badgeColors.red + ')' },
-  yellow: { bgColor: 'rgba(' + badgeColors.yellow + opacity + ')', text: 'rgb(' + badgeColors.yellow + ')' },
-  green: { bgColor: 'rgba(' + badgeColors.green + opacity + ')', text: 'rgb(' + badgeColors.green + ')' },
-  blue: { bgColor: 'rgba(' + badgeColors.blue + opacity + ')', text: 'rgb(' + badgeColors.blue + ')' },
-};
-
-const badgeStyles = {
-  'Main': badgeStyle.green,
-  'Food': badgeStyle.red,
-  'Workshop': badgeStyle.blue,
-  'Misc': badgeStyle.blue,
-  'Sponsor': badgeStyle.yellow,
-  'Mentor': badgeStyle.yellow,
-  'Campfire': badgeStyle.green
-};
-
 export default class EventDescription extends Component<Props> {
   constructor(props) {
     super(props);
@@ -98,6 +73,7 @@ export default class EventDescription extends Component<Props> {
       <EventModal
         isModalVisible={this.state.isModalVisible}
         toggleModal={this.toggleModal}
+        origin={this.props.origin}
         {...this.props}
       />
     );
@@ -126,9 +102,7 @@ export default class EventDescription extends Component<Props> {
                   : `${event.startTimeFormatted} - ${event.endTimeFormatted}`}
               </H4>*/}
               <H4 style={{ fontSize: 17.5, color: colors.textColor.light }}>{event.location}</H4>
-                  <Text>
-                  {(event.category == 'Misc' ? 'Mini-Event' : event.category).toUpperCase()}
-                  </Text>
+              <PillBadge category={event.category} from={'Description'}/>
             </View>
             <View style={[styles.row, { flex: 1, justifyContent: "flex-end", alignItems: 'center'}]}>
               <EventStar

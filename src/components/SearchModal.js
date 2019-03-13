@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, View, Platform, ScrollView, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
-import { Searchbar } from 'react-native-paper';
-
+import { SearchBar } from 'react-native-elements';
+import { H3 } from "./Text";
 import EventGroupComponent from '../components/schedule/EventGroupComponent';
 import EventDay from '../events/EventDay';
 import EventGroup from '../events/EventGroup';
 import { ModalContent, ModalHeader, modalStyle } from './Base';
 import { colors } from './Colors';
+import PillBadge from './PillBadge';
+import {badgeStyles} from './PillBadge.js';
 
 export default class SearchModal extends Component {
 
@@ -17,6 +19,7 @@ export default class SearchModal extends Component {
     this.filterEvents = this.filterEvents.bind(this);
     this.state = {
       schedule: this.props.eventDays,
+      search: '',
       newSchedule: {}
     }
 
@@ -37,7 +40,7 @@ export default class SearchModal extends Component {
           newEventGroup = new EventGroup(eventGroup.label, [])
           for (eventIndex in eventGroup.events) {
             event = eventGroup.events[eventIndex];
-            if (event.title.toLowerCase().search(query) >= 0 || 
+            if (event.title.toLowerCase().search(query) >= 0 ||
                 event.category.toLowerCase().search(query) >= 0) {
               newEventGroup.events.push(event);
             }
@@ -49,9 +52,10 @@ export default class SearchModal extends Component {
         newSchedule.push(newEventDay);
       }
     }
-    
+
     this.setState({
-      newSchedule: newSchedule
+      newSchedule: newSchedule,
+      search: query
     });
   }
 
@@ -75,6 +79,7 @@ export default class SearchModal extends Component {
         header={eventGroup.label}
         events={eventGroup.events}
         eventManager={this.props.eventManager}
+        origin={'Search'}
       />
     );
   }
@@ -86,10 +91,23 @@ export default class SearchModal extends Component {
     const imageWidth = dimensions.width - 42;
     const imageHeight = Math.round((imageWidth * 38) / 67);
     const styles = {width: window.width, height: window.height, overflow:'visible'};
+    let badges = [];
+    for (let obj in badgeStyles) {
+      badges.push(
+        <TouchableOpacity
+          onPress={() => this.filterEvents(obj)}
+          key={obj}>
+          <PillBadge
+            category={obj}
+            from='Modal'
+            margin={5}
+          />
+        </TouchableOpacity>);
+    }
     return (
       <Modal
         isVisible={props.isModalVisible}
-        backdropColor={colors.backgroundColor.normal}
+        backdropColor={'#f7f7f7'}
         backdropOpacity={1}
         animationInTiming={250}
         animationIn="fadeInUp"
@@ -102,16 +120,31 @@ export default class SearchModal extends Component {
         style={modalStyle}
       >
         <ModalContent style={{ padding: 0 }}>
-          <View style={{ padding: 20, paddingBottom: 0 }}>
+          {/*}<View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }}>
             <ModalHeader
               heading="Search for events"
               onBackButtonPress={() => props.toggleModal()}
+              origin={'Schedule'}
+              isSearch={true}
             />
-          </View>
-          <Searchbar
+          </View>*/}
+          <SearchBar
             placeholder="Search"
+            platform={'ios'}
             onChangeText={query => this.filterEvents(query)}
+            onClear={query => this.filterEvents('')}
+            value={this.state.search}
+            cancelButtonProps={{color: colors.primaryColor}}
           />
+          <View style={{flex: 1, borderTopWidth: 0.5}}>
+            <View style={{flex: 1, padding: 9, paddingTop: 10, paddingBottom: 10}}>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}>
+                {badges}
+              </ScrollView>
+            </View>
+          </View>
           <FlatList
             data={this.state.newSchedule}
             renderItem={this.renderScheduleForDay}
