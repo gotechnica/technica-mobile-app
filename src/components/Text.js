@@ -42,43 +42,43 @@ const styles = StyleSheet.create({
 
 
 const H1 = (props) => (
-  <Text style={[styles.text, styles.h1, props.style]}>
+  <Text {...props} style={[styles.text, styles.h1, props.style]}>
     {props.children}
   </Text>
 );
 
 const H2 = (props) => (
-  <Text style={[styles.text, styles.h2, props.style]}>
+  <Text {...props} style={[styles.text, styles.h2, props.style]}>
     {props.children}
   </Text>
 );
 
 const H3 = (props) => (
-  <Text style={[styles.text, styles.h3, props.style]}>
+  <Text {...props} style={[styles.text, styles.h3, props.style]}>
     {props.children}
   </Text>
 );
 
 const H4 = (props) => (
-  <Text style={[styles.text, styles.h4, props.style]}>
+  <Text {...props} style={[styles.text, styles.h4, props.style]}>
     {props.children}
   </Text>
 );
 
 const H5 = (props) => (
-  <Text style={[styles.text, styles.h5, props.style]}>
+  <Text {...props} style={[styles.text, styles.h5, props.style]}>
     {props.children}
   </Text>
 );
 
 const H6 = (props) => (
-  <Text style={[styles.text, styles.h6, props.style]}>
+  <Text {...props} style={[styles.text, styles.h6, props.style]}>
     {props.children}
   </Text>
 );
 
 const P = (props) => (
-  <Text style={[styles.text, styles.p, props.style]}>
+  <Text {...props} style={[styles.text, styles.p, props.style]}>
     {props.children}
   </Text>
 );

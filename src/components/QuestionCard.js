@@ -1,24 +1,43 @@
 import React, { Component, Fragment } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { H4, H5, H6 } from "./Text";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { H3, H6 } from "./Text";
 import moment from "moment";
 import { colors } from "./Colors";
+import Icon from "react-native-vector-icons/FontAwesome";
 import AnimatedEllipsis from "react-native-animated-ellipsis";
 
 const styles = StyleSheet.create({
   question: {
-    // backgroundColor: colors.backgroundColor.light,
-    paddingBottom: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderTopColor: colors.borderColor.light
-    // paddingLeft: 20,
-    // paddingRight: 20,
-    // marginBottom: 10
+    paddingVertical: 10,
+    borderBottomWidth: 0.25,
+    borderBottomColor: colors.borderColor.normal,
+  },
+  questionContainer: {
+    flexDirection: 'row',
+  },
+  questionText: {
+    flex: 1,
+  },
+  collapseIcon: {
+    marginRight: 10,
   }
 });
 
 export default class QuestionCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      questionIsExpanded: false,
+    };
+    
+    this.toggleQuestion = this.toggleQuestion.bind(this);
+  }
+
+  toggleQuestion() {
+    this.setState({questionIsExpanded: !this.state.questionIsExpanded});
+  }
+
   renderStatus() {
     const { status } = this.props;
     if (status.includes("claimed")) {
@@ -36,40 +55,23 @@ export default class QuestionCard extends Component {
   }
   render() {
     const { question, location, time } = this.props;
+    const questionIsExpanded = this.state.questionIsExpanded;
     return (
-      <View style={styles.question}>
-        <H4 style={{ color: colors.textColor.normal }}>"{question}"</H4>
-        <H4 style={{ color: colors.textColor.light, marginBottom: 10 }}>
-          {location}
-        </H4>
-        {/* // <H6 style={{color: colors.textColor.light, marginBottom: 10}}>{moment(time).format("h:mma, dddd")}</H6> */}
-        {this.renderStatus()}
-      </View>
+      <TouchableOpacity 
+        style={styles.question}
+        onPress={this.toggleQuestion}
+      >
+        <View style={styles.questionContainer}>
+          <H3 numberOfLines={1} style={styles.questionText}>{question}</H3>
+          <Icon
+            name={questionIsExpanded ? "chevron-down" : "chevron-right"}
+            style={styles.collapseIcon}
+            size={16}
+            color={colors.textColor.normal}
+          />
+        </View>
+        {questionIsExpanded && this.renderStatus()}
+      </TouchableOpacity>
     );
   }
 }
-
-// Deprecated until fixed, causes memory leaks
-// class AnimatedEllipsis extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       txt: '...'
-//     }
-//   }
-//
-//   componentDidMount() {
-//     this.timerId = setInterval(() => {
-//       const newTxt = this.state.txt === ' . . .' ? '' : (this.state.txt === '') ? ' .' : (this.state.txt === ' .') ? ' . .' : (this.state.txt === ' . .') ? ' . . .' : '';
-//       this.setState({ txt: newTxt});
-//     }, 600);
-//   }
-//
-//   componentWillUnmount() {
-//     clearInterval(this.timerID);
-//   }
-//
-//   render() {
-//     return <H6 style={{ color: colors.lavender }}>{`${this.props.status}${this.state.txt}`}</H6>;
-//   }
-// }
