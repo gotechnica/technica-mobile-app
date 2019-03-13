@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import moment from 'moment';
 
 import { colors } from './Colors';
 import { P } from './Text';
 
-const LABELS = ["Home", "Schedule", /*"Saved",*/ "Mentors", "Profile"];
+const hackingIsOver = moment().isAfter(moment("2019-04-14 09:00"));
 
-const ICONS = {
-  home: "home",
-  schedule: "calendar",
-  /*saved: "heart",*/
-  mentors: "people",
-  profile: "user"
-};
+let LABELS = ["Home", "Schedule"];
+
+if (hackingIsOver) {
+  LABELS.push("Expo");
+}
+
+LABELS.push("Mentors", "Profile");
 
 class CustomTabBar extends Component {
   render() {

@@ -21,6 +21,10 @@ export function createEventGroup(eventGroupLabel, rawEventArray) {
   let eventArray = [];
   for (let i in rawEventArray) {
     rawEvent = rawEventArray[i];
+    let img =  "banner_" + rawEvent.category.toLowerCase();
+    if (img === 'banner_misc' || img === 'banner_mentor') {
+      img = 'banner_filler';
+    }
     eventArray.push(
       new Event(
         rawEvent.eventID,
@@ -31,7 +35,7 @@ export function createEventGroup(eventGroupLabel, rawEventArray) {
         rawEvent.endTime,
         rawEvent.beginnerFriendly,
         rawEvent.location,
-        rawEvent.img
+        img
       )
     );
   }

@@ -7,6 +7,7 @@ import { H2, H3, H4, P } from '../components/Text';
 import { HorizontalLine, ModalContent, ModalHeader, modalStyle, Spacing } from './Base';
 import { colors } from './Colors';
 import PillBadge from "./PillBadge";
+import Images from '../../assets/imgs/index';
 
 // TODO TECH DEBT: Replace <Spacing /> with proper margins
 
@@ -16,7 +17,7 @@ export default class EventModal extends Component {
     const dimensions = require('Dimensions').get('window');
     const imageWidth = dimensions.width;
     const imageHeight = Math.round((imageWidth * 38) / 67);
-    const img = props.event.img + "_big";
+
     return (
       <Modal
         isVisible={props.isModalVisible}
@@ -50,8 +51,7 @@ export default class EventModal extends Component {
                   height: imageHeight,
                 }
               ]}
-              // source={Image[img]}
-              source={require('../../assets/imgs/filler.png')}
+              source={Images[props.event.img]}
             />
           <ScrollView>
             <View style={styles.viewWithSpacing}>
@@ -76,9 +76,9 @@ export default class EventModal extends Component {
                 </H3>
               </View>
             </View>
-            {props.event.beginnerFriendly && (
+            {props.event.featured && (
               <View style={styles.viewWithSpacing}>
-                <H4 style={{ color: colors.secondaryColor }}>BEST FOR BEGINNERS</H4>
+                <H4 style={{ color: colors.secondaryColor }}>FEATURED EVENT</H4>
               </View>
             )}
             <P style={styles.viewWithSpacing}>{props.event.description}</P>
