@@ -197,7 +197,7 @@ class ModalHeader extends Component<Props> {
               name={'ios-arrow-back'}
               size={40}
               color={colors.primaryColor}
-              style={{paddingRight: 5}}
+              style={{paddingRight: 7}}
             />
             <H3 style={{color: colors.primaryColor, fontSize: 20, alignSelf: 'center'}}>{this.props.origin}</H3>
           </View>
