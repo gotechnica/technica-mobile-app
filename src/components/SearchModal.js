@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { FlatList, View, Platform, ScrollView, TouchableOpacity } from 'react-native';
+import { FlatList, View, Platform, ScrollView, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Modal from 'react-native-modal';
 import { SearchBar } from 'react-native-elements';
 import { H3 } from "./Text";
@@ -10,6 +10,8 @@ import { ModalContent, ModalHeader, modalStyle } from './Base';
 import { colors } from './Colors';
 import PillBadge from './PillBadge';
 import {badgeStyles} from './PillBadge.js';
+import CustomScheduleTabBar from './schedule/CustomScheduleTabBar';
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 
 export default class SearchModal extends Component {
 
@@ -20,7 +22,8 @@ export default class SearchModal extends Component {
     this.state = {
       schedule: this.props.eventDays,
       search: '',
-      newSchedule: {}
+      newSchedule: [],
+      offsetHeight: 0
     }
 
   }
@@ -84,6 +87,12 @@ export default class SearchModal extends Component {
     );
   }
 
+  measureView(event) {
+    this.setState({
+      offsetHeight: (this.state.offsetHeight + event.nativeEvent.layout.height)
+    });
+    console.log(this.state.offsetHeight);
+  }
 
   render() {
     const props = this.props;
@@ -104,6 +113,7 @@ export default class SearchModal extends Component {
           />
         </TouchableOpacity>);
     }
+    let newSchedule = this.state.newSchedule.filter(event => event.eventGroups.length > 0);
     return (
       <Modal
         isVisible={props.isModalVisible}
@@ -117,18 +127,22 @@ export default class SearchModal extends Component {
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
-        style={modalStyle}
+        style={[modalStyle]}
       >
-        <ModalContent style={{ padding: 0 }}>
-          {Platform.OS === 'ios' ? <View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }}>
-            <ModalHeader
-              heading=''
-              onBackButtonPress={() => props.toggleModal()}
-              origin={'Schedule'}
-              isSearch={true}
-            />
-          </View>: <Fragment></Fragment>}
+      <ModalContent style={{padding:0}}>
+          {Platform.OS === 'ios' ?
+            <View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }}>
+              <ModalHeader
+                heading=''
+                onBackButtonPress={() => props.toggleModal()}
+                origin={'Schedule'}
+                isSearch={true}
+              />
+            </View>
+            :
+            <Fragment></Fragment>}
           <SearchBar
+            onLayout={(event) => this.measureView(event)}
             placeholder="Search"
             platform={Platform.OS}
             onChangeText={query => this.filterEvents(query)}
@@ -145,14 +159,52 @@ export default class SearchModal extends Component {
               </ScrollView>
             </View>
           </View>
-          <FlatList
-            data={this.state.newSchedule}
-            renderItem={this.renderScheduleForDay}
-            style={{padingTop: 10}}
-            keyExtractor={(event, index) => index.toString()}
-            />
-        </ModalContent>
+          {this.state.newSchedule.length > 0 ?
+            <ScrollableTabView
+              initialPage={0}
+              renderTabBar={() => <CustomScheduleTabBar /> }
+              style={{height: (dimensions.height - 134)}}
+            >
+              {newSchedule.map((eventDay,index) =>
+                ( eventDay.eventGroups.length > 0 ?
+                <ScrollView key={index} tabLabel={eventDay.label} style={[styles.tabView]}>
+                  <FlatList
+                    data={[eventDay]}
+                    renderItem={this.renderScheduleForDay}
+                    keyExtractor={(event, index) => index.toString()}
+                  />
+                </ScrollView>
+                :
+                <Fragment></Fragment>)
+              )}
+            </ScrollableTabView>
+            :
+            <Fragment></Fragment>
+          }
+          </ModalContent>
       </Modal>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  header: {
+    paddingLeft: 15,
+    paddingBottom: 3,
+    paddingTop: 3,
+    color: 'white',
+    backgroundColor: colors.primaryColor,
+    fontWeight: '500',
+    fontSize: 25,
+    //borderBottomWidth: 5,
+    //borderTopWidth: 0.5,
+    //borderBottomColor: colors.primaryColor,
+    //borderTopColor: 'black',
+    //textAlign: 'center'
+  },
+  tabView: {
+    flex: 1,
+    //padding: 10,
+    backgroundColor: 'rgba(0,0,0,0.01)'
+  },
+});

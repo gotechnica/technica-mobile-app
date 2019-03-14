@@ -10,9 +10,6 @@ import EventDescription from './schedule/EventDescription';
 import Images from '../../assets/imgs/index';
 
 const styles = StyleSheet.create({
-  event: {
-    marginBottom: 15,
-  },
   darkImageMask: {
     position: 'absolute',
     bottom: 0,
@@ -77,7 +74,7 @@ export default class EventCard extends Component {
           onPress={() => this.toggleModal()}
           activeOpacity={inSlideshow ? 0.7 : 0.2}
         >
-          <View style={styles.event}>
+          <View>
             {!inSlideshow ?
               (<React.Fragment>
                 <Image

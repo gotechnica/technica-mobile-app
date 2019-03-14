@@ -24,9 +24,12 @@ const badgeStyle = {
 export const badgeStyles = {
   'Main': badgeStyle.green,
   'Food': badgeStyle.red,
-  'Campfire': badgeStyle.yellow,
+  'Mini-Event': badgeStyle.yellow,
+  'Workshop': badgeStyle.purple,
   'Sponsor': badgeStyle.blue,
   'Mentor': badgeStyle.turquoise,
+  /* TODO: Remove once schedule is repulled */
+  'Campfire': badgeStyle.yellow,
   'Misc': badgeStyle.purple,
 };
 
