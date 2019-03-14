@@ -7,6 +7,7 @@ import { PadContainer } from './Base';
 import { colors } from './Colors';
 import EventModal from './EventModal';
 import EventDescription from './schedule/EventDescription';
+import Images from '../../assets/imgs/index';
 
 const styles = StyleSheet.create({
   event: {
@@ -64,16 +65,11 @@ export default class EventCard extends Component {
     imageWidth = inSlideshow ? dimensions.width : imageWidth;
     const imageHeight = Math.round((imageWidth * 38) / 67);
 
-
     let titleClipped = event.title;
     let titleLimit = 30;
     if (titleClipped && titleClipped.length > titleLimit) {
       titleClipped = titleClipped.substring(0, titleLimit) + "…";
     }
-
-    //let imgName = big ? event.img + "_big" : event.img;
-    let imgName = '';
-
     return (
       <View>
         {this.renderModal()}
@@ -94,7 +90,7 @@ export default class EventCard extends Component {
                     },
                     this.props.imageStyle
                   ]}
-                  source={require('../../assets/imgs/filler.png')}
+                  source={Images[event.img]}
                 />
                 {!big &&
                   <View>
@@ -112,8 +108,8 @@ export default class EventCard extends Component {
                   styles.imageBg,
                   { width: imageWidth, height: imageHeight,}
                 ]}
-                source={require('../../assets/imgs/filler.png')}
-              >
+                source={Images[event.img]}
+                >
                 <View style={styles.darkImageMask}>
                   <PadContainer style={styles.textGroup}>
                     <H3 style={styles.happeningTitle}>HAPPENING NOW</H3>

@@ -13,7 +13,6 @@ export default class EventStar extends Component {
 
   handleHeartPress() {
     const { eventID, eventManager, hasArrow } = this.props;
-    console.log("HERE");
     if (eventManager.isFavorited(eventID)) {
       eventManager.unfavoriteEvent(eventID)
     } else {
@@ -31,7 +30,6 @@ export default class EventStar extends Component {
         </H3>
         <TouchableOpacity onPress={() => {
           this.handleHeartPress();
-          console.log("ONPRESS");
         }}>
           <Icon
             name={'ios-star'}

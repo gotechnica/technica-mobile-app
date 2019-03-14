@@ -3,10 +3,19 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
+import moment from 'moment';
 import { colors } from './Colors';
 import { P } from './Text';
 
-const LABELS = ["Home", "Schedule", /*"Saved",*/ "Mentors", "Profile"];
+const hackingIsOver = moment().isAfter(moment("2019-04-14 09:00"));
+
+let LABELS = ["Home", "Schedule"];
+
+if (hackingIsOver) {
+  LABELS.push("Expo");
+}
+
+LABELS.push("Mentors", "Profile");
 
 class CustomTabBar extends Component {
   render() {
@@ -24,6 +33,7 @@ class CustomTabBar extends Component {
               {
                 'home': <FontAwesome name='home' size={35} color={color}/>,
                 'schedule': <EvilIcon name='calendar' size={45} color={color}/>,
+                'expo': <EvilIcon name='calendar' size={45} color={color}/>,
                 'mentors': <Ionicon name='ios-people' size={45} color={color} style={{marginBottom: -5,marginTop: -6}}/>,
                 'profile': <Ionicon name='ios-person' size={35} color={color}/>
               }[tab]

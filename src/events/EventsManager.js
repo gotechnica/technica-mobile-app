@@ -9,6 +9,7 @@ import Toast from 'react-native-simple-toast';
 import { createEventDay } from '../actions/util.js';
 
 const APP_ID = '@com.technica.technica18:';
+const USER_TOKEN = APP_ID + 'JWT';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const SAVED_COUNT_STORE = APP_ID + 'SAVED_COUNT_STORE';
 const EVENT_ID_PREFIX = APP_ID + 'eventNotification-';
@@ -245,31 +246,31 @@ export default class EventsManager {
     updateObj = {};
     updateObj[eventID] = true;
     AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
-    console.log("HERE");
     event = this.eventIDToEventMap[eventID];
     this.createNotification(event);
 
     this.updateHearts();
 
     await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
-      id = JSON.parse(result).id;
+      AsyncStorage.getItem(USER_TOKEN, (err, token) => {
+        id = JSON.parse(result).id;
+        token = token.replace(/\"/g, "");
 
-      let response = fetch("http://35.174.30.108/api/users/5c7b77b976b48e36303c61fd/favoriteEvent/5c7b77b976b48e36303c61fe", {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'x-access-token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjVjN2I3N2I5NzZiNDhlMzYzMDNjNjFmZCI.EW6HCP5_cUKttZGf-AwGAsnMBwjY7cUnI7dnjRBXStc'
-        },
-        body: JSON.stringify({
-          eventID: '5c7b77b976b48e36303c61fe',
-          id: id
-        })
-      }).then(function(myJson) {
-        console.log(JSON.stringify(myJson));
-      });;
+        let response = fetch(`http://35.174.30.108/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
+          method: 'POST',
+          headers: new Headers({
+            'Content-Type': 'application/json',
+            'x-access-token': token,
+          }),
+          body: JSON.stringify({
+            firebaseId: eventID,
+            userId: id
+          })
+        }).then(function(myJson) {
+          console.log(myJson);
+        });
+      });
     });
-
   }
 
   unfavoriteEvent(eventID) {
@@ -283,21 +284,26 @@ export default class EventsManager {
     this.deleteNotification(event);
 
     AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
-      id = JSON.parse(result).id;
+      AsyncStorage.getItem(USER_TOKEN, (err, token) => {
 
-      fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/unfavorite-event", {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          eventID: eventID,
-          id: id
-        })
+        id = JSON.parse(result).id;
+        token = token.replace(/\"/g, "");
+
+        fetch(`http://35.174.30.108/api/users/${id}/unfavoriteFirebaseEvent/${eventID}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token,
+          },
+          body: JSON.stringify({
+            firebaseId: eventID,
+            userId: id
+          })
+        }).then(function(myJson) {
+          console.log(myJson);
+        });
       });
-    });
-
+    })
     this.updateHearts();
   }
 

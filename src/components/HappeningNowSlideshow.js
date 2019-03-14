@@ -45,7 +45,6 @@ export default class HappeningNowSlideshow extends Component {
     return (
       <Swiper
         height={240}
-        onMomentumScrollEnd={(e, state) => console.log('index:', state.index)}
         dotColor={'rgba(255,255,255,.6)'}
         activeDotColor={'#fff'}
         loop

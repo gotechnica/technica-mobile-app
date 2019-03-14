@@ -13,7 +13,6 @@ import {
   Image,
   Text,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import EventStar from './EventStar';
 import { ifIphoneX } from 'react-native-iphone-x-helper'

@@ -14,9 +14,12 @@ import Home from './Home';
 import Mentors from './Mentors';
 import Profile from './Profile';
 import Schedule from './Schedule';
+import Expo from './Expo';
+import moment from 'moment';
 
 const channelId = "bitcamp-push-notifications";
 const channelName = "Bitcamp Announcements";
+const hackingIsOver = moment().isAfter(moment("2019-04-14 09:00"));
 
 export default class AppContainer extends Component<Props> {
   static navigationOptions = ({navigation}) => ({
@@ -170,12 +173,15 @@ export default class AppContainer extends Component<Props> {
             const tabIndex = tab.i;
             const tabNames = [
               "Bitcamp",
-              "Schedule",
-              "Mentors",
-              "Profile"
+              "Schedule"
             ];
+            if (hackingIsOver) {
+              tabNames.push("Expo");
+            }
+            tabNames.push("Mentors", "Profile");
+            console.log(tabNames);
             this.props.navigation.setParams({ title: tabNames[tabIndex] });
-            if (tabIndex == 1) {
+            if (tabIndex == 1 || (hackingIsOver && tabIndex == 2)) {
               this.props.navigation.setParams({ showMapIcon: false, showSearchIcon: true, eventDays: eventManager.getEventDays() });
             } else if (tabIndex == 0) {
               this.props.navigation.setParams({ showMapIcon: true, showSearchIcon: false });
@@ -202,6 +208,13 @@ export default class AppContainer extends Component<Props> {
             eventManager={this.props.screenProps.eventManager}
             navigation={this.props.navigation}
           />
+          { hackingIsOver &&
+          <Expo
+            tabLabel="expo"
+            eventManager={this.props.screenProps.eventManager}
+            navigation={this.props.navigation}
+          />
+          }
           <Mentors tabLabel="mentors" />
           <Profile tabLabel="profile" navigation={navigate} />
         </ScrollableTabView>
