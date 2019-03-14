@@ -22,17 +22,17 @@ class CustomTabBar extends Component {
             >
             {
               {
-                'home': <FontAwesome name='home' size={30} color={color}/>,
-                'schedule': <EvilIcon name='calendar' size={40} color={color}/>,
-                'mentors': <Ionicon name='ios-people' size={40} color={color}/>,
+                'home': <FontAwesome name='home' size={35} color={color}/>,
+                'schedule': <EvilIcon name='calendar' size={45} color={color}/>,
+                'mentors': <Ionicon name='ios-people' size={45} color={color} style={{marginBottom: -5,marginTop: -6}}/>,
                 'profile': <Ionicon name='ios-person' size={35} color={color}/>
               }[tab]
             }
               <P
                 style={
                   this.props.activeTab === i
-                    ? [styles.tabText, styles.tabActiveText]
-                    : [styles.tabText]
+                    ? [(tab === 'mentors' ? styles.tabTextMentors: styles.tabText), styles.tabActiveText]
+                    : [(tab === 'mentors' ? styles.tabTextMentors: styles.tabText)]
                 }
               >
                 {LABELS[i]}
@@ -50,11 +50,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 12,
-    paddingBottom: 10
+    paddingTop: 8,
+    paddingBottom: 8
   },
   tabText: {
-    marginTop: 4,
+    marginTop: 3,
+    color: colors.textColor.light
+  },
+  tabTextMentors: {
+    marginTop: 3,
     color: colors.textColor.light
   },
   tabActiveText: {
