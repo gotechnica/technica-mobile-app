@@ -354,7 +354,8 @@ export default class Profile extends Component<Props> {
                   <TouchableOpacity onPress={this.onNamePress}>
                     <Heading style={{
                       color: this.state.nameColor,
-                      textAlign: "center"
+                      textAlign: "center",
+                      marginTop: -15
                      }}
                     >
                       {this.state.devoolooperMode
@@ -368,7 +369,7 @@ export default class Profile extends Component<Props> {
                 </View>
               }
             </PadContainer>
-            <View style={{ justifyContent: 'space-evenly', flexDirection: "row" }}>
+            <View style={{ justifyContent: 'space-evenly', flexDirection: "row", marginTop: -15}}>
               {isOrganizer && (
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                   <TouchableOpacity
