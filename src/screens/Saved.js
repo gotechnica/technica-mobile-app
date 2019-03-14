@@ -150,5 +150,6 @@ const styles = StyleSheet.create({
   headingRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: -55
   },
 });
