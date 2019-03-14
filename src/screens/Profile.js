@@ -31,6 +31,7 @@ import { colors } from "../components/Colors";
 import Modal from "react-native-modal";
 import MCI from "react-native-vector-icons/MaterialCommunityIcons";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import FAIcon from "react-native-vector-icons/FontAwesome";
 import RNRestart from 'react-native-restart'; // Import package from node modules
 
 
