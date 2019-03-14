@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
+import Entypo from 'react-native-vector-icons/Entypo'
 import moment from 'moment';
 import { colors } from './Colors';
 import { P } from './Text';
@@ -14,7 +15,6 @@ let LABELS = ["Home", "Schedule"];
 if (hackingIsOver) {
   LABELS.push("Expo");
 }
-
 LABELS.push("Mentors", "Profile");
 
 class CustomTabBar extends Component {
@@ -33,7 +33,7 @@ class CustomTabBar extends Component {
               {
                 'home': <FontAwesome name='home' size={35} color={color}/>,
                 'schedule': <EvilIcon name='calendar' size={45} color={color}/>,
-                'expo': <EvilIcon name='calendar' size={45} color={color}/>,
+                'expo': <Entypo name='code' size={34} color={color}/>,
                 'mentors': <Ionicon name='ios-people' size={45} color={color} style={{marginBottom: -5,marginTop: -6}}/>,
                 'profile': <Ionicon name='ios-person' size={35} color={color}/>
               }[tab]
