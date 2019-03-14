@@ -4,6 +4,7 @@ import firebase from 'react-native-firebase';
 import { Colors } from 'react-native-paper';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { colors } from '../components/Colors';
 import CustomTabBar from '../components/CustomTabBar';
@@ -36,11 +37,11 @@ export default class AppContainer extends Component<Props> {
       <View>
         <View style={{flexDirection:"row", paddingRight: 15}}>
           <View style={{flex:1}}>
-            <TouchableHighlight 
+            <TouchableHighlight
             onPress={navigation.getParam("toggleMapModal")}
             underlayColor={Colors.white}
             >
-              <Icon
+              <FontAwesome
                 name="map"
                 size={30}
                 color={colors.primaryColor}
@@ -63,7 +64,7 @@ export default class AppContainer extends Component<Props> {
       <View>
         <View style={{flexDirection:"row", paddingRight: 15}}>
           <View style={{flex:1}}>
-          <TouchableHighlight 
+          <TouchableHighlight
             onPress={navigation.getParam("toggleSearchModal")}
             underlayColor={Colors.white}
             >
@@ -197,12 +198,12 @@ export default class AppContainer extends Component<Props> {
               this.mySchedule = mySchedule;
               eventManager.registerEventChangeListener(mySchedule);
             }}
-            tabLabel="calendar"
+            tabLabel="schedule"
             eventManager={this.props.screenProps.eventManager}
             navigation={this.props.navigation}
           />
-          <Mentors tabLabel="people" />
-          <Profile tabLabel="user" navigation={navigate} />
+          <Mentors tabLabel="mentors" />
+          <Profile tabLabel="profile" navigation={navigate} />
         </ScrollableTabView>
       </SafeAreaView>
     );

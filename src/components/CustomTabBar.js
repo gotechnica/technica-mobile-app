@@ -1,40 +1,33 @@
 import React, { Component } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import EvilIcon from 'react-native-vector-icons/EvilIcons';
 import { colors } from './Colors';
 import { P } from './Text';
 
 const LABELS = ["Home", "Schedule", /*"Saved",*/ "Mentors", "Profile"];
-
-const ICONS = {
-  home: "home",
-  schedule: "calendar",
-  /*saved: "heart",*/
-  mentors: "people",
-  profile: "user"
-};
 
 class CustomTabBar extends Component {
   render() {
     return (
       <View style={[styles.tabs, this.props.style]}>
         {this.props.tabs.map((tab, i) => {
+          let color = (this.props.activeTab === i ? colors.primaryColor : colors.textColor.light);
           return (
             <TouchableOpacity
               key={tab}
               onPress={() => this.props.goToPage(i)}
               style={styles.tab}
             >
-              <Icon
-                name={tab}
-                size={20}
-                color={
-                  this.props.activeTab === i
-                    ? colors.primaryColor
-                    : colors.textColor.light
-                }
-              />
+            {
+              {
+                'home': <FontAwesome name='home' size={30} color={color}/>,
+                'schedule': <EvilIcon name='calendar' size={40} color={color}/>,
+                'mentors': <Ionicon name='ios-people' size={40} color={color}/>,
+                'profile': <Ionicon name='ios-person' size={35} color={color}/>
+              }[tab]
+            }
               <P
                 style={
                   this.props.activeTab === i

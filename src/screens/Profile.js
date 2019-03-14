@@ -29,8 +29,8 @@ import QRCode from "react-native-qrcode";
 import _ from "lodash";
 import { colors } from "../components/Colors";
 import Modal from "react-native-modal";
-import FAIcon from "react-native-vector-icons/FontAwesome";
-import Icon from "react-native-vector-icons/SimpleLineIcons";
+import MCI from "react-native-vector-icons/MaterialCommunityIcons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import RNRestart from 'react-native-restart'; // Import package from node modules
 
 
@@ -315,10 +315,10 @@ export default class Profile extends Component<Props> {
         console.log(id);
 
         const isOrganizer = this.state.user.admin;
-        
+
         return (
           <ViewContainer>
-            {isOrganizer && 
+            {isOrganizer &&
               scannerView}
             <View style={{ alignItems: "center" }}>
               <View
@@ -339,17 +339,17 @@ export default class Profile extends Component<Props> {
                 )}
               </View>
               <H3 style={{ color: colors.textColor.light }}>
-                {isOrganizer 
+                {isOrganizer
                   ? "Use this code for testing"
                   : "Scan this code at check-in"
                 }
               </H3>
             </View>
             <PadContainer>
-              {this.state.user.profile && 
+              {this.state.user.profile &&
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity onPress={this.onNamePress}>
-                    <Heading style={{ 
+                    <Heading style={{
                       color: this.state.nameColor,
                       textAlign: "center"
                      }}
@@ -377,9 +377,9 @@ export default class Profile extends Component<Props> {
                     }}
                     onPress={() => this.toggleScanner()}
                   >
-                    <Icon
-                      name="camera"
-                      size={45}
+                    <MCI
+                      name="qrcode-scan"
+                      size={50}
                       color="black"
                     />
                   </TouchableOpacity>
@@ -396,10 +396,10 @@ export default class Profile extends Component<Props> {
                   }}
                   onPress={() => this.logout()}
                 >
-                  <Icon
-                      name="logout"
-                      size={45}
-                      color="white"
+                  <AntDesign
+                    name="logout"
+                    size={45}
+                    color="white"
                   />
                 </TouchableOpacity>
                 <H3 style={{fontWeight: "bold" }}>Sign Out</H3>
@@ -407,7 +407,7 @@ export default class Profile extends Component<Props> {
             </View>
           </ViewContainer>
         );
-        
+
       } else {
         return <CenteredActivityIndicator />;
       }
@@ -423,7 +423,7 @@ const ScanResponseModal = props => {
     return (
       <Modal
         isVisible={props.isVisible}
-        backdropColor={colors.backgroundColor.light} // This might need to be changed to a more appropriate color 
+        backdropColor={colors.backgroundColor.light} // This might need to be changed to a more appropriate color
         backdropOpacity={0.6}
         animationInTiming={200}
         animationIn="fadeInUp"

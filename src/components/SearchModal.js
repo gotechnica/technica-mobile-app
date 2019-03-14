@@ -10,7 +10,6 @@ import { ModalContent, ModalHeader, modalStyle } from './Base';
 import { colors } from './Colors';
 import PillBadge from './PillBadge';
 import {badgeStyles} from './PillBadge.js';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class SearchModal extends Component {
 
