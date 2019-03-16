@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
-import { H3, H6 } from "./Text";
+import { H3, H4, H6 } from "./Text";
 import moment from "moment";
 import { colors } from "./Colors";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -14,13 +14,14 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     flexDirection: 'row',
+    alignItems: 'flex-start',
   },
   questionText: {
     flex: 1,
   },
   collapseIcon: {
-    marginRight: 10,
-  }
+    marginHorizontal: 10,
+  },
 });
 
 export default class QuestionCard extends Component {
@@ -39,13 +40,13 @@ export default class QuestionCard extends Component {
   }
 
   renderStatus() {
-    const { status } = this.props;
+    const { status, question } = this.props;
     if (status.includes("claimed")) {
       return <H6 style={{ color: colors.secondaryColor }}>{status}</H6>;
     } else {
       return (
         <Fragment>
-          <H6 style={{ color: colors.secondaryColor }}>
+          <H6 style={{ color: colors.secondaryColor, marginTop: 5 }}>
             {status}
             <AnimatedEllipsis style={{ fontSize: 12, marginLeft: -4 }} />
           </H6>
@@ -62,7 +63,12 @@ export default class QuestionCard extends Component {
         onPress={this.toggleQuestion}
       >
         <View style={styles.questionContainer}>
-          <H3 numberOfLines={1} style={styles.questionText}>{question}</H3>
+          <H3 
+            numberOfLines={!questionIsExpanded ? 1 : null}
+            style={styles.questionText}
+          >
+            {question}
+          </H3>
           <Icon
             name={questionIsExpanded ? "chevron-down" : "chevron-right"}
             style={styles.collapseIcon}
