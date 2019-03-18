@@ -181,9 +181,10 @@ export default class EventsManager {
   }
 
   fetchSavedCounts() {
-    fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/favorite-counts")
+    fetch("http://35.174.30.108/api/firebaseEvents/favoriteCounts")
       .then((response) => response.json())
       .then((responseJson) => {
+        console.log(JSON.stringify(responseJson));
         newSavedCount = JSON.parse(responseJson.body);
         this.savedCounts = newSavedCount;
         //store new favorite counts on phone
