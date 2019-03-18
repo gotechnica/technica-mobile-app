@@ -21,7 +21,9 @@ export function createEventGroup(eventGroupLabel, rawEventArray) {
   let eventArray = [];
   for (let i in rawEventArray) {
     rawEvent = rawEventArray[i];
-    let img =  "banner_" + rawEvent.category.toLowerCase();
+    /* TODO : Change this once schedule is fixed */
+    //let img =  "banner_" + rawEvent.category.toLowerCase();
+    let img =  "banner_" + (Array.isArray(rawEvent.category) ? rawEvent.category[0] : rawEvent.category).toLowerCase();;
     if (img === 'banner_misc' || img === 'banner_mentor') {
       img = 'banner_filler';
     }
