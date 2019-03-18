@@ -23,9 +23,25 @@ export default class SearchModal extends Component {
       schedule: this.props.eventDays,
       search: '',
       newSchedule: [],
+      height: {
+        ModalHeader: 0,
+        SearchBar: 0,
+        TagViewParent: 0,
+        TagScrollView: 0
+      },
       offsetHeight: 0
     }
+  }
 
+  measureView(event, view) {
+    let newHeight = this.state.height;
+    newHeight[view] = event.nativeEvent.layout.height;
+    this.setState({
+      height: newHeight,
+      offsetHeight: Object.values(newHeight).reduce((acc,h) => acc + h, 0)
+    })
+    console.log(this.state.height);
+    console.log(this.state.offsetHeight);
   }
 
   filterEvents(query) {
@@ -90,15 +106,7 @@ export default class SearchModal extends Component {
     );
   }
 
-  measureView(event) {
-    this.setState({
-      offsetHeight: (this.state.offsetHeight + event.nativeEvent.layout.height)
-    });
-    console.log(this.state.offsetHeight);
-  }
-
   render() {
-    console.log(require('Dimensions').get('window'));
     const props = this.props;
     const dimensions = require('Dimensions').get('window');
     const imageWidth = dimensions.width - 42;
@@ -135,7 +143,7 @@ export default class SearchModal extends Component {
       >
       <ModalContent style={{padding:0}}>
           {Platform.OS === 'ios' ?
-            <View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }}>
+            <View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }} onLayout={(event) => this.measureView(event, 'ModalHeader')}>
               <ModalHeader
                 heading=''
                 onBackButtonPress={() => props.toggleModal()}
@@ -145,19 +153,21 @@ export default class SearchModal extends Component {
             </View>
             :
             <Fragment></Fragment>}
-          <SearchBar
-            onLayout={(event) => this.measureView(event)}
-            placeholder="Search"
-            platform={Platform.OS}
-            onChangeText={query => this.filterEvents(query)}
-            onClear={query => this.filterEvents('')}
-            value={this.state.search}
-            cancelButtonProps={{color: colors.primaryColor}}
-          />
-          <View style={{flex: 1, borderTopWidth: 0.5}}>
+          <View style={{flex: 1}} onLayout={(event) => this.measureView(event, 'SearchBar')}>
+            <SearchBar
+              placeholder="Search"
+              platform={Platform.OS}
+              onChangeText={query => this.filterEvents(query)}
+              onClear={query => this.filterEvents('')}
+              value={this.state.search}
+              cancelButtonProps={{color: colors.primaryColor}}
+            />
+          </View>
+          <View style={{flex: 1, borderTopWidth: 0.5}} onLayout={(event) => this.measureView(event, 'TagViewParent')}>
             <View style={{flex: 1, padding: 9, paddingTop: 10, paddingBottom: 10}}>
               <ScrollView
                 horizontal={true}
+                onLayout={(event) => this.measureView(event, 'TagScrollView')}
                 showsHorizontalScrollIndicator={false}>
                 {badges}
               </ScrollView>
@@ -166,7 +176,7 @@ export default class SearchModal extends Component {
           {this.state.newSchedule.length > 0 ?
             <ScrollableTabView
               renderTabBar={() => <CustomScheduleTabBar /> }
-              style={{height: (dimensions.height - 134)}}
+              style={{height: (dimensions.height - this.state.offsetHeight)}}
               page={0}
             >
               {newSchedule.map((eventDay,index) =>
