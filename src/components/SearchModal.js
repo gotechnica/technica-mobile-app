@@ -142,6 +142,7 @@ export default class SearchModal extends Component {
         style={[modalStyle]}
       >
       <ModalContent style={{padding:0}}>
+          {/* For no back button on IOS */}
           {Platform.OS === 'ios' ?
             <View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }} onLayout={(event) => this.measureView(event, 'ModalHeader')}>
               <ModalHeader

@@ -54,7 +54,6 @@ export default class Schedule extends Component<Props> {
       return (
         <PlainViewContainer>
           <ScrollableTabView
-            initialPage={0}
             renderTabBar={() => <CustomScheduleTabBar/> }
           >
             {eventDays.map((eventDay,index) =>
