@@ -57,9 +57,16 @@ export default class EventModal extends Component {
             <View style={styles.viewWithSpacing}>
               <View>
                 <H2>{props.event.title}</H2>
+                <View style={{ alignItems: 'flex-start', flexDirection:'row', paddingTop: 5, paddingBottom: 5 }}>
+                {/*TODO: Change when schedule fixed*/}
+                {(Array.isArray(props.event.category) ? props.event.category : [props.event.category]).map((category,index) =>
+                    <View style={{marginRight: 5}} key={props.event.title + index.toString()}>
+                      <PillBadge category={category} from={'Modal'}/>
+                    </View>
+                )}
+                </View>
                 <H3 style={styles.location}>{props.event.location}</H3>
               </View>
-              <PillBadge category={props.event.category} from={'Modal'}/>
             </View>
             <View style={styles.viewWithSpacing}>
               <View>
