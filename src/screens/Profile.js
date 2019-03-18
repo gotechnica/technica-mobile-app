@@ -93,31 +93,29 @@ export default class Profile extends Component<Props> {
   }
 
   async onScanSuccess(e) {
-    let url =
-      "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/login-user";
     try {
-      let phoneNumber = e.data;
+      const userId = e.data;
+      const url =`http://35.174.30.108/api/users/${userId}/checkIn`;
+      const token = await AsyncStorage.getItem(USER_TOKEN);
       let response = await fetch(url, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ phone: phoneNumber })
-      });
+          method: "POST",
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "x-access-token": token,
+          },
+        });
 
-      let responseJson = await response.json();
+      const responseJson = await response.json();
 
       if (responseJson.statusCode == 200) {
         const responseUserData = responseJson.body.user_data;
         // Set state for SUCCESS modal
         this.setState({
           scannedUserData: {
-            fullName: `${responseUserData.first_name} ${
-              responseUserData.last_name
-            }`,
-            minorStatus: responseUserData.minor_status,
-            dietaryRestrictions: responseUserData.dietary_restrictions
+            fullName: responseUserData.email, //TODO: fix this once the backend gets updated
+            minorStatus: !responseUserData.profile.adult,
+            dietaryRestrictions: responseUserData.profile.dietaryRestrictions
           },
           scannedUser: true
         });
