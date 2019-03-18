@@ -184,8 +184,7 @@ export default class EventsManager {
     fetch("http://35.174.30.108/api/firebaseEvents/favoriteCounts")
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log(JSON.stringify(responseJson));
-        newSavedCount = JSON.parse(responseJson.body);
+        newSavedCount = responseJson;
         this.savedCounts = newSavedCount;
         //store new favorite counts on phone
         AsyncStorage.setItem(SAVED_COUNT_STORE, JSON.stringify(newSavedCount), function(error){
@@ -255,7 +254,6 @@ export default class EventsManager {
     await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
         id = JSON.parse(result).id;
-        token = token.replace(/\"/g, "");
 
         let response = fetch(`http://35.174.30.108/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
           method: 'POST',
@@ -288,7 +286,6 @@ export default class EventsManager {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
 
         id = JSON.parse(result).id;
-        token = token.replace(/\"/g, "");
 
         fetch(`http://35.174.30.108/api/users/${id}/unfavoriteFirebaseEvent/${eventID}`, {
           method: 'POST',
