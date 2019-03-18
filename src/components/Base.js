@@ -215,13 +215,12 @@ class ModalHeader extends Component<Props> {
               />
             </View>
           }
+          {small ?
+              null
+              :
+              (this.props.isSearch ? <Fragment></Fragment> : <H2 style={styles.modalHeadingText}>{this.props.heading}</H2>)
+          }
         </View>
-        {
-          small ?
-            null
-            :
-            (this.props.isSearch ? <Fragment></Fragment> : <H2 style={styles.modalHeadingText}>{this.props.heading}</H2>)
-        }
       </View>
     );
   }

@@ -17,6 +17,8 @@ import { ModalContent, ModalHeader, HorizontalLine, Spacing, modalStyle } from '
 import { colors } from './Colors';
 import moment from 'moment';
 import PhotoView from 'react-native-photo-view';
+import CustomScheduleTabBar from '../components/schedule/CustomScheduleTabBar';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 export default class MapModal extends Component {
   render() {
@@ -42,24 +44,54 @@ export default class MapModal extends Component {
         style={modalStyle}
       >
         <ModalContent style={{ padding: 0 }}>
-          <View style={{ padding: 20, paddingBottom: 0 }}>
+          <View style={{ padding: 20, paddingBottom: 0, marginBottom: -16.5 }}>
             <ModalHeader
-              heading="Venue Map"
+              heading=""
               onBackButtonPress={() => props.toggleModal()}
               origin={'Home'}
             />
           </View>
+          <ScrollableTabView
+            renderTabBar={() => <CustomScheduleTabBar/> }
+            style={{height: 590}}
+          >
           <PhotoView
-            source={require('./images/floor_plan_final.png')}
+            tabLabel="Floor 1"
+            source={require('./images/Floor_1.png')}
             minimumZoomScale={1}
             maximumZoomScale={8}
             androidScaleType="fitCenter"
             onLoad={() => console.log("Image loaded!")}
             style={{
               width: window.width,
-              height: 600,
+              height: 530,
             }}
           />
+          <PhotoView
+            tabLabel="Floor 2"
+            source={require('./images/Floor_1.png')}
+            minimumZoomScale={1}
+            maximumZoomScale={8}
+            androidScaleType="fitCenter"
+            onLoad={() => console.log("Image loaded!")}
+            style={{
+              width: window.width,
+              height: 530,
+            }}
+          />
+          <PhotoView
+            tabLabel="Floor 3"
+            source={require('./images/Floor_1.png')}
+            minimumZoomScale={1}
+            maximumZoomScale={8}
+            androidScaleType="fitCenter"
+            onLoad={() => console.log("Image loaded!")}
+            style={{
+              width: window.width,
+              height: 530,
+            }}
+          />
+          </ScrollableTabView>
         </ModalContent>
       </Modal>
     );
