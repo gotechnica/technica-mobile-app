@@ -43,8 +43,10 @@ export default class SearchModal extends Component {
           newEventGroup = new EventGroup(eventGroup.label, [])
           for (eventIndex in eventGroup.events) {
             event = eventGroup.events[eventIndex];
-            if (event.title.toLowerCase().search(query) >= 0 ||
-                event.category.toLowerCase().search(query) >= 0) {
+            /* TODO: Change this when all categories switched to list */
+            let category_search = (Array.isArray(event.category) ? event.category.map(category => category.toLowerCase().search(query) >= 0) : event.category.toLowerCase().search(query) >= 0)
+            if (event.title.toLowerCase().search(query) >= 0 || (Array.isArray(category_search) ? category_search.includes(true) : category_search)
+          /*event.category.toLowerCase().search(query) >= 0*/) {
               newEventGroup.events.push(event);
             }
           }
@@ -60,6 +62,7 @@ export default class SearchModal extends Component {
       newSchedule: newSchedule,
       search: query
     });
+
   }
 
   renderScheduleForDay(eventDayObj) {
@@ -95,6 +98,7 @@ export default class SearchModal extends Component {
   }
 
   render() {
+    console.log(require('Dimensions').get('window'));
     const props = this.props;
     const dimensions = require('Dimensions').get('window');
     const imageWidth = dimensions.width - 42;
@@ -161,9 +165,9 @@ export default class SearchModal extends Component {
           </View>
           {this.state.newSchedule.length > 0 ?
             <ScrollableTabView
-              initialPage={0}
               renderTabBar={() => <CustomScheduleTabBar /> }
               style={{height: (dimensions.height - 134)}}
+              page={0}
             >
               {newSchedule.map((eventDay,index) =>
                 ( eventDay.eventGroups.length > 0 ?

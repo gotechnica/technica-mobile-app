@@ -22,7 +22,7 @@ const badgeStyle = {
 };
 
 export const badgeStyles = {
-  'Main': badgeStyle.green,
+  'Main-Event': badgeStyle.green,
   'Food': badgeStyle.red,
   'Mini-Event': badgeStyle.yellow,
   'Workshop': badgeStyle.purple,
@@ -31,6 +31,7 @@ export const badgeStyles = {
   /* TODO: Remove once schedule is repulled */
   'Campfire': badgeStyle.yellow,
   'Misc': badgeStyle.purple,
+  'Main': badgeStyle.green,
 };
 
 const styles = StyleSheet.create({

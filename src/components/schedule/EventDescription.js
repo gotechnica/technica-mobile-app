@@ -102,13 +102,14 @@ export default class EventDescription extends Component<Props> {
                   : `${event.startTimeFormatted} - ${event.endTimeFormatted}`}
               </H4>*/}
               <H4 style={{ fontSize: 17.5, color: colors.textColor.light }}>{event.location}</H4>
-              {[event.category].map(category =>
-                <View style={{ alignItems: 'flex-start', flexDirection:'row' }} key={event.title}>
-                  <View style={{marginRight: 5}}>
+              <View style={{ alignItems: 'flex-start', flexDirection:'row' }}>
+              {/* TODO : Change this once schedule is fixed */}
+              {(Array.isArray(event.category) ? event.category : [event.category]).map((category,index) =>
+                  <View style={{marginRight: 5}} key={event.title + index.toString()}>
                     <PillBadge category={category} from={'Description'}/>
                   </View>
-                </View>
               )}
+              </View>
             </View>
             <View style={[styles.row, { flex: 1, justifyContent: "flex-end", alignItems: 'center'}]}>
               <EventStar
