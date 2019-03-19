@@ -93,31 +93,29 @@ export default class Profile extends Component<Props> {
   }
 
   async onScanSuccess(e) {
-    let url =
-      "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/login-user";
     try {
-      let phoneNumber = e.data;
+      const userId = e.data;
+      const url =`http://35.174.30.108/api/users/${userId}/checkIn`;
+      const token = await AsyncStorage.getItem(USER_TOKEN);
       let response = await fetch(url, {
         method: "POST",
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "x-access-token": token,
         },
-        body: JSON.stringify({ phone: phoneNumber })
       });
 
-      let responseJson = await response.json();
+      const userJSON = await response.json();
 
-      if (responseJson.statusCode == 200) {
-        const responseUserData = responseJson.body.user_data;
+      if (userJSON.statusCode == 200) {
+        const userProfile = userJSON.profile;
         // Set state for SUCCESS modal
         this.setState({
           scannedUserData: {
-            fullName: `${responseUserData.first_name} ${
-              responseUserData.last_name
-            }`,
-            minorStatus: responseUserData.minor_status,
-            dietaryRestrictions: responseUserData.dietary_restrictions
+            displayName: this.getDisplayName(userJSON),
+            minorStatus: !userProfile.adult,
+            dietaryRestrictions: userProfile.dietaryRestrictions
           },
           scannedUser: true
         });
@@ -165,6 +163,13 @@ export default class Profile extends Component<Props> {
         RNRestart.Restart();
       });
     }
+  }
+
+  getDisplayName(user) {
+    const {email, profile: {firstName, lastName}} = user;
+    return (firstName && lastName) 
+      ? `${firstName} ${lastName}`
+      : email;
   }
 
   toggleModal() {
@@ -303,11 +308,7 @@ export default class Profile extends Component<Props> {
 
     const defaultView = (() => {
       if (this.state.user.profile) {
-        const fullName = this.state.user.profile
-          ? this.state.user.profile.firstName +
-            " " +
-            this.state.user.profile.lastName
-          : "";
+        const displayName = this.getDisplayName(this.state.user);
         const phone_number = this.state.user.profile.phoneNumber
           ? this.state.user.profile.phoneNumber
           : "";
@@ -360,8 +361,8 @@ export default class Profile extends Component<Props> {
                      }}
                     >
                       {this.state.devoolooperMode
-                        ? this.getDevoolooperName(fullName)
-                        : fullName}
+                        ? this.getDevoolooperName(displayName)
+                        : displayName}
                     </Heading>
                   </TouchableOpacity>
                   <SubHeading style={{ textAlign: "center", marginTop: -10 }}>
@@ -493,7 +494,7 @@ const ScanResponseModal = props => {
           style={{ marginBottom: 10 }}
         />
         <H2 style={{ color: colors.secondaryColor, marginBottom: 20 }}>SUCCESS</H2>
-        <H1 style={{ marginBottom: 20 }}>{props.scannedUserData.fullName}</H1>
+        <H1 style={{ marginBottom: 20 }}>{props.scannedUserData.displayName}</H1>
         {props.scannedUserData.minorStatus && (
           <H3 style={{ color: colors.primaryColor }}>+ Minor</H3>
         )}
