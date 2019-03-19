@@ -97,7 +97,7 @@ export default class Profile extends Component<Props> {
       const userId = e.data;
       const url =`http://35.174.30.108/api/users/${userId}/checkIn`;
       const token = await AsyncStorage.getItem(USER_TOKEN).replace(/\"/g, "");
-      let response = await fetch(url, {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Accept": "application/json",
@@ -109,7 +109,7 @@ export default class Profile extends Component<Props> {
       const responseJSON = await response.json();
 
       if (responseJSON.statusCode == 200) {
-        const userProfile = userJSON.body.profile;
+        const userProfile = responseJSON.body.profile;
         // Set state for SUCCESS modal
         this.setState({
           scannedUserData: {
