@@ -96,14 +96,14 @@ export default class Profile extends Component<Props> {
     try {
       const userId = e.data;
       const url =`http://35.174.30.108/api/users/${userId}/checkIn`;
-      const token = await AsyncStorage.getItem(USER_TOKEN);
+      const token = await AsyncStorage.getItem(USER_TOKEN).replace(/\"/g, "");
       let response = await fetch(url, {
         method: "POST",
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
           "x-access-token": token,
-        },
+        }
       });
 
       const userJSON = await response.json();
