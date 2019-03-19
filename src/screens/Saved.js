@@ -41,12 +41,12 @@ export default class Saved extends Component<Props> {
     return (
       <ScrollView>
         <PadContainer>
-          <View style={styles.headingRow}>
+          {/*<View style={styles.headingRow}>
             <TouchableOpacity onPress={() => {this.setState({ refresh: !this.state.refresh })}}>
               <Icon
                 name="refresh"
                 size={30}
-                color="white"
+                color="black"
                 style={{
                   paddingTop: 34,
                   marginBottom: 20,
@@ -54,8 +54,8 @@ export default class Saved extends Component<Props> {
                 }}
               />
             </TouchableOpacity>
-          </View>
-          <SubHeading>
+          </View>*/}
+          <SubHeading style={{marginTop: 10}}>
             {events.length} events saved
           </SubHeading>
           {
@@ -150,6 +150,5 @@ const styles = StyleSheet.create({
   headingRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: -55
   },
 });

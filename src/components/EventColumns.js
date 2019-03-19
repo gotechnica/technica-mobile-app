@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
   },
   halfColumn: {
     flex: 5,
-    flexDirection: "column"
+    flexDirection: "column",
+    marginRight: -20
   },
   event: {
     marginBottom: 15
