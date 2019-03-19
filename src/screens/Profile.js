@@ -96,7 +96,7 @@ export default class Profile extends Component<Props> {
     try {
       const userId = e.data;
       const url =`http://35.174.30.108/api/users/${userId}/checkIn`;
-      const token = await AsyncStorage.getItem(USER_TOKEN).replace(/\"/g, "");
+      const token = await AsyncStorage.getItem(USER_TOKEN);
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -107,13 +107,12 @@ export default class Profile extends Component<Props> {
       });
 
       const responseJSON = await response.json();
-
-      if (responseJSON.statusCode == 200) {
-        const userProfile = responseJSON.body.profile;
+      if (response.status == 200) {
+        const userProfile = responseJSON.profile;
         // Set state for SUCCESS modal
         this.setState({
           scannedUserData: {
-            displayName: this.getDisplayName(userJSON.body),
+            displayName: this.getDisplayName(responseJSON),
             minorStatus: !userProfile.adult,
             dietaryRestrictions: userProfile.dietaryRestrictions
           },
@@ -127,6 +126,7 @@ export default class Profile extends Component<Props> {
         });
       }
     } catch (error) {
+      console.log(error);
       Alert.alert(
         "No internet connection.",
         "Try again.",
