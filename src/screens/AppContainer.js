@@ -175,11 +175,10 @@ export default class AppContainer extends Component<Props> {
               "Bitcamp",
               "Schedule"
             ];
-            if (hackingIsOver) {
-              tabNames.push("Expo");
-            }
+            // if (hackingIsOver) {
+            //   tabNames.push("Expo");
+            // }
             tabNames.push("Mentors", "Profile");
-            console.log(tabNames);
             this.props.navigation.setParams({ title: tabNames[tabIndex] });
             if (tabIndex == 1 || (hackingIsOver && tabIndex == 2)) {
               this.props.navigation.setParams({ showMapIcon: false, showSearchIcon: true, eventDays: eventManager.getEventDays() });
