@@ -106,7 +106,7 @@ export default class Profile extends Component<Props> {
         }
       });
 
-      const userJSON = await response.json();
+      const userJSON = await response.json().body;
 
       if (userJSON.statusCode == 200) {
         const userProfile = userJSON.profile;
