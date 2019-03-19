@@ -22,16 +22,12 @@ const badgeStyle = {
 };
 
 export const badgeStyles = {
-  'Main-Event': badgeStyle.green,
+  'Main': badgeStyle.green,
   'Food': badgeStyle.red,
-  'Mini-Event': badgeStyle.yellow,
+  'Mini': badgeStyle.yellow,
   'Workshop': badgeStyle.purple,
   'Sponsor': badgeStyle.blue,
   'Mentor': badgeStyle.turquoise,
-  /* TODO: Remove once schedule is repulled */
-  'Campfire': badgeStyle.yellow,
-  'Misc': badgeStyle.purple,
-  'Main': badgeStyle.green,
 };
 
 const styles = StyleSheet.create({
@@ -67,7 +63,7 @@ export default class PillBadge extends Component<Props> {
         {backgroundColor: badgeStyles[this.props.category].bgColor, marginLeft: (this.props.margin !== null ? this.props.margin : 0)}
       ]}>
         <Text style={[styles.width,styles.text,{color: badgeStyles[this.props.category].text}]}>
-            {(this.props.category === 'Misc' ? 'miscellaneous' : this.props.category).toUpperCase()}
+            {(this.props.category === 'Main' || this.props.category === 'Mini' ? this.props.category + '-Event' : this.props.category).toUpperCase()}
         </Text>
       </View>
     );

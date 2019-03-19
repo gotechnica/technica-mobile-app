@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   },
   subSection: {
     // paddingTop: 20,
-    paddingBottom: 40
+    paddingBottom: 20
   },
   subSectionHeading: {
     paddingBottom: 20
