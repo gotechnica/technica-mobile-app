@@ -373,7 +373,6 @@ const modalStyles = StyleSheet.create({
   input: {
     backgroundColor: colors.backgroundColor.normal,
     fontSize: 14,
-    fontFamily: "Poppins-Regular",
     color: colors.textColor.normal,
     padding: 15,
     minHeight: 40,
