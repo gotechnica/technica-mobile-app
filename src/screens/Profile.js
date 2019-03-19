@@ -106,14 +106,14 @@ export default class Profile extends Component<Props> {
         }
       });
 
-      const userJSON = await response.json().body;
+      const responseJSON = await response.json();
 
-      if (userJSON.statusCode == 200) {
-        const userProfile = userJSON.profile;
+      if (responseJSON.statusCode == 200) {
+        const userProfile = userJSON.body.profile;
         // Set state for SUCCESS modal
         this.setState({
           scannedUserData: {
-            displayName: this.getDisplayName(userJSON),
+            displayName: this.getDisplayName(userJSON.body),
             minorStatus: !userProfile.adult,
             dietaryRestrictions: userProfile.dietaryRestrictions
           },
