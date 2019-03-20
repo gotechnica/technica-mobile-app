@@ -10,6 +10,8 @@ import { ViewContainer, CenteredActivityIndicator } from './components/Base';
 // NOTE dangerously ignore deprecated warning for now
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader', 'Setting a timer', "Warning: Can't"]);
 
+console.reportErrorsAsExceptions = false;
+
 XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
     GLOBAL.originalXMLHttpRequest :
     GLOBAL.XMLHttpRequest;

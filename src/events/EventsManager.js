@@ -110,7 +110,6 @@ export default class EventsManager {
     //repeat process of scanning through events
     for (let i in rawData) {
       newEventDays.push(createEventDay(rawData[i]));
-      //console.log(rawData[i])
     }
 
     newCombinedEvents = _.flatten(
@@ -150,7 +149,7 @@ export default class EventsManager {
           curEventObj.description = newEvent.description;
           curEventObj.startTime = newEvent.startTime;
           curEventObj.endTime = newEvent.endTime;
-          curEventObj.beginnerFriendly = newEvent.beginnerFriendly;
+          curEventObj.featured = newEvent.featured;
           curEventObj.location = newEvent.location;
           curEventObj.img = newEvent.img;
         }
@@ -214,8 +213,8 @@ export default class EventsManager {
     return topSorted.slice(0, 10);
   }
 
-  getBeginnerEventsArray() {
-    return _.filter(this.combinedEvents, event => event.beginnerFriendly);
+  getFeaturedEvents() {
+    return _.filter(this.combinedEvents, event => event.featured);
   }
 
   getHappeningNow() {
