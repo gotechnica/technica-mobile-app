@@ -93,31 +93,28 @@ export default class Profile extends Component<Props> {
   }
 
   async onScanSuccess(e) {
-    let url =
-      "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/login-user";
     try {
-      let phoneNumber = e.data;
-      let response = await fetch(url, {
+      const userId = e.data;
+      const url =`http://35.174.30.108/api/users/${userId}/checkIn`;
+      const token = await AsyncStorage.getItem(USER_TOKEN);
+      const response = await fetch(url, {
         method: "POST",
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ phone: phoneNumber })
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "x-access-token": token,
+        }
       });
 
-      let responseJson = await response.json();
-
-      if (responseJson.statusCode == 200) {
-        const responseUserData = responseJson.body.user_data;
+      const responseJSON = await response.json();
+      if (response.status == 200) {
+        const userProfile = responseJSON.profile;
         // Set state for SUCCESS modal
         this.setState({
           scannedUserData: {
-            fullName: `${responseUserData.first_name} ${
-              responseUserData.last_name
-            }`,
-            minorStatus: responseUserData.minor_status,
-            dietaryRestrictions: responseUserData.dietary_restrictions
+            displayName: this.getDisplayName(responseJSON),
+            minorStatus: !userProfile.adult,
+            dietaryRestrictions: userProfile.dietaryRestrictions
           },
           scannedUser: true
         });
@@ -129,6 +126,7 @@ export default class Profile extends Component<Props> {
         });
       }
     } catch (error) {
+      console.log(error);
       Alert.alert(
         "No internet connection.",
         "Try again.",
@@ -165,6 +163,13 @@ export default class Profile extends Component<Props> {
         RNRestart.Restart();
       });
     }
+  }
+
+  getDisplayName(user) {
+    const {email, profile: {firstName, lastName}} = user;
+    return (firstName && lastName) 
+      ? `${firstName} ${lastName}`
+      : email;
   }
 
   toggleModal() {
@@ -303,11 +308,7 @@ export default class Profile extends Component<Props> {
 
     const defaultView = (() => {
       if (this.state.user.profile) {
-        const fullName = this.state.user.profile
-          ? this.state.user.profile.firstName +
-            " " +
-            this.state.user.profile.lastName
-          : "";
+        const displayName = this.getDisplayName(this.state.user);
         const phone_number = this.state.user.profile.phoneNumber
           ? this.state.user.profile.phoneNumber
           : "";
@@ -360,8 +361,8 @@ export default class Profile extends Component<Props> {
                      }}
                     >
                       {this.state.devoolooperMode
-                        ? this.getDevoolooperName(fullName)
-                        : fullName}
+                        ? this.getDevoolooperName(displayName)
+                        : displayName}
                     </Heading>
                   </TouchableOpacity>
                   <SubHeading style={{ textAlign: "center", marginTop: -10 }}>
@@ -424,48 +425,10 @@ export default class Profile extends Component<Props> {
 
 // TODO make this code less redundant
 const ScanResponseModal = props => {
-  if (props.scannedUserData === null) {
-    return (
-      <Modal
-        isVisible={props.isVisible}
-        backdropColor={colors.backgroundColor.light} // This might need to be changed to a more appropriate color
-        backdropOpacity={0.6}
-        animationInTiming={200}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
-        animationOutTiming={200}
-        backdropTransitionInTiming={200}
-        backdropTransitionOutTiming={200}
-        avoidKeyboard={true}
-        onBackdropPress={props.onBack}
-        onBackButtonPress={props.onBack}
-        style={{ margin: 40 }}
-      >
-        <View
-          style={{
-            backgroundColor: colors.backgroundColor.normal,
-            padding: 40,
-            borderRadius: 8,
-            alignItems: "center"
-          }}
-        >
-          <FAIcon
-            name="times"
-            size={48}
-            color={colors.iconColor}
-            style={{ marginBottom: 10 }}
-          />
-          <H2 style={{ color: colors.textColor.normal, marginBottom: 20 }}>NOT FOUND</H2>
-          <H3 style={{ color: colors.textColor.light }}>Send to check-in table.</H3>
-        </View>
-      </Modal>
-    );
-  }
-
   return (
     <Modal
       isVisible={props.isVisible}
-      backdropColor={colors.secondaryColor}
+      backdropColor={colors.backgroundColor.light}
       backdropOpacity={0.6}
       animationInTiming={200}
       animationIn="fadeInUp"
@@ -486,23 +449,38 @@ const ScanResponseModal = props => {
           alignItems: "center"
         }}
       >
-        <FAIcon
-          name="check"
-          size={48}
-          color={colors.secondaryColor}
-          style={{ marginBottom: 10 }}
-        />
-        <H2 style={{ color: colors.secondaryColor, marginBottom: 20 }}>SUCCESS</H2>
-        <H1 style={{ marginBottom: 20 }}>{props.scannedUserData.fullName}</H1>
-        {props.scannedUserData.minorStatus && (
-          <H3 style={{ color: colors.primaryColor }}>+ Minor</H3>
-        )}
-        {props.scannedUserData.dietaryRestrictions != null &&
-          props.scannedUserData.dietaryRestrictions.length > 0 &&
-          props.scannedUserData.dietaryRestrictions[0] !==
-            "I Have No Food Restrictions" && (
-            <H3 style={{ color: colors.primaryColor }}>+ Dietary Restrictions</H3>
-          )}
+        {
+          !props.scannedUserData
+          ? <React.Fragment>
+              <FAIcon
+                name="times"
+                size={48}
+                color={colors.iconColor}
+                style={{ marginBottom: 10 }}
+              />
+              <H2 style={{ color: colors.textColor.normal, marginBottom: 20 }}>NOT FOUND</H2>
+              <H3 style={{ color: colors.textColor.light }}>Send to check-in table.</H3>
+            </React.Fragment>
+          : <React.Fragment>
+              <FAIcon
+                name="check"
+                size={48}
+                color={colors.secondaryColor}
+                style={{ marginBottom: 10 }}
+              />
+              <H2 style={{ color: colors.secondaryColor, marginBottom: 20 }}>SUCCESS</H2>
+              <H1 style={{ marginBottom: 20 }}>{props.scannedUserData.displayName}</H1>
+              {props.scannedUserData.minorStatus && (
+                <H3 style={{ color: colors.primaryColor }}>+ Minor</H3>
+              )}
+              {props.scannedUserData.dietaryRestrictions != null &&
+                props.scannedUserData.dietaryRestrictions.length > 0 &&
+                props.scannedUserData.dietaryRestrictions[0] !==
+                  "I Have No Food Restrictions" && (
+                  <H3 style={{ color: colors.primaryColor }}>+ Dietary Restrictions</H3>
+                )}
+            </React.Fragment>
+        }
       </View>
     </Modal>
   );

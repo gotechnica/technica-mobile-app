@@ -107,6 +107,14 @@ export default class Login extends Component<Props> {
 
   }
 
+  processUserEvents(eventsArr) {
+    userFavoritedEvents = {};
+    for(i = 0; i < eventsArr.length; i++) {
+      userFavoritedEvents[eventsArr[i]] = true;
+    }
+    return userFavoritedEvents;
+  }
+
   async sendReceivedCode(code){
 
     let url = "http://35.174.30.108/auth/login/code";
@@ -123,7 +131,9 @@ export default class Login extends Component<Props> {
         let responseJson = await response.json();
         if(response.status == 200){
           await AsyncStorage.setItem(USER_DATA_STORE, JSON.stringify(responseJson.user));
-          await AsyncStorage.setItem(USER_TOKEN, JSON.stringify(JSON.parse(response._bodyInit).token));
+          await AsyncStorage.setItem(USER_TOKEN, responseJson.token);
+          userFavoritedEvents = this.processUserEvents(responseJson.user.favoritedFirebaseEvents);
+          await AsyncStorage.setItem(EVENT_FAVORITED_STORE, JSON.stringify(userFavoritedEvents));
           this.setState({savedCode: code, fieldValue: ''});
           const { navigate } = this.props.navigation;
           navigate('AppContainer');
@@ -145,6 +155,7 @@ export default class Login extends Component<Props> {
           );
         }
     } catch (error) {
+      console.log(error);
         Alert.alert(
           "No internet connection.",
           "Try again.",
