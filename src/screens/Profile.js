@@ -74,7 +74,6 @@ export default class Profile extends Component<Props> {
             AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
               const navigate = this.props.navigation;
               RNRestart.Restart();
-              //navigate("Login");
             });
           }
         },

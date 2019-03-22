@@ -43,7 +43,7 @@ export function createEventGroup(eventGroupLabel, rawEventArray) {
         rawEvent.description,
         rawEvent.startTime,
         rawEvent.endTime,
-        rawEvent.beginnerFriendly,
+        rawEvent.featuredEvent,
         rawEvent.location,
         img
       )
