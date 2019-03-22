@@ -23,10 +23,18 @@ export function createEventGroup(eventGroupLabel, rawEventArray) {
     rawEvent = rawEventArray[i];
     /* TODO : Change this once schedule is fixed */
     //let img =  "banner_" + rawEvent.category.toLowerCase();
-    let img =  "banner_" + (Array.isArray(rawEvent.category) ? rawEvent.category[0] : rawEvent.category).toLowerCase();;
-    if (img === 'banner_misc' || img === 'banner_mentor') {
-      img = 'banner_filler';
+    let banner_map = {
+      opening_ceremony: "ceremony",
+      closing_ceremony: "ceremony",
+      Expo_a: "demo",
+      Expo_b: "demo",
+      colorwar: "colorwar"
     }
+    let title = rawEvent.title.toLowerCase().replace(' ','_');
+    let img =  "banner_" + (banner_map[title] != undefined ?
+      banner_map[title]
+      :
+      ((Array.isArray(rawEvent.category) ? rawEvent.category[0] : rawEvent.category).toLowerCase()));
     eventArray.push(
       new Event(
         rawEvent.eventID,

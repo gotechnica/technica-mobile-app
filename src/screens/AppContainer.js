@@ -128,7 +128,7 @@ export default class AppContainer extends Component<Props> {
     this.toggleSearchModal = this.toggleSearchModal.bind(this);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.props.navigation.setParams({
-      title: "Bitcamp",
+      title: "bitcamp",
       showMapIcon: true,
       isMapModalVisible: false,
       isSearchModalVisible: false,

@@ -58,7 +58,7 @@ export default class EventCard extends Component {
   render() {
     const { big, event, eventManager, inSlideshow } = this.props;
     const dimensions = require('Dimensions').get('window');
-    let imageWidth = big ? dimensions.width - 40 : dimensions.width / 2 - 30;
+    let imageWidth = big ? dimensions.width - 40 : (dimensions.width / 2) + 10;
     imageWidth = inSlideshow ? dimensions.width : imageWidth;
     const imageHeight = Math.round((imageWidth * 38) / 67);
 
@@ -82,10 +82,10 @@ export default class EventCard extends Component {
                     {
                       width: imageWidth,
                       height: big ? imageHeight / 2 : imageHeight,
-                      borderRadius: 4,
+                      borderRadius: 13,
                       marginBottom: 5,
                     },
-                    this.props.imageStyle
+                    this.props.imageStyle,
                   ]}
                   source={Images[event.img]}
                 />
@@ -103,7 +103,7 @@ export default class EventCard extends Component {
               <ImageBackground
                 style={[
                   styles.imageBg,
-                  { width: imageWidth, height: imageHeight,}
+                  { width: imageWidth, height: imageHeight }
                 ]}
                 source={Images[event.img]}
                 >

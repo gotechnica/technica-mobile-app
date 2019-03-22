@@ -6,6 +6,7 @@ import { StyleSheet } from 'react-native';
 import { PadContainer } from "../components/Base";
 import EventCard from "./EventCard";
 import { H2, H3 } from '../components/Text';
+import { colors } from "./Colors";
 
 const styles = StyleSheet.create({
     textIfNoEvents: {
@@ -41,12 +42,15 @@ export default class HappeningNowSlideshow extends Component {
           />
         )
     }
+    let height = require('Dimensions').get('window').height;
 
     return (
       <Swiper
-        height={240}
+        height={height/3 + 15}
         dotColor={'rgba(255,255,255,.6)'}
-        activeDotColor={'#fff'}
+        activeDotColor={colors.primaryColor}
+        autoplay={true}
+        autoplayTimeout={5}
         loop
       >
         {slideshow_content}
