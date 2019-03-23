@@ -35,7 +35,7 @@ export default class EventModal extends Component {
       >
         <ModalContent>
           <ModalHeader
-            onBackButtonPress={() => props.toggleModal()}
+            onBackButtonPress={() => {props.toggleModal();}}
             eventID={props.event.eventID.toString()}
             eventManager={props.eventManager}
             origin={this.props.origin}

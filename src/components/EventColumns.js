@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   halfColumn: {
     flex: 5,
     flexDirection: "column",
-    marginRight: -20
+    marginRight: 20
   },
   event: {
     marginBottom: 15
@@ -52,14 +52,9 @@ export default class EventColumns extends Component {
   getCardCol(event, index) {
     if (event) {
       return (
-        <PadContainer
-          key={index}
-          style={styles.row}
-        >
-          <View style={styles.halfColumn}>
-            <EventCard event={event} eventManager={this.props.eventManager} origin={this.props.origin}/>
-          </View>
-        </PadContainer>
+        <View style={[styles.halfColumn, (index === 0 ? {marginLeft: 20} : {marginLeft: 0})]} key={index}>
+          <EventCard event={event} eventManager={this.props.eventManager} origin={this.props.origin}/>
+        </View>
       );
     } else {
       return null;
@@ -90,18 +85,18 @@ export default class EventColumns extends Component {
       const left = eventsArr[i];
       const right = eventsArr[i + 1];
       rows.push(
-        <PadContainer
+        <View
           key={i}
           style={[
             styles.row,
             { marginLeft: isClipped == false ? -20 : 0 },
-            { width: width }
+            { width: width },
           ]}
         >
-          {this.getCardCol(left)}
-          <View style={{ width: 20 }} />
-          {this.getCardCol(right)}
-        </PadContainer>
+          {this.getCardCol(left, i)}
+          {/*<View style={{ width: 20 }} />*/}
+          {this.getCardCol(right, i + 1)}
+        </View>
       );
     }
 
@@ -127,7 +122,8 @@ export default class EventColumns extends Component {
     return (
       <ScrollView
         horizontal={true}
-        style={{paddingRight: 10}}>
+        style={{paddingRight: 10}}
+        showsHorizontalScrollIndicator={false}>
         {rowEventsList}
       </ScrollView>
     );
@@ -164,7 +160,7 @@ export default class EventColumns extends Component {
   render() {
     const { width, height } = require("Dimensions").get("window");
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1}}>
         {this.renderModal()}
         {this.getRowOfEvents()}
       </View>

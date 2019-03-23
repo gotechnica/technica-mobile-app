@@ -118,6 +118,7 @@ export default class EventDescription extends Component<Props> {
                 }}
                 eventID={event.eventID.toString()}
                 eventManager={eventManager}
+                origin={'Event Description'}
               />
             </View>
           </View>

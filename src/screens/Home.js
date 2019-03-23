@@ -127,7 +127,7 @@ export default class Home extends Component<Props> {
   };
 
   renderBestForBeginnersSection = () => {
-    const heading = "Featured Workshops";
+    const heading = "Featured Events";
     const events = this.props.eventManager.getFeaturedEvents();
     return (
       <View style={styles.subSection}>
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20
   },
   subSectionHeading: {
-    paddingBottom: 20
+    paddingBottom: 10
   },
   columnContainer: {
     flex: 1,
