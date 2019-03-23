@@ -90,7 +90,7 @@ export default class EventColumns extends Component {
           style={[
             styles.row,
             { marginLeft: isClipped == false ? -20 : 0 },
-            { /*width: width*/ },
+            { width: width },
           ]}
         >
           {this.getCardCol(left, i)}

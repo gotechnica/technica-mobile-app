@@ -172,7 +172,7 @@ export default class AppContainer extends Component<Props> {
           onChangeTab={tab => {
             const tabIndex = tab.i;
             const tabNames = [
-              "Bitcamp",
+              "bitcamp",
               "Schedule"
             ];
             // if (hackingIsOver) {

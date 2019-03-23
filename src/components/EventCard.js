@@ -91,7 +91,7 @@ export default class EventCard extends Component {
                 />
                 {!big &&
                   <View>
-                    <H3>{titleClipped}</H3>
+                    <H3 style={{width: imageWidth}} numberOfLines={1}>{titleClipped}</H3>
                     <H6 style={{ opacity: .8 }}>
                       <Icon name="star" size={12} color={colors.starColor.selected} />{' '}
                       {eventManager.getSavedCount(event.eventID)}

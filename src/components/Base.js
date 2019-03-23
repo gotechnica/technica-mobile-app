@@ -212,6 +212,7 @@ class ModalHeader extends Component<Props> {
                 eventID={eventID}
                 eventManager={eventManager}
                 discludeArrow={noArrow}
+                origin={'Modal Header'}
               />
             </View>
           }

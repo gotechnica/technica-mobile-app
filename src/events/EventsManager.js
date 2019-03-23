@@ -239,7 +239,7 @@ export default class EventsManager {
 
   //key of event
   // time in minutes to warn before event
-  async favoriteEvent(eventID) {
+  async favoriteEvent(eventID, refreshSaved) {
     this.favoriteState[eventID] = true;
     this.savedCounts[eventID] = this.getSavedCount(eventID) + 1;
     updateObj = {};
@@ -269,10 +269,9 @@ export default class EventsManager {
         });
       });
     });
-    this.updateEventComponents();
   }
 
-  unfavoriteEvent(eventID) {
+  unfavoriteEvent(eventID, refreshSaved) {
     this.favoriteState[eventID] = false;
     this.savedCounts[eventID]= this.getSavedCount(eventID) - 1;
     updateObj = {};
@@ -303,7 +302,6 @@ export default class EventsManager {
       });
     })
     this.updateHearts();
-    this.updateEventComponents();
   }
 
   createNotification(event) {
