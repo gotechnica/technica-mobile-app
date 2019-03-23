@@ -127,7 +127,7 @@ export default class Home extends Component<Props> {
   };
 
   renderBestForBeginnersSection = () => {
-    const heading = "Featured Workshops";
+    const heading = "Featured Events";
     const events = this.props.eventManager.getFeaturedEvents();
     return (
       <View style={styles.subSection}>

@@ -26,8 +26,8 @@ export function createEventGroup(eventGroupLabel, rawEventArray) {
     let banner_map = {
       opening_ceremony: "ceremony",
       closing_ceremony: "ceremony",
-      Expo_a: "demo",
-      Expo_b: "demo",
+      expo_a: "demo",
+      expo_b: "demo",
       colorwar: "colorwar"
     }
     let title = rawEvent.title.toLowerCase().replace(' ','_');
