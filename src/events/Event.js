@@ -8,7 +8,7 @@ export default class Event {
     description,
     startTime,
     endTime,
-    beginnerFriendly,
+    featured,
     location,
     img
   ) {
@@ -18,7 +18,7 @@ export default class Event {
     this.description = description;
     this.startTime = startTime;
     this.endTime = endTime;
-    this.beginnerFriendly = beginnerFriendly;
+    this.featured = featured;
     this.location = location;
     this.img = img;
   }

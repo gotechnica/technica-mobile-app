@@ -128,7 +128,7 @@ export default class AppContainer extends Component<Props> {
     this.toggleSearchModal = this.toggleSearchModal.bind(this);
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.props.navigation.setParams({
-      title: "Bitcamp",
+      title: "bitcamp",
       showMapIcon: true,
       isMapModalVisible: false,
       isSearchModalVisible: false,
@@ -172,7 +172,7 @@ export default class AppContainer extends Component<Props> {
           onChangeTab={tab => {
             const tabIndex = tab.i;
             const tabNames = [
-              "Bitcamp",
+              "bitcamp",
               "Schedule"
             ];
             // if (hackingIsOver) {

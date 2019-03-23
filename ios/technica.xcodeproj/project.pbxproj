@@ -82,6 +82,8 @@
 		F6843383DAE54F74BFC1EFF1 /* AvenirLTStd-BlackOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4505017204AB4E8AA91371E4 /* AvenirLTStd-BlackOblique.otf */; };
 		FB0F665C3D764D0DB36F6E5C /* aleo-bold-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F87AA7CD9AC4868B821DFE6 /* aleo-bold-webfont.ttf */; };
 		FD71B372222E0B7B00618397 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4C84143EA4C4F5DB85C5379 /* FontAwesome5_Solid.ttf */; };
+		FDACD24C2241AD820042EB5F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		FDACD2502241B0470042EB5F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDACD24F2241B0470042EB5F /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -529,6 +531,8 @@
 		FAC70FCD806947CA99C06B75 /* DINPro-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DINPro-Bold.otf"; path = "../assets/fonts/DINPro-Bold.otf"; sourceTree = "<group>"; };
 		FB1B63A26D412DB69337A226 /* Pods-technica-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-technica-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-technica-tvOS/Pods-technica-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		FD114B7E0856445195872880 /* aleo-bolditalic-webfont.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "aleo-bolditalic-webfont.ttf"; path = "../assets/fonts/aleo-bolditalic-webfont.ttf"; sourceTree = "<group>"; };
+		FDACD24E2241AE640042EB5F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		FDACD24F2241B0470042EB5F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "technica/Images.xcassets/Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -648,6 +652,7 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				FDACD24F2241B0470042EB5F /* Launch Screen.storyboard */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				3F66C63B2144E08A00B9644E /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -1436,6 +1441,7 @@
 				3E2437571DF44AB08BB2EFF4 /* SimpleLineIcons.ttf in Resources */,
 				22616CE42C8D485D8AAA5128 /* Zocial.ttf in Resources */,
 				FB0F665C3D764D0DB36F6E5C /* aleo-bold-webfont.ttf in Resources */,
+				FDACD24C2241AD820042EB5F /* Images.xcassets in Resources */,
 				DA2A45622B924B15ABEAC545 /* Aleo-Bold.otf in Resources */,
 				A54D970E5F464C329A05BCB5 /* aleo-bolditalic-webfont.ttf in Resources */,
 				F34CDF711E5B4D9A822CFD20 /* Aleo-BoldItalic.otf in Resources */,
@@ -1443,6 +1449,7 @@
 				0818853C26DC49738B382B61 /* Aleo-Italic.otf in Resources */,
 				7716041FEF72462A92BC96FA /* aleo-light-webfont.ttf in Resources */,
 				3E0405A4A509433AB46393E7 /* Aleo-Light.otf in Resources */,
+				FDACD2502241B0470042EB5F /* Launch Screen.storyboard in Resources */,
 				09D9A6744DF140E093F2C494 /* aleo-lightitalic-webfont.ttf in Resources */,
 				BA909FC9D7D345A9970077A6 /* Aleo-LightItalic.otf in Resources */,
 				64082AE614A2476D9D6647E5 /* aleo-regular-webfont.ttf in Resources */,
@@ -1521,6 +1528,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				13B07FB21A68108700A75B9A /* Base */,
+				FDACD24E2241AE640042EB5F /* en */,
 			);
 			name = LaunchScreen.xib;
 			path = technica;
