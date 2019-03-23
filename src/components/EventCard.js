@@ -113,22 +113,22 @@ export default class EventCard extends Component {
                   imageStyle={{ borderRadius: 13 }}
                 >
                 {!big &&<React.Fragment><View style={{flex: 1, flexDirection: 'row'}}>
-                  <View style={{backgroundColor: color, height: ((imageHeight / 4) + 1), width: ((imageWidth / 4) + 10), borderTopLeftRadius: 13}}>
+                  <View style={{backgroundColor: color, height: (imageHeight / 4), width: ((imageWidth / 4) + 10), borderTopLeftRadius: 13}}>
                   </View>
                   <View style={{
                     width: 0,
                     height: 0,
                     backgroundColor: 'transparent',
                     borderStyle: 'solid',
-                    borderRightWidth: 29.5,
-                    borderTopWidth: 29.5,
+                    borderRightWidth: (imageHeight / 4),
+                    borderTopWidth: (imageHeight / 4),
                     borderRightColor: 'transparent',
                     borderTopColor: color,
                     marginLeft: -0.2
                   }}>
                 </View>
-                <Text style={{ marginLeft: -((imageWidth / 3) + 13), paddingTop: 4, color: 'white', fontSize: 17, width: (imageWidth / 3)}}>
-                  <Icon name="star" size={22} color={colors.starColor.selected} />{' '}
+                <Text style={{ marginLeft: -((imageWidth / 3) + 13), paddingTop: (imageHeight / 30), color: 'white', fontSize: (imageHeight / 7), width: (imageWidth / 3)}}>
+                  <Icon name="star" size={(imageHeight / 5)} color={colors.starColor.selected} />{' '}
                   {eventManager.getSavedCount(event.eventID)}
                 </Text>
                 </View>
