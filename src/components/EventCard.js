@@ -11,12 +11,8 @@ import Images from '../../assets/imgs/index';
 
 const styles = StyleSheet.create({
   darkImageMask: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-    backgroundColor: 'rgba(0,0,0,0.45)',
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.3)',
   },
   textGroup: {
     marginBottom: 40,
