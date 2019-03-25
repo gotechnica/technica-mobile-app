@@ -12,13 +12,15 @@ const styles = StyleSheet.create({
     textIfNoEvents: {
       marginBottom: 10,
     },
+    dotContainer: {
+      bottom: 18,
+    }
 });
 
 export default class HappeningNowSlideshow extends Component {
   constructor(props) {
     super(props);
   }
-
 
   render() {
     if (this.props.dataSource.length == 0) {
@@ -30,25 +32,24 @@ export default class HappeningNowSlideshow extends Component {
         );
     }
 
-    slideshow_content = []
-    for (i = 0; i < this.props.dataSource.length; i++) {
-        slideshow_content.push(
-          <EventCard
-            key={i}
-            event={this.props.dataSource[i]}
-            eventManager={this.props.eventManager}
-            origin={'Home'}
-            inSlideshow
-          />
-        )
-    }
-    let height = require('Dimensions').get('window').height;
+    slideshow_content = this.props.dataSource.map((event, i) => 
+      <EventCard
+        key={i}
+        event={event}
+        eventManager={this.props.eventManager}
+        origin={'Home'}
+        inSlideshow
+      />
+    );
+
+    let width = require('Dimensions').get('window').width;
 
     return (
       <Swiper
-        height={height/3 + 15}
+        height={Math.round((width * 38) / 67)}
         dotColor={'rgba(255,255,255,.6)'}
         activeDotColor={colors.primaryColor}
+        paginationStyle={styles.dotContainer}
         autoplay={true}
         autoplayTimeout={5}
         loop
