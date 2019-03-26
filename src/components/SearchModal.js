@@ -134,8 +134,6 @@ export default class SearchModal extends Component {
         animationInTiming={250}
         animationIn="slideInRight"
         animationOut="slideOutRight"
-        swipeDirection="right"
-        onSwipe={() => props.toggleModal()} // Have to change to `onSwipeComplete` when we upgrade react-native-modal
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}

@@ -25,9 +25,6 @@ export default class EventModal extends Component {
         backdropOpacity={1}
         animationIn="slideInRight"
         animationOut="slideOutRight"
-        swipeDirection="right"
-        onSwipe={() => props.toggleModal()} // Have to change to `onSwipeComplete` when we upgrade react-native-modal
-        swipeThreshold={100}
         animationInTiming={250}
         animationOutTiming={300}
         backdropTransitionInTiming={250}
@@ -35,7 +32,6 @@ export default class EventModal extends Component {
         avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
         style={modalStyle}
-        propogateSwipe
       >
         <ModalContent>
           <ModalHeader
