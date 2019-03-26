@@ -246,7 +246,6 @@ export default class EventsManager {
     await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
         id = JSON.parse(result).id;
-
         let response = fetch(`http://35.174.30.108/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
           method: 'POST',
           headers: new Headers({
