@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { H3 } from './Text';
 import { StyleSheet, Text } from 'react-native';
+import { colors } from './Colors';
 
 // when hacking begins
 const START_TIME = moment("2019-04-12 21:00");
@@ -49,10 +50,7 @@ export default class CountdownTimer extends Component {
 
     // If hacking is over
     } else if (this.state.time > endTime) {
-      days = 0;
-      hours = 0;
-      minutes = 0;
-      seconds = 0;
+      return <React.Fragment></React.Fragment>
 
     // If hacking is currently happening
     } else {
@@ -79,9 +77,10 @@ export default class CountdownTimer extends Component {
 
 const styles = StyleSheet.create({
   countdownText: {
-    padding: 10,
+    paddingVertical: 10,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 18,
+    flex: 1,
   }
 });
