@@ -136,8 +136,10 @@ export default class EventColumns extends Component {
         backdropColor={colors.backgroundColor.normal}
         backdropOpacity={1}
         animationInTiming={250}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
+        animationIn="slideInRight"
+        animationOut="slideOutRight"
+        swipeDirection="right"
+        onSwipe={() => props.toggleModal()} // Have to change to `onSwipeComplete` when we upgrade react-native-modal
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}

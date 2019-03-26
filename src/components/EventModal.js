@@ -23,19 +23,19 @@ export default class EventModal extends Component {
         isVisible={props.isModalVisible}
         backdropColor={colors.backgroundColor.normal}
         backdropOpacity={1}
+        animationIn="slideInRight"
+        animationOut="slideOutRight"
+        swipeDirection="right"
+        onSwipe={() => props.toggleModal()} // Have to change to `onSwipeComplete` when we upgrade react-native-modal
+        swipeThreshold={100}
         animationInTiming={250}
-        animationIn={props.origin === "Schedule" 
-          ? "fadeInRight" 
-          : "fadeInUp"}
-        animationOut={props.origin === "Schedule" 
-        ? "fadeOutRight" 
-        : "fadeOutDown"}
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
         style={modalStyle}
+        propogateSwipe
       >
         <ModalContent>
           <ModalHeader
@@ -62,7 +62,6 @@ export default class EventModal extends Component {
               <View>
                 <H2>{props.event.title}</H2>
                 <View style={{ alignItems: 'flex-start', flexDirection:'row', paddingTop: 5, paddingBottom: 5 }}>
-                {/*TODO: Change when schedule fixed*/}
                 {(Array.isArray(props.event.category) ? props.event.category : [props.event.category]).map((category,index) =>
                     <View style={{marginRight: 5}} key={props.event.title + index.toString()}>
                       <PillBadge category={category} from={'Modal'}/>
