@@ -257,7 +257,7 @@ export default class EventsManager {
             firebaseId: eventID,
             userId: id
           })
-        }).then(function(myJson) {
+        }).then((myJson) => {
           if (myJson.status == 200) {
             this.favoriteState[eventID] = true;
             this.savedCounts[eventID] = this.getSavedCount(eventID) + 1;
@@ -293,7 +293,7 @@ export default class EventsManager {
             firebaseId: eventID,
             userId: id
           })
-        }).then(function(myJson) {
+        }).then((myJson) =>  {
           if (myJson.status == 200) {
             this.favoriteState[eventID] = false;
             this.savedCounts[eventID]= this.getSavedCount(eventID) - 1;
@@ -303,13 +303,14 @@ export default class EventsManager {
 
             event = this.eventIDToEventMap[eventID];
             this.deleteNotification(event);
+            this.updateHearts();
           } else {
             Toast.show('Could not unfavorite this event. Please try again.');
           }
         });
       });
     })
-    this.updateHearts();
+
   }
 
   createNotification(event) {
