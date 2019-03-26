@@ -258,7 +258,7 @@ export default class Profile extends Component<Props> {
           animationIn="slideInRight"
           animationOut="slideOutRight"
           swipeDirection="right"
-          onSwipe={() => props.toggleModal()} // Have to change to `onSwipeComplete` when we upgrade react-native-modal
+          onSwipe={() => this.toggleModal()} // Have to change to `onSwipeComplete` when we upgrade react-native-modal
           animationOutTiming={300}
           backdropTransitionInTiming={250}
           backdropTransitionOutTiming={300}
@@ -432,10 +432,8 @@ const ScanResponseModal = props => {
       backdropColor={colors.backgroundColor.light}
       backdropOpacity={0.6}
       animationInTiming={200}
-      animationIn="slideInRight"
-      animationOut="slideOutRight"
-      swipeDirection="right"
-      onSwipe={() => props.toggleModal()} // Have to change to `onSwipeComplete` when we upgrade react-native-modal
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
       animationOutTiming={200}
       backdropTransitionInTiming={200}
       backdropTransitionOutTiming={200}

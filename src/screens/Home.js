@@ -45,7 +45,7 @@ export default class Home extends Component<Props> {
       animationIn="slideInRight"
       animationOut="slideOutRight"
       swipeDirection="right"
-      onSwipe={() => props.toggleModal()} // Have to change to `onSwipeComplete` when we upgrade react-native-modal
+      onSwipe={() => this.toggleModal()} // Have to change to `onSwipeComplete` when we upgrade react-native-modal
       animationOutTiming={300}
       backdropTransitionInTiming={250}
       backdropTransitionOutTiming={300}
