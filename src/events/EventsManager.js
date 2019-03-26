@@ -274,6 +274,7 @@ export default class EventsManager {
         });
       });
     });
+    this.updateHearts();
   }
 
   unfavoriteEvent(eventID, refreshSaved) {
@@ -310,7 +311,7 @@ export default class EventsManager {
         });
       });
     })
-
+    this.updateHearts();
   }
 
   createNotification(event) {
