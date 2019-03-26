@@ -8,11 +8,11 @@ import { colors } from './Colors';
 import EventModal from './EventModal';
 import EventDescription from './schedule/EventDescription';
 import Images from '../../assets/imgs/index';
+import LinearGradient from 'react-native-linear-gradient';
 
 const styles = StyleSheet.create({
   darkImageMask: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.3)',
   },
   textGroup: {
     marginBottom: 40,
@@ -25,6 +25,10 @@ const styles = StyleSheet.create({
   happeningTitle: {
     fontWeight: 'bold',
     color: colors.textColor.primary,
+  },
+  eventTitle: {
+    color: colors.textColor.primary,
+    fontSize: 26,
   }
 });
 
@@ -150,12 +154,16 @@ export default class EventCard extends Component {
                 ]}
                 source={Images[event.img]}
                 >
-                <View style={styles.darkImageMask}>
+                <LinearGradient 
+                  style={styles.darkImageMask}
+                  colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.65)']}
+                  locations={[0.3, 1]}
+                >
                   <PadContainer style={styles.textGroup}>
                     <H3 style={styles.happeningTitle}>HAPPENING NOW</H3>
-                    <H2 style={{ color: colors.textColor.primary, }}>{titleClipped}</H2>
+                    <H2 style={styles.eventTitle}>{titleClipped}</H2>
                   </PadContainer>
-                </View>
+                </LinearGradient>
               </ImageBackground>
             )}
           </View>
