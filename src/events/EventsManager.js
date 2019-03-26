@@ -241,15 +241,7 @@ export default class EventsManager {
   //key of event
   // time in minutes to warn before event
   async favoriteEvent(eventID, refreshSaved) {
-    this.favoriteState[eventID] = true;
-    this.savedCounts[eventID] = this.getSavedCount(eventID) + 1;
-    updateObj = {};
-    updateObj[eventID] = true;
-    AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
-    event = this.eventIDToEventMap[eventID];
-    this.createNotification(event);
 
-    this.updateHearts();
 
     await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
@@ -266,21 +258,25 @@ export default class EventsManager {
             userId: id
           })
         }).then(function(myJson) {
-          console.log(myJson);
+          if (myJson.status == 200) {
+            this.favoriteState[eventID] = true;
+            this.savedCounts[eventID] = this.getSavedCount(eventID) + 1;
+            updateObj = {};
+            updateObj[eventID] = true;
+            AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
+            event = this.eventIDToEventMap[eventID];
+            this.createNotification(event);
+        
+            this.updateHearts();
+          } else {
+            Toast.show('Could not favorite this event. Please try again.');
+          }
         });
       });
     });
   }
 
   unfavoriteEvent(eventID, refreshSaved) {
-    this.favoriteState[eventID] = false;
-    this.savedCounts[eventID]= this.getSavedCount(eventID) - 1;
-    updateObj = {};
-    updateObj[eventID] = false;
-    AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
-
-    event = this.eventIDToEventMap[eventID];
-    this.deleteNotification(event);
 
     AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
@@ -298,7 +294,18 @@ export default class EventsManager {
             userId: id
           })
         }).then(function(myJson) {
-          console.log(myJson);
+          if (myJson.status == 200) {
+            this.favoriteState[eventID] = false;
+            this.savedCounts[eventID]= this.getSavedCount(eventID) - 1;
+            updateObj = {};
+            updateObj[eventID] = false;
+            AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
+
+            event = this.eventIDToEventMap[eventID];
+            this.deleteNotification(event);
+          } else {
+            Toast.show('Could not unfavorite this event. Please try again.');
+          }
         });
       });
     })
