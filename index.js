@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppRegistry } from 'react-native';
+import { AppRegistry, Platform } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import App from './src/App';
 import StatusBar from './src/components/StatusBar';
@@ -10,7 +10,12 @@ export default (Main = () => {
   eventManager = new EventManager();
   return (
     <PaperProvider>
-      <StatusBar backgroundColor={colors.black} barStyle="light-content" />
+      {Platform.OS === "ios" ? null : (
+        <StatusBar
+          backgroundColor={colors.borderColor.light}
+          barStyle="light-content"
+        />
+      )}
       <App eventManager={eventManager} />
     </PaperProvider>
   );

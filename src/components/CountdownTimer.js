@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { SubHeading } from './Base';
+import { H3 } from './Text';
+import { StyleSheet, Text } from 'react-native';
+import { colors } from './Colors';
 
 // when hacking begins
-const START_TIME = moment("2018-11-10 12:00");
+const START_TIME = moment("2019-04-12 21:00");
 // when hacking ends
-const END_TIME = moment("2018-11-11 12:00");
+const END_TIME = moment("2019-04-14 09:00");
 
 export default class CountdownTimer extends Component {
   constructor(props) {
@@ -41,15 +43,14 @@ export default class CountdownTimer extends Component {
     // If hacking hasn't begun
     if (this.state.time < startTime) {
       return (
-        <SubHeading>November 10-11</SubHeading>
+        <H3 style={styles.countdownText}>
+          Bitcamp is April 12-14
+        </H3>
       );
 
     // If hacking is over
     } else if (this.state.time > endTime) {
-      days = 0;
-      hours = 0;
-      minutes = 0;
-      seconds = 0;
+      return <React.Fragment></React.Fragment>
 
     // If hacking is currently happening
     } else {
@@ -66,9 +67,20 @@ export default class CountdownTimer extends Component {
     let secondsText = `${seconds}s `;
 
     return (
-      <SubHeading>
-        {`${daysText}${hoursText}${minutesText}${secondsText}left to hack`}
-      </SubHeading>
+      <H3 style={styles.countdownText}>
+        {daysText + hoursText + minutesText + secondsText}
+        <Text style={{ fontWeight: 'normal' }}>left to hack</Text>
+      </H3>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  countdownText: {
+    paddingVertical: 10,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    flex: 1,
+  }
+});

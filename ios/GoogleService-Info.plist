@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>149993005451-att4gh3erbt51ssm4oj6shm70boa02d2.apps.googleusercontent.com</string>
+	<string>961178996283-dkmd6leo5oeljc61sbeaafhnkpv7mrs0.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.149993005451-att4gh3erbt51ssm4oj6shm70boa02d2</string>
+	<string>com.googleusercontent.apps.961178996283-dkmd6leo5oeljc61sbeaafhnkpv7mrs0</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCFbIJoMzVJzsJLzVrPSE6VDp4dljXP2mE</string>
+	<string>AIzaSyCiSKxw8Vt5EVkTKxeS9qoG7OQ-YR29HP8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>149993005451</string>
+	<string>961178996283</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.technica.technica18</string>
+	<string>com.bitcamp.bitcamp19</string>
 	<key>PROJECT_ID</key>
-	<string>technica-mobile-app</string>
+	<string>bitcamp2019-9e3d7</string>
 	<key>STORAGE_BUCKET</key>
-	<string>technica-mobile-app.appspot.com</string>
+	<string>bitcamp2019-9e3d7.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:149993005451:ios:fff5077db368f09c</string>
+	<string>1:961178996283:ios:e191d460ae1d5369</string>
 	<key>DATABASE_URL</key>
-	<string>https://technica-mobile-app.firebaseio.com</string>
+	<string>https://bitcamp2019-9e3d7.firebaseio.com</string>
 </dict>
 </plist>

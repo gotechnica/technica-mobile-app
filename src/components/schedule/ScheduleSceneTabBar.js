@@ -48,10 +48,10 @@ ScheduleSceneTabBar.propTypes = {
 
 const styles = StyleSheet.create({
   activeText: {
-    color: colors.white,
+    color: colors.textColor.normal,
   },
   inactiveText: {
-    color: colors.fontGrey,
+    color: colors.textColor.light,
   },
   // bottomBorderInactive: {
   //   // alignSelf: 'stretch',
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 40,
+    //marginBottom: 40,
     // marginVertical: 10,
   },
   tabs: {

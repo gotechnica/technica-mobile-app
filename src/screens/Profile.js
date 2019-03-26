@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Platform,
   StyleSheet,
@@ -8,9 +8,9 @@ import {
   Alert,
   TouchableOpacity,
   ActivityIndicator,
-  Fragment,
-} from 'react-native';
-import { H1, H2, H3, H4, P } from '../components/Text';
+  Fragment
+} from "react-native";
+import { H1, H2, H3, H4, P } from "../components/Text";
 import {
   ViewContainer,
   Heading,
@@ -21,172 +21,201 @@ import {
   ModalHeader,
   ModalContent,
   CenteredActivityIndicator,
-  Button
-} from '../components/Base';
-import QRCodeScanner from 'react-native-qrcode-scanner';
-import QRCode from 'react-native-qrcode';
-import _ from 'lodash';
-import { colors } from '../components/Colors';
-import Modal from 'react-native-modal';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
+  Button,
+  PlainViewContainer
+} from "../components/Base";
+import QRCodeScanner from "react-native-qrcode-scanner";
+import QRCode from "react-native-qrcode";
+import _ from "lodash";
+import { colors } from "../components/Colors";
+import Modal from "react-native-modal";
+import MCI from "react-native-vector-icons/MaterialCommunityIcons";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import FAIcon from "react-native-vector-icons/FontAwesome";
+import RNRestart from 'react-native-restart'; // Import package from node modules
+
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
-const USER_DATA_STORE = 'USER_DATA_STORE';
+const APP_ID = '@com.technica.technica18:';
+const USER_TOKEN = APP_ID + 'JWT';
+const USER_DATA_STORE = "USER_DATA_STORE";
 
 export default class Profile extends Component<Props> {
-    constructor(props){
-        super(props);
-        this.state = {
-          user:{},
-          scanner:false,
-          modalVisible:true,
-          userModal: false,
-          modalContent: "",
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {},
+      scanner: false,
+      modalVisible: true,
+      userModal: false,
+      modalContent: "",
 
-          scannedUser: false,
-          scannedUserData: {},
+      scannedUser: false,
+      scannedUserData: {},
 
-          // For fun...
-          devoolooperMode: false,
-          namePresses: 0,
-          nameColor: '#FFFFFF',
-          timeInterval: null,
-        };
-        this.onNamePress = this.onNamePress.bind(this);
-    }
+      // For fun...
+      devoolooperMode: false,
+      namePresses: 0,
+      nameColor: colors.textColor.normal,
+      timeInterval: null
+    };
+    this.onNamePress = this.onNamePress.bind(this);
+  }
 
-  async logout(){
+  async logout() {
     Alert.alert(
       "Log Out",
       "Are you sure you want to log out?",
       [
-        {text: 'OK', onPress: () => {
-          AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
-            const navigate = this.props.navigation;
-            navigate('Login');
-          });
-        }},
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {
+          text: "OK",
+          onPress: () => {
+            AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
+              const navigate = this.props.navigation;
+              RNRestart.Restart();
+            });
+          }
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        }
       ],
       { cancelable: true }
     );
   }
 
-  toggleScanner(){
-      this.setState({scanner: !this.state.scanner});
+  toggleScanner() {
+    this.setState({ scanner: !this.state.scanner });
   }
 
   async onScanSuccess(e) {
-      let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/login-user";
-      try {
-          let phoneNumber = e.data;
-          let response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({'phone': phoneNumber})
-          });
-
-          let responseJson = await response.json();
-
-          if(responseJson.statusCode == 200){
-            const responseUserData = responseJson.body.user_data;
-            // Set state for SUCCESS modal
-            this.setState({
-              scannedUserData: {
-                fullName: `${responseUserData.first_name} ${responseUserData.last_name}`,
-                minorStatus: responseUserData.minor_status,
-                dietaryRestrictions: responseUserData.dietary_restrictions,
-              },
-              scannedUser: true,
-            })
-
-          } else{
-            // Set state for NOT FOUND modal
-            this.setState({
-              scannedUserData: null,
-              scannedUser: true,
-            })
-          }
-      } catch (error) {
-          Alert.alert(
-            "No internet connection.",
-            "Try again.",
-            [
-              {text: 'OK', onPress: () => {this.scanner.reactivate();}},
-            ],
-            { cancelable: false }
-          );
+    try {
+      const userId = e.data;
+      const url =`http://35.174.30.108/api/users/${userId}/checkIn`;
+      const token = await AsyncStorage.getItem(USER_TOKEN);
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "x-access-token": token,
         }
+      });
 
-      // this.scanner.reactivate();
-  }
-
-  async verifyHacker(){
-      return true;
-
-  }
-
-  async componentDidMount(){
-      var loggedInUser = JSON.parse(await AsyncStorage.getItem(USER_DATA_STORE));
-      if (FORCE_NORMAL_USER) {
-        loggedInUser.user_data.organizer = false;
+      const responseJSON = await response.json();
+      if (response.status == 200) {
+        const userProfile = responseJSON.profile;
+        // Set state for SUCCESS modal
+        this.setState({
+          scannedUserData: {
+            displayName: this.getDisplayName(responseJSON),
+            minorStatus: !userProfile.adult,
+            dietaryRestrictions: userProfile.dietaryRestrictions
+          },
+          scannedUser: true
+        });
+      } else {
+        // Set state for NOT FOUND modal
+        this.setState({
+          scannedUserData: null,
+          scannedUser: true
+        });
       }
-      this.setState({user: loggedInUser});
+    } catch (error) {
+      console.log(error);
+      Alert.alert(
+        "No internet connection.",
+        "Try again.",
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              this.scanner.reactivate();
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    }
+
+    // this.scanner.reactivate();
   }
 
-  toggleModal(){
-      this.setState({modalVisible:!this.state.modalVisible});
+  async verifyHacker() {
+    return true;
+  }
+
+  async componentDidMount() {
+    var loggedInUser = JSON.parse(await AsyncStorage.getItem(USER_DATA_STORE));
+    console.log(loggedInUser);
+    if (FORCE_NORMAL_USER) {
+      loggedInUser.admin = false;
+    }
+    this.setState({ user: loggedInUser });
+    if (!this.state.user.profile) {
+      keys = [USER_DATA_STORE, USER_TOKEN];
+      AsyncStorage.multiRemove(keys).then(() => {
+        const navigate = this.props.navigation;
+        RNRestart.Restart();
+      });
+    }
+  }
+
+  getDisplayName(user) {
+    const {email, profile: {firstName, lastName}} = user;
+    return (firstName && lastName) 
+      ? `${firstName} ${lastName}`
+      : email;
+  }
+
+  toggleModal() {
+    this.setState({ modalVisible: !this.state.modalVisible });
   }
 
   onNamePress() {
     this.setState({ namePresses: this.state.namePresses + 1 });
 
     if (this.state.namePresses > 3) {
-
       // If turning on devoolooperMode
       if (!this.state.devoolooperMode) {
         Alert.alert(
           "Congratulations!",
           "You have toggled devoolooper mode.",
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ],
+          [{ text: "OK", onPress: () => console.log("OK Pressed") }],
           { cancelable: false }
         );
 
-
-        let count = 0;;
+        let count = 0;
         let intervalID = setInterval(() => {
-           // Your logic here
-           this.setState({
-             nameColor: (this.state.nameColor !== colors.pink) ? colors.pink : colors.cyan
-           })
-           if (++count === 18) {
-               clearInterval(intervalID);
-               this.setState({
-                 nameColor: '#ffffff',
-               });
-           }
+          // Your logic here
+          this.setState({
+            nameColor:
+              this.state.nameColor !== colors.primaryColor
+                ? colors.primaryColor
+                : colors.secondaryColor
+          });
+          if(++count === 100 || !this.state.devoolooperMode) {
+            clearInterval(intervalID);
+            this.setState({
+              nameColor: colors.textColor.normal
+            });
+          }
         }, 250);
       } else {
         Alert.alert(
           "Okay :(",
           "You can be a normal person again.",
-          [
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ],
+          [{ text: "OK", onPress: () => console.log("OK Pressed") }],
           { cancelable: false }
         );
-
       }
 
       this.setState({
         devoolooperMode: !this.state.devoolooperMode,
-        namePresses: 0,
+        namePresses: 0
       });
     }
   }
@@ -194,249 +223,212 @@ export default class Profile extends Component<Props> {
   getDevoolooperName(name) {
     // A, E, I, O, U
     let vowels = new Set();
-    vowels.add('A');
-    vowels.add('E');
-    vowels.add('I');
-    vowels.add('O');
-    vowels.add('U');
+    vowels.add("A");
+    vowels.add("E");
+    vowels.add("I");
+    vowels.add("O");
+    vowels.add("U");
 
     name = name.toUpperCase();
 
-    let newName = '';
+    let newName = "";
     for (let i = 0; i < name.length; i++) {
       if (vowels.has(name.charAt(i))) {
-        newName += 'oo';
+        newName += "oo";
       } else {
         newName += name.charAt(i);
       }
     }
 
     // Turn to title case
-    return newName.replace(/\w\S*/g, function(txt){
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    return newName.replace(/\w\S*/g, function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   }
 
-
   render() {
+
     const scannerView = (() => {
-        return(
-            <Modal
-              isVisible={this.state.scanner}
-              backdropColor={colors.black}
-              backdropOpacity={1}
-              animationInTiming={250}
-              animationIn="fadeInUp"
-              animationOut="fadeOutDown"
-              animationOutTiming={300}
-              backdropTransitionInTiming={250}
-              backdropTransitionOutTiming={300}
-              avoidKeyboard={true}
-              onBackButtonPress={() => this.toggleScanner()}
-              style={modalStyle}
-            >
-            <ModalContent style={{ padding: 0 }}>
-              <View style={{ padding: 20, paddingBottom: 0 }}>
-                <ModalHeader
-                  heading="QR Scanner"
-                  onBackButtonPress={() => this.toggleScanner()}
-                />
-              </View>
-              <ViewContainer>
-                <QRCodeScanner
-                    ref={(node) => { this.scanner = node }}
-                    onRead={this.onScanSuccess.bind(this)}
-                    showMarker
-                    reactivate={false}
-                    customMarker={
-                      <View
-                        style={{
-                          width: 240,
-                          height: 240,
-                          borderRadius: 8,
-                          borderWidth: 2,
-                          borderColor: colors.cyan,
-                        }}
-                      />
-                    }
-                  />
-                  <ScanResponseModal
-                    isVisible={this.state.scannedUser}
-                    scannedUserData={this.state.scannedUserData}
-                    onBack={() => {
-                      this.setState({ scannedUser: false });
-                      this.scanner.reactivate();
+      return (
+        <Modal
+          isVisible={this.state.scanner}
+          backdropColor={colors.backgroundColor.normal}
+          backdropOpacity={1}
+          animationInTiming={250}
+          animationIn="slideInRight"
+          animationOut="slideOutRight"
+          animationOutTiming={300}
+          backdropTransitionInTiming={250}
+          backdropTransitionOutTiming={300}
+          avoidKeyboard={true}
+          onBackButtonPress={() => this.toggleScanner()}
+          style={modalStyle}
+        >
+          <ModalContent style={{ padding: 0 }}>
+            <View style={{ padding: 20, paddingBottom: 0 }}>
+              <ModalHeader
+                heading="QR Scanner"
+                onBackButtonPress={() => this.toggleScanner()}
+              />
+            </View>
+            <ViewContainer>
+              <QRCodeScanner
+                ref={node => {
+                  this.scanner = node;
+                }}
+                onRead={this.onScanSuccess.bind(this)}
+                showMarker
+                reactivate={false}
+                customMarker={
+                  <View
+                    style={{
+                      width: 240,
+                      height: 240,
+                      borderRadius: 8,
+                      borderWidth: 2,
+                      borderColor: colors.secondaryColor
                     }}
                   />
-              </ViewContainer>
-            </ModalContent>
-          </Modal>
-        )
+                }
+              />
+              <ScanResponseModal
+                isVisible={this.state.scannedUser}
+                scannedUserData={this.state.scannedUserData}
+                onBack={() => {
+                  this.setState({ scannedUser: false });
+                  this.scanner.reactivate();
+                }}
+              />
+            </ViewContainer>
+          </ModalContent>
+        </Modal>
+      );
     })();
 
-    const defaultView = ( () => {
-        if(this.state.user.user_data){
-            const fullName = this.state.user.user_data ?
-                this.state.user.user_data.first_name + " " + this.state.user.user_data.last_name :
-                "";
-            const phone_number = this.state.user.user_data ? this.state.user.user_data.phone : "";
+    const defaultView = (() => {
+      if (this.state.user.profile) {
+        const displayName = this.getDisplayName(this.state.user);
+        const phone_number = this.state.user.profile.phoneNumber
+          ? this.state.user.profile.phoneNumber
+          : "";
 
-            if(this.state.user.user_data.organizer){
-                return (
-                  <ViewContainer>
-                    { scannerView }
-                    <PadContainer>
-                      {this.state.user.user_data &&
-                        <View style={{alignItems: 'center'}}>
-                          <TouchableOpacity onPress={this.onNamePress}>
-                            <Heading style={{ color: this.state.nameColor }}>
-                              { this.state.devoolooperMode ? this.getDevoolooperName(fullName) : fullName }
-                            </Heading>
-                          </TouchableOpacity>
-                        </View>
-                      }
-                      <SubHeading style={{ textAlign: 'center' }}>
-                        Organizer
-                      </SubHeading>
-                    </PadContainer>
-                    {
-                      this.state.devoolooperMode &&
-                      (
-                        <View style={{
-                          alignItems: 'center',
-                        }}>
-                          <View style={{
-                            backgroundColor: 'white',
-                            padding: 20,
-                            borderRadius: 8,
-                            marginBottom: 20,
-                          }}>
-                            {
-                              this.state.user.user_data &&
-                              <QRCode
-                                value={phone_number}
-                                size={180}
-                                bgColor='black'
-                                fgColor='white'
-                              />
-                            }
-                          </View>
-                          <H3 style={{ marginBottom: 40 }}>
-                            Use this code for TESTING.
-                          </H3>
-                        </View>
-                      )
-                    }
-                    <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => this.toggleScanner()}>
-                      <Button text="Open Scanner" />
-                    </TouchableOpacity>
+        const id = this.state.user.id
+          ? this.state.user.id
+          : "";
 
-                    <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => this.logout()}>
-                      <Button text="Log Out" />
-                    </TouchableOpacity>
-                  </ViewContainer>
-                );
+        console.log(id);
 
-            } else { // otherwise this person is a hacker
-                return (
-                  <ViewContainer>
-                    <PadContainer>
-                      <View style={{alignItems: 'center'}}>
-                        {this.state.user.user_data && <Heading style={{ justifyContent: 'center' }}>
-                            {fullName}
-                        </Heading>}
-                        <SubHeading style={{ textAlign: 'center' }}>
-                          Your QR code
-                        </SubHeading>
-                      </View>
-                    </PadContainer>
-                    <View style={{
-                      alignItems: 'center',
-                    }}>
-                      <View style={{
-                        backgroundColor: 'white',
-                        padding: 20,
-                        borderRadius: 8,
-                        marginBottom: 20,
-                      }}>
-                        {
-                          this.state.user.user_data &&
-                          <QRCode
-                            value={phone_number}
-                            size={180}
-                            bgColor='black'
-                            fgColor='white'
-                          />
-                        }
-                      </View>
-                      <H3 style={{ marginBottom: 40 }}>
-                        Use this code for check-in.
-                      </H3>
-                    </View>
+        const isOrganizer = this.state.user.admin;
 
-                    <TouchableOpacity onPress={() => this.logout()}>
-                      <Button text="Logout" />
-                    </TouchableOpacity>
-                  </ViewContainer>
-                );
+        return (
+          <ViewContainer>
+            {isOrganizer &&
+              scannerView}
+            <View style={{ alignItems: "center" }}>
+              <View
+                style={{
+                  marginTop: 30,
+                  backgroundColor: "white",
+                  borderRadius: 8,
+                  padding: 7
+                }}
+              >
+                {this.state.user.profile && (
+                  <QRCode
+                    value={id}
+                    size={190}
+                    bgColor="black"
+                    fgColor="white"
+                  />
+                )}
+              </View>
+              <H3 style={{ color: colors.textColor.light }}>
+                {isOrganizer
+                  ? "Use this code for testing"
+                  : "Scan this code at check-in"
+                }
+              </H3>
+            </View>
+            <PadContainer>
+              {this.state.user.profile &&
+                <View style={{ alignItems: "center" }}>
+                  <TouchableOpacity onPress={this.onNamePress}>
+                    <Heading style={{
+                      color: this.state.nameColor,
+                      textAlign: "center",
+                      marginTop: -15
+                     }}
+                    >
+                      {this.state.devoolooperMode
+                        ? this.getDevoolooperName(displayName)
+                        : displayName}
+                    </Heading>
+                  </TouchableOpacity>
+                  <SubHeading style={{ textAlign: "center", marginTop: -10 }}>
+                    {this.state.user.email}
+                  </SubHeading>
+                </View>
+              }
+            </PadContainer>
+            <View style={{ justifyContent: 'space-evenly', flexDirection: "row", marginTop: -15}}>
+              {isOrganizer && (
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                  <TouchableOpacity
+                    style={{
+                      marginBottom: 5,
+                      borderRadius: 20,
+                      padding: 20,
+                      backgroundColor: "#d2d1d7"
+                    }}
+                    onPress={() => this.toggleScanner()}
+                  >
+                    <MCI
+                      name="qrcode-scan"
+                      size={50}
+                      color="black"
+                    />
+                  </TouchableOpacity>
+                  <H3 style={{ fontWeight: 'bold' }}>Scanner</H3>
+                </View>
+              )}
+              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <TouchableOpacity
+                  style={{
+                    marginBottom: 5,
+                    borderRadius: 20,
+                    padding: 20,
+                    backgroundColor: "red"
+                  }}
+                  onPress={() => this.logout()}
+                >
+                  <AntDesign
+                    name="logout"
+                    size={45}
+                    color="white"
+                  />
+                </TouchableOpacity>
+                <H3 style={{fontWeight: "bold" }}>Sign Out</H3>
+              </View>
+            </View>
+          </ViewContainer>
+        );
 
-            }
-
-        } else {
-            return (
-              <CenteredActivityIndicator />
-            );
-        }
+      } else {
+        return <CenteredActivityIndicator />;
+      }
     })();
 
-    return (defaultView);
+    return defaultView;
   }
 }
 
 // TODO make this code less redundant
-const ScanResponseModal = (props) => {
-
-  if (props.scannedUserData === null) {
-    return (
-      <Modal
-        isVisible={props.isVisible}
-        backdropColor={colors.white}
-        backdropOpacity={.6}
-        animationInTiming={200}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
-        animationOutTiming={200}
-        backdropTransitionInTiming={200}
-        backdropTransitionOutTiming={200}
-        avoidKeyboard={true}
-        onBackdropPress={props.onBack}
-        onBackButtonPress={props.onBack}
-        style={{ margin: 40 }}
-      >
-        <View style={{
-          backgroundColor: colors.black,
-          padding: 40,
-          borderRadius: 8,
-          alignItems: 'center',
-        }}>
-          <FAIcon
-            name="times"
-            size={48}
-            color={colors.white}
-            style={{ marginBottom: 10 }}
-          />
-          <H2 style={{ color: colors.white, marginBottom: 20 }}>NOT FOUND</H2>
-          <H3 style={{ color: colors.fontGrey }}>Send to check-in table.</H3>
-        </View>
-      </Modal>
-    )
-  }
-
+const ScanResponseModal = props => {
   return (
     <Modal
       isVisible={props.isVisible}
-      backdropColor={colors.cyan}
-      backdropOpacity={.6}
+      backdropColor={colors.backgroundColor.light}
+      backdropOpacity={0.6}
       animationInTiming={200}
       animationIn="fadeInUp"
       animationOut="fadeOutDown"
@@ -448,31 +440,47 @@ const ScanResponseModal = (props) => {
       onBackButtonPress={props.onBack}
       style={{ margin: 40 }}
     >
-      <View style={{
-        backgroundColor: colors.black,
-        padding: 40,
-        borderRadius: 8,
-        alignItems: 'center',
-      }}>
-        <FAIcon
-          name="check"
-          size={48}
-          color={colors.cyan}
-          style={{ marginBottom: 10 }}
-        />
-        <H2 style={{ color: colors.cyan, marginBottom: 20 }}>SUCCESS</H2>
-        <H1 style={{ marginBottom: 20 }}>{props.scannedUserData.fullName}</H1>
+      <View
+        style={{
+          backgroundColor: colors.backgroundColor.normal,
+          padding: 40,
+          borderRadius: 8,
+          alignItems: "center"
+        }}
+      >
         {
-          props.scannedUserData.minorStatus &&
-          <H3 style={{ color: colors.pink }}>+ Minor</H3>
-        }
-        {
-          props.scannedUserData.dietaryRestrictions != null &&
-          props.scannedUserData.dietaryRestrictions.length > 0 &&
-          props.scannedUserData.dietaryRestrictions[0] !== "I Have No Food Restrictions" &&
-          <H3 style={{ color: colors.pink }}>+ Dietary Restrictions</H3>
+          !props.scannedUserData
+          ? <React.Fragment>
+              <FAIcon
+                name="times"
+                size={48}
+                color={colors.iconColor}
+                style={{ marginBottom: 10 }}
+              />
+              <H2 style={{ color: colors.textColor.normal, marginBottom: 20 }}>NOT FOUND</H2>
+              <H3 style={{ color: colors.textColor.light }}>Send to check-in table.</H3>
+            </React.Fragment>
+          : <React.Fragment>
+              <FAIcon
+                name="check"
+                size={48}
+                color={colors.secondaryColor}
+                style={{ marginBottom: 10 }}
+              />
+              <H2 style={{ color: colors.secondaryColor, marginBottom: 20 }}>SUCCESS</H2>
+              <H1 style={{ marginBottom: 20 }}>{props.scannedUserData.displayName}</H1>
+              {props.scannedUserData.minorStatus && (
+                <H3 style={{ color: colors.primaryColor }}>+ Minor</H3>
+              )}
+              {props.scannedUserData.dietaryRestrictions != null &&
+                props.scannedUserData.dietaryRestrictions.length > 0 &&
+                props.scannedUserData.dietaryRestrictions[0] !==
+                  "I Have No Food Restrictions" && (
+                  <H3 style={{ color: colors.primaryColor }}>+ Dietary Restrictions</H3>
+                )}
+            </React.Fragment>
         }
       </View>
     </Modal>
   );
-}
+};

@@ -1,59 +1,52 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  Animated,
-  TouchableOpacity,
-} from 'react-native';
-
-import { H5 } from './Text';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import EvilIcon from 'react-native-vector-icons/EvilIcons';
+import Entypo from 'react-native-vector-icons/Entypo'
+import moment from 'moment';
 import { colors } from './Colors';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import { P } from './Text';
 
-const LABELS = ['Home', 'Schedule', 'Saved', 'Mentors', 'Profile']
+const hackingIsOver = moment().isAfter(moment("2019-04-14 09:00"));
 
-const ICONS = {
-  'home': 'home',
-  'schedule': 'calendar',
-  'saved': 'heart',
-  'mentors': 'people',
-  'profile': 'user',
-};
+let LABELS = ["Home", "Schedule"];
+
+// if (hackingIsOver) {
+//   LABELS.push("Expo");
+// }
+LABELS.push("Mentors", "Profile");
 
 class CustomTabBar extends Component {
   render() {
     return (
-      <View style={[styles.tabs, this.props.style, ]}>
+      <View style={[styles.tabs, this.props.style]}>
         {this.props.tabs.map((tab, i) => {
+          let color = (this.props.activeTab === i ? colors.primaryColor : colors.textColor.light);
           return (
             <TouchableOpacity
               key={tab}
               onPress={() => this.props.goToPage(i)}
               style={styles.tab}
             >
-              <Icon
-                name={tab}
-                size={20}
-                color={
-                  this.props.activeTab === i ?
-                    colors.white
-                    :
-                    colors.fontGrey}
-              />
-              <H5
+            {
+              {
+                'home': <FontAwesome name='home' size={35} color={color}/>,
+                'schedule': <EvilIcon name='calendar' size={45} color={color}/>,
+                'expo': <Entypo name='code' size={34} color={color}/>,
+                'mentors': <Ionicon name='ios-people' size={45} color={color} style={{marginBottom: -5,marginTop: -6}}/>,
+                'profile': <Ionicon name='ios-person' size={35} color={color}/>
+              }[tab]
+            }
+              <P
                 style={
-                  this.props.activeTab === i ?
-                    [styles.tabText, styles.tabActiveText]
-                    :
-                    [styles.tabText]
-                  }
+                  this.props.activeTab === i
+                    ? [(tab === 'mentors' ? styles.tabTextMentors: styles.tabText), styles.tabActiveText]
+                    : [(tab === 'mentors' ? styles.tabTextMentors: styles.tabText)]
+                }
               >
-                {LABELS[i].toUpperCase()}
-              </H5>
+                {LABELS[i]}
+              </P>
             </TouchableOpacity>
           );
         })}
@@ -65,22 +58,26 @@ class CustomTabBar extends Component {
 const styles = StyleSheet.create({
   tab: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 12,
-    paddingBottom: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 8,
+    paddingBottom: 8
   },
   tabText: {
-    marginTop: 4,
-    color: colors.fontGrey,
+    marginTop: 3,
+    color: colors.textColor.light
+  },
+  tabTextMentors: {
+    marginTop: 3,
+    color: colors.textColor.light
   },
   tabActiveText: {
-    color: colors.white,
+    color: colors.primaryColor
   },
   tabs: {
-    flexDirection: 'row',
-    backgroundColor: colors.mediumGrey,
-  },
+    flexDirection: "row",
+    backgroundColor: colors.backgroundColor.light
+  }
 });
 
 export default CustomTabBar;

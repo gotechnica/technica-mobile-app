@@ -1,56 +1,32 @@
 import React, { Component, Fragment } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  View,
-  Alert,
-  AsyncStorage,
-  TextInput
-} from 'react-native';
-import { H1, H2, H3, H4, H6, P } from '../components/Text';
-import {
-  ViewContainer,
-  Heading,
-  SubHeading,
-  PaperSheet,
-  PadContainer,
-  HorizontalLine,
-  ModalContent,
-  ModalHeader,
-  Spacing,
-  Button,
-} from '../components/Base';
-import Modal from "react-native-modal";
-import EventCard from '../components/EventCard';
-import EventColumns from '../components/EventColumns';
+import { Alert, AsyncStorage, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+
+import { Button, Heading, PadContainer, SubHeading } from '../components/Base';
 import { colors } from '../components/Colors';
-import CountdownTimer from '../components/CountdownTimer';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import KeyboardShift from '../components/KeyboardShift';
 
 const APP_ID = '@com.technica.technica18:';
+const USER_TOKEN = APP_ID + 'JWT';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const USER_DATA_STORE = 'USER_DATA_STORE';
-
+const { State: TextInputState } = TextInput;
 
 
 export default class Login extends Component<Props> {
 
   createInitialState() {
     return {
-      savedPhone: '',
-      savedSMS: '',
+      savedEmail: '',
+      savedCode: '',
       fieldValue: '',
       placeholder: '',
-      greeting: 'Welcome to \nTECHNICA 2018',
-      instruction: 'Enter the phone number you used to \nsign up for Technica.',
+      greeting: 'Welcome to \nBitcamp 2019',
+      instruction: 'Enter the email you used to sign up for Bitcamp.',
       nextPage: (
-        <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
+        <TouchableOpacity onPress={() => this.sendEmail(this.state.fieldValue)}>
           <Button
               text="Next"
-              style={styles.button}
+              style={{...styles.button}}
             />
         </TouchableOpacity>),
     };
@@ -60,48 +36,23 @@ export default class Login extends Component<Props> {
 
     this.state = this.createInitialState();
   }
-//
-//   async componentDidMount() {
-// /*
-//     await AsyncStorage.removeItem(USER_DATA_STORE);
-//     this.setState({loadPage: true});*/
-//
-//     try {
-//       const value = await AsyncStorage.getItem(USER_DATA_STORE);
-//       if (value !== null) {
-//         const { navigate } = this.props.navigation;
-//         navigate('AppContainer');
-//       }
-//       this.setState({loadPage: true});
-//     } catch (error) {
-//        console.log(error);
-//     }
-//
-//   }
 
   static navigationOptions = {
     header: null,
   };
 
-  validPhoneNumber(phoneNumber){
-    // Clean spaces, dashes, and parenthesis from phone numbers
-    phoneNumber = phoneNumber.replace(/-| |\(|\)/gm,"");
-
-    var phoneRegex = RegExp('^\\d{11,}$');
-    if(phoneRegex.test(phoneNumber)){
-      return "+" + phoneNumber;
-    }
-    phoneRegex = RegExp('^\\d{10}$');
-    if(phoneRegex.test(phoneNumber)){
-      return "+1" + phoneNumber;
+  validEmail(email){
+    var emailRegex = RegExp('^.+@.+\.com');
+    if(emailRegex.test(email)){
+      return email;
     }
     return null;
   }
 
-  async sendPhoneNumber(phoneNumber) {
-    validNumber = this.validPhoneNumber(phoneNumber);
-    if(validNumber != null){
-      let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/check-status";
+  async sendEmail(email) {
+    validEmail = this.validEmail(email);
+    if(validEmail != null){
+      let url = "http://35.174.30.108/auth/login/requestCode";
       try {
           let response = await fetch(url, {
             method: 'POST',
@@ -109,14 +60,12 @@ export default class Login extends Component<Props> {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({'phone': validNumber})
+            body: JSON.stringify({'email': validEmail})
           });
-          let responseJson = await response.json();
-          console.log("response json is", responseJson)
-          if(responseJson.statusCode == 200){
-            this.setState({greeting: "Great!", instruction: "We're texting you a verification code. Please enter that code below to login.",
+          if(response.status == 200){
+            this.setState({greeting: "Great!", instruction: "We've sent a verification code to your email. Please enter that code below to login.",
             nextPage: (
-              <TouchableOpacity onPress={() => this.sendReceivedText(this.state.fieldValue)}>
+              <TouchableOpacity onPress={() => this.sendReceivedCode(this.state.fieldValue)}>
                   <Button
                       text='Submit'
                       size={22}
@@ -124,18 +73,17 @@ export default class Login extends Component<Props> {
                       style={styles.button}
                     />
                 </TouchableOpacity>),
-              savedPhone: validNumber, fieldValue: '', placeholder: 'xxxxxx'});
+              savedEmail: validEmail, fieldValue: '', placeholder: 'xxxxxx'});
           } else{
             Alert.alert(
-              "Your phone number was not found.",
-              "If you recently registered for Technica, please try again in 24 hrs.",
+              "Your email was not found.",
+              "If you recently registered for Bitcamp, please try again in 24 hrs.",
               [
                 {text: 'OK', onPress: () => console.log('OK Pressed')},
               ],
               { cancelable: false }
             );
           }
-          console.log("RESPONSE: " + JSON.stringify(responseJson));
       } catch (error) {
           Alert.alert(
             "No internet connection.",
@@ -148,8 +96,8 @@ export default class Login extends Component<Props> {
         }
     }else{
       Alert.alert(
-        "Invalid Phone Number.",
-        "Please enter a valid phone number.",
+        "Invalid Email.",
+        "Please enter a valid email.",
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],
@@ -159,23 +107,34 @@ export default class Login extends Component<Props> {
 
   }
 
-  async sendReceivedText(sms){
+  processUserEvents(eventsArr) {
+    userFavoritedEvents = {};
+    for(i = 0; i < eventsArr.length; i++) {
+      userFavoritedEvents[eventsArr[i]] = true;
+    }
+    return userFavoritedEvents;
+  }
 
-    let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/confirm-pin";
+  async sendReceivedCode(code){
+
+    let url = "http://35.174.30.108/auth/login/code";
     try {
-        let phoneNumber = this.state.savedPhone;
+        let email = this.state.savedEmail;
         let response = await fetch(url, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({'phone': phoneNumber, 'pin': sms})
+          body: JSON.stringify({'email': email, 'code': code})
         });
         let responseJson = await response.json();
-        if(responseJson.statusCode == 200){
-          await AsyncStorage.setItem(USER_DATA_STORE, JSON.stringify(responseJson.body));
-          this.setState({savedSMS: sms, fieldValue: ''});
+        if(response.status == 200){
+          await AsyncStorage.setItem(USER_DATA_STORE, JSON.stringify(responseJson.user));
+          await AsyncStorage.setItem(USER_TOKEN, responseJson.token);
+          userFavoritedEvents = this.processUserEvents(responseJson.user.favoritedFirebaseEvents);
+          await AsyncStorage.setItem(EVENT_FAVORITED_STORE, JSON.stringify(userFavoritedEvents));
+          this.setState({savedCode: code, fieldValue: ''});
           const { navigate } = this.props.navigation;
           navigate('AppContainer');
 
@@ -196,6 +155,7 @@ export default class Login extends Component<Props> {
           );
         }
     } catch (error) {
+      console.log(error);
         Alert.alert(
           "No internet connection.",
           "Try again.",
@@ -207,11 +167,10 @@ export default class Login extends Component<Props> {
       }
   }
 
-
   render() {
     return (
-      <ViewContainer>
-        <PadContainer style={styles.subSection}>
+        <KeyboardShift>
+          <PadContainer style={this.state.keyboardShown ? styles.subSection2 : styles.subSection}>
           <Heading style={{ paddingBottom: 20 }}>
             {this.state.greeting}
           </Heading>
@@ -223,20 +182,21 @@ export default class Login extends Component<Props> {
             value={this.state.fieldValue}
             underlineColorAndroid='rgba(0,0,0,0)'
             onChangeText={field => this.setState({ fieldValue: field })}
-            placeholderTextColor={colors.borderGrey}
-            keyboardType = 'numeric'
+            placeholderTextColor={colors.textColor.light}
+            keyboardType = 'email-address'
+            autoCapitalize = 'none'
             style={{
-              borderColor: colors.white,
+              borderColor: colors.borderColor.normal,
               borderBottomWidth: 1,
               paddingBottom: 8,
-              fontFamily: "DINPro-Medium",
               fontSize: 24,
-              color: colors.white,
+              color: colors.textColor.normal,
             }}
           />
-        </PadContainer>
+        
         {this.state.nextPage}
-      </ViewContainer>
+        </PadContainer>
+      </KeyboardShift>
     );
   }
 }
@@ -250,14 +210,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   subSection: {
-    marginTop: '30%',
+    paddingTop: '30%',
+    backgroundColor: colors.backgroundColor.normal
+  },
+  subSection2: {
+    backgroundColor: colors.backgroundColor.normal
   },
   columnContainer: {
     flex: 1, flexDirection: 'row'
   },
   button: {
     marginTop: 20,
-    backgroundColor: colors.pink,
+    backgroundColor: colors.primaryColor,
   },
   column: {
     flex: 5,

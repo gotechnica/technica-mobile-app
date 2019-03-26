@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
 import { DefaultTheme, BottomNavigation } from 'react-native-paper';
 import { YellowBox, AsyncStorage, ActivityIndicator } from 'react-native';
-import Home from './screens/Home';
-import Mentors from './screens/Mentors';
-import Saved from './screens/Saved';
-import Schedule from './screens/Schedule';
 import Login from './screens/Login';
-import CustomTabBar from './components/CustomTabBar';
-import { H5 } from './components/Text';
-import { colors } from './components/Colors';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
 import AppContainer from './screens/AppContainer';
 import {View} from 'react-native'
 import { createStackNavigator} from 'react-navigation';
 import { ViewContainer, CenteredActivityIndicator } from './components/Base';
 
 // NOTE dangerously ignore deprecated warning for now
-YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader', 'Setting a timer', "Warning: Can't"]);
+
+console.reportErrorsAsExceptions = false;
+
+XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
+    GLOBAL.originalXMLHttpRequest :
+    GLOBAL.XMLHttpRequest;
+
+  // fetch logger
+global._fetch = fetch;
+global.fetch = function (uri, options, ...args) {
+  return global._fetch(uri, options, ...args).then((response) => {
+    console.log('Fetch', { request: { uri, options, ...args }, response });
+    return response;
+  });
+};
 
 export default class App extends Component<Props> {
   constructor(props) {

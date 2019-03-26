@@ -7,79 +7,73 @@ import {
 
 const styles = StyleSheet.create({
   text: {
-    color: colors.white,
-    fontFamily: "Poppins-Regular",
-    fontSize: 12,
+    color: colors.textColor.normal,
   },
   h1: {
-    fontFamily: "DINPro-Black",
-    fontSize: 30,
+    color: colors.primaryColor,
+    fontFamily: "Aleo-Bold",
+    fontSize: 36,
   },
   h2: {
-    fontFamily: "Poppins-Bold",
-    fontSize: 18,
+    fontWeight: 'bold',
+    fontSize: 21,
   },
   h3: {
-    fontFamily: "Poppins-SemiBold",
-    fontSize: 14,
+    fontSize: 16,
   },
   h4: {
-    fontFamily: "Poppins-SemiBold",
-    fontSize: 12,
+    fontSize: 13,
   },
   h5: {
-    fontFamily: "DINPro-Medium",
-    fontSize: 10,
+    fontSize: 11,
   },
   h6: {
-    fontFamily: "Poppins-Regular",
-    fontSize: 12,
+    fontSize: 13,
   },
   p: {
-    fontFamily: "Poppins-Regular",
-    fontSize: 14,
+    fontSize: 15,
   },
 });
 
 
 const H1 = (props) => (
-  <Text style={[styles.text, styles.h1, props.style]}>
+  <Text {...props} style={[styles.text, styles.h1, props.style]}>
     {props.children}
   </Text>
 );
 
 const H2 = (props) => (
-  <Text style={[styles.text, styles.h2, props.style]}>
+  <Text {...props} style={[styles.text, styles.h2, props.style]}>
     {props.children}
   </Text>
 );
 
 const H3 = (props) => (
-  <Text style={[styles.text, styles.h3, props.style]}>
+  <Text {...props} style={[styles.text, styles.h3, props.style]}>
     {props.children}
   </Text>
 );
 
 const H4 = (props) => (
-  <Text style={[styles.text, styles.h4, props.style]}>
+  <Text {...props} style={[styles.text, styles.h4, props.style]}>
     {props.children}
   </Text>
 );
 
 const H5 = (props) => (
-  <Text style={[styles.text, styles.h5, props.style]}>
+  <Text {...props} style={[styles.text, styles.h5, props.style]}>
     {props.children}
   </Text>
 );
 
 const H6 = (props) => (
-  <Text style={[styles.text, styles.h6, props.style]}>
+  <Text {...props} style={[styles.text, styles.h6, props.style]}>
     {props.children}
   </Text>
 );
 
 const P = (props) => (
-  <Text style={[styles.text, styles.p, props.style]}>
+  <Text {...props} style={[styles.text, styles.p, props.style]}>
     {props.children}
   </Text>
 );

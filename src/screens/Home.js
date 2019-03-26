@@ -1,34 +1,22 @@
 import React, { Component, Fragment } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import Modal from 'react-native-modal';
+
 import {
-  Platform,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  View,
-  Alert
-} from 'react-native';
-import { H1, H2, H3, H4, H6, P } from '../components/Text';
-import {
-  ViewContainer,
-  Heading,
-  SubHeading,
-  PaperSheet,
-  PadContainer,
   HorizontalLine,
-  modalStyle,
   ModalContent,
   ModalHeader,
+  modalStyle,
+  PadContainer,
+  PaperSheet,
   Spacing,
-  Button
+  ViewContainer,
 } from '../components/Base';
-import Modal from 'react-native-modal';
-import EventCard from '../components/EventCard';
-import EventColumns from '../components/EventColumns';
 import { colors } from '../components/Colors';
-import MapModal from '../components/MapModal';
 import CountdownTimer from '../components/CountdownTimer';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import EventColumns from '../components/EventColumns';
+import { H2, H4, H6 } from '../components/Text';
+import HappeningNowSlideshow from '../components/HappeningNowSlideshow';
 
 export default class Home extends Component<Props> {
   constructor(props) {
@@ -37,23 +25,25 @@ export default class Home extends Component<Props> {
       updates: [],
       isUpdatesModalVisible: false,
       isMapModalVisible: false,
+      happeningNow: this.props.eventManager.getHappeningNow(),
     };
     this.toggleMapModal = this.toggleMapModal.bind(this);
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
+    this.timer = setInterval(() => this.setState({happeningNow: this.props.eventManager.getHappeningNow()}), 1000*60);
   }
 
   toggleUpdatesModal() {
     this.setState({ isUpdatesModalVisible: !this.state.isUpdatesModalVisible });
   }
-   // Renders the full list view of all updates
+  // Renders the full list view of all updates
   renderUpdatesModal = () => (
     <Modal
       isVisible={this.state.isUpdatesModalVisible}
-      backdropColor={colors.black}
+      backdropColor={colors.backgroundColor.normal}
       backdropOpacity={1}
       animationInTiming={250}
-      animationIn="fadeInUp"
-      animationOut="fadeOutDown"
+      animationIn="slideInRight"
+      animationOut="slideOutRight"
       animationOutTiming={300}
       backdropTransitionInTiming={250}
       backdropTransitionOutTiming={300}
@@ -65,6 +55,7 @@ export default class Home extends Component<Props> {
         <ModalHeader
           onBackButtonPress={() => this.toggleUpdatesModal()}
           heading="Recent Updates"
+          origin={'Home'}
         />
         <Spacing />
         {this.props.eventManager.getUpdates().map(update => (
@@ -79,7 +70,7 @@ export default class Home extends Component<Props> {
       </ModalContent>
     </Modal>
   );
-   // Does not render anything if there are no recent updates yet
+  // Does not render anything if there are no recent updates yet
   renderUpdatesSection = () => {
     const updates = this.props.eventManager.getUpdates();
     const numUpdates = updates.length;
@@ -102,9 +93,8 @@ export default class Home extends Component<Props> {
                     <HorizontalLine />
                     <Spacing />
                     <H6>
-                      View {numUpdates - 1} other update{updates.length > 2
-                        ? 's'
-                        : null}
+                      View {numUpdates - 1} other update
+                      {updates.length > 2 ? "s" : null}
                     </H6>
                   </Fragment>
                 ) : null}
@@ -116,10 +106,9 @@ export default class Home extends Component<Props> {
     );
   };
 
-
   renderPopularEventsSection = () => {
-    const heading = 'Popular Events';
-    const events = this.props.eventManager.getTopEvents(24);
+    const heading = "Popular Events";
+    const events = this.props.eventManager.getTopEvents();
     return (
       <View style={styles.subSection}>
         <PadContainer style={styles.subSectionHeading}>
@@ -130,6 +119,7 @@ export default class Home extends Component<Props> {
             heading={heading}
             eventsArr={events}
             eventManager={this.props.eventManager}
+            origin={'Home'}
           />
         </View>
       </View>
@@ -137,8 +127,8 @@ export default class Home extends Component<Props> {
   };
 
   renderBestForBeginnersSection = () => {
-    const heading = 'Best for Beginners';
-    const events = this.props.eventManager.getBeginnerEventsArray();
+    const heading = "Featured Events";
+    const events = this.props.eventManager.getFeaturedEvents();
     return (
       <View style={styles.subSection}>
         <PadContainer style={styles.subSectionHeading}>
@@ -153,36 +143,27 @@ export default class Home extends Component<Props> {
     );
   };
 
+  renderHappeningNow = () => {
+    const events = this.state.happeningNow.length == 0 ? this.props.eventManager.getHappeningNow() : this.state.happeningNow;
+    return (
+      <View style={styles.subSection}>
+        <HappeningNowSlideshow
+          dataSource={events}
+          eventManager={this.props.eventManager}
+        />
+      </View>
+    );
+  };
+
   toggleMapModal = () => {
     this.setState({ isMapModalVisible: !this.state.isMapModalVisible });
-  }
+  };
 
   render() {
     return (
       <ViewContainer>
-        <PadContainer>
-          <View style={styles.headingRow}>
-            <Heading>Technica 2018</Heading>
-            <TouchableOpacity onPress={this.toggleMapModal}>
-              <Icon
-                name="map"
-                size={30}
-                color="white"
-                style={{
-                  paddingTop: 64,
-                  marginBottom: 20,
-                  opacity: .8,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-          <CountdownTimer />
-        </PadContainer>
-        <MapModal
-          isModalVisible={this.state.isMapModalVisible}
-          toggleModal={this.toggleMapModal}
-        />
-        {this.renderUpdatesSection()}
+        <CountdownTimer />
+        {this.renderHappeningNow()}
         {this.renderPopularEventsSection()}
         {this.renderBestForBeginnersSection()}
       </ViewContainer>
@@ -193,29 +174,30 @@ export default class Home extends Component<Props> {
 const styles = StyleSheet.create({
   bottomContainer: {
     // paddingBottom: 20,
-    backgroundColor: 'white'
+    backgroundColor: "white"
   },
   heading: {
     marginBottom: 20
   },
   headingRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems:'center'
   },
   subSection: {
     // paddingTop: 20,
-    paddingBottom: 40
+    paddingBottom: 20
   },
   subSectionHeading: {
-    paddingBottom: 20
+    paddingBottom: 10
   },
   columnContainer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   column: {
     flex: 5,
-    flexDirection: 'column'
+    flexDirection: "column"
   },
   event: {
     // backgroundColor: 'black',

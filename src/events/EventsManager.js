@@ -6,14 +6,10 @@ import moment from 'moment';
 import _ from 'lodash';
 import Toast from 'react-native-simple-toast';
 
-
-import EventDay from './EventDay';
-import EventGroup from './EventGroup';
-import Event from './Event';
-
-import { normalizeTimeLabel, createEventGroup, createEventDay } from '../actions/util.js';
+import { createEventDay } from '../actions/util.js';
 
 const APP_ID = '@com.technica.technica18:';
+const USER_TOKEN = APP_ID + 'JWT';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const SAVED_COUNT_STORE = APP_ID + 'SAVED_COUNT_STORE';
 const EVENT_ID_PREFIX = APP_ID + 'eventNotification-';
@@ -59,7 +55,6 @@ export default class EventsManager {
           firebase.database().ref('/Schedule')
             .on('value', async (snapshot) => {
               let data = snapshot.val();
-
               //store new schedule on phone
               AsyncStorage.setItem(SCHEDULE_STORAGE_KEY, JSON.stringify(data), function(error){
                 if (error){
@@ -112,7 +107,6 @@ export default class EventsManager {
 
   processNewEvents(rawData, rescheduleNotifications) {
     newEventDays = [];
-
     //repeat process of scanning through events
     for (let i in rawData) {
       newEventDays.push(createEventDay(rawData[i]));
@@ -132,14 +126,12 @@ export default class EventsManager {
     let changed = false;
     newCombinedEvents.forEach(newEvent => {
       let eventID = newEvent.eventID;
-
       // this event hasn't been seen yet
       if(this.eventIDToEventMap[eventID] == null) {
         changed = true;
         this.eventIDToEventMap[eventID] = newEvent;
       } else {
         curEventObj = this.eventIDToEventMap[newEvent.eventID];
-
         if(!_.isEqual(curEventObj, newEvent)) {
 
           // if the start time has changed we need to create a new notification and delete the original one
@@ -150,13 +142,14 @@ export default class EventsManager {
             this.createNotification(newEvent);
           }
           changed = true;
-
+          //console.log(newEvent);
           //update Event object with new properties
           curEventObj.title = newEvent.title;
+          curEventObj.category = newEvent.category;
           curEventObj.description = newEvent.description;
           curEventObj.startTime = newEvent.startTime;
           curEventObj.endTime = newEvent.endTime;
-          curEventObj.beginnerFriendly = newEvent.beginnerFriendly;
+          curEventObj.featured = newEvent.featured;
           curEventObj.location = newEvent.location;
           curEventObj.img = newEvent.img;
         }
@@ -187,10 +180,11 @@ export default class EventsManager {
   }
 
   fetchSavedCounts() {
-    fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/favorite-counts")
+    fetch("http://35.174.30.108/api/firebaseEvents/favoriteCounts")
       .then((response) => response.json())
       .then((responseJson) => {
-        newSavedCount = JSON.parse(responseJson.body);
+        newSavedCount = responseJson;
+        console.log("SAVED: " + responseJson);
         this.savedCounts = newSavedCount;
         //store new favorite counts on phone
         AsyncStorage.setItem(SAVED_COUNT_STORE, JSON.stringify(newSavedCount), function(error){
@@ -211,17 +205,22 @@ export default class EventsManager {
     return this.eventDays;
   }
 
-  getTopEvents(num) {
+  getTopEvents() {
     topSorted = _.sortBy(
       this.combinedEvents,
       event => -this.getSavedCount(event.eventID)
     );
 
-    return topSorted.slice(0, num);
+    return topSorted.slice(0, 10);
   }
 
-  getBeginnerEventsArray() {
-    return _.filter(this.combinedEvents, event => event.beginnerFriendly);
+  getFeaturedEvents() {
+    return _.filter(this.combinedEvents, event => event.featured);
+  }
+
+  getHappeningNow() {
+    var currentDateTime = moment(moment().format("YYYY-MM-DD HH:mm"));
+    return events = _.filter(this.combinedEvents, event => currentDateTime.isBetween(moment(event.startTime), moment(event.endTime)));
   }
 
   getSavedEventsArray() {
@@ -241,62 +240,76 @@ export default class EventsManager {
 
   //key of event
   // time in minutes to warn before event
-  favoriteEvent(eventID) {
-    this.favoriteState[eventID] = true;
-    this.savedCounts[eventID] = this.getSavedCount(eventID) + 1;
-    updateObj = {};
-    updateObj[eventID] = true;
-    AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
+  async favoriteEvent(eventID, refreshSaved) {
 
-    event = this.eventIDToEventMap[eventID];
-    this.createNotification(event);
 
-    this.updateHearts();
-
-    AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
-      phone = JSON.parse(result).user_data.phone;
-
-      fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/favorite-event", {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          eventID: eventID,
-          phone: phone
-        })
+    await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
+      AsyncStorage.getItem(USER_TOKEN, (err, token) => {
+        id = JSON.parse(result).id;
+        let response = fetch(`http://35.174.30.108/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
+          method: 'POST',
+          headers: new Headers({
+            'Content-Type': 'application/json',
+            'x-access-token': token,
+          }),
+          body: JSON.stringify({
+            firebaseId: eventID,
+            userId: id
+          })
+        }).then((myJson) => {
+          if (myJson.status == 200) {
+            this.favoriteState[eventID] = true;
+            this.savedCounts[eventID] = this.getSavedCount(eventID) + 1;
+            updateObj = {};
+            updateObj[eventID] = true;
+            AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
+            event = this.eventIDToEventMap[eventID];
+            this.createNotification(event);
+        
+            this.updateHearts();
+          } else {
+            Toast.show('Could not favorite this event. Please try again.');
+          }
+        });
       });
     });
-
+    this.updateHearts();
   }
 
-  unfavoriteEvent(eventID) {
-    this.favoriteState[eventID] = false;
-    this.savedCounts[eventID]= this.getSavedCount(eventID) - 1;
-    updateObj = {};
-    updateObj[eventID] = false;
-    AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
-
-    event = this.eventIDToEventMap[eventID];
-    this.deleteNotification(event);
+  unfavoriteEvent(eventID, refreshSaved) {
 
     AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
-      phone = JSON.parse(result).user_data.phone;
+      AsyncStorage.getItem(USER_TOKEN, (err, token) => {
 
-      fetch("https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/events/unfavorite-event", {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          eventID: eventID,
-          phone: phone
-        })
+        id = JSON.parse(result).id;
+
+        fetch(`http://35.174.30.108/api/users/${id}/unfavoriteFirebaseEvent/${eventID}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token,
+          },
+          body: JSON.stringify({
+            firebaseId: eventID,
+            userId: id
+          })
+        }).then((myJson) =>  {
+          if (myJson.status == 200) {
+            this.favoriteState[eventID] = false;
+            this.savedCounts[eventID]= this.getSavedCount(eventID) - 1;
+            updateObj = {};
+            updateObj[eventID] = false;
+            AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
+
+            event = this.eventIDToEventMap[eventID];
+            this.deleteNotification(event);
+            this.updateHearts();
+          } else {
+            Toast.show('Could not unfavorite this event. Please try again.');
+          }
+        });
       });
-    });
-
+    })
     this.updateHearts();
   }
 

@@ -1,6 +1,6 @@
-# Technica 2018 Mobile App
+# Bitcamp 2019 Mobile App
 
-This is the the mobile app for Technica's 2018 hackathon.
+This is the the mobile app for Bitcamp's 2019 hackathon.
 
 # Quick Start
 

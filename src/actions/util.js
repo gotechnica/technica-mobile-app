@@ -19,19 +19,33 @@ export function hasTimePassed(t) {
 // which have already been grouped
 export function createEventGroup(eventGroupLabel, rawEventArray) {
   let eventArray = [];
-
   for (let i in rawEventArray) {
     rawEvent = rawEventArray[i];
+    /* TODO : Change this once schedule is fixed */
+    //let img =  "banner_" + rawEvent.category.toLowerCase();
+    let banner_map = {
+      opening_ceremony: "ceremony",
+      closing_ceremony: "ceremony",
+      expo_a: "demo",
+      expo_b: "demo",
+      colorwar: "colorwar"
+    }
+    let title = rawEvent.title.toLowerCase().replace(' ','_');
+    let img =  "banner_" + (banner_map[title] != undefined ?
+      banner_map[title]
+      :
+      ((Array.isArray(rawEvent.category) ? rawEvent.category[0] : rawEvent.category).toLowerCase()));
     eventArray.push(
       new Event(
         rawEvent.eventID,
         rawEvent.title,
+        rawEvent.category,
         rawEvent.description,
         rawEvent.startTime,
         rawEvent.endTime,
-        rawEvent.beginnerFriendly,
+        rawEvent.featuredEvent,
         rawEvent.location,
-        rawEvent.img
+        img
       )
     );
   }
