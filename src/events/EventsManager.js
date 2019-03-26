@@ -184,6 +184,7 @@ export default class EventsManager {
       .then((response) => response.json())
       .then((responseJson) => {
         newSavedCount = responseJson;
+        console.log("SAVED: " + responseJson);
         this.savedCounts = newSavedCount;
         //store new favorite counts on phone
         AsyncStorage.setItem(SAVED_COUNT_STORE, JSON.stringify(newSavedCount), function(error){
