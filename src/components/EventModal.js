@@ -24,8 +24,12 @@ export default class EventModal extends Component {
         backdropColor={colors.backgroundColor.normal}
         backdropOpacity={1}
         animationInTiming={250}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
+        animationIn={props.origin === "Schedule" 
+          ? "fadeInRight" 
+          : "fadeInUp"}
+        animationOut={props.origin === "Schedule" 
+        ? "fadeOutRight" 
+        : "fadeOutDown"}
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}
@@ -38,7 +42,7 @@ export default class EventModal extends Component {
             onBackButtonPress={() => {props.toggleModal();}}
             eventID={props.event.eventID.toString()}
             eventManager={props.eventManager}
-            origin={this.props.origin}
+            origin={props.origin}
             heart
             noArrow
             small

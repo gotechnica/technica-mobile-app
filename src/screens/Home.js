@@ -162,9 +162,7 @@ export default class Home extends Component<Props> {
   render() {
     return (
       <ViewContainer>
-        <PadContainer>
         <CountdownTimer />
-        </PadContainer>
         {this.renderHappeningNow()}
         {this.renderPopularEventsSection()}
         {this.renderBestForBeginnersSection()}

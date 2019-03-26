@@ -3,6 +3,7 @@ package com.bitcamp.bitcamp19;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.reactnative.photoview.PhotoViewPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
             new ReactNativeRestartPackage(),
             new RNCameraPackage(),
             new PhotoViewPackage(),
