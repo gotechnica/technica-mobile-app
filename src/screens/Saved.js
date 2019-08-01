@@ -108,6 +108,10 @@ class EventsList extends Component<Props> {
     super(props);
   }
 
+  /**
+   * ComponentWillUnmount() will be called before component is destroyed,
+   * this ensures listeners are removed and prevents memory leakes
+   */
   componentWillUnmount() {
     this.props.eventManager.removeUpdatesListener(this.myEventsList);
   }
