@@ -29,13 +29,13 @@ import EventColumns from '../components/EventColumns';
 import { colors } from '../components/Colors';
 import CountdownTimer from '../components/CountdownTimer';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import validPhoneNumber from '../actions/validate.js'
 
 const APP_ID = '@com.technica.technica18:';
 const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const USER_DATA_STORE = 'USER_DATA_STORE';
 
-
-
+// Login page asks user for phone number and input for a verification code
 export default class Login extends Component<Props> {
 
   createInitialState() {
@@ -57,49 +57,16 @@ export default class Login extends Component<Props> {
   }
   constructor(props) {
     super(props);
-
     this.state = this.createInitialState();
   }
-//
-//   async componentDidMount() {
-// /*
-//     await AsyncStorage.removeItem(USER_DATA_STORE);
-//     this.setState({loadPage: true});*/
-//
-//     try {
-//       const value = await AsyncStorage.getItem(USER_DATA_STORE);
-//       if (value !== null) {
-//         const { navigate } = this.props.navigation;
-//         navigate('AppContainer');
-//       }
-//       this.setState({loadPage: true});
-//     } catch (error) {
-//        console.log(error);
-//     }
-//
-//   }
 
   static navigationOptions = {
     header: null,
   };
 
-  validPhoneNumber(phoneNumber){
-    // Clean spaces, dashes, and parenthesis from phone numbers
-    phoneNumber = phoneNumber.replace(/-| |\(|\)/gm,"");
-
-    var phoneRegex = RegExp('^\\d{11,}$');
-    if(phoneRegex.test(phoneNumber)){
-      return "+" + phoneNumber;
-    }
-    phoneRegex = RegExp('^\\d{10}$');
-    if(phoneRegex.test(phoneNumber)){
-      return "+1" + phoneNumber;
-    }
-    return null;
-  }
-
   async sendPhoneNumber(phoneNumber) {
-    validNumber = this.validPhoneNumber(phoneNumber);
+    // verify valid number
+    validNumber = validPhoneNumber(phoneNumber);
     if(validNumber != null){
       let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/check-status";
       try {
@@ -137,6 +104,7 @@ export default class Login extends Component<Props> {
           }
           console.log("RESPONSE: " + JSON.stringify(responseJson));
       } catch (error) {
+        // not able to verify
           Alert.alert(
             "No internet connection.",
             "Try again.",
@@ -147,6 +115,7 @@ export default class Login extends Component<Props> {
           );
         }
     }else{
+      // invalid number
       Alert.alert(
         "Invalid Phone Number.",
         "Please enter a valid phone number.",
@@ -160,7 +129,6 @@ export default class Login extends Component<Props> {
   }
 
   async sendReceivedText(sms){
-
     let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/confirm-pin";
     try {
         let phoneNumber = this.state.savedPhone;
@@ -175,6 +143,7 @@ export default class Login extends Component<Props> {
         let responseJson = await response.json();
         if(responseJson.statusCode == 200){
           await AsyncStorage.setItem(USER_DATA_STORE, JSON.stringify(responseJson.body));
+          // save sms, reset field value
           this.setState({savedSMS: sms, fieldValue: ''});
           const { navigate } = this.props.navigation;
           navigate('AppContainer');
@@ -220,6 +189,7 @@ export default class Login extends Component<Props> {
           </SubHeading>
           <TextInput
             placeholder={this.state.placeholder}
+            // input for sms pin
             value={this.state.fieldValue}
             underlineColorAndroid='rgba(0,0,0,0)'
             onChangeText={field => this.setState({ fieldValue: field })}

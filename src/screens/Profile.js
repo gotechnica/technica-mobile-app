@@ -23,6 +23,9 @@ import {
   CenteredActivityIndicator,
   Button
 } from '../components/Base';
+import logout from '../actions/logout.js'
+import getDevoolooperName from '../actions/getDevoolooperName.js'
+
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import QRCode from 'react-native-qrcode';
 import _ from 'lodash';
@@ -34,6 +37,7 @@ const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
 const USER_DATA_STORE = 'USER_DATA_STORE';
 
+// Profile page contains QR code for user to check-in and has option to logout
 export default class Profile extends Component<Props> {
     constructor(props){
         super(props);
@@ -55,23 +59,6 @@ export default class Profile extends Component<Props> {
         };
         this.onNamePress = this.onNamePress.bind(this);
     }
-
-  async logout(){
-    Alert.alert(
-      "Log Out",
-      "Are you sure you want to log out?",
-      [
-        {text: 'OK', onPress: () => {
-          AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
-            const navigate = this.props.navigation;
-            navigate('Login');
-          });
-        }},
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-      ],
-      { cancelable: true }
-    );
-  }
 
   toggleScanner(){
       this.setState({scanner: !this.state.scanner});
@@ -127,7 +114,6 @@ export default class Profile extends Component<Props> {
 
   async verifyHacker(){
       return true;
-
   }
 
   async componentDidMount(){
@@ -157,7 +143,6 @@ export default class Profile extends Component<Props> {
           ],
           { cancelable: false }
         );
-
 
         let count = 0;;
         let intervalID = setInterval(() => {
@@ -190,33 +175,6 @@ export default class Profile extends Component<Props> {
       });
     }
   }
-
-  getDevoolooperName(name) {
-    // A, E, I, O, U
-    let vowels = new Set();
-    vowels.add('A');
-    vowels.add('E');
-    vowels.add('I');
-    vowels.add('O');
-    vowels.add('U');
-
-    name = name.toUpperCase();
-
-    let newName = '';
-    for (let i = 0; i < name.length; i++) {
-      if (vowels.has(name.charAt(i))) {
-        newName += 'oo';
-      } else {
-        newName += name.charAt(i);
-      }
-    }
-
-    // Turn to title case
-    return newName.replace(/\w\S*/g, function(txt){
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  }
-
 
   render() {
     const scannerView = (() => {
@@ -290,7 +248,7 @@ export default class Profile extends Component<Props> {
                         <View style={{alignItems: 'center'}}>
                           <TouchableOpacity onPress={this.onNamePress}>
                             <Heading style={{ color: this.state.nameColor }}>
-                              { this.state.devoolooperMode ? this.getDevoolooperName(fullName) : fullName }
+                              { this.state.devoolooperMode ? getDevoolooperName(fullName) : fullName }
                             </Heading>
                           </TouchableOpacity>
                         </View>
@@ -331,7 +289,7 @@ export default class Profile extends Component<Props> {
                       <Button text="Open Scanner" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => this.logout()}>
+                    <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => logout(this.props.navigation)}>
                       <Button text="Log Out" />
                     </TouchableOpacity>
                   </ViewContainer>
@@ -374,7 +332,7 @@ export default class Profile extends Component<Props> {
                       </H3>
                     </View>
 
-                    <TouchableOpacity onPress={() => this.logout()}>
+                    <TouchableOpacity onPress={() => logout(this.props.navigation)}>
                       <Button text="Logout" />
                     </TouchableOpacity>
                   </ViewContainer>

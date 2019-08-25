@@ -26,6 +26,7 @@ import moment from 'moment';
 
 const serverURL = "https://technicamentorshipservertest.herokuapp.com"
 
+// Mentors page allows for user to submit a question to the mentors
 export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
@@ -50,7 +51,6 @@ export default class Mentors extends Component<Props> {
     console.log("ERROR GRABBING QUESTIONS")
     console.log(err)
   })
-
   }
 
   // initially loads question data from server
@@ -147,7 +147,7 @@ export default class Mentors extends Component<Props> {
           Mentors
         </Heading>
         <SubHeading>
-          Ask our mentors for help
+          Ask our mentors for help!!
         </SubHeading>
       </React.Fragment>
       )

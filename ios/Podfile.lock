@@ -176,11 +176,11 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
-  React: aa2040dbb6f317b95314968021bd2888816e03d5
-  react-native-camera: 68ad5143d2d0636236d46c7de8d2a6455ca52a36
-  ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
-  yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
+  React: 755b16d9a9387e856d4dce6528130c51e4d409b8
+  react-native-camera: 0faae75e327775b26760afd929f729431956bcff
+  ReactNativePermissions: 2e324bb3baf12702e3ec27f76c8ae1158fa69fc6
+  yoga: c3ce6137f85f60c93a834235d7f08e2b44a42eed
 
 PODFILE CHECKSUM: b4a6bab58889c21be925ce9e72852a94270f480d
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.5
