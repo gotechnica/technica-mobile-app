@@ -3,6 +3,7 @@ import Toast from "react-native-simple-toast";
 import moment from "moment";
 import firebase from "react-native-firebase";
 
+// Pulls current mentor questions in the database
 export function grabQuestionsFromDB(email) {
   fetch(`${serverURL}/getquestions/${email}`, {
     method: 'GET',
@@ -11,28 +12,30 @@ export function grabQuestionsFromDB(email) {
       'Content-Type': 'application/json'
     },
   }).then(response => response.json()).then(async (responseJson) => {
-    console.log("questions found")
-    console.log(responseJson)
+    console.log("questions found");
+    console.log(responseJson);
     this.setState({listData: responseJson});
   }).catch(err => {
-    console.log("ERROR GRABBING QUESTIONS")
+    console.log("ERROR GRABBING QUESTIONS");
     console.log(err)
   })
 
 }
 
-// initially loads question data from server
+// Initially loads mentor question data from server
 export async function componentDidMount() {
-  AppState.addEventListener('change', this._handleAppStateChange)
+  AppState.addEventListener('change', this._handleAppStateChange);
   const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
-  const user_data_json = JSON.parse(user_data)
+  const user_data_json = JSON.parse(user_data);
   this.grabQuestionsFromDB(user_data_json.user_data.email)
 }
 
+// Removes event listener from initial data load
 export function componentWillUnmount() {
   AppState.removeEventListener('change', this._handleAppStateChange);
 }
 
+// Grabs updated/new mentor questions when change is detected in database
 export async function _handleAppStateChange(nextAppState) {
   if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
     console.log('App has come to the foreground!')
@@ -43,18 +46,22 @@ export async function _handleAppStateChange(nextAppState) {
   this.setState({appState: nextAppState});
 }
 
+// Empty text box for mentor question
 export function clearInputs() {
   this.setState({question: '', location: ''});
 }
 
+// Resets mentor question screen
 export function cancelQuestion() {
   this.setState({question: '', newQuestionScreen: !this.state.newQuestionScreen});
 }
 
+// Toggles state of question screen
 export function toggleModal() {
   this.setState({newQuestionScreen: !this.state.newQuestionScreen});
 }
 
+// Shows toast for after question is sent
 export function showToast() {
   // Show toast after 600ms
   // This 600ms delay ensures the toast loads after the modal animation close
@@ -112,7 +119,7 @@ export async function sendQuestion() {
   }
 }
 
-
+// Creates notification listeners for when database is updated and grabs new questions when notification is detected
 export async function createNotificationListener() {
   // updates when app is in foreground
   this.notificationListener = firebase

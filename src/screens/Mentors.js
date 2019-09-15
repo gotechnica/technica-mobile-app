@@ -24,10 +24,11 @@ import { H1, H2, H3, H4, H6, P } from '../components/Text';
 import Toast from 'react-native-simple-toast';
 import moment from 'moment';
 
-import * as ScreenLogic from 'utils/ScreenLogic'
+import * as ScreenLogic from '../actions/ScreenLogic'
 
 const serverURL = "https://technicamentorshipservertest.herokuapp.com"
 
+// This is the part of the app users go to for asking questions to mentors
 export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
@@ -37,7 +38,7 @@ export default class Mentors extends Component<Props> {
     this._handleAppStateChange = ScreenLogic._handleAppStateChange.bind(this);
   }
 
-
+  // Sets up heading of the page
   renderHeading() {
     return (
       <React.Fragment>
@@ -51,6 +52,7 @@ export default class Mentors extends Component<Props> {
       )
   }
 
+  // Sets up the question-asking area (widgets, animation, style, etc.)
   renderNewQuestionModal() {
     const { question, location, newQuestionScreen  } = this.state;
     return (
@@ -125,6 +127,7 @@ export default class Mentors extends Component<Props> {
     )
   }
 
+  // Completes overall setup of the page along with saving the question
   render() {
     { this.createNotificationListener() }
 
