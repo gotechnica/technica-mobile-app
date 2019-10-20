@@ -44,8 +44,8 @@ export default class Login extends Component<Props> {
       savedSMS: '',
       fieldValue: '',
       placeholder: '',
-      greeting: 'Welcome to \nTECHNICA 2018',
-      instruction: 'Enter the phone number you used to \nsign up for Technica.',
+      greeting: 'Welcome to \nTECHNICA 2019',
+      instruction: 'Enter the phone number or email you used to sign up for Technica.',
       nextPage: (
         <TouchableOpacity onPress={() => this.sendPhoneNumber(this.state.fieldValue)}>
           <Button

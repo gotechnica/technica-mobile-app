@@ -62,6 +62,8 @@ export default class Schedule extends Component<Props> {
     );
   }
 
+
+
   render() {
     let eventDays = this.props.eventManager.getEventDays();
     let tabNames = eventDays.map(eventDay => eventDay.label);

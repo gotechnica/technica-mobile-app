@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { DefaultTheme, BottomNavigation } from 'react-native-paper';
 import Home from './Home';
-import Mentors from './Mentors';
 import Profile from './Profile';
 import Saved from './Saved';
 import Schedule from './Schedule';
+import Map from './Map';
 import Login from './Login';
+import Help from './Help';
 import CustomTabBar from '../components/CustomTabBar';
 import { H5 } from '../components/Text';
 import { colors } from '../components/Colors';
@@ -19,7 +20,7 @@ import firebase from 'react-native-firebase';
 const channelId = 'technica-push-notifications';
 const channelName = 'Technica Announcements';
 
-export default class AppContainer extends Component<Props> {
+export default class AppContainer extends Component {
 	static navigationOptions = {
 		header: null,
 	};
@@ -63,18 +64,17 @@ export default class AppContainer extends Component<Props> {
 	          tabLabel="calendar"
 	          eventManager={this.props.screenProps.eventManager}
 	        />
-	        <Saved
-						ref={mySaved => {
-							this.mySaved = mySaved;
-							eventManager.registerEventChangeListener(mySaved);
-						}}
-	          tabLabel="heart"
-	          eventManager={this.props.screenProps.eventManager}
-	        />
-	        <Mentors tabLabel="people" />
-	        <Profile
-						tabLabel="user"
-						navigation = {navigate}/>
+          <Profile
+						tabLabel="qrcode"
+						navigation = {navigate}
+          />
+	        <Map 
+            tabLabel="map-o"
+          />
+          <Help
+            tabLabel="question-circle-o"
+						navigation = {navigate}
+          />
 	      </ScrollableTabView>
 			</SafeAreaView>
     );

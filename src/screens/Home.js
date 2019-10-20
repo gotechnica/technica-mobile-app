@@ -30,7 +30,7 @@ import MapModal from '../components/MapModal';
 import CountdownTimer from '../components/CountdownTimer';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
-export default class Home extends Component<Props> {
+export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -160,28 +160,12 @@ export default class Home extends Component<Props> {
   render() {
     return (
       <ViewContainer>
-        <PadContainer>
+        <View style={styles.centerHeading}>
           <View style={styles.headingRow}>
-            <Heading>Technica 2018</Heading>
-            <TouchableOpacity onPress={this.toggleMapModal}>
-              <Icon
-                name="map"
-                size={30}
-                color="white"
-                style={{
-                  paddingTop: 64,
-                  marginBottom: 20,
-                  opacity: .8,
-                }}
-              />
-            </TouchableOpacity>
+            <Heading>Technica 2019</Heading>
           </View>
           <CountdownTimer />
-        </PadContainer>
-        <MapModal
-          isModalVisible={this.state.isMapModalVisible}
-          toggleModal={this.toggleMapModal}
-        />
+        </View>
         {this.renderUpdatesSection()}
         {this.renderPopularEventsSection()}
         {this.renderBestForBeginnersSection()}
@@ -194,6 +178,10 @@ const styles = StyleSheet.create({
   bottomContainer: {
     // paddingBottom: 20,
     backgroundColor: 'white'
+  },
+  centerHeading: {
+    alignItems: 'center',
+    justifyContent: 'center', 
   },
   heading: {
     marginBottom: 20

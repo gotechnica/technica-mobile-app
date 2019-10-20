@@ -12,16 +12,16 @@ import {
 
 import { H5 } from './Text';
 import { colors } from './Colors';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const LABELS = ['Home', 'Schedule', 'Saved', 'Mentors', 'Profile']
+const LABELS = ['Home', 'Schedule', 'Profile', 'Map', 'Help']
 
 const ICONS = {
   'home': 'home',
   'schedule': 'calendar',
-  'saved': 'heart',
-  'mentors': 'people',
-  'profile': 'user',
+  'profile': 'qrcode',
+  'map': 'map',
+  'help': 'help',
 };
 
 class CustomTabBar extends Component {
