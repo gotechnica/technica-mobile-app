@@ -4,7 +4,6 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
-  Alert,
   AppState
 } from 'react-native';
 import {
@@ -17,16 +16,10 @@ import {
 } from '../components/Base';
 import Modal from "react-native-modal";
 import { colors } from '../components/Colors';
-import firebase from 'react-native-firebase';
 import QuestionCard from '../components/QuestionCard'
-import { AsyncStorage } from "react-native"
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
-import Toast from 'react-native-simple-toast';
-import moment from 'moment';
-
-import * as ScreenLogic from '../actions/ScreenLogic'
-
-const serverURL = "https://technicamentorshipservertest.herokuapp.com"
+import { Dropdown } from 'react-native-material-dropdown';
+import * as ScreenLogic from '../actions/ScreenLogic';
 
 // This is the part of the app users go to for asking questions to mentors
 export default class Mentors extends Component<Props> {
@@ -55,6 +48,35 @@ export default class Mentors extends Component<Props> {
   // Sets up the question-asking area (widgets, animation, style, etc.)
   renderNewQuestionModal() {
     const { question, location, newQuestionScreen  } = this.state;
+    let data = [{
+      value: 'Mobile Development',
+    }, {
+      value: 'AI/VR',
+    }, {
+      value: 'Machine Learning',
+    }, {
+      value: 'Object Oriented Programming Languages',
+    }, {
+      value: 'Scripting Languages',
+    }, {
+      value: 'Web Development',
+    }, {
+      value: 'Databases',
+    }, {
+      value: 'Backend Engineering',
+    }, {
+      value: 'Frontend UX/UI Design',
+    }, {
+      value: 'AWS',
+    }, {
+      value: 'Hardware',
+    }, {
+      value: 'Linux',
+    }, {
+      value: 'Data Science',
+    }, {
+      value: 'Product Design',
+    }];
     return (
       <Modal
         isVisible={newQuestionScreen}
@@ -67,7 +89,7 @@ export default class Mentors extends Component<Props> {
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
-        onBackButtonPress={() => this.toggleModal()}
+        onBackButtonPress={() => ScreenLogic.toggleModal.call(this)}
         style={modalStyle}
       >
         <View style={{ padding: 20 }}>
@@ -98,6 +120,7 @@ export default class Mentors extends Component<Props> {
                 fontFamily: "Poppins-Regular",
                 padding: 0,
                 paddingBottom: 2,
+                marginBottom: 20,
                 fontSize: 14,
                 color: colors.white,
               }}
@@ -108,16 +131,34 @@ export default class Mentors extends Component<Props> {
               placeholderTextColor="#666666"
             />
           </View>
+          <View marginTop = {10}>
+            <H3 style={{ color: 'white' }}>Which tag best applies?</H3>
+            <Dropdown
+              style={{fontFamily: "Poppins-Regular",}}
+              label='Tag'
+              data={data}
+              baseColor={colors.white}
+              textColor={colors.white}
+              selectedItemColor={colors.white}
+              itemColor={colors.fontGrey}
+              fontSize={14}
+              labelFontSize={11}
+              itemCount={4.3}
+              containerStyle={{fontFamily: "Poppins-Regular"}}
+              itemTextStyle={{fontFamily: "Poppins-Regular", backgroundColor: colors.black}}
+              pickerStyle={{backgroundColor: colors.black, borderColor: colors.white}}
+            />
+          </View>
         </View>
         <View marginTop = {10}>
-        <TouchableOpacity onPress={() => ScreenLogic.sendQuestion()}>
+        <TouchableOpacity onPress={() => ScreenLogic.sendQuestion.call(this)}>
           <Button
             text="Submit Question"
           />
         </TouchableOpacity>
         </View>
         <View marginTop = {10}>
-          <TouchableOpacity onPress={() => ScreenLogic.cancelQuestion()}>
+          <TouchableOpacity onPress={() => ScreenLogic.cancelQuestion.call(this)}>
             <Button
               text="Cancel"
             />
@@ -129,7 +170,7 @@ export default class Mentors extends Component<Props> {
 
   // Completes overall setup of the page along with saving the question
   render() {
-    { this.createNotificationListener() }
+    { ScreenLogic.createNotificationListener.call(this) }
 
       return (
       <ViewContainer>
@@ -138,7 +179,7 @@ export default class Mentors extends Component<Props> {
         {this.renderNewQuestionModal()}
       </PadContainer>
       <TouchableOpacity
-        onPress={() => { this.toggleModal() }}
+        onPress={() => { ScreenLogic.toggleModal.call(this) }}
         style={{ marginBottom: 40 }}
       >
         <Button text="Ask a Question" />

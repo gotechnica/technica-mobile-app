@@ -3,6 +3,8 @@ import Toast from "react-native-simple-toast";
 import moment from "moment";
 import firebase from "react-native-firebase";
 
+const serverURL = "https://technicamentorshipservertest.herokuapp.com";
+
 // Pulls current mentor questions in the database
 export function grabQuestionsFromDB(email) {
   fetch(`${serverURL}/getquestions/${email}`, {
@@ -72,6 +74,16 @@ export function showToast() {
   }, 400)
 }
 
+export function showToast2(message) {
+  // Show toast after 600ms
+  // This 600ms delay ensures the toast loads after the modal animation close
+  // happens. There is a weird iOS issue where toast will vanish the moment
+  // modal closes. This is the best workaround I could make for now.
+  setTimeout(() => {
+    Toast.show(message, Toast.LONG);
+  }, 400)
+}
+
 // Creates question object and sends it to mentors
 export async function sendQuestion() {
   if (this.state.question === '' || this.state.location === '') {
@@ -87,7 +99,7 @@ export async function sendQuestion() {
     const fcmToken = await AsyncStorage.getItem("FCMToken");
     const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
     const user_data_json = JSON.parse(user_data);
-    const name = user_data_json.user_data.first_name + " " + user_data_json.user_data.last_name
+    const name = user_data_json.user_data.first_name + " " + user_data_json.user_data.last_name;
     var questionObject = {
       question: this.state.question,
       location: this.state.location,
@@ -99,7 +111,6 @@ export async function sendQuestion() {
     if (fcmToken != null) {
       questionObject.fcmToken = fcmToken
     }
-
     var questionString = JSON.stringify(questionObject);
     fetch(`${serverURL}/question`, {
       method: 'POST',
@@ -111,9 +122,9 @@ export async function sendQuestion() {
     }).catch(error => {
       console.log(error)
     });
-    clearInputs();
+    clearInputs.call(this);
     showToast();
-    toggleModal();
+    toggleModal.call(this);
     // make new question show up immediately at top of list
     this.setState({listData: [questionObject].concat(this.state.listData)})
   }
