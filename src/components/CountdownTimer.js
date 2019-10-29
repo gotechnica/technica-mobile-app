@@ -38,27 +38,34 @@ export default class CountdownTimer extends Component {
     let minutes;
     let seconds;
 
-    // If hacking hasn't begun
-    if (this.state.time < startTime) {
-      return (
-        <SubHeading>November 9-10</SubHeading>
-      );
+    // To hide timer until hacking starts:
+    // if (this.state.time < startTime) {
+    //   return (
+    //     <SubHeading>November 9-10</SubHeading>
+    //   );
 
-    // If hacking is over
-    } else if (this.state.time > endTime) {
-      days = 0;
-      hours = 0;
-      minutes = 0;
-      seconds = 0;
+    // // If hacking is over
+    // } else if (this.state.time > endTime) {
+    //   days = 0;
+    //   hours = 0;
+    //   minutes = 0;
+    //   seconds = 0;
 
-    // If hacking is currently happening
-    } else {
-      remain  = moment.duration(moment(endTime).diff(moment(this.state.time)));
-      days    = remain.days();
-      hours   = remain.hours();
-      minutes = remain.minutes();
-      seconds = remain.seconds();
-    }
+    // // If hacking is currently happening
+    // } else {
+    //   remain  = moment.duration(moment(endTime).diff(moment(this.state.time)));
+    //   days    = remain.days();
+    //   hours   = remain.hours();
+    //   minutes = remain.minutes();
+    //   seconds = remain.seconds();
+    // }
+
+    // TODO: remove when finished with testing
+    remain  = moment.duration(moment(endTime).diff(moment(this.state.time)));
+    days    = remain.days();
+    hours   = remain.hours();
+    minutes = remain.minutes();
+    seconds = remain.seconds();
 
     let daysText = (days > 0) ? `${days}d ` : ``;
     let hoursText = `${hours}h `

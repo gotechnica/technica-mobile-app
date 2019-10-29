@@ -198,7 +198,6 @@ export default class EventsManager {
             console.log(error);
           }
         });
-
         this.updateEventComponents();
         this.updateHearts();
       })

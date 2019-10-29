@@ -23,7 +23,7 @@ import { colors } from "../components/Colors";
 /**
  * Schedule page lists the schedule of events for all days of the hackathon.
  */
-export default class Schedule extends Component<Props> {
+export default class Schedule extends Component {
   constructor(props) {
     super(props);
 

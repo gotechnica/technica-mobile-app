@@ -39,6 +39,27 @@ const USER_DATA_STORE = "USER_DATA_STORE";
 export default class Profile extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      displayVenue: true
+    }
+
+    this.toggleVenueMap = this.toggleVenueMap.bind(this);
+  }
+
+  toggleVenueMap() {
+    this.setState({'displayVenue':!this.state.displayVenue})
+  }
+
+  // Checks which map to display
+  displayManager() {
+    if(this.state.displayVenue){
+      console.log('venue!!')
+      return '../components/images/floor_plan_final.png';
+    } else {
+      console.log('parking!!')
+      return '../components/images/parking.png';
+    }
   }
 
   render() {
@@ -46,18 +67,37 @@ export default class Profile extends Component {
       <ViewContainer>
           <PadContainer>
               <Heading>Venue Map</Heading>
+              <TouchableOpacity onPress={() => this.toggleVenueMap()}>
+                <Button text="Parking Map" />
+              </TouchableOpacity>
             </PadContainer>
-          <PhotoView
-            source={require("../components/images/floor_plan_final.png")}
-            minimumZoomScale={1}
-            maximumZoomScale={8}
-            androidScaleType="fitCenter"
-            onLoad={() => console.log("Image loaded!")}
-            style={{
-              width: window.width,
-              height: 600
-            }}
-          />
+            {this.state.displayVenue && 
+              <PhotoView
+                source={require("../components/images/floor_plan_final.png")}
+                minimumZoomScale={1}
+                maximumZoomScale={8}
+                androidScaleType="fitCenter"
+                onLoad={() => console.log("Image loaded!")}
+                style={{
+                  width: window.width,
+                  height: 600
+                }}
+              />
+            }
+            {!this.state.displayVenue && 
+              <PhotoView
+                source={require("../components/images/parking.png")}
+                minimumZoomScale={1}
+                maximumZoomScale={8}
+                androidScaleType="fitCenter"
+                onLoad={() => console.log("Image loaded!")}
+                style={{
+                  width: window.width,
+                  height: 600
+                }}
+              />
+            }
+          
       </ViewContainer>
     );
   }
