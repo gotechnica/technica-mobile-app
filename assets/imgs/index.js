@@ -16,6 +16,13 @@ const Images = {
     banner_demos_big: require('./Big_Banner06_Demos.png'),
     banner_sponsorship_big: require('./Big_Banner07_Sponsorship.png'),
     banner_fun_big: require('./Big_Banner08_FunCelebrate.png'),
+
+    facebook: require('./facebook.png'),
+    insta: require('./insta.png'),
+    linkedin: require('./linkedin.png'),
+    medium: require('./medium.png'),
+    twitter: require('./twitter.png'),
+    youtube: require('./youtube.png'),
 };
 
 export default Images;
