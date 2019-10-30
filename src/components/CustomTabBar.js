@@ -14,13 +14,14 @@ import { H5 } from './Text';
 import { colors } from './Colors';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
-const LABELS = ['Home', 'Schedule', 'Saved', 'Mentors', 'Profile']
+const LABELS = ['Home', 'Schedule', 'Saved', 'Mentors', 'Connect', 'Profile'];
 
 const ICONS = {
   'home': 'home',
   'schedule': 'calendar',
   'saved': 'heart',
   'mentors': 'people',
+  'connect': 'share',
   'profile': 'user',
 };
 

@@ -6,6 +6,7 @@ import Profile from './Profile';
 import Saved from './Saved';
 import Schedule from './Schedule';
 import Login from './Login';
+import Connect from "./Connect";
 import CustomTabBar from '../components/CustomTabBar';
 import { H5 } from '../components/Text';
 import { colors } from '../components/Colors';
@@ -72,6 +73,7 @@ export default class AppContainer extends Component<Props> {
 	          eventManager={this.props.screenProps.eventManager}
 	        />
 	        <Mentors tabLabel="people" />
+	        <Connect tabLabel="share" />
 	        <Profile
 						tabLabel="user"
 						navigation = {navigate}/>
