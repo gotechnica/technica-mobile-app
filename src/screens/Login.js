@@ -35,7 +35,6 @@ const EVENT_FAVORITED_STORE = APP_ID + 'EVENT_FAVORITED_STORE';
 const USER_DATA_STORE = 'USER_DATA_STORE';
 
 
-
 export default class Login extends Component<Props> {
 
   createInitialState() {

@@ -37,7 +37,9 @@ export default class AppContainer extends Component {
     this.configureNotificationSettings();
 
 		const eventManager = this.props.screenProps.eventManager;
-		const { navigate }  = this.props.navigation;
+    const { navigate }  = this.props.navigation;
+
+    console.log('APP CONTAINER NAV:', navigate)
 
 		return (
 			<SafeAreaView style={{flex: 1, backgroundColor: colors.black}}>
@@ -53,6 +55,7 @@ export default class AppContainer extends Component {
 							eventManager.registerEventChangeListener(myHome);
 							eventManager.registerUpdatesListener(myHome);
 						}}
+            navigation={navigate}
 	          eventManager={this.props.screenProps.eventManager}
 	          tabLabel="home"
 	        />

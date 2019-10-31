@@ -14,9 +14,9 @@ import {
 import { colors } from '../Colors';
 import { H1, H2, H3, H4, P } from '../Text';
 
-export default class ScheduleSceneTabBar extends Component {
+export default class MapTabBar extends Component {
   render() {
-    console.log('MATTHEW ELLIS', this.props.tabs)
+    const options = ['Venue Map', 'Parking Map']
     return (
       <FlatList
         style={[styles.tabs, this.props.style]}
@@ -25,7 +25,7 @@ export default class ScheduleSceneTabBar extends Component {
           const isActive = (this.props.activeTab === tabObj.index);
           return (
             <TouchableOpacity
-              onPress={() => this.props.goToSection(tabObj.index)}
+              onPress={() => console.log('INSIDE TAB BAR:', this.props.displayVenue)}
               style={[styles.tab, styles.tabActive]}
             >
               <H2 style={ isActive ? styles.activeText : styles.inactiveText }>{tabObj.item}&nbsp;</H2>
@@ -41,8 +41,8 @@ export default class ScheduleSceneTabBar extends Component {
   }
 }
 
-ScheduleSceneTabBar.propTypes = {
-  goToPage: PropTypes.func,
+MapTabBar.propTypes = {
+  displayVenue: PropTypes.bool,
   activeTab: PropTypes.number,
   tabs: PropTypes.array
 };

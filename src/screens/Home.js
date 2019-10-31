@@ -33,13 +33,13 @@ import EventColumns from "../components/EventColumns";
 import { colors } from "../components/Colors";
 import Saved from "./Saved";
 import MapModal from "../components/MapModal";
-import ChallengeList from "../components/ChallengeList"
+import ChallengeList from "../components/ChallengeList";
 import EventListModal from "../components/EventListModal";
 import CountdownTimer from "../components/CountdownTimer";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { FlatGrid } from "react-native-super-grid";
 import PhotoView from "react-native-photo-view";
-
+import Connect from "../components/Connect"
 
 export default class Home extends Component {
   constructor(props) {
@@ -51,12 +51,14 @@ export default class Home extends Component {
       isSavedModalVisible: false,
       isChallengesModalVisible: false,
       isAboutUsModalVisible: false,
+      isConnectModalVisible: false,
       dataSource: {}
     };
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
     this.toggleEventListModal = this.toggleEventListModal.bind(this);
     this.toggleSavedModal = this.toggleSavedModal.bind(this);
     this.toggleChallengesModal = this.toggleChallengesModal.bind(this);
+    this.toggleConnectModal = this.toggleConnectModal.bind(this);
   }
 
   componentDidMount() {
@@ -94,9 +96,34 @@ export default class Home extends Component {
     this.setState({ isAboutUsModalVisible: !this.state.isAboutUsModalVisible });
   }
 
+  toggleConnectModal() {
+    this.setState({ isConnectModalVisible: !this.state.isConnectModalVisible });
+  }
+
   renderChallengeList() {
-    return(
-      <ChallengeList/>
+    return (
+      <Modal
+        isVisible={this.state.isChallengesModalVisible}
+        backdropColor={colors.black}
+        backdropOpacity={1}
+        animationInTiming={250}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationOutTiming={300}
+        backdropTransitionInTiming={250}
+        backdropTransitionOutTiming={300}
+        avoidKeyboard={true}
+        onBackButtonPress={() => this.toggleChallengesModal()}
+        style={modalStyle}
+      >
+        <ModalContent>
+          <ModalHeader
+            onBackButtonPress={() => this.toggleChallengesModal()}
+            heading="Challenges"
+          />
+          <ChallengeList />
+        </ModalContent>
+      </Modal>
     );
   }
 
@@ -127,6 +154,33 @@ export default class Home extends Component {
     );
   };
 
+  renderConnectModal = () => {
+    return (
+      <Modal
+        isVisible={this.state.isConnectModalVisible}
+        backdropColor={colors.black}
+        backdropOpacity={1}
+        animationInTiming={250}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationOutTiming={300}
+        backdropTransitionInTiming={250}
+        backdropTransitionOutTiming={300}
+        avoidKeyboard={true}
+        onBackButtonPress={() => this.toggleConnectModal()}
+        style={modalStyle}
+      >
+        <ModalContent>
+          <ModalHeader
+            onBackButtonPress={() => this.toggleConnectModal()}
+            heading="Connect"
+          />
+          <Connect/>
+        </ModalContent>
+      </Modal>
+    );
+  };
+
   renderAboutUsModal = () => {
     return (
       <Modal
@@ -146,10 +200,10 @@ export default class Home extends Component {
         <ModalContent>
           <ModalHeader
             onBackButtonPress={() => this.toggleAboutUsModal()}
-            heading="About us"
+            heading="Challenges"
           />
           <ScrollView contentContainerStyle={{ alignItems: "center", flex: 1 }}>
-            <Image style={{flex: 1}} source={Images["milestones"]} resizeMode="stretch" />
+            <Text>About Us</Text>
           </ScrollView>
         </ModalContent>
       </Modal>
@@ -157,9 +211,7 @@ export default class Home extends Component {
   };
 
   renderChallengesModal = () => {
-    return (
-      <ChallengeList/>
-    );
+    return <ChallengeList />;
   };
 
   renderEventListModal = () => {
@@ -277,6 +329,8 @@ export default class Home extends Component {
       this.toggleChallengesModal();
     } else if (name == "banner_aboutus") {
       this.toggleAboutUsModal();
+    } else if (name == "banner_sponsors") {
+      this.toggleConnectModal();
     }
   }
 
@@ -326,8 +380,6 @@ export default class Home extends Component {
       { name: "banner_aboutus" }
     ];
 
-    console.log('HOME SCREEN PROPS:', this.props)
-
     return (
       <ViewContainer>
         <View style={styles.centerHeading}>
@@ -340,6 +392,8 @@ export default class Home extends Component {
         {this.renderEventListModal()}
         {this.renderSavedModal()}
         {this.renderAboutUsModal()}
+        {this.renderChallengeList()}
+        {this.renderConnectModal()}
         <ScrollView style={styles.scrollContainer}>
           <FlatGrid
             itemDimension={130}
@@ -353,14 +407,6 @@ export default class Home extends Component {
               </TouchableOpacity>
             )}
           />
-
-          <TouchableOpacity onPress={() => this.props.navigate('Login')}>
-            <Button text="Challenge Page" />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => this.toggleVenueMap()}>
-            <Button text="Saved Page" />
-          </TouchableOpacity>
 
           {/* <TouchableOpacity onPress={console.log('test')}>
             <View style={styles.itemContainer}>
@@ -395,7 +441,9 @@ const styles = StyleSheet.create({
   },
   subSection: {
     // paddingTop: 20,
-    paddingBottom: 40
+    paddingBottom: 40,
+    paddingRight: 40,
+    margin: 0
   },
   subSectionHeading: {
     paddingBottom: 20
@@ -438,7 +486,7 @@ const styles = StyleSheet.create({
     backgroundColor: "gold"
   },
   gridView: {
-    marginTop: 20,
+    marginTop: 5,
     flex: 1
   },
   itemContainer: {
@@ -446,7 +494,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 1,
     height: 150,
-    marginTop: 20
+    marginTop: Dimensions.get("window").height / 20
   },
   itemName: {
     fontSize: 16,
@@ -461,6 +509,7 @@ const styles = StyleSheet.create({
   banners: {
     width: "100%",
     height: undefined,
-    aspectRatio: 1
+    aspectRatio: 1,
+    borderRadius: 20,
   }
 });

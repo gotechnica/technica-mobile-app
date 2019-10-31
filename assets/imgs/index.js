@@ -26,7 +26,16 @@ const Images = {
     banner_aboutus: require('./aboutus_banner.png'),
     banner_speakers: require('./speakers_banner.png'),
 
-    milestones: require('./milestones.png')
+    milestones: require('./milestones.png'),
+
+    technica_circle: require('./technica_circle.png'),
+
+    facebook: require('./facebook.png'),
+    insta: require('./insta.png'),
+    linkedin: require('./linkedin.png'),
+    medium: require('./medium.png'),
+    twitter: require('./twitter.png'),
+    youtube: require('./youtube.png'),
 };
 
 export default Images;
