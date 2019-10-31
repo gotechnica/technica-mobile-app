@@ -34,7 +34,8 @@
     "react-native-tab-view": "^2.10.0",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.13.0",
-    "yo": "2.0.3"
+    "yo": "2.0.3",
+    "resolveAssetSource": "latest"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",

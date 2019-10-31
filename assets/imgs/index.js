@@ -36,6 +36,14 @@ const Images = {
     medium: require('./medium.png'),
     twitter: require('./twitter.png'),
     youtube: require('./youtube.png'),
+
+    beginnings: require('./beginnings.png'),
+    worldrecord: require('./worldrecord.png'),
+    nonprofit: require('./nonprofit.png'),
+    fiveyears: require('./5years.png'),
+    joinus: require('./joinus.png'),
+    sustainable: require('./sustainable.png'),
+
 };
 
 export default Images;

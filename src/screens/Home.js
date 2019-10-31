@@ -40,6 +40,7 @@ import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { FlatGrid } from "react-native-super-grid";
 import PhotoView from "react-native-photo-view";
 import Connect from "../components/Connect"
+import About from "../components/About";
 
 export default class Home extends Component {
   constructor(props) {
@@ -200,11 +201,8 @@ export default class Home extends Component {
         <ModalContent>
           <ModalHeader
             onBackButtonPress={() => this.toggleAboutUsModal()}
-            heading="Challenges"
           />
-          <ScrollView contentContainerStyle={{ alignItems: "center", flex: 1 }}>
-            <Text>About Us</Text>
-          </ScrollView>
+          <About/>
         </ModalContent>
       </Modal>
     );
