@@ -16,6 +16,26 @@ const Images = {
     banner_demos_big: require('./Big_Banner06_Demos.png'),
     banner_sponsorship_big: require('./Big_Banner07_Sponsorship.png'),
     banner_fun_big: require('./Big_Banner08_FunCelebrate.png'),
+
+    technica_logo: require('./technica_logo.png'),
+
+    banner_popular: require('./popular_banner.png'),
+    banner_saved: require('./saved_banner.png'),
+    banner_challenges: require('./challenge_banner.png'),
+    banner_sponsors: require('./sponsors_banner.png'),
+    banner_aboutus: require('./aboutus_banner.png'),
+    banner_speakers: require('./speakers_banner.png'),
+
+    milestones: require('./milestones.png'),
+
+    technica_circle: require('./technica_circle.png'),
+
+    facebook: require('./facebook.png'),
+    insta: require('./insta.png'),
+    linkedin: require('./linkedin.png'),
+    medium: require('./medium.png'),
+    twitter: require('./twitter.png'),
+    youtube: require('./youtube.png'),
 };
 
 export default Images;

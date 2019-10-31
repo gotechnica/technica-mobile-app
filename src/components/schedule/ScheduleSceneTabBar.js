@@ -16,6 +16,7 @@ import { H1, H2, H3, H4, P } from '../Text';
 
 export default class ScheduleSceneTabBar extends Component {
   render() {
+    console.log('MATTHEW ELLIS', this.props.tabs)
     return (
       <FlatList
         style={[styles.tabs, this.props.style]}

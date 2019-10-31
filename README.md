@@ -1,6 +1,6 @@
-# Technica 2019 Mobile App
+# Technica 2018 Mobile App
 
-This is the the mobile app for Technica's 2019 hackathon.
+This is the the mobile app for Technica's 2018 hackathon.
 
 # Quick Start
 

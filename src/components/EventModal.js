@@ -16,7 +16,7 @@ import { ModalStyle, ModalContent, ModalHeader, HorizontalLine, Spacing, modalSt
 import { colors } from './Colors';
 import moment from 'moment';
 
-// TODO TECH DEBT: Replace <Spacing /> with proper margins
+// TODO: TECH DEBT: Replace <Spacing /> with proper margins
 
 export default class EventModal extends Component {
   render() {

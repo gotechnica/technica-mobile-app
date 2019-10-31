@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { DefaultTheme, BottomNavigation } from 'react-native-paper';
 import { YellowBox, AsyncStorage, ActivityIndicator } from 'react-native';
 import Home from './screens/Home';
-import Mentors from './screens/Mentors';
 import Saved from './screens/Saved';
 import Schedule from './screens/Schedule';
+import Help from './screens/Help';
+import Map from './screens/Map';
 import Login from './screens/Login';
 import CustomTabBar from './components/CustomTabBar';
 import { H5 } from './components/Text';
@@ -19,7 +20,7 @@ import { ViewContainer, CenteredActivityIndicator } from './components/Base';
 // NOTE dangerously ignore deprecated warning for now
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
-export default class App extends Component<Props> {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
