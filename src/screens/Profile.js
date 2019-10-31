@@ -48,7 +48,7 @@ export default class Profile extends Component<Props> {
           scannedUserData: {},
 
           // For fun...
-          devoolooperMode: false,
+          devoolooperMode: true,
           namePresses: 0,
           nameColor: '#FFFFFF',
           timeInterval: null,
@@ -322,7 +322,7 @@ export default class Profile extends Component<Props> {
                             }
                           </View>
                           <H3 style={{ marginBottom: 40 }}>
-                            Use this code for TESTING.
+                            USE FOR TESTING ONLY
                           </H3>
                         </View>
                       )
