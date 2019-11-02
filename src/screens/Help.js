@@ -1,178 +1,116 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
+  ScrollView,
   TextInput,
   FlatList,
   TouchableOpacity,
-  Alert,
-  AppState,
-  StyleSheet
-} from "react-native";
+  AppState
+} from 'react-native';
 import {
   ViewContainer,
   Heading,
   modalStyle,
   SubHeading,
   Button,
-  PadContainer
-} from "../components/Base";
+  PadContainer,
+} from '../components/Base';
 import Modal from "react-native-modal";
-import { colors } from "../components/Colors";
-import firebase from "react-native-firebase";
-import QuestionCard from "../components/QuestionCard";
-import { AsyncStorage } from "react-native";
-import { H1, H2, H3, H4, H6, P } from "../components/Text";
-import Toast from "react-native-simple-toast";
-import moment from "moment";
+import { colors } from '../components/Colors';
+import QuestionCard from '../components/QuestionCard'
+import { H1, H2, H3, H4, H6, P } from '../components/Text';
+import * as ScreenLogic from '../actions/ScreenLogic';
+import CheckBox from 'react-native-checkbox';
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings(['Class RCTCxxModule']);
 
-const serverURL = "https://technicamentorshipservertest.herokuapp.com";
-
-export default class Help extends Component {
+// This is the part of the app users go to for asking questions to mentors
+export default class Help extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      appState: AppState.currentState,
-      question: "",
-      location: "",
-      newQuestionScreen: false,
-      listData: []
+      appState: AppState.currentState, question: '', location: "", newQuestionScreen: false, listData: [], topics: [{
+        name: 'Mobile Development',
+        checked: false,
+      }, {
+        name: 'AI/VR',
+        checked: false,
+      }, {
+        name: 'Machine Learning',
+        checked: false,
+      }, {
+        name: 'Object Oriented Programming Languages',
+        checked: false,
+      }, {
+        name: 'Scripting Languages',
+        checked: false,
+      }, {
+        name: 'Web Development',
+        checked: false,
+      }, {
+        name: 'Databases',
+        checked: false,
+      }, {
+        name: 'Backend Engineering',
+        checked: false,
+      }, {
+        name: 'Frontend UX/UI Design',
+        checked: false,
+      }, {
+        name: 'AWS',
+        checked: false,
+      }, {
+        name: 'Hardware',
+        checked: false,
+      }, {
+        name: 'Linux',
+        checked: false,
+      }, {
+        name: 'Data Science',
+        checked: false,
+      }, {
+        name: 'Product Design',
+        checked: false,
+      }]
     };
-    this.sendQuestion = this.sendQuestion.bind(this);
-    this.showToast = this.showToast.bind(this);
-    this._handleAppStateChange = this._handleAppStateChange.bind(this);
+    this.sendQuestion = ScreenLogic.sendQuestion.bind(this);
+    this.showToast = ScreenLogic.showToast.bind(this);
+    this._handleAppStateChange = ScreenLogic._handleAppStateChange.bind(this);
   }
 
-  grabQuestionsFromDB(email) {
-    fetch(`${serverURL}/getquestions/${email}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
-      .then(async responseJson => {
-        console.log("questions found");
-        console.log(responseJson);
-        this.setState({ listData: responseJson });
-      })
-      .catch(err => {
-        console.log("ERROR GRABBING QUESTIONS");
-        console.log(err);
-      });
-  }
-
-  // initially loads question data from server
-  async componentDidMount() {
-    AppState.addEventListener("change", this._handleAppStateChange);
-    const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
-    const user_data_json = JSON.parse(user_data);
-    this.grabQuestionsFromDB(user_data_json.user_data.email);
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener("change", this._handleAppStateChange);
-  }
-
-  async _handleAppStateChange(nextAppState) {
-    if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === "active"
-    ) {
-      console.log("App has come to the foreground!");
-      const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
-      const user_data_json = JSON.parse(user_data);
-      this.grabQuestionsFromDB(user_data_json.user_data.email);
-    }
-    this.setState({ appState: nextAppState });
-  }
-
-  clearInputs() {
-    this.setState({ question: "", location: "" });
-  }
-  cancelQuestion() {
-    this.setState({
-      question: "",
-      newQuestionScreen: !this.state.newQuestionScreen
-    });
-  }
-  toggleModal() {
-    this.setState({ newQuestionScreen: !this.state.newQuestionScreen });
-  }
-
-  showToast() {
-    // Show toast after 600ms
-    // This 600ms delay ensures the toast loads after the modal animation close
-    // happens. There is a weird iOS issue where toast will vanish the moment
-    // modal closes. This is the best workaround I could make for now.
-    setTimeout(() => {
-      Toast.show(
-        "Question sent! Our next available mentor will come assist you.",
-        Toast.LONG
-      );
-    }, 400);
-  }
-
-  async sendQuestion() {
-    if (this.state.question === "" || this.state.location === "") {
-      Alert.alert(
-        "Try Again",
-        "Your question or location was empty.",
-        [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-        { cancelable: false }
-      );
-    } else {
-      const fcmToken = await AsyncStorage.getItem("FCMToken");
-      const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
-      const user_data_json = JSON.parse(user_data);
-      const name =
-        user_data_json.user_data.first_name +
-        " " +
-        user_data_json.user_data.last_name;
-      var questionObject = {
-        question: this.state.question,
-        location: this.state.location,
-        status: "Awaiting available mentors",
-        key: moment().format(),
-        name: name,
-        email: user_data_json.user_data.email
-      };
-      if (fcmToken != null) {
-        questionObject.fcmToken = fcmToken;
-      }
-
-      var questionString = JSON.stringify(questionObject);
-      fetch(`${serverURL}/question`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: questionString
-      }).catch(error => {
-        console.log(error);
-      });
-      this.clearInputs();
-      this.showToast();
-      this.toggleModal();
-      // make new question show up immediately at top of list
-      this.setState({ listData: [questionObject].concat(this.state.listData) });
-    }
-  }
+  // Sets up heading of the page
   renderHeading() {
     return (
-      <View>
-        <Heading>Ask a Mentor</Heading>
+      <React.Fragment>
+        <Heading>
+          Mentors
+        </Heading>
         <SubHeading>
-          Technica mentors are experts in helping with your hack or answering
-          any additional questions you might have!
+          Ask our mentors for help
         </SubHeading>
-      </View>
-    );
+      </React.Fragment>
+    )
   }
 
+  changeCheck(i) {
+    let topics = this.state.topics.slice(0);
+    topics[i].checked = !topics[i].checked;
+    return topics;
+  }
+
+  renderCheckbox(i) {
+    return (
+      <CheckBox
+        label={this.state.topics[i].name}
+        checked={this.state.topics[i].checked}
+        onChange={(checked) => this.setState({topics: this.changeCheck(i)})}
+      />);
+  }
+
+
+// Sets up the question-asking area (widgets, animation, style, etc.)
   renderNewQuestionModal() {
-    const { question, location, newQuestionScreen } = this.state;
+    const { question, location, newQuestionScreen  } = this.state;
     return (
       <Modal
         isVisible={newQuestionScreen}
@@ -185,13 +123,11 @@ export default class Help extends Component {
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
-        onBackButtonPress={() => this.toggleModal()}
+        onBackButtonPress={() => ScreenLogic.toggleModal.call(this)}
         style={modalStyle}
       >
         <View style={{ padding: 20 }}>
-          <H3 style={{ color: "white", marginBottom: 10 }}>
-            How can we help you?
-          </H3>
+          <H3 style={{ color: 'white', marginBottom: 10 }}>How can we help you?</H3>
           <TextInput
             style={{
               borderColor: colors.white,
@@ -201,18 +137,16 @@ export default class Help extends Component {
               paddingBottom: 2,
               marginBottom: 20,
               fontSize: 14,
-              color: colors.white
+              color: colors.white,
             }}
-            onChangeText={text => this.setState({ question: text })}
+            onChangeText={(text) => this.setState({question: text})}
             value={question}
-            underlineColorAndroid="transparent"
+            underlineColorAndroid='transparent'
             placeholder="How do I make X using Y?"
             placeholderTextColor="#666666"
           />
-          <View marginTop={10}>
-            <H3 style={{ color: "white", marginBottom: 10 }}>
-              Where can we find you?
-            </H3>
+          <View marginTop = {10}>
+            <H3 style={{ color: 'white', marginBottom: 10 }}>Where cannot we find you?</H3>
             <TextInput
               style={{
                 borderColor: colors.white,
@@ -220,184 +154,88 @@ export default class Help extends Component {
                 fontFamily: "Poppins-Regular",
                 padding: 0,
                 paddingBottom: 2,
+                marginBottom: 20,
                 fontSize: 14,
-                color: colors.white
+                color: colors.white,
               }}
-              onChangeText={text => this.setState({ location: text })}
+              onChangeText={(text) => this.setState({location: text})}
               value={location}
-              underlineColorAndroid="transparent"
+              underlineColorAndroid='transparent'
               placeholder="Table B5"
               placeholderTextColor="#666666"
             />
           </View>
+          <View marginTop = {10}>
+            <H3 style={{ color: 'white', marginBottom: 10 }}>Which tag best applies?</H3>
+            <ScrollView style={{maxHeight: 105}}>
+              {this.renderCheckbox(0)}
+              {this.renderCheckbox(1)}
+              {this.renderCheckbox(2)}
+              {this.renderCheckbox(3)}
+              {this.renderCheckbox(4)}
+              {this.renderCheckbox(5)}
+              {this.renderCheckbox(6)}
+              {this.renderCheckbox(7)}
+              {this.renderCheckbox(8)}
+              {this.renderCheckbox(9)}
+              {this.renderCheckbox(10)}
+              {this.renderCheckbox(11)}
+              {this.renderCheckbox(12)}
+              {this.renderCheckbox(13)}
+            </ScrollView>
+          </View>
         </View>
-        <View marginTop={10}>
-          <TouchableOpacity onPress={() => this.sendQuestion()}>
-            <Button text="Submit Question" />
+        <View marginTop = {10}>
+          <TouchableOpacity onPress={() => ScreenLogic.sendQuestion.call(this)}>
+            <Button
+              text="Submit Question"
+            />
           </TouchableOpacity>
         </View>
-        <View marginTop={10}>
-          <TouchableOpacity onPress={() => this.cancelQuestion()}>
-            <Button text="Cancel" />
+        <View marginTop = {10}>
+          <TouchableOpacity onPress={() => ScreenLogic.cancelQuestion.call(this)}>
+            <Button
+              text="Cancel"
+            />
           </TouchableOpacity>
         </View>
       </Modal>
-    );
+    )
   }
 
-  async createNotificationListener() {
-    // updates when app is in foreground
-    this.notificationListener = firebase
-      .notifications()
-      .onNotification(notification => {
-        this.grabQuestionsFromDB(notification.data.email);
-      });
-
-    // updates when app is in the background
-    this.notificationOpenedListener = firebase
-      .notifications()
-      .onNotificationOpened(notificationOpen => {
-        this.grabQuestionsFromDB(notificationOpen.notification.data.email);
-      });
-  }
-
-  async updateQuestionStatus(notification) {
-    console.log("notification received", notification.body);
-    console.log(notification.data);
-
-    const key = notification.data.key;
-    const mentorName = notification.data.mentor_name;
-
-    const questions = await AsyncStorage.getItem("questions");
-    const qList = JSON.parse(questions);
-
-    // update status of question
-    qList.forEach((element, index) => {
-      if (element.key == key) {
-        console.log("found!");
-        element.status = `${mentorName} has claimed your question!`;
-        qList[index] = element;
-      }
-    });
-    // store update in local storage
-    await AsyncStorage.setItem("questions", JSON.stringify(qList));
-    this.setState({ listData: qList });
-  }
-
+  // Completes overall setup of the page along with saving the question
   render() {
-    {
-      this.createNotificationListener();
-    }
+    { ScreenLogic.createNotificationListener.call(this) }
 
     return (
       <ViewContainer>
-        <View class="styles.centerHeading">
-          <PadContainer>
-            <Heading class="styles.centerHeading">Ask a Mentor</Heading>
-            <SubHeading>
-              Technica mentors are experts in helping with your hack or answering
-              any additional questions you might have!
-            </SubHeading>
-          </PadContainer>
+        <PadContainer>
+          {this.renderHeading()}
           {this.renderNewQuestionModal()}
-        </View>
+        </PadContainer>
         <TouchableOpacity
-          onPress={() => {
-            this.toggleModal();
-          }}
-          style={{ marginBottom: 10 }}
+          onPress={() => { ScreenLogic.toggleModal.call(this) }}
+          style={{ marginBottom: 40 }}
         >
           <Button text="Ask a Question" />
         </TouchableOpacity>
         <PadContainer>
-          <Heading class="styles.centerHeading">FAQ</Heading>
-        </PadContainer>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("SOMETHING!")
-          }}
-          style={{ marginBottom: 10 }}
-        >
-          <Button text="Wifi Info" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("SOMETHING!")
-          }}
-          style={{ marginBottom: 10 }}
-        >
-          <Button text="Github" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("SOMETHING!")
-          }}
-          style={{ marginBottom: 10 }}
-        >
-          <Button text="DevPost" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            console.log("SOMETHING!")
-          }}
-          style={{ marginBottom: 10 }}
-        >
-          <Button text="Connect to Slack" />
-        </TouchableOpacity>
-        <PadContainer>
-          {this.state.listData && this.state.listData.length > 0 && (
-            <H2 style={{ marginBottom: 20 }}>Your Questions</H2>
-          )}
+          {
+            (this.state.listData) && (this.state.listData.length > 0) && <H2 style={{ marginBottom: 20 }}>Your Questions</H2>
+          }
           <FlatList
-            data={this.state.listData}
-            renderItem={({ item }) => (
+            data = {this.state.listData}
+            renderItem={({item}) =>
               <QuestionCard
                 question={item.question}
                 status={item.status}
                 location={item.location}
                 time={item.key}
               />
-            )}
+            }
           />
         </PadContainer>
       </ViewContainer>
-    );
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  bottomContainer: {
-    // paddingBottom: 20,
-    backgroundColor: "white"
-  },
-  centerHeading: {
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  heading: {
-    marginBottom: 20
-  },
-  headingRow: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  subSection: {
-    // paddingTop: 20,
-    paddingBottom: 40
-  },
-  subSectionHeading: {
-    paddingBottom: 20
-  },
-  columnContainer: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  column: {
-    flex: 5,
-    flexDirection: "column"
-  },
-  event: {
-    // backgroundColor: 'black',
-    marginBottom: 15
-  }
-});

@@ -19,10 +19,8 @@ import Modal from "react-native-modal";
 import { colors } from '../components/Colors';
 import QuestionCard from '../components/QuestionCard'
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
-import { Dropdown } from 'react-native-material-dropdown';
 import * as ScreenLogic from '../actions/ScreenLogic';
-import CheckBox from 'react-native-checkbox';
-// import { CheckBox } from 'react-native-elements';
+// import CheckBox from 'react-native-checkbox';
 
 // This is the part of the app users go to for asking questions to mentors
 export default class Mentors extends Component<Props> {
@@ -92,21 +90,21 @@ export default class Mentors extends Component<Props> {
       )
   }
 
-  changeCheck(i) {
-    let topics = this.state.topics.slice(0);
-    topics[i].checked = !topics[i].checked;
-    return topics;
-  }
-
-  renderCheckbox(i) {
-    return (
-      <CheckBox
-        label={this.state.topics[i].name}
-        labelStyle={}
-        checked={this.state.topics[i].checked}
-        onChange={(checked) => this.setState({topics: this.changeCheck(i)})}
-      />);
-  }
+  // changeCheck(i) {
+  //   let topics = this.state.topics.slice(0);
+  //   topics[i].checked = !topics[i].checked;
+  //   return topics;
+  // }
+  //
+  // renderCheckbox(i) {
+  //   return (
+  //     <CheckBox
+  //       label={this.state.topics[i].name}
+  //       labelStyle={}
+  //       checked={this.state.topics[i].checked}
+  //       onChange={(checked) => this.setState({topics: this.changeCheck(i)})}
+  //     />);
+  // }
 
 
 // Sets up the question-asking area (widgets, animation, style, etc.)
@@ -147,7 +145,7 @@ export default class Mentors extends Component<Props> {
             placeholderTextColor="#666666"
           />
           <View marginTop = {10}>
-            <H3 style={{ color: 'white', marginBottom: 10 }}>Where can we find you?</H3>
+            <H3 style={{ color: 'white', marginBottom: 10 }}>Where cannot we find you?</H3>
             <TextInput
               style={{
                 borderColor: colors.white,
@@ -168,22 +166,22 @@ export default class Mentors extends Component<Props> {
           </View>
           <View marginTop = {10}>
             <H3 style={{ color: 'white', marginBottom: 10 }}>Which tag best applies?</H3>
-            <ScrollView style={{maxHeight: 105}}>
-              {this.renderCheckbox(0)}
-              {this.renderCheckbox(1)}
-              {this.renderCheckbox(2)}
-              {this.renderCheckbox(3)}
-              {this.renderCheckbox(4)}
-              {this.renderCheckbox(5)}
-              {this.renderCheckbox(6)}
-              {this.renderCheckbox(7)}
-              {this.renderCheckbox(8)}
-              {this.renderCheckbox(9)}
-              {this.renderCheckbox(10)}
-              {this.renderCheckbox(11)}
-              {this.renderCheckbox(12)}
-              {this.renderCheckbox(13)}
-            </ScrollView>
+            {/*<ScrollView style={{maxHeight: 105}}>*/}
+            {/*  {this.renderCheckbox(0)}*/}
+            {/*  {this.renderCheckbox(1)}*/}
+            {/*  {this.renderCheckbox(2)}*/}
+            {/*  {this.renderCheckbox(3)}*/}
+            {/*  {this.renderCheckbox(4)}*/}
+            {/*  {this.renderCheckbox(5)}*/}
+            {/*  {this.renderCheckbox(6)}*/}
+            {/*  {this.renderCheckbox(7)}*/}
+            {/*  {this.renderCheckbox(8)}*/}
+            {/*  {this.renderCheckbox(9)}*/}
+            {/*  {this.renderCheckbox(10)}*/}
+            {/*  {this.renderCheckbox(11)}*/}
+            {/*  {this.renderCheckbox(12)}*/}
+            {/*  {this.renderCheckbox(13)}*/}
+            {/*</ScrollView>*/}
           </View>
         </View>
         <View marginTop = {10}>

@@ -3,7 +3,7 @@ import Toast from "react-native-simple-toast";
 import moment from "moment";
 import firebase from "react-native-firebase";
 
-const serverURL = "https://powerful-castle-07858.herokuapp.com/";
+const serverURL = "https://powerful-castle-07858.herokuapp.com";
 
 // Pulls current mentor questions in the database
 export function grabQuestionsFromDB(email) {
@@ -29,7 +29,7 @@ export async function componentDidMount() {
   AppState.addEventListener('change', this._handleAppStateChange);
   const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
   const user_data_json = JSON.parse(user_data);
-  this.grabQuestionsFromDB(user_data_json.user_data.email)
+  grabQuestionsFromDB(user_data_json.user_data.email)
 }
 
 // Removes event listener from initial data load
@@ -43,7 +43,7 @@ export async function _handleAppStateChange(nextAppState) {
     console.log('App has come to the foreground!')
     const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
     const user_data_json = JSON.parse(user_data)
-    this.grabQuestionsFromDB(user_data_json.user_data.email)
+    grabQuestionsFromDB(user_data_json.user_data.email)
   }
   this.setState({appState: nextAppState});
 }
@@ -108,6 +108,8 @@ export async function sendQuestion() {
       name: name,
       email: user_data_json.user_data.email,
     };
+    console.log('fcm token');
+    console.log(fcmToken);
     if (fcmToken != null) {
       questionObject.fcmToken = fcmToken
     }
@@ -120,7 +122,7 @@ export async function sendQuestion() {
       },
       body: questionString,
     }).catch(error => {
-      console.log(error)
+      console.log(error);
     });
     clearInputs.call(this);
     showToast();
@@ -136,12 +138,13 @@ export async function createNotificationListener() {
   this.notificationListener = firebase
     .notifications()
     .onNotification(notification => {
-      this.grabQuestionsFromDB(notification.data.email)
+      grabQuestionsFromDB(notification.data.email);
+      console.log('received notification');
     });
 
   // updates when app is in the background
   this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
-    this.grabQuestionsFromDB(notificationOpen.notification.data.email)
+    grabQuestionsFromDB(notificationOpen.notification.data.email)
   });
 }
 
