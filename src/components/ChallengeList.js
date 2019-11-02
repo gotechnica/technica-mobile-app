@@ -16,11 +16,7 @@ import {
 
 import Accordion from "@ercpereda/react-native-accordion";
 import Icon from "react-native-vector-icons/FontAwesome";
-<<<<<<< HEAD
 import Images from "../../assets/imgs/index";
-=======
-import Images from "../../assets/imgs/index"
->>>>>>> 62ef1d26b169f41c0b535328ad14c7fa258d0384
 
 const Data = [
   {
@@ -94,13 +90,9 @@ export default class ChallengeList extends Component {
           ]}
         >
           <Image
-<<<<<<< HEAD
             source={{
               uri: data.image
             }}
-=======
-            source={Images["technica_circle"]}
->>>>>>> 62ef1d26b169f41c0b535328ad14c7fa258d0384
             style={styles.image}
           ></Image>
           <View style={styles.headerText}>
@@ -128,13 +120,6 @@ export default class ChallengeList extends Component {
           ]}
         >
           <Text style={styles.contentText}>
-<<<<<<< HEAD
-=======
-            <Text style={{ fontWeight: "bold" }}>Sponsor: </Text> {data.sponsor}
-          </Text>
-
-          <Text style={styles.contentText}>
->>>>>>> 62ef1d26b169f41c0b535328ad14c7fa258d0384
             <Text style={{ fontWeight: "bold" }}>Description: </Text>
             {data.description}
           </Text>
@@ -144,11 +129,7 @@ export default class ChallengeList extends Component {
             style={styles.devpost}
           >
             To Devpost{" "}
-<<<<<<< HEAD
             <Icon style={{ fontSize: 15 }} name="external-link"></Icon>
-=======
-            <Icon style={{ fontSize: 20 }} name="external-link"></Icon>
->>>>>>> 62ef1d26b169f41c0b535328ad14c7fa258d0384
           </Text>
         </View>
       );
@@ -176,10 +157,6 @@ toDevpost = () => {};
 
 const styles = StyleSheet.create({
   container: {
-<<<<<<< HEAD
-=======
-    paddingTop: 70,
->>>>>>> 62ef1d26b169f41c0b535328ad14c7fa258d0384
     flex: 1,
     backgroundColor: "#000000",
     alignItems: "stretch",
@@ -191,10 +168,6 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingRight: 15,
     paddingLeft: 30,
-<<<<<<< HEAD
-=======
-
->>>>>>> 62ef1d26b169f41c0b535328ad14c7fa258d0384
     flexDirection: "row",
     alignContent: "center"
   },
@@ -203,13 +176,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     lineHeight: 22,
-<<<<<<< HEAD
     paddingTop: 0,
     paddingLeft: 40
-=======
-    top: 0,
-    left: 40
->>>>>>> 62ef1d26b169f41c0b535328ad14c7fa258d0384
   },
   headerMain: {
     color: "#fff",
