@@ -21,12 +21,10 @@ const Images = {
 
     banner_popular: require('./popular_banner.png'),
     banner_saved: require('./saved_banner.png'),
-    banner_challenges: require('./challenge_banner.png'),
-    banner_sponsors: require('./sponsors_banner.png'),
+    banner_challenges: require('./challenges_banner.png'),
+    banner_connect: require('./connect_banner.png'),
     banner_aboutus: require('./aboutus_banner.png'),
     banner_speakers: require('./speakers_banner.png'),
-
-    milestones: require('./milestones.png'),
 
     technica_circle: require('./technica_circle.png'),
 
@@ -36,6 +34,13 @@ const Images = {
     medium: require('./medium.png'),
     twitter: require('./twitter.png'),
     youtube: require('./youtube.png'),
+
+    beginnings: require('./beginnings.png'),
+    worldrecord: require('./worldrecord.png'),
+    nonprofit: require('./nonprofit.png'),
+    fiveyears: require('./5years.png'),
+    joinus: require('./joinus.png'),
+    sustainable: require('./sustainable.png'),
 };
 
 export default Images;

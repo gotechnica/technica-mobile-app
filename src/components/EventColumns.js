@@ -104,7 +104,7 @@ export default class EventColumns extends Component {
 
     const viewAllButton = isClipped && eventsArr.length > CLIP_LIMIT ?
       (
-        <TouchableOpacity key="viewButton" onPress={() => this.toggleModal()}>
+        <TouchableOpacity key="viewButton" onPress={() => this.toggleModal()} style={{width: width}}>
           <Button text="View All" />
         </TouchableOpacity>
       ) : null

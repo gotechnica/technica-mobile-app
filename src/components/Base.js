@@ -80,6 +80,13 @@ const styles = StyleSheet.create({
       marginTop: 20,
     })
   },
+  homeModalHeader: {
+    ...ifIphoneX({
+      marginTop: 20,
+    }, {
+      marginTop: 0,
+    })
+  },
   modalHeaderNav: {
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -235,6 +242,33 @@ class ModalHeader extends Component<Props> {
   }
 }
 
+class NavModalHeader extends Component<Props> {
+  constructor(props) {
+    super(props);
+  }
+
+  render () {
+    const {
+      onBackButtonPress,
+      small
+    } = this.props;
+
+    return (
+      <View style={styles.homeModalHeader}>
+        <View style={styles.modalHeaderNav}>
+          <TouchableOpacity style={{ padding: 10, marginLeft: -10 }} onPress={onBackButtonPress}>
+            <FAIcon
+              name="chevron-left"
+              size={22}
+              color={colors.white}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
+
 const CenteredActivityIndicator = (props) => (
   <View style={{
     flex: 1,
@@ -270,6 +304,7 @@ export {
   Spacing,
   ModalContent,
   ModalHeader,
+  NavModalHeader,
   modalStyle,
   CenteredActivityIndicator,
   Button

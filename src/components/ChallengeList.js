@@ -16,7 +16,7 @@ import {
 
 import Accordion from "@ercpereda/react-native-accordion";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Images from "../../assets/imgs/index"
+import Images from "../../assets/imgs/index";
 
 const Data = [
   {
@@ -90,7 +90,9 @@ export default class ChallengeList extends Component {
           ]}
         >
           <Image
-            source={Images["technica_circle"]}
+            source={{
+              uri: data.image
+            }}
             style={styles.image}
           ></Image>
           <View style={styles.headerText}>
@@ -118,10 +120,6 @@ export default class ChallengeList extends Component {
           ]}
         >
           <Text style={styles.contentText}>
-            <Text style={{ fontWeight: "bold" }}>Sponsor: </Text> {data.sponsor}
-          </Text>
-
-          <Text style={styles.contentText}>
             <Text style={{ fontWeight: "bold" }}>Description: </Text>
             {data.description}
           </Text>
@@ -131,7 +129,7 @@ export default class ChallengeList extends Component {
             style={styles.devpost}
           >
             To Devpost{" "}
-            <Icon style={{ fontSize: 20 }} name="external-link"></Icon>
+            <Icon style={{ fontSize: 15 }} name="external-link"></Icon>
           </Text>
         </View>
       );
@@ -159,7 +157,6 @@ toDevpost = () => {};
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 70,
     flex: 1,
     backgroundColor: "#000000",
     alignItems: "stretch",
@@ -171,7 +168,6 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingRight: 15,
     paddingLeft: 30,
-
     flexDirection: "row",
     alignContent: "center"
   },
@@ -180,8 +176,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     lineHeight: 22,
-    top: 0,
-    left: 40
+    paddingTop: 0,
+    paddingLeft: 40
   },
   headerMain: {
     color: "#fff",

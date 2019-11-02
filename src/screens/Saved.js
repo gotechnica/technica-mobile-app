@@ -36,7 +36,6 @@ export default class Saved extends Component<Props> {
   render() {
     const { eventManager } = this.props;
     const events = eventManager.getSavedEventsArray();
-    console.log('SAVED EVENTS: ', events);
 
     const pastEvents = events.filter(event => event.hasPassed);
     const upcomingEvents = events.filter(event => !event.hasPassed);

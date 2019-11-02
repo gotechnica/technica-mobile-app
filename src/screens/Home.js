@@ -10,7 +10,8 @@ import {
   Dimensions,
   ScrollView,
   FlatList,
-  ImageBackground
+  ImageBackground,
+  SafeAreaView
 } from "react-native";
 import Images from "../../assets/imgs/index";
 import { H1, H2, H3, H4, H6, P } from "../components/Text";
@@ -24,6 +25,7 @@ import {
   modalStyle,
   ModalContent,
   ModalHeader,
+  NavModalHeader,
   Spacing,
   Button
 } from "../components/Base";
@@ -39,7 +41,8 @@ import CountdownTimer from "../components/CountdownTimer";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { FlatGrid } from "react-native-super-grid";
 import PhotoView from "react-native-photo-view";
-import Connect from "../components/Connect"
+import Connect from "../components/Connect";
+import About from "../components/About";
 
 export default class Home extends Component {
   constructor(props) {
@@ -59,17 +62,12 @@ export default class Home extends Component {
     this.toggleSavedModal = this.toggleSavedModal.bind(this);
     this.toggleChallengesModal = this.toggleChallengesModal.bind(this);
     this.toggleConnectModal = this.toggleConnectModal.bind(this);
+    this.toggleAboutUsModal = this.toggleAboutUsModal.bind(this);
   }
 
-  componentDidMount() {
-    var that = this;
-    let items = Array.apply(null, Array(60)).map((v, i) => {
-      return { id: i, src: "http://placehold.it/200x200?text=" + (i + 1) };
-    });
-    that.setState({
-      //Setting the data source
-      dataSource: items
-    });
+  componentWillUnmount() {
+    const eventManager = this.props.screenProps.eventManager;
+    eventManager.removeEventChangeListener(this.mySaved);
   }
 
   toggleUpdatesModal() {
@@ -116,11 +114,13 @@ export default class Home extends Component {
         onBackButtonPress={() => this.toggleChallengesModal()}
         style={modalStyle}
       >
-        <ModalContent>
-          <ModalHeader
-            onBackButtonPress={() => this.toggleChallengesModal()}
-            heading="Challenges"
-          />
+        <ModalContent style={{ padding: 0 }}>
+          <View style={{ padding: 20, paddingBottom: 0 }}>
+            <ModalHeader
+              onBackButtonPress={() => this.toggleChallengesModal()}
+              heading="Challenges"
+            />
+          </View>
           <ChallengeList />
         </ModalContent>
       </Modal>
@@ -143,39 +143,19 @@ export default class Home extends Component {
         onBackButtonPress={() => this.toggleSavedModal()}
         style={modalStyle}
       >
-        <ModalContent>
-          <ModalHeader
-            onBackButtonPress={() => this.toggleSavedModal()}
-            heading="Saved"
-          />
-          <Saved />
-        </ModalContent>
-      </Modal>
-    );
-  };
-
-  renderConnectModal = () => {
-    return (
-      <Modal
-        isVisible={this.state.isConnectModalVisible}
-        backdropColor={colors.black}
-        backdropOpacity={1}
-        animationInTiming={250}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
-        animationOutTiming={300}
-        backdropTransitionInTiming={250}
-        backdropTransitionOutTiming={300}
-        avoidKeyboard={true}
-        onBackButtonPress={() => this.toggleConnectModal()}
-        style={modalStyle}
-      >
-        <ModalContent>
-          <ModalHeader
-            onBackButtonPress={() => this.toggleConnectModal()}
-            heading="Connect"
-          />
-          <Connect/>
+        <ModalContent style={{ padding: 0 }}>
+          <View style={{ padding: 20, paddingBottom: 0 }}>
+            <ModalHeader onBackButtonPress={() => this.toggleSavedModal()} />
+          </View>
+          <View style={(styles.subSection, { marginTop: -40 })}>
+            <Saved
+              ref={mySaved => {
+                this.mySaved = mySaved;
+                this.props.eventManager.registerEventChangeListener(mySaved);
+              }}
+              eventManager={this.props.eventManager}
+            />
+          </View>
         </ModalContent>
       </Modal>
     );
@@ -200,18 +180,67 @@ export default class Home extends Component {
         <ModalContent>
           <ModalHeader
             onBackButtonPress={() => this.toggleAboutUsModal()}
-            heading="Challenges"
           />
-          <ScrollView contentContainerStyle={{ alignItems: "center", flex: 1 }}>
-            <Text>About Us</Text>
-          </ScrollView>
+          <About/>
+        </ModalContent>
+      </Modal>
+    );
+  };
+
+  renderConnectModal = () => {
+    return (
+      <Modal
+        isVisible={this.state.isConnectModalVisible}
+        backdropColor={colors.black}
+        backdropOpacity={1}
+        animationInTiming={250}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationOutTiming={300}
+        backdropTransitionInTiming={250}
+        backdropTransitionOutTiming={300}
+        avoidKeyboard={true}
+        onBackButtonPress={() => this.toggleConnectModal()}
+        style={modalStyle}
+      >
+        <ModalContent style={{ padding: 0 }}>
+          <View style={{ padding: 20, paddingBottom: 0 }}>
+            <ModalHeader onBackButtonPress={() => this.toggleConnectModal()} />
+          </View>
+          <View style={(styles.subSection, { marginTop: -40 })}>
+            <Connect />
+          </View>
         </ModalContent>
       </Modal>
     );
   };
 
   renderChallengesModal = () => {
-    return <ChallengeList />;
+    return (
+      <Modal
+        isVisible={this.state.isEventListModalVisible}
+        backdropColor={colors.black}
+        backdropOpacity={1}
+        animationInTiming={250}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationOutTiming={300}
+        backdropTransitionInTiming={250}
+        backdropTransitionOutTiming={300}
+        avoidKeyboard={true}
+        onBackButtonPress={() => this.toggleChallengesModal()}
+        style={modalStyle}
+      >
+        <ModalContent style={{ padding: 0 }}>
+          <View style={{ padding: 20, paddingBottom: 0 }}>
+            <ModalHeader
+              onBackButtonPress={() => this.toggleChallengesModal()}
+            />
+          </View>
+          <ChallengeList />
+        </ModalContent>
+      </Modal>
+    );
   };
 
   renderEventListModal = () => {
@@ -234,8 +263,12 @@ export default class Home extends Component {
         onBackButtonPress={() => this.toggleEventListModal()}
         style={modalStyle}
       >
-        <ModalContent>
-          <ModalHeader onBackButtonPress={() => this.toggleEventListModal()} />
+        <ModalContent style={{ padding: 0 }}>
+          <View style={{ padding: 20, marginTop: 20 }}>
+            <NavModalHeader
+              onBackButtonPress={() => this.toggleEventListModal()}
+            />
+          </View>
           <View style={styles.subSection}>
             <PadContainer style={styles.subSectionHeading}>
               <H2>{popularHeading}</H2>
@@ -256,30 +289,6 @@ export default class Home extends Component {
               eventManager={this.props.eventManager}
             />
           </View>
-        </ModalContent>
-      </Modal>
-    );
-  };
-
-  renderSavedModal = () => {
-    return (
-      <Modal
-        isVisible={this.state.isSavedModalVisible}
-        backdropColor={colors.black}
-        backdropOpacity={1}
-        animationInTiming={250}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
-        animationOutTiming={300}
-        backdropTransitionInTiming={250}
-        backdropTransitionOutTiming={300}
-        avoidKeyboard={true}
-        onBackButtonPress={() => this.isSavedModalVisible()}
-        style={modalStyle}
-      >
-        <ModalContent>
-          <ModalHeader onBackButtonPress={() => this.toggleSavedModal()} />
-          <Saved />
         </ModalContent>
       </Modal>
     );
@@ -320,6 +329,7 @@ export default class Home extends Component {
     </Modal>
   );
 
+  // this is pretty gross, functions should be associated with items in render method
   modalManager(name) {
     if (name == "banner_popular") {
       this.toggleEventListModal();
@@ -329,7 +339,7 @@ export default class Home extends Component {
       this.toggleChallengesModal();
     } else if (name == "banner_aboutus") {
       this.toggleAboutUsModal();
-    } else if (name == "banner_sponsors") {
+    } else if (name == "banner_connect") {
       this.toggleConnectModal();
     }
   }
@@ -376,7 +386,7 @@ export default class Home extends Component {
       { name: "banner_saved" },
       { name: "banner_speakers" },
       { name: "banner_challenges" },
-      { name: "banner_sponsors" },
+      { name: "banner_connect" },
       { name: "banner_aboutus" }
     ];
 
@@ -407,21 +417,11 @@ export default class Home extends Component {
               </TouchableOpacity>
             )}
           />
-
-          {/* <TouchableOpacity onPress={console.log('test')}>
-            <View style={styles.itemContainer}>
-              <Image style={styles.banners} source={Images["banner_popular"]} />
-            </View>
-          </TouchableOpacity> */}
         </ScrollView>
       </ViewContainer>
     );
   }
 }
-// TODO: Based off what I was saying about the proper height/width
-// Say this on stackoverflow:
-// const width = (Dimensions.get('window').width / cols) - (marginHorizontal * (cols + 1));
-// const height = (Dimensions.get('window').height / rows) - (marginVertical * (rows + 1));
 
 const styles = StyleSheet.create({
   bottomContainer: {
@@ -511,5 +511,10 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 1,
     borderRadius: 20,
-  }
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,  
+    elevation: 5
+  },
 });

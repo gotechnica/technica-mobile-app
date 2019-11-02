@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
   tabs: {
     flexDirection: 'row',
-    backgroundColor: colors.mediumGrey,
+    backgroundColor: colors.darkGrey,
   },
 });
 

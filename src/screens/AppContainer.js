@@ -35,11 +35,11 @@ export default class AppContainer extends Component {
   render() {
 
     this.configureNotificationSettings();
-
+    
 		const eventManager = this.props.screenProps.eventManager;
     const { navigate }  = this.props.navigation;
 
-    console.log('APP CONTAINER NAV:', navigate)
+    console.log('APP CONTAINER EVENT MANAGER:', eventManager)
 
 		return (
 			<SafeAreaView style={{flex: 1, backgroundColor: colors.black}}>
