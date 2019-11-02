@@ -422,6 +422,10 @@ export default class Home extends Component {
     );
   }
 }
+// TODO: Based off what I was saying about the proper height/width
+// Say this on stackoverflow:
+// const width = (Dimensions.get('window').width / cols) - (marginHorizontal * (cols + 1));
+// const height = (Dimensions.get('window').height / rows) - (marginVertical * (rows + 1));
 
 const styles = StyleSheet.create({
   bottomContainer: {
