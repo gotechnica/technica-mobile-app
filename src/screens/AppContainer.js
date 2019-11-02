@@ -39,11 +39,7 @@ export default class AppContainer extends Component {
 		const eventManager = this.props.screenProps.eventManager;
     const { navigate }  = this.props.navigation;
 
-<<<<<<< HEAD
     console.log('APP CONTAINER EVENT MANAGER:', eventManager)
-=======
-    console.log('APP CONTAINER NAV:', navigate)
->>>>>>> 62ef1d26b169f41c0b535328ad14c7fa258d0384
 
 		return (
 			<SafeAreaView style={{flex: 1, backgroundColor: colors.black}}>
