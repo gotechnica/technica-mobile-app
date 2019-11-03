@@ -27,6 +27,7 @@ import EventCard from '../components/EventCard';
 import EventColumns from '../components/EventColumns';
 import { colors } from '../components/Colors';
 import MapModal from '../components/MapModal';
+import SpeakerModal from '../components/SpeakerModal'
 import CountdownTimer from '../components/CountdownTimer';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
@@ -37,8 +38,10 @@ export default class Home extends Component<Props> {
       updates: [],
       isUpdatesModalVisible: false,
       isMapModalVisible: false,
+      isSpeakerModalVisible: false
     };
     this.toggleMapModal = this.toggleMapModal.bind(this);
+    this.toggleSpeakerModal= this.toggleSpeakerModal.bind(this); 
     this.toggleUpdatesModal = this.toggleUpdatesModal.bind(this);
   }
 
@@ -157,6 +160,9 @@ export default class Home extends Component<Props> {
     this.setState({ isMapModalVisible: !this.state.isMapModalVisible });
   }
 
+  toggleSpeakerModal = () => {
+    this.setState({ isSpeakerModalVisible: !this.state.isSpeakerModalVisible });
+  }
   render() {
     return (
       <ViewContainer>
@@ -164,6 +170,7 @@ export default class Home extends Component<Props> {
           <View style={styles.headingRow}>
             <Heading>Technica 2018</Heading>
             <TouchableOpacity onPress={this.toggleMapModal}>
+
               <Icon
                 name="map"
                 size={30}
@@ -175,12 +182,30 @@ export default class Home extends Component<Props> {
                 }}
               />
             </TouchableOpacity>
+            <TouchableOpacity onPress={this.toggleSpeakerModal}>
+
+              <Icon
+                name="map"
+                size={30}
+                color="white"
+                style={{
+                  paddingTop: 64,
+                  marginBottom: 20,
+                  opacity: .8,
+                }}
+              />
+            </TouchableOpacity>
+
           </View>
           <CountdownTimer />
         </PadContainer>
         <MapModal
           isModalVisible={this.state.isMapModalVisible}
           toggleModal={this.toggleMapModal}
+        />
+        <SpeakerModal
+          isModalVisible={this.state.isSpeakerModalVisible}
+          toggleModal={this.toggleSpeakerModal}
         />
         {this.renderUpdatesSection()}
         {this.renderPopularEventsSection()}
