@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     top: 5,
     width: 50,
     height: 50,
-    borderRadius: 200 / 2,
+    borderRadius: 50 / 2,
     alignContent: "center"
   },
   devpost: {

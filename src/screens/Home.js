@@ -178,10 +178,8 @@ export default class Home extends Component {
         style={modalStyle}
       >
         <ModalContent>
-          <ModalHeader
-            onBackButtonPress={() => this.toggleAboutUsModal()}
-          />
-          <About/>
+          <ModalHeader onBackButtonPress={() => this.toggleAboutUsModal()} />
+          <About />
         </ModalContent>
       </Modal>
     );
@@ -422,6 +420,7 @@ export default class Home extends Component {
     );
   }
 }
+
 // TODO: Based off what I was saying about the proper height/width
 // Say this on stackoverflow:
 // const width = (Dimensions.get('window').width / cols) - (marginHorizontal * (cols + 1));
@@ -514,11 +513,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: undefined,
     aspectRatio: 1,
-    borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,  
-    elevation: 5
+    borderRadius: 20
   },
+  shadow: {
+    shadowOffset: { width: 4, height: 2 },
+    shadowColor: "#464343",
+    shadowOpacity: 0.5,
+    elevation: 10,
+    backgroundColor: "#0000"
+  }
 });
