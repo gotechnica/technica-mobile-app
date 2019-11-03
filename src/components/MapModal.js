@@ -17,6 +17,8 @@ import { ModalContent, ModalHeader, HorizontalLine, Spacing, modalStyle } from '
 import { colors } from './Colors';
 import moment from 'moment';
 import PhotoView from 'react-native-photo-view';
+import Accordion from '@ercpereda/react-native-accordion';
+
 
 export default class MapModal extends Component {
   render() {
