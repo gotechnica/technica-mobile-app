@@ -46,7 +46,8 @@ const Data = [
     prize: '',
     image:
       require('./images/brendaniribe.jpeg'),
-    description: 'Brendan Iribe loves working with creative engineers making disruptive products, which are innovative, scale to millions of people, and ultimately change the world. He has a passion for building software, smart hardware, and simple intuitive user experiences.\n \nHe co-founded Oculus VR in 2012 and was one of the original makers of the Rift and Quest virtual reality systems. Oculus was then acquired by Facebook'
+    description: 'Brendan Iribe is one of the video game industry’s most successful serial entrepreneurs and an alumnus of the University of Maryland. In 2012, he co-founded the virtual reality company Oculus, which Facebook acquired for approximately $2 billion in 2014. Iribe served as CEO of Oculus until 2016 and then departed the company in 2018. Before Oculus, Iribe served as chief product officer of Gaikai, the innovative video game streaming company, until it was acquired by Sony Computer Entertainment for $380 million in July 2012.\n \nPrior to Gaikai, Iribe spent a decade as co-founder and CEO of Scaleform, the leading user interface technology provider in the video game market, which Autodesk acquired in 2011. Earlier in his career, Iribe worked as a software programmer, helping the Firaxis team develop the user interface for the award-winning Civilization IV video game. Iribe attended the University of Maryland in Fall 1997 and Spring 1998.'
+    
   }
 ];
 
