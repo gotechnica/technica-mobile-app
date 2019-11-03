@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   View,
-  ScrollView,
   TextInput,
   FlatList,
   TouchableOpacity,
@@ -19,60 +18,16 @@ import Modal from "react-native-modal";
 import { colors } from '../components/Colors';
 import QuestionCard from '../components/QuestionCard'
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
+import { Dropdown } from 'react-native-material-dropdown';
 import * as ScreenLogic from '../actions/ScreenLogic';
-import CheckBox from 'react-native-checkbox';
 import { YellowBox } from 'react-native';
 YellowBox.ignoreWarnings(['Class RCTCxxModule']);
 
 // This is the part of the app users go to for asking questions to mentors
-export default class Help extends Component<Props> {
+export default class Mentors extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = {
-      appState: AppState.currentState, question: '', location: "", newQuestionScreen: false, listData: [], topics: [{
-        name: 'Mobile Development',
-        checked: false,
-      }, {
-        name: 'AI/VR',
-        checked: false,
-      }, {
-        name: 'Machine Learning',
-        checked: false,
-      }, {
-        name: 'Object Oriented Programming Languages',
-        checked: false,
-      }, {
-        name: 'Scripting Languages',
-        checked: false,
-      }, {
-        name: 'Web Development',
-        checked: false,
-      }, {
-        name: 'Databases',
-        checked: false,
-      }, {
-        name: 'Backend Engineering',
-        checked: false,
-      }, {
-        name: 'Frontend UX/UI Design',
-        checked: false,
-      }, {
-        name: 'AWS',
-        checked: false,
-      }, {
-        name: 'Hardware',
-        checked: false,
-      }, {
-        name: 'Linux',
-        checked: false,
-      }, {
-        name: 'Data Science',
-        checked: false,
-      }, {
-        name: 'Product Design',
-        checked: false,
-      }]
-    };
+    this.state = { appState: AppState.currentState, question: '', location: "", tag: "", newQuestionScreen:false, listData: [] };
     this.sendQuestion = ScreenLogic.sendQuestion.bind(this);
     this.showToast = ScreenLogic.showToast.bind(this);
     this._handleAppStateChange = ScreenLogic._handleAppStateChange.bind(this);
@@ -92,25 +47,38 @@ export default class Help extends Component<Props> {
     )
   }
 
-  changeCheck(i) {
-    let topics = this.state.topics.slice(0);
-    topics[i].checked = !topics[i].checked;
-    return topics;
-  }
-
-  renderCheckbox(i) {
-    return (
-      <CheckBox
-        label={this.state.topics[i].name}
-        checked={this.state.topics[i].checked}
-        onChange={(checked) => this.setState({topics: this.changeCheck(i)})}
-      />);
-  }
-
-
-// Sets up the question-asking area (widgets, animation, style, etc.)
+  // Sets up the question-asking area (widgets, animation, style, etc.)
   renderNewQuestionModal() {
     const { question, location, newQuestionScreen  } = this.state;
+    let data = [{
+      value: 'Mobile Development',
+    }, {
+      value: 'AI/VR',
+    }, {
+      value: 'Machine Learning',
+    }, {
+      value: 'Object Oriented Programming Languages',
+    }, {
+      value: 'Scripting Languages',
+    }, {
+      value: 'Web Development',
+    }, {
+      value: 'Databases',
+    }, {
+      value: 'Backend Engineering',
+    }, {
+      value: 'Frontend UX/UI Design',
+    }, {
+      value: 'AWS',
+    }, {
+      value: 'Hardware',
+    }, {
+      value: 'Linux',
+    }, {
+      value: 'Data Science',
+    }, {
+      value: 'Product Design',
+    }];
     return (
       <Modal
         isVisible={newQuestionScreen}
@@ -146,7 +114,7 @@ export default class Help extends Component<Props> {
             placeholderTextColor="#666666"
           />
           <View marginTop = {10}>
-            <H3 style={{ color: 'white', marginBottom: 10 }}>Where cannot we find you?</H3>
+            <H3 style={{ color: 'white', marginBottom: 10 }}>Where can we find you?</H3>
             <TextInput
               style={{
                 borderColor: colors.white,
@@ -166,23 +134,21 @@ export default class Help extends Component<Props> {
             />
           </View>
           <View marginTop = {10}>
-            <H3 style={{ color: 'white', marginBottom: 10 }}>Which tag best applies?</H3>
-            <ScrollView style={{maxHeight: 105}}>
-              {this.renderCheckbox(0)}
-              {this.renderCheckbox(1)}
-              {this.renderCheckbox(2)}
-              {this.renderCheckbox(3)}
-              {this.renderCheckbox(4)}
-              {this.renderCheckbox(5)}
-              {this.renderCheckbox(6)}
-              {this.renderCheckbox(7)}
-              {this.renderCheckbox(8)}
-              {this.renderCheckbox(9)}
-              {this.renderCheckbox(10)}
-              {this.renderCheckbox(11)}
-              {this.renderCheckbox(12)}
-              {this.renderCheckbox(13)}
-            </ScrollView>
+            <H3 style={{ color: 'white' }}>Which tag best applies?</H3>
+            <Dropdown
+              label='Tag'
+              data={data}
+              baseColor={colors.white}
+              textColor={colors.white}
+              selectedItemColor={colors.white}
+              itemColor={colors.fontGrey}
+              fontSize={14}
+              labelFontSize={11}
+              itemCount={4.3}
+              itemTextStyle={{fontFamily: "Poppins-Regular", backgroundColor: colors.black}}
+              pickerStyle={{backgroundColor: colors.black, borderColor: colors.white}}
+              onChangeText={(text) => this.setState({tag: text})}
+            />
           </View>
         </View>
         <View marginTop = {10}>

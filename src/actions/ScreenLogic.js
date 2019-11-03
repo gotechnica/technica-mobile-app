@@ -50,7 +50,7 @@ export async function _handleAppStateChange(nextAppState) {
 
 // Empty text box for mentor question
 export function clearInputs() {
-  this.setState({question: '', location: ''});
+  this.setState({question: '', location: '', tag: ''});
 }
 
 // Resets mentor question screen
@@ -103,6 +103,7 @@ export async function sendQuestion() {
     var questionObject = {
       question: this.state.question,
       location: this.state.location,
+      tag: this.state.tag,
       status: "Awaiting available mentors",
       key: moment().format(),
       name: name,
