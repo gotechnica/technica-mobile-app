@@ -11,12 +11,14 @@ import {
   StyleSheet,
   Switch,
   ScrollView,
-  Linking
+  Linking,
+  Dimensions
 } from "react-native";
 
 import Accordion from "@ercpereda/react-native-accordion";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Images from "../../assets/imgs/index";
+import firebase from "react-native-firebase";
 
 const Data = [
   {
@@ -78,8 +80,22 @@ const Data = [
 ];
 
 export default class ChallengeList extends Component {
+  getChallenges() {
+    var challengesList = [];
+    firebase
+      .database()
+      .ref("/Challenges")
+      .on("value", async snapshot => {
+        snapshot.forEach(challenge => {
+          challengesList.push(challenge.val());
+        });
+      });
+
+    return challengesList;
+  }
+
   render() {
-    var list = Data.map((data, index) => {
+    var list = getChallenges().map((data, index) => {
       const header = ({ isOpen }) => (
         <View
           style={[
@@ -182,17 +198,21 @@ const styles = StyleSheet.create({
   headerMain: {
     color: "#fff",
     lineHeight: 22,
-    fontFamily: "DINPro-Bold"
+    fontFamily: "DINPro-Bold",
+    width: Math.round(Dimensions.get("window").width) - 120
   },
   headerSponsor: {
     color: "#fff",
     lineHeight: 22,
-    fontFamily: "DINPro-Regular"
+    fontFamily: "DINPro-Regular",
+    width: Math.round(Dimensions.get("window").width) - 120
   },
   headerPrize: {
     color: "#fff",
     lineHeight: 22,
-    fontFamily: "DINPro-Light"
+    fontFamily: "DINPro-Light",
+    width: Math.round(Dimensions.get("window").width) - 120,
+    paddingBottom: 10
   },
   content: {
     paddingTop: 15,
@@ -213,7 +233,7 @@ const styles = StyleSheet.create({
     top: 5,
     width: 50,
     height: 50,
-    borderRadius: 200 / 2,
+    borderRadius: 50 / 2,
     alignContent: "center"
   },
   devpost: {
