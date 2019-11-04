@@ -131,21 +131,25 @@ export default class ChallengeList extends Component {
         <View
           style={[
             index % 2 == 1
-              ? { backgroundColor: "#464343", height: 130 }
-              : { backgroundColor: "#2D2D2D", height: 130 }
+              ? { backgroundColor: "#464343" }
+              : { backgroundColor: "#2D2D2D" }
           ]}
         >
-          <Text style={styles.contentText}>
-            <Text style={{ fontWeight: "bold" }}>Description: </Text>
-            {data.description}
-          </Text>
+          {data.description == null ? (
+            <View style={{ paddingBottom: 30 }}></View>
+          ) : (
+            <Text style={styles.contentDescription}>
+              <Text style={{ fontWeight: "bold" }}>Description: </Text>
+              {data.description}
+            </Text>
+          )}
 
           <Text
             onPress={() => Linking.openURL("https://technica2019.devpost.com/")}
             style={styles.devpost}
           >
             To Devpost{" "}
-            <Icon style={{ fontSize: 15 }} name="external-link"></Icon>
+            <Icon style={{ fontSize: 20 }} name="external-link"></Icon>
           </Text>
         </View>
       );
@@ -180,7 +184,6 @@ const styles = StyleSheet.create({
   },
   accordion: {},
   header: {
-    height: 90,
     paddingTop: 15,
     paddingRight: 15,
     paddingLeft: 30,
@@ -227,6 +230,15 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingRight: 15,
     paddingBottom: 15,
+    paddingLeft: 15
+  },
+
+  contentDescription: {
+    fontFamily: "DINPro-Regular",
+    color: "#fff",
+    paddingTop: 5,
+    paddingRight: 15,
+    paddingBottom: 50,
     paddingLeft: 15
   },
   image: {
