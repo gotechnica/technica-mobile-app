@@ -36,14 +36,13 @@ export default class Mentors extends Component<Props> {
   // Sets up heading of the page
   renderHeading() {
     return (
-      <React.Fragment>
-        <Heading>
-          Mentors
-        </Heading>
+      <View>
+        <Heading>Ask a Mentor</Heading>
         <SubHeading>
-          Ask our mentors for help
+          Technica mentors are experts in helping with your hack or answering
+          any additional questions you might have!
         </SubHeading>
-      </React.Fragment>
+      </View>
     )
   }
 

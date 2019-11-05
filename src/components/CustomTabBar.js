@@ -14,7 +14,7 @@ import { H5 } from './Text';
 import { colors } from './Colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const LABELS = ['Home', 'Schedule', 'Profile', 'Map', 'Help']
+const LABELS = ['Home', 'Schedule', 'Profile', 'Saved', 'Help']
 
 const ICONS = {
   'home': 'home',

@@ -172,4 +172,3 @@ export async function updateQuestionStatus(notification) {
   await AsyncStorage.setItem("questions", JSON.stringify(qList))
   this.setState({listData: qList})
 }
-

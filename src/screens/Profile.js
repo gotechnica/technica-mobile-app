@@ -54,7 +54,17 @@ export default class Profile extends Component<Props> {
           timeInterval: null,
         };
         this.onNamePress = this.onNamePress.bind(this);
+        // this.toggleConnectModal = this.toggleConnectModal.bind(this);
+        // this.toggleAboutUsModal = this.toggleAboutUsModal.bind(this);
     }
+
+    // toggleConnectModal() {
+    //   this.setState({ isConnectModalVisible: !this.state.isConnectModalVisible });
+    // }
+
+    //     toggleAboutUsModal() {
+    //   this.setState({ isConnectModalVisible: !this.state.isConnectModalVisible });
+    // }
 
   async logout(){
     Alert.alert(
@@ -76,6 +86,58 @@ export default class Profile extends Component<Props> {
   toggleScanner(){
       this.setState({scanner: !this.state.scanner});
   }
+
+  renderAboutUsModal = () => {
+    return (
+      <Modal
+        isVisible={this.state.isAboutUsModalVisible}
+        backdropColor={colors.black}
+        backdropOpacity={1}
+        animationInTiming={250}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationOutTiming={300}
+        backdropTransitionInTiming={250}
+        backdropTransitionOutTiming={300}
+        avoidKeyboard={true}
+        onBackButtonPress={() => this.toggleAboutUsModal()}
+        style={modalStyle}
+      >
+        <ModalContent>
+          <ModalHeader onBackButtonPress={() => this.toggleAboutUsModal()} />
+          <About />
+        </ModalContent>
+      </Modal>
+    );
+  };
+
+  renderConnectModal = () => {
+    return (
+      <Modal
+        isVisible={this.state.isConnectModalVisible}
+        backdropColor={colors.black}
+        backdropOpacity={1}
+        animationInTiming={250}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationOutTiming={300}
+        backdropTransitionInTiming={250}
+        backdropTransitionOutTiming={300}
+        avoidKeyboard={true}
+        onBackButtonPress={() => this.toggleConnectModal()}
+        style={modalStyle}
+      >
+        <ModalContent style={{ padding: 0 }}>
+          <View style={{ padding: 20, paddingBottom: 0 }}>
+            <ModalHeader onBackButtonPress={() => this.toggleConnectModal()} />
+          </View>
+          <View style={(styles.subSection, { marginTop: -40 })}>
+            <Connect />
+          </View>
+        </ModalContent>
+      </Modal>
+    );
+  };
 
   async onScanSuccess(e) {
       let url = "https://obq8mmlhg9.execute-api.us-east-1.amazonaws.com/beta/login/login-user";
@@ -158,7 +220,6 @@ export default class Profile extends Component<Props> {
           { cancelable: false }
         );
 
-
         let count = 0;;
         let intervalID = setInterval(() => {
            // Your logic here
@@ -190,6 +251,23 @@ export default class Profile extends Component<Props> {
       });
     }
   }
+
+    //   // this is pretty gross, functions should be associated with items in render method
+    //   modalManager(name) {
+    //     if (name == "banner_popular") {
+    //         this.toggleEventListModal();
+    //     } else if (name == "banner_saved") {
+    //         this.toggleSavedModal();
+    //     } else if (name == "banner_challenges") {
+    //         this.toggleChallengesModal();
+    //     } else if (name == "banner_aboutus") {
+    //         this.toggleAboutUsModal();
+    //     } else if (name == "banner_connect") {
+    //         this.toggleConnectModal();
+    //     } else if (name == "banner_speakers") {
+    //         this.toggleSpeakerModal();
+    //     }
+    // }
 
   getDevoolooperName(name) {
     // A, E, I, O, U
@@ -275,6 +353,11 @@ export default class Profile extends Component<Props> {
     })();
 
     const defaultView = ( () => {
+      // const items = [
+      //   { name: "banner_connect" },
+      //   { name: "banner_aboutus" }
+      // ];
+
         if(this.state.user.user_data){
             const fullName = this.state.user.user_data ?
                 this.state.user.user_data.first_name + " " + this.state.user.user_data.last_name :
@@ -321,9 +404,6 @@ export default class Profile extends Component<Props> {
                               />
                             }
                           </View>
-                          <H3 style={{ marginBottom: 40 }}>
-                            USE FOR TESTING ONLY
-                          </H3>
                         </View>
                       )
                     }
@@ -334,6 +414,22 @@ export default class Profile extends Component<Props> {
                     <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => this.logout()}>
                       <Button text="Log Out" />
                     </TouchableOpacity>
+                    {/* {this.renderAboutUsModal()}
+        {this.renderConnectModal()}
+        <View style={{ flex: 1 }}>
+        <FlatGrid
+            itemDimension={130}
+            items={items}
+            style={styles.gridView}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity onPress={() => this.modalManager(item.name)}>
+                <View style={styles.itemContainer}>
+                  <Image style={styles.banners} source={Images[item.name]} />
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        </View> */}
                   </ViewContainer>
                 );
 
@@ -377,6 +473,20 @@ export default class Profile extends Component<Props> {
                     <TouchableOpacity onPress={() => this.logout()}>
                       <Button text="Logout" />
                     </TouchableOpacity>
+        {/* <View style={{ flex: 1 }}>
+        <FlatGrid
+            itemDimension={130}
+            items={items}
+            style={styles.gridView}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity onPress={() => this.modalManager(item.name)}>
+                <View style={styles.itemContainer}>
+                  <Image style={styles.banners} source={Images[item.name]} />
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        </View> */}
                   </ViewContainer>
                 );
 

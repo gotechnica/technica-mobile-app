@@ -43,6 +43,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: 'row',
   },
+  modalHeading: {
+    marginBottom: 20,
+    flexDirection: 'row',
+  },
   subHeading: {
     color: colors.fontGrey,
     marginBottom: 40,
@@ -137,6 +141,14 @@ const PadContainer = (props) => (
 
 const Heading = (props) => (
   <View style={[styles.heading]}>
+    <H1 style={props.style}>
+      {props.children}
+    </H1>
+  </View>
+);
+
+const ModalHeading = (props) => (
+  <View style={[styles.modalHeading]}>
     <H1 style={props.style}>
       {props.children}
     </H1>
@@ -307,5 +319,6 @@ export {
   NavModalHeader,
   modalStyle,
   CenteredActivityIndicator,
-  Button
+  Button,
+  ModalHeading
 };
