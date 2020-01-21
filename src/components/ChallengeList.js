@@ -11,12 +11,14 @@ import {
   StyleSheet,
   Switch,
   ScrollView,
-  Linking
+  Linking,
+  Dimensions
 } from "react-native";
 
 import Accordion from "@ercpereda/react-native-accordion";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Images from "../../assets/imgs/index";
+import firebase from "react-native-firebase";
 
 const Data = [
   {
@@ -78,8 +80,22 @@ const Data = [
 ];
 
 export default class ChallengeList extends Component {
+  getChallenges() {
+    var challengesList = [];
+    firebase
+      .database()
+      .ref("/Challenges")
+      .on("value", async snapshot => {
+        snapshot.forEach(challenge => {
+          challengesList.push(challenge.val());
+        });
+      });
+
+    return challengesList;
+  }
+
   render() {
-    var list = Data.map((data, index) => {
+    var list = getChallenges().map((data, index) => {
       const header = ({ isOpen }) => (
         <View
           style={[
@@ -115,21 +131,25 @@ export default class ChallengeList extends Component {
         <View
           style={[
             index % 2 == 1
-              ? { backgroundColor: "#464343", height: 130 }
-              : { backgroundColor: "#2D2D2D", height: 130 }
+              ? { backgroundColor: "#464343" }
+              : { backgroundColor: "#2D2D2D" }
           ]}
         >
-          <Text style={styles.contentText}>
-            <Text style={{ fontWeight: "bold" }}>Description: </Text>
-            {data.description}
-          </Text>
+          {data.description == null ? (
+            <View style={{ paddingBottom: 30 }}></View>
+          ) : (
+            <Text style={styles.contentDescription}>
+              <Text style={{ fontWeight: "bold" }}>Description: </Text>
+              {data.description}
+            </Text>
+          )}
 
           <Text
             onPress={() => Linking.openURL("https://technica2019.devpost.com/")}
             style={styles.devpost}
           >
             To Devpost{" "}
-            <Icon style={{ fontSize: 15 }} name="external-link"></Icon>
+            <Icon style={{ fontSize: 20 }} name="external-link"></Icon>
           </Text>
         </View>
       );
@@ -164,7 +184,6 @@ const styles = StyleSheet.create({
   },
   accordion: {},
   header: {
-    height: 90,
     paddingTop: 15,
     paddingRight: 15,
     paddingLeft: 30,
@@ -182,17 +201,21 @@ const styles = StyleSheet.create({
   headerMain: {
     color: "#fff",
     lineHeight: 22,
-    fontFamily: "DINPro-Bold"
+    fontFamily: "DINPro-Bold",
+    width: Math.round(Dimensions.get("window").width) - 120
   },
   headerSponsor: {
     color: "#fff",
     lineHeight: 22,
-    fontFamily: "DINPro-Regular"
+    fontFamily: "DINPro-Regular",
+    width: Math.round(Dimensions.get("window").width) - 120
   },
   headerPrize: {
     color: "#fff",
     lineHeight: 22,
-    fontFamily: "DINPro-Light"
+    fontFamily: "DINPro-Light",
+    width: Math.round(Dimensions.get("window").width) - 120,
+    paddingBottom: 10
   },
   content: {
     paddingTop: 15,
@@ -207,6 +230,15 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingRight: 15,
     paddingBottom: 15,
+    paddingLeft: 15
+  },
+
+  contentDescription: {
+    fontFamily: "DINPro-Regular",
+    color: "#fff",
+    paddingTop: 5,
+    paddingRight: 15,
+    paddingBottom: 50,
     paddingLeft: 15
   },
   image: {
